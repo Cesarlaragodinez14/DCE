@@ -16,11 +16,11 @@
             @import url('https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css');
 
             .bg-primary {
-                background-color: #FF2D20;
+                background-color: #1f2937;
             }
 
             .text-primary {
-                color: #FF2D20;
+                color: #1f2937;
             }
         </style>
     </head>
