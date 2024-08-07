@@ -2,8 +2,8 @@
 
 return [
     'catDgsegEfs' => [
-        'itemTitle' => 'Cat Dgseg Ef',
-        'collectionTitle' => 'Cat Dgseg Efs',
+        'itemTitle' => 'Catalogo Dgseg Ef',
+        'collectionTitle' => 'Catalogo Dgseg Efs',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -121,8 +121,8 @@ return [
         ],
     ],
     'catClaveAccions' => [
-        'itemTitle' => 'Cat Clave Accion',
-        'collectionTitle' => 'Cat Clave Accions',
+        'itemTitle' => 'Catalogo Clave Accion',
+        'collectionTitle' => 'Catalogo Clave Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -154,8 +154,8 @@ return [
         ],
     ],
     'catEnteDeLaAccions' => [
-        'itemTitle' => 'Cat Ente De La Accion',
-        'collectionTitle' => 'Cat Ente De La Accions',
+        'itemTitle' => 'Catalogo Ente De La Accion',
+        'collectionTitle' => 'Catalogo Ente De La Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -187,8 +187,8 @@ return [
         ],
     ],
     'catEnteFiscalizados' => [
-        'itemTitle' => 'Cat Ente Fiscalizado',
-        'collectionTitle' => 'Cat Ente Fiscalizados',
+        'itemTitle' => 'Catalogo Ente Fiscalizado',
+        'collectionTitle' => 'Catalogo Ente Fiscalizados',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -220,8 +220,8 @@ return [
         ],
     ],
     'catSiglasAuditoriaEspecials' => [
-        'itemTitle' => 'Cat Siglas Auditoria Especial',
-        'collectionTitle' => 'Cat Siglas Auditoria Especials',
+        'itemTitle' => 'Catalogo Siglas Auditoria Especial',
+        'collectionTitle' => 'Catalogo Siglas Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -253,8 +253,8 @@ return [
         ],
     ],
     'catTipoDeAuditorias' => [
-        'itemTitle' => 'Cat Tipo De Auditoria',
-        'collectionTitle' => 'Cat Tipo De Auditorias',
+        'itemTitle' => 'Catalogo Tipo De Auditoria',
+        'collectionTitle' => 'Catalogo Tipo De Auditorias',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -286,8 +286,8 @@ return [
         ],
     ],
     'catUaas' => [
-        'itemTitle' => 'Cat Uaa',
-        'collectionTitle' => 'Cat Uaas',
+        'itemTitle' => 'Catalogo Uaa',
+        'collectionTitle' => 'Catalogo Uaas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -319,8 +319,8 @@ return [
         ],
     ],
     'catAuditoriaEspecials' => [
-        'itemTitle' => 'Cat Auditoria Especial',
-        'collectionTitle' => 'Cat Auditoria Especials',
+        'itemTitle' => 'Catalogo Auditoria Especial',
+        'collectionTitle' => 'Catalogo Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -352,8 +352,8 @@ return [
         ],
     ],
     'catEntregas' => [
-        'itemTitle' => 'Cat Entrega',
-        'collectionTitle' => 'Cat Entregas',
+        'itemTitle' => 'Catalogo Entrega',
+        'collectionTitle' => 'Catalogo Entregas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -385,8 +385,8 @@ return [
         ],
     ],
     'catCuentaPublicas' => [
-        'itemTitle' => 'Cat Cuenta Publica',
-        'collectionTitle' => 'Cat Cuenta Publicas',
+        'itemTitle' => 'Catalogo Cuenta Publica',
+        'collectionTitle' => 'Catalogo Cuenta Publicas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -418,8 +418,8 @@ return [
         ],
     ],
     'catSiglasTipoAcciones' => [
-        'itemTitle' => 'Cat Siglas Tipo Accion',
-        'collectionTitle' => 'Cat Siglas Tipo Acciones',
+        'itemTitle' => 'Catalogo Siglas Tipo Accion',
+        'collectionTitle' => 'Catalogo Siglas Tipo Acciones',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',

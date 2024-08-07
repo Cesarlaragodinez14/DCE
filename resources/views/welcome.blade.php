@@ -29,7 +29,7 @@
             <header class="w-full bg-primary text-white py-4">
                 <div class="container mx-auto flex flex-wrap justify-between items-center px-4">
                     <div class="text-2xl font-bold">
-                        SAES - Sistema de Archivo de Expedientes de Seguimiento
+                        SAES
                     </div>
                     <nav class="mt-2 sm:mt-0">
                         @if (Route::has('login'))
@@ -37,9 +37,9 @@
                                 @auth
                                     <a href="{{ url('/dashboard') }}" class="hover:text-gray-300">Dashboard</a>
                                 @else
-                                    <a href="{{ route('login') }}" class="hover:text-gray-300">Log in</a>
+                                    <a href="{{ route('login') }}" class="hover:text-gray-300">Ingresar</a>
                                     @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="hover:text-gray-300">Register</a>
+                                        <a href="{{ route('register') }}" class="hover:text-gray-300">Registro</a>
                                     @endif
                                 @endauth
                             </div>
