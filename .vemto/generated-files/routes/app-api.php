@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CatUaaController;
 use App\Http\Controllers\Api\CatDgsegEfController;
 use App\Http\Controllers\Api\CatEntregaController;
+use App\Http\Controllers\Api\AuditoriasController;
 use App\Http\Controllers\Api\CatClaveAccionController;
 use App\Http\Controllers\Api\CatCuentaPublicaController;
 use App\Http\Controllers\Api\CatEnteDeLaAccionController;
@@ -466,5 +467,30 @@ Route::name('api.')
                 CatSiglasTipoAccionController::class,
                 'destroy',
             ])->name('cat-siglas-tipo-acciones.destroy');
+
+            Route::get('/all-auditorias', [
+                AuditoriasController::class,
+                'index',
+            ])->name('all-auditorias.index');
+
+            Route::post('/all-auditorias', [
+                AuditoriasController::class,
+                'store',
+            ])->name('all-auditorias.store');
+
+            Route::get('/all-auditorias/{auditorias}', [
+                AuditoriasController::class,
+                'show',
+            ])->name('all-auditorias.show');
+
+            Route::put('/all-auditorias/{auditorias}', [
+                AuditoriasController::class,
+                'update',
+            ])->name('all-auditorias.update');
+
+            Route::delete('/all-auditorias/{auditorias}', [
+                AuditoriasController::class,
+                'destroy',
+            ])->name('all-auditorias.destroy');
         });
     });

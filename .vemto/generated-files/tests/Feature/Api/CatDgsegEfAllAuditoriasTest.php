@@ -45,7 +45,6 @@ test('it stores the cat_dgseg_ef all_auditorias', function () {
         $data
     );
 
-    unset($data['cuenta_publica']);
     unset($data['created_at']);
     unset($data['updated_at']);
 

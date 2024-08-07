@@ -2,8 +2,8 @@
 
 return [
     'catDgsegEfs' => [
-        'itemTitle' => 'Catalogo Dgseg Ef',
-        'collectionTitle' => 'Catalogo Dgseg Efs',
+        'itemTitle' => 'Cat Dgseg Ef',
+        'collectionTitle' => 'Cat Dgseg Efs',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -119,10 +119,134 @@ return [
                 'placeholder' => 'Dgseg ef',
             ],
         ],
+        'filament' => [
+            'clave_de_accion' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'entrega' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'auditoria_especial' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'tipo_de_auditoria' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'siglas_auditoria_especial' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'siglas_dg_uaa' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'titulo' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'ente_fiscalizado' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'numero_de_auditoria' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'ente_de_la_accion' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'clave_accion' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'siglas_tipo_accion' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'dgseg_ef' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+            'nombre_director_general' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'direccion_de_area' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'nombre_director_de_area' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'sub_direccion_de_area' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'nombre_sub_director_de_area' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'jefe_de_departamento' => [
+                'helper_text' => '',
+                'label' => '',
+                'description' => '',
+            ],
+            'cuenta_publica' => [
+                'helper_text' => '',
+                'loading_message' => '',
+                'no_result_message' => '',
+                'search_message' => '',
+                'label' => '',
+            ],
+        ],
     ],
     'catClaveAccions' => [
-        'itemTitle' => 'Catalogo Clave Accion',
-        'collectionTitle' => 'Catalogo Clave Accions',
+        'itemTitle' => 'Cat Clave Accion',
+        'collectionTitle' => 'Cat Clave Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -154,8 +278,8 @@ return [
         ],
     ],
     'catEnteDeLaAccions' => [
-        'itemTitle' => 'Catalogo Ente De La Accion',
-        'collectionTitle' => 'Catalogo Ente De La Accions',
+        'itemTitle' => 'Cat Ente De La Accion',
+        'collectionTitle' => 'Cat Ente De La Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -187,8 +311,8 @@ return [
         ],
     ],
     'catEnteFiscalizados' => [
-        'itemTitle' => 'Catalogo Ente Fiscalizado',
-        'collectionTitle' => 'Catalogo Ente Fiscalizados',
+        'itemTitle' => 'Cat Ente Fiscalizado',
+        'collectionTitle' => 'Cat Ente Fiscalizados',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -220,8 +344,8 @@ return [
         ],
     ],
     'catSiglasAuditoriaEspecials' => [
-        'itemTitle' => 'Catalogo Siglas Auditoria Especial',
-        'collectionTitle' => 'Catalogo Siglas Auditoria Especials',
+        'itemTitle' => 'Cat Siglas Auditoria Especial',
+        'collectionTitle' => 'Cat Siglas Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -253,8 +377,8 @@ return [
         ],
     ],
     'catTipoDeAuditorias' => [
-        'itemTitle' => 'Catalogo Tipo De Auditoria',
-        'collectionTitle' => 'Catalogo Tipo De Auditorias',
+        'itemTitle' => 'Cat Tipo De Auditoria',
+        'collectionTitle' => 'Cat Tipo De Auditorias',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -286,8 +410,8 @@ return [
         ],
     ],
     'catUaas' => [
-        'itemTitle' => 'Catalogo Uaa',
-        'collectionTitle' => 'Catalogo Uaas',
+        'itemTitle' => 'Cat Uaa',
+        'collectionTitle' => 'Cat Uaas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -319,8 +443,8 @@ return [
         ],
     ],
     'catAuditoriaEspecials' => [
-        'itemTitle' => 'Catalogo Auditoria Especial',
-        'collectionTitle' => 'Catalogo Auditoria Especials',
+        'itemTitle' => 'Cat Auditoria Especial',
+        'collectionTitle' => 'Cat Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -352,8 +476,8 @@ return [
         ],
     ],
     'catEntregas' => [
-        'itemTitle' => 'Catalogo Entrega',
-        'collectionTitle' => 'Catalogo Entregas',
+        'itemTitle' => 'Cat Entrega',
+        'collectionTitle' => 'Cat Entregas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -385,8 +509,8 @@ return [
         ],
     ],
     'catCuentaPublicas' => [
-        'itemTitle' => 'Catalogo Cuenta Publica',
-        'collectionTitle' => 'Catalogo Cuenta Publicas',
+        'itemTitle' => 'Cat Cuenta Publica',
+        'collectionTitle' => 'Cat Cuenta Publicas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -418,8 +542,8 @@ return [
         ],
     ],
     'catSiglasTipoAcciones' => [
-        'itemTitle' => 'Catalogo Siglas Tipo Accion',
-        'collectionTitle' => 'Catalogo Siglas Tipo Acciones',
+        'itemTitle' => 'Cat Siglas Tipo Accion',
+        'collectionTitle' => 'Cat Siglas Tipo Acciones',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',

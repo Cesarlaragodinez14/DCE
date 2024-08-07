@@ -14,4 +14,5 @@ return [
     'cat_entregas' => 'Entregas',
     'cat_cuenta_publicas' => 'Cuentas Publicas',
     'cat_siglas_tipo_acciones' => 'Siglas Tipos Acciones',
+    'all_auditorias' => 'Auditorias',
 ];

@@ -74,42 +74,41 @@
             </x-slot>
 
             <x-slot name="body">
-                @forelse ($catSiglasAuditoriaEspecials as
-                $catSiglasAuditoriaEspecial)
-                <x-ui.table.row wire:loading.class.delay="opacity-75">
-                    <x-ui.table.column for-crud
-                        >{{ $catSiglasAuditoriaEspecial->valor
-                        }}</x-ui.table.column
-                    >
-                    <x-ui.table.column for-crud
-                        >{{ $catSiglasAuditoriaEspecial->descripcion
-                        }}</x-ui.table.column
-                    >
-                    <x-ui.table.column for-crud
-                        >{{ $catSiglasAuditoriaEspecial->activo
-                        }}</x-ui.table.column
-                    >
-                    <x-ui.table.action-column>
-                        @can('update', $catSiglasAuditoriaEspecial)
-                        <x-ui.action
-                            wire:navigate
-                            href="{{ route('dashboard.cat-siglas-auditoria-especials.edit', $catSiglasAuditoriaEspecial) }}"
-                            >Edit</x-ui.action
-                        >
-                        @endcan @can('delete', $catSiglasAuditoriaEspecial)
-                        <x-ui.action.danger
-                            wire:click="confirmDeletion({{ $catSiglasAuditoriaEspecial->id }})"
-                            >Delete</x-ui.action.danger
-                        >
-                        @endcan
-                    </x-ui.table.action-column>
-                </x-ui.table.row>
+                @forelse ($catSiglasAuditoriaEspecials as $catSiglasAuditoriaEspecial)
+                    <x-ui.table.row wire:loading.class.delay="opacity-75">
+                        <x-ui.table.column for-crud>
+                            {{ $catSiglasAuditoriaEspecial->valor }}
+                        </x-ui.table.column>
+                        <x-ui.table.column for-crud>
+                            {{ $catSiglasAuditoriaEspecial->descripcion }}
+                        </x-ui.table.column>
+                        <x-ui.table.column for-crud>
+                            {{ $catSiglasAuditoriaEspecial->activo }}
+                        </x-ui.table.column>
+                        <x-ui.table.action-column>
+                            @can('update', $catSiglasAuditoriaEspecial)
+                                <x-ui.action
+                                    wire:navigate
+                                    href="{{ route('dashboard.cat-siglas-auditoria-especials.edit', $catSiglasAuditoriaEspecial) }}"
+                                >
+                                    Edit
+                                </x-ui.action>
+                            @endcan
+                            @can('delete', $catSiglasAuditoriaEspecial)
+                                <x-ui.action.danger
+                                    wire:click="confirmDeletion({{ $catSiglasAuditoriaEspecial->id }})"
+                                >
+                                    Delete
+                                </x-ui.action.danger>
+                            @endcan
+                        </x-ui.table.action-column>
+                    </x-ui.table.row>
                 @empty
-                <x-ui.table.row>
-                    <x-ui.table.column colspan="4"
-                        >No {{ __('crud.catSiglasAuditoriaEspecials.collectionTitle') }} found.</x-ui.table.column
-                    >
-                </x-ui.table.row>
+                    <x-ui.table.row>
+                        <x-ui.table.column colspan="4">
+                            No {{ __('crud.catSiglasAuditoriaEspecials.collectionTitle') }} found.
+                        </x-ui.table.column>
+                    </x-ui.table.row>
                 @endforelse
             </x-slot>
         </x-ui.table>

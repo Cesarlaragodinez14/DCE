@@ -181,6 +181,21 @@ Route::prefix('/dashboard')
             '/cat-siglas-tipo-acciones/{catSiglasTipoAccion}',
             App\Livewire\Dashboard\CatSiglasTipoAccionEdit::class
         )->name('cat-siglas-tipo-acciones.edit');
+
+        Route::get(
+            '/all-auditorias',
+            App\Livewire\Dashboard\AuditoriasIndex::class
+        )->name('all-auditorias.index');
+
+        Route::get(
+            '/all-auditorias/create',
+            App\Livewire\Dashboard\AuditoriasCreate::class
+        )->name('all-auditorias.create');
+
+        Route::get(
+            '/all-auditorias/{auditorias}',
+            App\Livewire\Dashboard\AuditoriasEdit::class
+        )->name('all-auditorias.edit');
     });
 
 // API

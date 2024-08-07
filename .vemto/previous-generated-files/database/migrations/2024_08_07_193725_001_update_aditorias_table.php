@@ -13,16 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('aditorias', function (Blueprint $table) {
-            $table
-                ->bigInteger('cuenta_publica')
-                ->unsigned()
-                ->after('jefe_de_departamento');
-            $table
-                ->foreign('cuenta_publica')
-                ->references('id')
-                ->on('cat_cuenta_publica')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->renameColumn('siglas_dg_uaa', 'uaa');
         });
     }
 
@@ -34,8 +25,7 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('aditorias', function (Blueprint $table) {
-            $table->dropColumn('cuenta_publica');
-            $table->dropForeign('aditorias_cuenta_publica_foreign');
+            $table->renameColumn('uaa', 'siglas_dg_uaa');
         });
     }
 };
