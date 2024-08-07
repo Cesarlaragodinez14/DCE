@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>SAES - Sistema Automatizado de Evaluación de Sanciones</title>
+        <title>SAES - Sistema de Archivo de Expedientes de Seguimiento</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -29,7 +29,7 @@
             <header class="w-full bg-primary text-white py-4">
                 <div class="container mx-auto flex justify-between items-center">
                     <div class="text-2xl font-bold">
-                        SAES - Sistema Automatizado de Evaluación de Sanciones
+                        SAES - Sistema de Archivo de Expedientes de Seguimiento
                     </div>
                     <nav>
                         @if (Route::has('login'))
@@ -49,6 +49,12 @@
             </header>
 
             <main class="container mx-auto flex-1 px-6 py-12">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Bienvenido al SAES</h1>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        El Sistema de Archivo de Expedientes de Seguimiento (SAES) te permite gestionar y seguir de manera eficiente los expedientes de sanción. Accede a las distintas funcionalidades para optimizar tus procesos y asegurar el cumplimiento de las normativas.
+                    </p>
+                </div>
                 <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
                     <!-- Card: Entrega Recepción de Expedientes -->
                     <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
@@ -77,13 +83,18 @@
                         <a href="{{ url('/revision-expedientes') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
                     </div>
                 </div>
-            </main>
 
-            <footer class="w-full bg-gray-100 dark:bg-gray-700 text-center py-4">
-                <div class="text-sm text-gray-600 dark:text-gray-400">
-                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) | © 2024 ASF
+                <div class="mt-12 grid gap-6 lg:grid-cols-3 lg:gap-8">
+                    <!-- Card: Normatividad y Documentación -->
+                    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Normatividad y Documentación</h2>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">
+                            Accede a la normativa y documentación relacionada con la gestión de expedientes para asegurar el cumplimiento de las disposiciones legales.
+                        </p>
+                        <a href="{{ url('/normatividad-documentacion') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
+                    </div>
                 </div>
-            </footer>
+            </main>
         </div>
     </body>
 </html>
