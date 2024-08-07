@@ -5,7 +5,7 @@
                 "uuid": "e486d783-8c84-4184-8213-1ae3bce5ab48",
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:48",
-                "updatedAt": "2024-08-06 19:14:29",
+                "updatedAt": "2024-08-06 19:53:43",
                 "settings": {
                     "cssFramework": "tailwind",
                     "uiStarterKit": "jetstream",
@@ -312,7 +312,7 @@
                 "vthemeCdn": "https://cdn.tailwindcss.com",
                 "connectionFinished": true,
                 "canIgnoreNextSchemaSourceChanges": false,
-                "lastReadSchemaDataHash": "021e05bec804a8e6d0a18f4f215d9f70",
+                "lastReadSchemaDataHash": "7c4ac07d79eb0bb22468ee675aff6d63",
                 "currentZoom": 50,
                 "currentRenderedFilesPaths": [
                     "/lang/en//navigation.php",
@@ -786,8 +786,6 @@
                                 13
                             ],
                             "relationships.projectId": [
-                                13,
-                                14,
                                 15,
                                 16,
                                 17,
@@ -807,7 +805,9 @@
                                 31,
                                 32,
                                 33,
-                                34
+                                34,
+                                35,
+                                36
                             ],
                             "cruds.projectId": [
                                 1,
@@ -1819,7 +1819,7 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "586",
                 "positionY": "28",
                 "sectionId": 1,
@@ -1959,7 +1959,6 @@
                                 82,
                                 83,
                                 84,
-                                85,
                                 86,
                                 87,
                                 88,
@@ -1976,13 +1975,13 @@
                                 172,
                                 173,
                                 174,
-                                175
+                                175,
+                                177
                             ],
                             "models.tableId": [
                                 5
                             ],
                             "indices.tableId": [
-                                10,
                                 11,
                                 12,
                                 13,
@@ -1992,7 +1991,8 @@
                                 17,
                                 18,
                                 19,
-                                20
+                                20,
+                                21
                             ],
                             "indices.onTableId": [],
                             "cruds.tableId": [
@@ -2061,7 +2061,7 @@
                             ],
                             "indices.tableId": [],
                             "indices.onTableId": [
-                                10
+                                21
                             ],
                             "cruds.tableId": [
                                 19,
@@ -2667,7 +2667,7 @@
                 },
                 "id": 2,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3055,7 +3055,7 @@
                 },
                 "id": 3,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3223,7 +3223,7 @@
                 },
                 "id": 4,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3391,7 +3391,7 @@
                 },
                 "id": 5,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3841,7 +3841,7 @@
                 },
                 "id": 6,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4291,7 +4291,7 @@
                 },
                 "id": 7,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4741,7 +4741,7 @@
                 },
                 "id": 8,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4983,7 +4983,7 @@
                 },
                 "id": 9,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4996,9 +4996,9 @@
                 "createdFromInterface": false,
                 "id": 13,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-06 19:08:49",
-                "positionX": "-1132",
-                "positionY": "-167",
+                "updatedAt": "2024-08-06 19:53:40",
+                "positionX": "-1136",
+                "positionY": "-171",
                 "removed": false,
                 "migrations": [
                     {
@@ -5341,6 +5341,49 @@
                         "createdTables": [
                             "aditorias"
                         ],
+                        "renamedTables": [],
+                        "droppedTables": []
+                    },
+                    {
+                        "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
+                        "relativePath": "/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
+                        "migrationName": "2024_08_07_005214_001_update_aditorias_table",
+                        "datePrefix": "2024_08_07",
+                        "fullPrefix": "2024_08_07_005214",
+                        "addedColumns": [
+                            {
+                                "type": "bigInteger",
+                                "name": "cuenta_publica",
+                                "autoIncrement": false,
+                                "unsigned": true,
+                                "table": "aditorias",
+                                "creatorMethod": "bigInteger",
+                                "after": "jefe_de_departamento"
+                            }
+                        ],
+                        "changedColumns": [],
+                        "droppedColumns": [],
+                        "renamedColumns": [],
+                        "commands": [
+                            {
+                                "name": "create",
+                                "table": "aditorias"
+                            },
+                            {
+                                "name": "foreign",
+                                "index": "aditorias_cuenta_publica_foreign",
+                                "columns": [
+                                    "cuenta_publica"
+                                ],
+                                "algorithm": null,
+                                "references": "id",
+                                "on": "cat_cuenta_publica",
+                                "onDelete": "cascade",
+                                "onUpdate": "cascade",
+                                "table": "aditorias"
+                            }
+                        ],
+                        "createdTables": [],
                         "renamedTables": [],
                         "droppedTables": []
                     }
@@ -5693,6 +5736,49 @@
                             ],
                             "renamedTables": [],
                             "droppedTables": []
+                        },
+                        {
+                            "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
+                            "relativePath": "/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
+                            "migrationName": "2024_08_07_005214_001_update_aditorias_table",
+                            "datePrefix": "2024_08_07",
+                            "fullPrefix": "2024_08_07_005214",
+                            "addedColumns": [
+                                {
+                                    "type": "bigInteger",
+                                    "name": "cuenta_publica",
+                                    "autoIncrement": false,
+                                    "unsigned": true,
+                                    "table": "aditorias",
+                                    "creatorMethod": "bigInteger",
+                                    "after": "jefe_de_departamento"
+                                }
+                            ],
+                            "changedColumns": [],
+                            "droppedColumns": [],
+                            "renamedColumns": [],
+                            "commands": [
+                                {
+                                    "name": "create",
+                                    "table": "aditorias"
+                                },
+                                {
+                                    "name": "foreign",
+                                    "index": "aditorias_cuenta_publica_foreign",
+                                    "columns": [
+                                        "cuenta_publica"
+                                    ],
+                                    "algorithm": null,
+                                    "references": "id",
+                                    "on": "cat_cuenta_publica",
+                                    "onDelete": "cascade",
+                                    "onUpdate": "cascade",
+                                    "table": "aditorias"
+                                }
+                            ],
+                            "createdTables": [],
+                            "renamedTables": [],
+                            "droppedTables": []
                         }
                     ]
                 }
@@ -5704,7 +5790,7 @@
                 "createdFromInterface": false,
                 "id": 14,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2605",
                 "positionY": "-30",
                 "removed": false,
@@ -5864,7 +5950,7 @@
                 "createdFromInterface": false,
                 "id": 15,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2979",
                 "positionY": "-717",
                 "removed": false,
@@ -6024,7 +6110,7 @@
                 "createdFromInterface": false,
                 "id": 16,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2605",
                 "positionY": "-719",
                 "removed": false,
@@ -6184,7 +6270,7 @@
                 "createdFromInterface": false,
                 "id": 17,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2236",
                 "positionY": "-721",
                 "removed": false,
@@ -6344,7 +6430,7 @@
                 "createdFromInterface": false,
                 "id": 18,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2604",
                 "positionY": "-372",
                 "removed": false,
@@ -6504,7 +6590,7 @@
                 "createdFromInterface": false,
                 "id": 19,
                 "createdAt": "2024-08-06 11:45:03",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-1868",
                 "positionY": "-724",
                 "removed": false,
@@ -6664,7 +6750,7 @@
                 "createdFromInterface": false,
                 "id": 20,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2979",
                 "positionY": "-372",
                 "removed": false,
@@ -6824,7 +6910,7 @@
                 "createdFromInterface": false,
                 "id": 21,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2230",
                 "positionY": "-372",
                 "removed": false,
@@ -6984,7 +7070,7 @@
                 "createdFromInterface": false,
                 "id": 22,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-1859",
                 "positionY": "-375",
                 "removed": false,
@@ -7144,7 +7230,7 @@
                 "createdFromInterface": false,
                 "id": 23,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2967",
                 "positionY": "-26",
                 "removed": false,
@@ -7304,7 +7390,7 @@
                 "createdFromInterface": false,
                 "id": 24,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "positionX": "-2231",
                 "positionY": "-29",
                 "removed": false,
@@ -7483,11 +7569,11 @@
                 "options": [],
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "__tableData": {
                 "count": 151,
-                "lastPrimaryKey": 176,
+                "lastPrimaryKey": 177,
                 "index": {
                     "1": {
                         "hasMany": {}
@@ -7847,41 +7933,6 @@
                             ]
                         }
                     },
-                    "85": {
-                        "hasMany": {
-                            "index_column.columnId": [
-                                11
-                            ],
-                            "relationships.foreignKeyId": [
-                                13,
-                                14
-                            ],
-                            "inputs.columnId": [
-                                5,
-                                27,
-                                49,
-                                71,
-                                93,
-                                115,
-                                137,
-                                159,
-                                181,
-                                225,
-                                247,
-                                270,
-                                293,
-                                316,
-                                339,
-                                362,
-                                385,
-                                408,
-                                431,
-                                454,
-                                477,
-                                500
-                            ]
-                        }
-                    },
                     "86": {
                         "hasMany": {
                             "index_column.columnId": [
@@ -8142,11 +8193,11 @@
                         "hasMany": {
                             "index_column.columnId": [],
                             "indices.referencesColumnId": [
-                                10
+                                21
                             ],
                             "relationships.parentKeyId": [
-                                13,
-                                14
+                                35,
+                                36
                             ]
                         }
                     },
@@ -9040,6 +9091,17 @@
                                 518
                             ]
                         }
+                    },
+                    "177": {
+                        "hasMany": {
+                            "index_column.columnId": [
+                                22
+                            ],
+                            "relationships.foreignKeyId": [
+                                35,
+                                36
+                            ]
+                        }
                     }
                 },
                 "additionalIndexes": {},
@@ -9063,7 +9125,7 @@
                 "options": [],
                 "id": 2,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_3": {
                 "name": "email",
@@ -9084,7 +9146,7 @@
                 "options": [],
                 "id": 3,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_4": {
                 "name": "email_verified_at",
@@ -9103,7 +9165,7 @@
                 "options": [],
                 "id": 4,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_5": {
                 "name": "password",
@@ -9122,7 +9184,7 @@
                 "options": [],
                 "id": 5,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_6": {
                 "name": "two_factor_secret",
@@ -9141,7 +9203,7 @@
                 "options": [],
                 "id": 6,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_7": {
                 "name": "two_factor_recovery_codes",
@@ -9160,7 +9222,7 @@
                 "options": [],
                 "id": 7,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_8": {
                 "name": "two_factor_confirmed_at",
@@ -9179,7 +9241,7 @@
                 "options": [],
                 "id": 8,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_9": {
                 "name": "remember_token",
@@ -9200,7 +9262,7 @@
                 "options": [],
                 "id": 9,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_10": {
                 "name": "current_team_id",
@@ -9223,7 +9285,7 @@
                 "options": [],
                 "id": 10,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_11": {
                 "name": "profile_photo_path",
@@ -9244,7 +9306,7 @@
                 "options": [],
                 "id": 11,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_12": {
                 "name": "created_at",
@@ -9263,7 +9325,7 @@
                 "options": [],
                 "id": 12,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_13": {
                 "name": "updated_at",
@@ -9282,7 +9344,7 @@
                 "options": [],
                 "id": 13,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_14": {
                 "name": "email",
@@ -9307,7 +9369,7 @@
                 "options": [],
                 "id": 14,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_15": {
                 "name": "token",
@@ -9326,7 +9388,7 @@
                 "options": [],
                 "id": 15,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_16": {
                 "name": "created_at",
@@ -9345,7 +9407,7 @@
                 "options": [],
                 "id": 16,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_17": {
                 "name": "id",
@@ -9370,7 +9432,7 @@
                 "options": [],
                 "id": 17,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_18": {
                 "name": "user_id",
@@ -9395,7 +9457,7 @@
                 "options": [],
                 "id": 18,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_19": {
                 "name": "ip_address",
@@ -9416,7 +9478,7 @@
                 "options": [],
                 "id": 19,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_20": {
                 "name": "user_agent",
@@ -9435,7 +9497,7 @@
                 "options": [],
                 "id": 20,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_21": {
                 "name": "payload",
@@ -9452,7 +9514,7 @@
                 "options": [],
                 "id": 21,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_22": {
                 "name": "last_activity",
@@ -9475,7 +9537,7 @@
                 "options": [],
                 "id": 22,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_23": {
                 "name": "key",
@@ -9500,7 +9562,7 @@
                 "options": [],
                 "id": 23,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_24": {
                 "name": "value",
@@ -9517,7 +9579,7 @@
                 "options": [],
                 "id": 24,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_25": {
                 "name": "expiration",
@@ -9538,7 +9600,7 @@
                 "options": [],
                 "id": 25,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_26": {
                 "name": "key",
@@ -9563,7 +9625,7 @@
                 "options": [],
                 "id": 26,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_27": {
                 "name": "owner",
@@ -9582,7 +9644,7 @@
                 "options": [],
                 "id": 27,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_28": {
                 "name": "expiration",
@@ -9603,7 +9665,7 @@
                 "options": [],
                 "id": 28,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_29": {
                 "name": "id",
@@ -9629,7 +9691,7 @@
                 "options": [],
                 "id": 29,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_30": {
                 "name": "queue",
@@ -9650,7 +9712,7 @@
                 "options": [],
                 "id": 30,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_31": {
                 "name": "payload",
@@ -9667,7 +9729,7 @@
                 "options": [],
                 "id": 31,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_32": {
                 "name": "attempts",
@@ -9688,7 +9750,7 @@
                 "options": [],
                 "id": 32,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_33": {
                 "name": "reserved_at",
@@ -9711,7 +9773,7 @@
                 "options": [],
                 "id": 33,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_34": {
                 "name": "available_at",
@@ -9732,7 +9794,7 @@
                 "options": [],
                 "id": 34,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_35": {
                 "name": "created_at",
@@ -9753,7 +9815,7 @@
                 "options": [],
                 "id": 35,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_36": {
                 "name": "id",
@@ -9778,7 +9840,7 @@
                 "options": [],
                 "id": 36,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_37": {
                 "name": "name",
@@ -9797,7 +9859,7 @@
                 "options": [],
                 "id": 37,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_38": {
                 "name": "total_jobs",
@@ -9818,7 +9880,7 @@
                 "options": [],
                 "id": 38,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_39": {
                 "name": "pending_jobs",
@@ -9839,7 +9901,7 @@
                 "options": [],
                 "id": 39,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_40": {
                 "name": "failed_jobs",
@@ -9860,7 +9922,7 @@
                 "options": [],
                 "id": 40,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_41": {
                 "name": "failed_job_ids",
@@ -9877,7 +9939,7 @@
                 "options": [],
                 "id": 41,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_42": {
                 "name": "options",
@@ -9896,7 +9958,7 @@
                 "options": [],
                 "id": 42,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_43": {
                 "name": "cancelled_at",
@@ -9919,7 +9981,7 @@
                 "options": [],
                 "id": 43,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_44": {
                 "name": "created_at",
@@ -9940,7 +10002,7 @@
                 "options": [],
                 "id": 44,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_45": {
                 "name": "finished_at",
@@ -9963,7 +10025,7 @@
                 "options": [],
                 "id": 45,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_46": {
                 "name": "id",
@@ -9989,7 +10051,7 @@
                 "options": [],
                 "id": 46,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_47": {
                 "name": "uuid",
@@ -10010,7 +10072,7 @@
                 "options": [],
                 "id": 47,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_48": {
                 "name": "connection",
@@ -10027,7 +10089,7 @@
                 "options": [],
                 "id": 48,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_49": {
                 "name": "queue",
@@ -10044,7 +10106,7 @@
                 "options": [],
                 "id": 49,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_50": {
                 "name": "payload",
@@ -10061,7 +10123,7 @@
                 "options": [],
                 "id": 50,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_51": {
                 "name": "exception",
@@ -10078,7 +10140,7 @@
                 "options": [],
                 "id": 51,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_52": {
                 "name": "failed_at",
@@ -10095,7 +10157,7 @@
                 "options": [],
                 "id": 52,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_53": {
                 "name": "id",
@@ -10121,7 +10183,7 @@
                 "options": [],
                 "id": 53,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_54": {
                 "name": "tokenable_type",
@@ -10142,7 +10204,7 @@
                 "options": [],
                 "id": 54,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_55": {
                 "name": "tokenable_id",
@@ -10165,7 +10227,7 @@
                 "options": [],
                 "id": 55,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_56": {
                 "name": "name",
@@ -10184,7 +10246,7 @@
                 "options": [],
                 "id": 56,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_57": {
                 "name": "token",
@@ -10205,7 +10267,7 @@
                 "options": [],
                 "id": 57,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_58": {
                 "name": "abilities",
@@ -10224,7 +10286,7 @@
                 "options": [],
                 "id": 58,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_59": {
                 "name": "last_used_at",
@@ -10243,7 +10305,7 @@
                 "options": [],
                 "id": 59,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_60": {
                 "name": "expires_at",
@@ -10262,7 +10324,7 @@
                 "options": [],
                 "id": 60,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_61": {
                 "name": "created_at",
@@ -10281,7 +10343,7 @@
                 "options": [],
                 "id": 61,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_62": {
                 "name": "updated_at",
@@ -10300,11 +10362,14 @@
                 "options": [],
                 "id": 62,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49"
+                "updatedAt": "2024-08-06 19:53:40"
             },
             "item_80": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
@@ -10314,13 +10379,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 80,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_81": {
@@ -10336,10 +10403,10 @@
                 },
                 "nullable": true,
                 "faker": "fake()->dateTime()",
-                "order": 21,
+                "order": 22,
                 "id": 81,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_82": {
@@ -10355,10 +10422,10 @@
                 },
                 "nullable": true,
                 "faker": "fake()->dateTime()",
-                "order": 22,
+                "order": 23,
                 "id": 82,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "options": []
             },
             "item_83": {
@@ -10378,7 +10445,7 @@
                 "faker": "fake()->word()",
                 "id": 83,
                 "createdAt": "2024-08-05 19:04:41",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -10401,31 +10468,8 @@
                 "faker": "fake()->word()",
                 "id": 84,
                 "createdAt": "2024-08-05 19:06:16",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 13,
-                "options": []
-            },
-            "item_85": {
-                "name": "cuenta_publica",
-                "type": "integer",
-                "index": true,
-                "tableId": 13,
-                "removed": false,
-                "schemaState": {
-                    "name": "cuenta_publica",
-                    "unsigned": false,
-                    "autoIncrement": false,
-                    "type": "integer",
-                    "index": true,
-                    "options": []
-                },
-                "unsigned": false,
-                "autoIncrement": false,
-                "faker": "fake()->word()",
-                "id": 85,
-                "createdAt": "2024-08-05 19:06:40",
-                "updatedAt": "2024-08-06 19:08:49",
-                "order": 2,
                 "options": []
             },
             "item_86": {
@@ -10447,7 +10491,7 @@
                 "faker": "fake()->word()",
                 "id": 86,
                 "createdAt": "2024-08-05 19:06:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -10470,7 +10514,7 @@
                 "faker": "fake()->word()",
                 "id": 87,
                 "createdAt": "2024-08-05 19:07:32",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 4,
                 "options": []
             },
@@ -10491,7 +10535,7 @@
                 "faker": "fake()->word()",
                 "id": 88,
                 "createdAt": "2024-08-05 19:07:44",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 7,
                 "options": []
             },
@@ -10510,7 +10554,7 @@
                 "faker": "fake()->word()",
                 "id": 89,
                 "createdAt": "2024-08-05 19:08:18",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 8,
                 "options": []
             },
@@ -10531,7 +10575,7 @@
                 "faker": "fake()->word()",
                 "id": 90,
                 "createdAt": "2024-08-05 19:10:34",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 10,
                 "options": []
             },
@@ -10554,7 +10598,7 @@
                 "faker": "fake()->word()",
                 "id": 91,
                 "createdAt": "2024-08-05 19:19:19",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 5,
                 "options": []
             },
@@ -10577,13 +10621,16 @@
                 "faker": "fake()->word()",
                 "id": 92,
                 "createdAt": "2024-08-05 19:35:09",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 9,
                 "options": []
             },
             "item_93": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 14,
                 "removed": false,
                 "schemaState": {
@@ -10593,13 +10640,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 93,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_94": {
@@ -10618,7 +10667,7 @@
                 "order": 4,
                 "id": 94,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_95": {
@@ -10637,12 +10686,15 @@
                 "order": 5,
                 "id": 95,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_96": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 15,
                 "removed": false,
                 "schemaState": {
@@ -10652,13 +10704,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 96,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_97": {
@@ -10677,7 +10731,7 @@
                 "order": 4,
                 "id": 97,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_98": {
@@ -10696,12 +10750,15 @@
                 "order": 5,
                 "id": 98,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_99": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 16,
                 "removed": false,
                 "schemaState": {
@@ -10711,13 +10768,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 99,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_100": {
@@ -10736,7 +10795,7 @@
                 "order": 4,
                 "id": 100,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_101": {
@@ -10755,12 +10814,15 @@
                 "order": 5,
                 "id": 101,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_102": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 17,
                 "removed": false,
                 "schemaState": {
@@ -10770,13 +10832,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 102,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_103": {
@@ -10795,7 +10859,7 @@
                 "order": 4,
                 "id": 103,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_104": {
@@ -10814,12 +10878,15 @@
                 "order": 5,
                 "id": 104,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_105": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 18,
                 "removed": false,
                 "schemaState": {
@@ -10829,13 +10896,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 105,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_106": {
@@ -10854,7 +10923,7 @@
                 "order": 4,
                 "id": 106,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_107": {
@@ -10873,12 +10942,15 @@
                 "order": 5,
                 "id": 107,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_108": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 19,
                 "removed": false,
                 "schemaState": {
@@ -10888,13 +10960,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 108,
                 "createdAt": "2024-08-06 11:45:03",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_109": {
@@ -10913,7 +10987,7 @@
                 "order": 4,
                 "id": 109,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_110": {
@@ -10932,7 +11006,7 @@
                 "order": 5,
                 "id": 110,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_111": {
@@ -10952,7 +11026,7 @@
                 "faker": "fake()->name()",
                 "id": 111,
                 "createdAt": "2024-08-06 14:04:46",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -10971,7 +11045,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 112,
                 "createdAt": "2024-08-06 14:13:08",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -10990,7 +11064,7 @@
                 "faker": "fake()->word()",
                 "id": 113,
                 "createdAt": "2024-08-06 14:13:19",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11011,7 +11085,7 @@
                 "faker": "fake()->word()",
                 "id": 114,
                 "createdAt": "2024-08-06 14:13:42",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11030,7 +11104,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 115,
                 "createdAt": "2024-08-06 14:13:48",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11049,7 +11123,7 @@
                 "faker": "fake()->boolean()",
                 "id": 116,
                 "createdAt": "2024-08-06 14:13:54",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11070,7 +11144,7 @@
                 "faker": "fake()->word()",
                 "id": 117,
                 "createdAt": "2024-08-06 14:14:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11089,7 +11163,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 118,
                 "createdAt": "2024-08-06 14:14:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11108,7 +11182,7 @@
                 "faker": "fake()->boolean()",
                 "id": 119,
                 "createdAt": "2024-08-06 14:15:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11129,7 +11203,7 @@
                 "faker": "fake()->word()",
                 "id": 120,
                 "createdAt": "2024-08-06 14:15:27",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11148,7 +11222,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 121,
                 "createdAt": "2024-08-06 14:15:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11167,7 +11241,7 @@
                 "faker": "fake()->boolean()",
                 "id": 122,
                 "createdAt": "2024-08-06 14:15:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11188,7 +11262,7 @@
                 "faker": "fake()->word()",
                 "id": 123,
                 "createdAt": "2024-08-06 14:16:02",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11207,7 +11281,7 @@
                 "faker": "fake()->word()",
                 "id": 124,
                 "createdAt": "2024-08-06 14:16:09",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11226,7 +11300,7 @@
                 "faker": "fake()->boolean()",
                 "id": 125,
                 "createdAt": "2024-08-06 14:16:15",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11247,7 +11321,7 @@
                 "faker": "fake()->word()",
                 "id": 126,
                 "createdAt": "2024-08-06 14:16:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11266,7 +11340,7 @@
                 "faker": "fake()->word()",
                 "id": 127,
                 "createdAt": "2024-08-06 14:16:37",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11285,13 +11359,16 @@
                 "faker": "fake()->boolean()",
                 "id": 128,
                 "createdAt": "2024-08-06 14:16:41",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
             "item_135": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 20,
                 "removed": false,
                 "schemaState": {
@@ -11301,13 +11378,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 135,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_136": {
@@ -11326,7 +11405,7 @@
                 "order": 4,
                 "id": 136,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_137": {
@@ -11345,7 +11424,7 @@
                 "order": 5,
                 "id": 137,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_138": {
@@ -11365,7 +11444,7 @@
                 "faker": "fake()->word()",
                 "id": 138,
                 "createdAt": "2024-08-06 15:18:04",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11384,7 +11463,7 @@
                 "faker": "fake()->word()",
                 "id": 139,
                 "createdAt": "2024-08-06 15:18:10",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11403,7 +11482,7 @@
                 "faker": "fake()->boolean()",
                 "id": 140,
                 "createdAt": "2024-08-06 15:18:20",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11426,13 +11505,16 @@
                 "faker": "fake()->randomNumber()",
                 "id": 141,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 6,
                 "options": []
             },
             "item_142": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 21,
                 "removed": false,
                 "schemaState": {
@@ -11442,13 +11524,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 142,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_143": {
@@ -11467,7 +11551,7 @@
                 "order": 4,
                 "id": 143,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_144": {
@@ -11486,7 +11570,7 @@
                 "order": 5,
                 "id": 144,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_145": {
@@ -11506,7 +11590,7 @@
                 "faker": "fake()->word()",
                 "id": 145,
                 "createdAt": "2024-08-06 15:42:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11525,7 +11609,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 146,
                 "createdAt": "2024-08-06 15:42:57",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11544,13 +11628,16 @@
                 "faker": "fake()->boolean()",
                 "id": 147,
                 "createdAt": "2024-08-06 15:43:10",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
             "item_148": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 22,
                 "removed": false,
                 "schemaState": {
@@ -11560,13 +11647,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 148,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_149": {
@@ -11585,7 +11674,7 @@
                 "order": 4,
                 "id": 149,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_150": {
@@ -11604,7 +11693,7 @@
                 "order": 5,
                 "id": 150,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_151": {
@@ -11624,7 +11713,7 @@
                 "faker": "fake()->word()",
                 "id": 151,
                 "createdAt": "2024-08-06 15:55:42",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11643,7 +11732,7 @@
                 "faker": "fake()->word()",
                 "id": 152,
                 "createdAt": "2024-08-06 15:55:43",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11662,7 +11751,7 @@
                 "faker": "fake()->word()",
                 "id": 153,
                 "createdAt": "2024-08-06 16:04:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11685,13 +11774,16 @@
                 "faker": "fake()->randomNumber()",
                 "id": 154,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 11,
                 "options": []
             },
             "item_155": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 23,
                 "removed": false,
                 "schemaState": {
@@ -11701,13 +11793,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 155,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_156": {
@@ -11726,7 +11820,7 @@
                 "order": 4,
                 "id": 156,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_157": {
@@ -11745,7 +11839,7 @@
                 "order": 5,
                 "id": 157,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_158": {
@@ -11765,7 +11859,7 @@
                 "faker": "fake()->word()",
                 "id": 158,
                 "createdAt": "2024-08-06 17:57:55",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11784,7 +11878,7 @@
                 "faker": "fake()->word()",
                 "id": 159,
                 "createdAt": "2024-08-06 17:58:11",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11803,7 +11897,7 @@
                 "faker": "fake()->word()",
                 "id": 160,
                 "createdAt": "2024-08-06 17:58:17",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11826,13 +11920,16 @@
                 "faker": "fake()->randomNumber()",
                 "id": 161,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 12,
                 "options": []
             },
             "item_162": {
                 "name": "id",
                 "type": "bigInteger",
+                "index": false,
+                "length": null,
+                "unique": false,
                 "tableId": 24,
                 "removed": false,
                 "schemaState": {
@@ -11842,13 +11939,15 @@
                     "type": "bigInteger",
                     "options": []
                 },
+                "nullable": false,
                 "unsigned": true,
+                "default": "",
                 "autoIncrement": true,
                 "faker": "",
                 "order": 0,
                 "id": 162,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_163": {
@@ -11867,7 +11966,7 @@
                 "order": 4,
                 "id": 163,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_164": {
@@ -11886,7 +11985,7 @@
                 "order": 5,
                 "id": 164,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "options": []
             },
             "item_165": {
@@ -11906,7 +12005,7 @@
                 "faker": "fake()->word()",
                 "id": 165,
                 "createdAt": "2024-08-06 18:10:42",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 1,
                 "options": []
             },
@@ -11925,7 +12024,7 @@
                 "faker": "fake()->word()",
                 "id": 166,
                 "createdAt": "2024-08-06 18:10:43",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 2,
                 "options": []
             },
@@ -11944,7 +12043,7 @@
                 "faker": "fake()->word()",
                 "id": 167,
                 "createdAt": "2024-08-06 18:17:23",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 3,
                 "options": []
             },
@@ -11967,7 +12066,7 @@
                 "faker": "fake()->randomNumber()",
                 "id": 168,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 14,
                 "options": []
             },
@@ -11986,7 +12085,7 @@
                 "faker": "fake()->word()",
                 "id": 169,
                 "createdAt": "2024-08-06 18:56:20",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 15,
                 "options": []
             },
@@ -12005,7 +12104,7 @@
                 "faker": "fake()->word()",
                 "id": 170,
                 "createdAt": "2024-08-06 18:56:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 16,
                 "options": []
             },
@@ -12024,7 +12123,7 @@
                 "faker": "fake()->word()",
                 "id": 172,
                 "createdAt": "2024-08-06 18:58:13",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 17,
                 "options": []
             },
@@ -12043,7 +12142,7 @@
                 "faker": "fake()->word()",
                 "id": 173,
                 "createdAt": "2024-08-06 18:58:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 18,
                 "options": []
             },
@@ -12062,7 +12161,7 @@
                 "faker": "fake()->word()",
                 "id": 174,
                 "createdAt": "2024-08-06 18:58:46",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 19,
                 "options": []
             },
@@ -12081,8 +12180,31 @@
                 "faker": "fake()->word()",
                 "id": 175,
                 "createdAt": "2024-08-06 18:59:12",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:40",
                 "order": 20,
+                "options": []
+            },
+            "item_177": {
+                "name": "cuenta_publica",
+                "type": "bigInteger",
+                "index": true,
+                "tableId": 13,
+                "removed": false,
+                "schemaState": {
+                    "name": "cuenta_publica",
+                    "unsigned": true,
+                    "autoIncrement": false,
+                    "type": "bigInteger",
+                    "index": true,
+                    "options": []
+                },
+                "unsigned": true,
+                "autoIncrement": false,
+                "faker": "fake()->randomNumber()",
+                "id": 177,
+                "createdAt": "2024-08-06 19:52:09",
+                "updatedAt": "2024-08-06 19:53:40",
+                "order": 21,
                 "options": []
             }
         },
@@ -12107,25 +12229,18 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false
             },
             "__tableData": {
                 "count": 12,
-                "lastPrimaryKey": 20,
+                "lastPrimaryKey": 21,
                 "index": {
                     "1": {
                         "hasMany": {
                             "index_column.indexId": [
                                 1,
                                 2
-                            ]
-                        }
-                    },
-                    "10": {
-                        "hasMany": {
-                            "index_column.indexId": [
-                                11
                             ]
                         }
                     },
@@ -12198,42 +12313,18 @@
                                 21
                             ]
                         }
+                    },
+                    "21": {
+                        "hasMany": {
+                            "index_column.indexId": [
+                                22
+                            ]
+                        }
                     }
                 },
                 "additionalIndexes": {},
                 "items": [],
                 "relations": []
-            },
-            "item_10": {
-                "tableId": 13,
-                "name": "aditorias_cuenta_publica_foreign",
-                "columns": [
-                    "cuenta_publica"
-                ],
-                "type": "foreign",
-                "on": "cat_cuenta_publica",
-                "onTableId": 15,
-                "references": "id",
-                "referencesColumnId": 96,
-                "onUpdate": "cascade",
-                "onDelete": "cascade",
-                "id": 10,
-                "createdAt": "2024-08-06 15:10:41",
-                "updatedAt": "2024-08-06 19:08:49",
-                "removed": false,
-                "algorithm": null,
-                "schemaState": {
-                    "name": "aditorias_cuenta_publica_foreign",
-                    "columns": [
-                        "cuenta_publica"
-                    ],
-                    "algorithm": null,
-                    "type": "foreign",
-                    "on": "cat_cuenta_publica",
-                    "references": "id",
-                    "onUpdate": "cascade",
-                    "onDelete": "cascade"
-                }
             },
             "item_11": {
                 "tableId": 13,
@@ -12250,7 +12341,7 @@
                 "onDelete": "cascade",
                 "id": 11,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12281,7 +12372,7 @@
                 "onDelete": "cascade",
                 "id": 12,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12312,7 +12403,7 @@
                 "onDelete": "cascade",
                 "id": 13,
                 "createdAt": "2024-08-06 15:11:58",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12343,7 +12434,7 @@
                 "onDelete": "cascade",
                 "id": 14,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12374,7 +12465,7 @@
                 "onDelete": "cascade",
                 "id": 15,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12405,7 +12496,7 @@
                 "onDelete": "cascade",
                 "id": 16,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12436,7 +12527,7 @@
                 "onDelete": "cascade",
                 "id": 17,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12467,7 +12558,7 @@
                 "onDelete": "cascade",
                 "id": 18,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12498,7 +12589,7 @@
                 "onDelete": "cascade",
                 "id": 19,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12529,7 +12620,7 @@
                 "onDelete": "cascade",
                 "id": 20,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12540,6 +12631,37 @@
                     "algorithm": null,
                     "type": "foreign",
                     "on": "cat_dgseg_ef",
+                    "references": "id",
+                    "onUpdate": "cascade",
+                    "onDelete": "cascade"
+                }
+            },
+            "item_21": {
+                "tableId": 13,
+                "name": "aditorias_cuenta_publica_foreign",
+                "columns": [
+                    "cuenta_publica"
+                ],
+                "type": "foreign",
+                "on": "cat_cuenta_publica",
+                "onTableId": 15,
+                "references": "id",
+                "referencesColumnId": 96,
+                "onUpdate": "cascade",
+                "onDelete": "cascade",
+                "id": 21,
+                "createdAt": "2024-08-06 19:52:09",
+                "updatedAt": "2024-08-06 19:53:41",
+                "removed": false,
+                "algorithm": null,
+                "schemaState": {
+                    "name": "aditorias_cuenta_publica_foreign",
+                    "columns": [
+                        "cuenta_publica"
+                    ],
+                    "algorithm": null,
+                    "type": "foreign",
+                    "on": "cat_cuenta_publica",
                     "references": "id",
                     "onUpdate": "cascade",
                     "onDelete": "cascade"
@@ -12556,15 +12678,12 @@
             },
             "__tableData": {
                 "count": 13,
-                "lastPrimaryKey": 21,
+                "lastPrimaryKey": 22,
                 "index": {
                     "1": {
                         "hasMany": {}
                     },
                     "2": {
-                        "hasMany": {}
-                    },
-                    "11": {
                         "hasMany": {}
                     },
                     "12": {
@@ -12596,6 +12715,9 @@
                     },
                     "21": {
                         "hasMany": {}
+                    },
+                    "22": {
+                        "hasMany": {}
                     }
                 },
                 "additionalIndexes": {},
@@ -12608,13 +12730,6 @@
                 "id": 2,
                 "createdAt": "2024-08-05 11:51:50",
                 "updatedAt": "2024-08-05 11:51:50"
-            },
-            "item_11": {
-                "indexId": 10,
-                "columnId": 85,
-                "id": 11,
-                "createdAt": "2024-08-06 15:10:41",
-                "updatedAt": "2024-08-06 15:10:41"
             },
             "item_12": {
                 "indexId": 11,
@@ -12685,6 +12800,13 @@
                 "id": 21,
                 "createdAt": "2024-08-06 18:18:31",
                 "updatedAt": "2024-08-06 18:18:31"
+            },
+            "item_22": {
+                "indexId": 21,
+                "columnId": 177,
+                "id": 22,
+                "createdAt": "2024-08-06 19:52:09",
+                "updatedAt": "2024-08-06 19:52:09"
             }
         },
         "models": {
@@ -12799,7 +12921,7 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "plural": "Users",
                 "pluralAndSingularAreSame": false,
                 "tableId": 1,
@@ -12838,7 +12960,6 @@
                                 5
                             ],
                             "relationships.modelId": [
-                                14,
                                 16,
                                 18,
                                 20,
@@ -12848,10 +12969,10 @@
                                 28,
                                 30,
                                 32,
-                                34
+                                34,
+                                36
                             ],
                             "relationships.relatedModelId": [
-                                13,
                                 15,
                                 17,
                                 19,
@@ -12861,7 +12982,8 @@
                                 27,
                                 29,
                                 31,
-                                33
+                                33,
+                                35
                             ],
                             "cruds.modelId": [
                                 2,
@@ -12909,10 +13031,10 @@
                     "7": {
                         "hasMany": {
                             "relationships.relatedModelId": [
-                                14
+                                36
                             ],
                             "relationships.modelId": [
-                                13
+                                35
                             ],
                             "cruds.modelId": [
                                 19,
@@ -13098,7 +13220,7 @@
                 "appends": [],
                 "id": 5,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "aditorias",
@@ -13172,7 +13294,7 @@
                 "appends": [],
                 "id": 6,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_siglas_tipo_accion",
@@ -13244,7 +13366,7 @@
                 "appends": [],
                 "id": 7,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_cuenta_publica",
@@ -13316,7 +13438,7 @@
                 "appends": [],
                 "id": 8,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_entrega",
@@ -13388,7 +13510,7 @@
                 "appends": [],
                 "id": 9,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_auditoria_especial",
@@ -13460,7 +13582,7 @@
                 "appends": [],
                 "id": 10,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_uaa",
@@ -13532,7 +13654,7 @@
                 "appends": [],
                 "id": 11,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_tipo_de_auditoria",
@@ -13604,7 +13726,7 @@
                 "appends": [],
                 "id": 13,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_siglas_auditoria_especial",
@@ -13676,7 +13798,7 @@
                 "appends": [],
                 "id": 14,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_ente_fiscalizado",
@@ -13748,7 +13870,7 @@
                 "appends": [],
                 "id": 15,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_ente_de_la_accion",
@@ -13820,7 +13942,7 @@
                 "appends": [],
                 "id": 17,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_clave_accion",
@@ -13892,7 +14014,7 @@
                 "appends": [],
                 "id": 18,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_dgseg_ef",
@@ -14225,12 +14347,12 @@
         "schema_sections": {
             "item_1": {
                 "name": "App",
-                "scrollX": 23453,
-                "scrollY": 24550,
+                "scrollX": 23414,
+                "scrollY": 24450,
                 "projectId": 1,
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:51",
-                "updatedAt": "2024-08-06 19:29:27"
+                "updatedAt": "2024-08-06 19:51:52"
             },
             "__tableData": {
                 "count": 3,
@@ -14489,50 +14611,8 @@
         "relationships": {
             "__tableData": {
                 "count": 22,
-                "lastPrimaryKey": 34,
+                "lastPrimaryKey": 36,
                 "index": {
-                    "13": {
-                        "hasMany": {
-                            "relationships.inverseId": [
-                                14
-                            ],
-                            "has_many_details.relationshipId": [
-                                10,
-                                22
-                            ]
-                        }
-                    },
-                    "14": {
-                        "hasMany": {
-                            "relationships.inverseId": [
-                                13
-                            ],
-                            "inputs.relationshipId": [
-                                5,
-                                27,
-                                49,
-                                71,
-                                93,
-                                115,
-                                137,
-                                159,
-                                181,
-                                225,
-                                247,
-                                270,
-                                293,
-                                316,
-                                339,
-                                362,
-                                385,
-                                408,
-                                431,
-                                454,
-                                477,
-                                500
-                            ]
-                        }
-                    },
                     "15": {
                         "hasMany": {
                             "relationships.inverseId": [
@@ -14953,117 +15033,25 @@
                                 512
                             ]
                         }
+                    },
+                    "35": {
+                        "hasMany": {
+                            "relationships.inverseId": [
+                                36
+                            ]
+                        }
+                    },
+                    "36": {
+                        "hasMany": {
+                            "relationships.inverseId": [
+                                35
+                            ]
+                        }
                     }
                 },
                 "additionalIndexes": {},
                 "items": [],
                 "relations": []
-            },
-            "item_13": {
-                "name": "allAuditorias",
-                "modelId": 7,
-                "projectId": 1,
-                "relatedModelId": 5,
-                "type": "HasMany",
-                "foreignKeyName": "cuenta_publica",
-                "parentKeyId": 96,
-                "foreignKeyId": 85,
-                "defaultName": "allAuditorias",
-                "usingFirstDefaultName": true,
-                "id": 13,
-                "createdAt": "2024-08-06 15:10:41",
-                "updatedAt": "2024-08-06 19:08:50",
-                "inverseId": 14,
-                "removed": false,
-                "relatedTableName": "aditorias",
-                "relatedModelName": "App\\Models\\Auditorias",
-                "parentTableName": "cat_cuenta_publica",
-                "parentModelName": "App\\Models\\CatCuentaPublica",
-                "localKeyName": "id",
-                "ownerKeyName": null,
-                "relatedKeyName": null,
-                "morphType": null,
-                "createdFromInterface": false,
-                "foreignPivotKeyName": null,
-                "relatedPivotKeyName": null,
-                "pivotTableName": null,
-                "firstKeyName": null,
-                "secondKeyName": null,
-                "withPivotColumns": false,
-                "includedPivotColumns": [],
-                "schemaState": {
-                    "name": "allAuditorias",
-                    "type": "HasMany",
-                    "relatedTableName": "aditorias",
-                    "relatedModelName": "App\\Models\\Auditorias",
-                    "parentTableName": "cat_cuenta_publica",
-                    "parentModelName": "App\\Models\\CatCuentaPublica",
-                    "foreignKeyName": "cuenta_publica",
-                    "localKeyName": "id",
-                    "ownerKeyName": null,
-                    "relatedKeyName": null,
-                    "morphType": null,
-                    "foreignPivotKeyName": null,
-                    "relatedPivotKeyName": null,
-                    "pivotTableName": null,
-                    "firstKeyName": null,
-                    "secondKeyName": null,
-                    "withPivotColumns": false,
-                    "includedPivotColumns": []
-                }
-            },
-            "item_14": {
-                "modelId": 5,
-                "projectId": 1,
-                "type": "BelongsTo",
-                "relatedModelId": 7,
-                "defaultName": "catCuentaPublica",
-                "usingFirstDefaultName": true,
-                "name": "catCuentaPublica",
-                "parentKeyId": 96,
-                "foreignKeyName": "cuenta_publica",
-                "inverseId": 13,
-                "foreignKeyId": 85,
-                "id": 14,
-                "createdAt": "2024-08-06 15:10:41",
-                "updatedAt": "2024-08-06 19:08:49",
-                "removed": false,
-                "relatedTableName": "cat_cuenta_publica",
-                "relatedModelName": "App\\Models\\CatCuentaPublica",
-                "parentTableName": "aditorias",
-                "parentModelName": "App\\Models\\Auditorias",
-                "localKeyName": null,
-                "ownerKeyName": "id",
-                "relatedKeyName": null,
-                "morphType": null,
-                "createdFromInterface": false,
-                "foreignPivotKeyName": null,
-                "relatedPivotKeyName": null,
-                "pivotTableName": null,
-                "firstKeyName": null,
-                "secondKeyName": null,
-                "withPivotColumns": false,
-                "includedPivotColumns": [],
-                "schemaState": {
-                    "name": "catCuentaPublica",
-                    "type": "BelongsTo",
-                    "relatedTableName": "cat_cuenta_publica",
-                    "relatedModelName": "App\\Models\\CatCuentaPublica",
-                    "parentTableName": "aditorias",
-                    "parentModelName": "App\\Models\\Auditorias",
-                    "foreignKeyName": "cuenta_publica",
-                    "localKeyName": null,
-                    "ownerKeyName": "id",
-                    "relatedKeyName": null,
-                    "morphType": null,
-                    "foreignPivotKeyName": null,
-                    "relatedPivotKeyName": null,
-                    "pivotTableName": null,
-                    "firstKeyName": null,
-                    "secondKeyName": null,
-                    "withPivotColumns": false,
-                    "includedPivotColumns": []
-                }
             },
             "item_15": {
                 "name": "allAuditorias",
@@ -15078,7 +15066,7 @@
                 "usingFirstDefaultName": true,
                 "id": 15,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 16,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15132,7 +15120,7 @@
                 "foreignKeyId": 86,
                 "id": 16,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_entrega",
                 "relatedModelName": "App\\Models\\CatEntrega",
@@ -15184,7 +15172,7 @@
                 "usingFirstDefaultName": true,
                 "id": 17,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 18,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15238,7 +15226,7 @@
                 "foreignKeyId": 87,
                 "id": 18,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_auditoria_especial",
                 "relatedModelName": "App\\Models\\CatAuditoriaEspecial",
@@ -15290,7 +15278,7 @@
                 "usingFirstDefaultName": true,
                 "id": 19,
                 "createdAt": "2024-08-06 15:11:58",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 20,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15344,7 +15332,7 @@
                 "foreignKeyId": 88,
                 "id": 20,
                 "createdAt": "2024-08-06 15:11:58",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_uaa",
                 "relatedModelName": "App\\Models\\CatUaa",
@@ -15396,7 +15384,7 @@
                 "usingFirstDefaultName": true,
                 "id": 21,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 22,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15450,7 +15438,7 @@
                 "foreignKeyId": 91,
                 "id": 22,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_tipo_de_auditoria",
                 "relatedModelName": "App\\Models\\CatTipoDeAuditoria",
@@ -15502,7 +15490,7 @@
                 "usingFirstDefaultName": true,
                 "id": 23,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 24,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15556,7 +15544,7 @@
                 "foreignKeyId": 141,
                 "id": 24,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_siglas_auditoria_especial",
                 "relatedModelName": "App\\Models\\CatSiglasAuditoriaEspecial",
@@ -15608,7 +15596,7 @@
                 "usingFirstDefaultName": true,
                 "id": 25,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 26,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15662,7 +15650,7 @@
                 "foreignKeyId": 92,
                 "id": 26,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-06 19:08:49",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_ente_fiscalizado",
                 "relatedModelName": "App\\Models\\CatEnteFiscalizado",
@@ -15714,7 +15702,7 @@
                 "usingFirstDefaultName": true,
                 "id": 27,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 28,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15768,7 +15756,7 @@
                 "foreignKeyId": 154,
                 "id": 28,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_ente_de_la_accion",
                 "relatedModelName": "App\\Models\\CatEnteDeLaAccion",
@@ -15820,7 +15808,7 @@
                 "usingFirstDefaultName": true,
                 "id": 29,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 30,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15874,7 +15862,7 @@
                 "foreignKeyId": 161,
                 "id": 30,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_clave_accion",
                 "relatedModelName": "App\\Models\\CatClaveAccion",
@@ -15926,7 +15914,7 @@
                 "usingFirstDefaultName": true,
                 "id": 31,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 32,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15980,7 +15968,7 @@
                 "foreignKeyId": 84,
                 "id": 32,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_siglas_tipo_accion",
                 "relatedModelName": "App\\Models\\CatSiglasTipoAccion",
@@ -16032,7 +16020,7 @@
                 "usingFirstDefaultName": true,
                 "id": 33,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "inverseId": 34,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -16086,7 +16074,7 @@
                 "foreignKeyId": 168,
                 "id": 34,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-06 19:08:50",
+                "updatedAt": "2024-08-06 19:53:41",
                 "removed": false,
                 "relatedTableName": "cat_dgseg_ef",
                 "relatedModelName": "App\\Models\\CatDgsegEf",
@@ -16112,6 +16100,112 @@
                     "parentTableName": "aditorias",
                     "parentModelName": "App\\Models\\Auditorias",
                     "foreignKeyName": "dgseg_ef",
+                    "localKeyName": null,
+                    "ownerKeyName": "id",
+                    "relatedKeyName": null,
+                    "morphType": null,
+                    "foreignPivotKeyName": null,
+                    "relatedPivotKeyName": null,
+                    "pivotTableName": null,
+                    "firstKeyName": null,
+                    "secondKeyName": null,
+                    "withPivotColumns": false,
+                    "includedPivotColumns": []
+                }
+            },
+            "item_35": {
+                "name": "allAuditorias",
+                "modelId": 7,
+                "projectId": 1,
+                "relatedModelId": 5,
+                "type": "HasMany",
+                "foreignKeyName": "cuenta_publica",
+                "parentKeyId": 96,
+                "foreignKeyId": 177,
+                "defaultName": "allAuditorias",
+                "usingFirstDefaultName": true,
+                "id": 35,
+                "createdAt": "2024-08-06 19:52:09",
+                "updatedAt": "2024-08-06 19:53:41",
+                "inverseId": 36,
+                "removed": false,
+                "relatedTableName": "aditorias",
+                "relatedModelName": "App\\Models\\Auditorias",
+                "parentTableName": "cat_cuenta_publica",
+                "parentModelName": "App\\Models\\CatCuentaPublica",
+                "localKeyName": "id",
+                "ownerKeyName": null,
+                "relatedKeyName": null,
+                "morphType": null,
+                "createdFromInterface": false,
+                "foreignPivotKeyName": null,
+                "relatedPivotKeyName": null,
+                "pivotTableName": null,
+                "firstKeyName": null,
+                "secondKeyName": null,
+                "withPivotColumns": false,
+                "includedPivotColumns": [],
+                "schemaState": {
+                    "name": "allAuditorias",
+                    "type": "HasMany",
+                    "relatedTableName": "aditorias",
+                    "relatedModelName": "App\\Models\\Auditorias",
+                    "parentTableName": "cat_cuenta_publica",
+                    "parentModelName": "App\\Models\\CatCuentaPublica",
+                    "foreignKeyName": "cuenta_publica",
+                    "localKeyName": "id",
+                    "ownerKeyName": null,
+                    "relatedKeyName": null,
+                    "morphType": null,
+                    "foreignPivotKeyName": null,
+                    "relatedPivotKeyName": null,
+                    "pivotTableName": null,
+                    "firstKeyName": null,
+                    "secondKeyName": null,
+                    "withPivotColumns": false,
+                    "includedPivotColumns": []
+                }
+            },
+            "item_36": {
+                "modelId": 5,
+                "projectId": 1,
+                "type": "BelongsTo",
+                "relatedModelId": 7,
+                "defaultName": "catCuentaPublica",
+                "usingFirstDefaultName": true,
+                "name": "catCuentaPublica",
+                "parentKeyId": 96,
+                "foreignKeyName": "cuenta_publica",
+                "inverseId": 35,
+                "foreignKeyId": 177,
+                "id": 36,
+                "createdAt": "2024-08-06 19:52:09",
+                "updatedAt": "2024-08-06 19:53:41",
+                "removed": false,
+                "relatedTableName": "cat_cuenta_publica",
+                "relatedModelName": "App\\Models\\CatCuentaPublica",
+                "parentTableName": "aditorias",
+                "parentModelName": "App\\Models\\Auditorias",
+                "localKeyName": null,
+                "ownerKeyName": "id",
+                "relatedKeyName": null,
+                "morphType": null,
+                "createdFromInterface": false,
+                "foreignPivotKeyName": null,
+                "relatedPivotKeyName": null,
+                "pivotTableName": null,
+                "firstKeyName": null,
+                "secondKeyName": null,
+                "withPivotColumns": false,
+                "includedPivotColumns": [],
+                "schemaState": {
+                    "name": "catCuentaPublica",
+                    "type": "BelongsTo",
+                    "relatedTableName": "cat_cuenta_publica",
+                    "relatedModelName": "App\\Models\\CatCuentaPublica",
+                    "parentTableName": "aditorias",
+                    "parentModelName": "App\\Models\\Auditorias",
+                    "foreignKeyName": "cuenta_publica",
                     "localKeyName": null,
                     "ownerKeyName": "id",
                     "relatedKeyName": null,
@@ -16181,7 +16275,6 @@
                             ],
                             "inputs.crudId": [
                                 4,
-                                5,
                                 6,
                                 7,
                                 8,
@@ -16227,7 +16320,6 @@
                             ],
                             "inputs.crudId": [
                                 26,
-                                27,
                                 28,
                                 29,
                                 30,
@@ -16273,7 +16365,6 @@
                             ],
                             "inputs.crudId": [
                                 48,
-                                49,
                                 50,
                                 51,
                                 52,
@@ -16319,7 +16410,6 @@
                             ],
                             "inputs.crudId": [
                                 70,
-                                71,
                                 72,
                                 73,
                                 74,
@@ -16365,7 +16455,6 @@
                             ],
                             "inputs.crudId": [
                                 92,
-                                93,
                                 94,
                                 95,
                                 96,
@@ -16411,7 +16500,6 @@
                             ],
                             "inputs.crudId": [
                                 114,
-                                115,
                                 116,
                                 117,
                                 118,
@@ -16457,7 +16545,6 @@
                             ],
                             "inputs.crudId": [
                                 136,
-                                137,
                                 138,
                                 139,
                                 140,
@@ -16503,7 +16590,6 @@
                             ],
                             "inputs.crudId": [
                                 158,
-                                159,
                                 160,
                                 161,
                                 162,
@@ -16549,7 +16635,6 @@
                             ],
                             "inputs.crudId": [
                                 180,
-                                181,
                                 182,
                                 183,
                                 184,
@@ -16641,7 +16726,6 @@
                             ],
                             "inputs.crudId": [
                                 224,
-                                225,
                                 226,
                                 227,
                                 228,
@@ -16687,7 +16771,6 @@
                             ],
                             "inputs.crudId": [
                                 246,
-                                247,
                                 248,
                                 249,
                                 250,
@@ -16734,7 +16817,6 @@
                             ],
                             "inputs.crudId": [
                                 269,
-                                270,
                                 271,
                                 272,
                                 273,
@@ -16781,7 +16863,6 @@
                             ],
                             "inputs.crudId": [
                                 292,
-                                293,
                                 294,
                                 295,
                                 296,
@@ -16828,7 +16909,6 @@
                             ],
                             "inputs.crudId": [
                                 315,
-                                316,
                                 317,
                                 318,
                                 319,
@@ -16875,7 +16955,6 @@
                             ],
                             "inputs.crudId": [
                                 338,
-                                339,
                                 340,
                                 341,
                                 342,
@@ -16922,7 +17001,6 @@
                             ],
                             "inputs.crudId": [
                                 361,
-                                362,
                                 363,
                                 364,
                                 365,
@@ -16969,7 +17047,6 @@
                             ],
                             "inputs.crudId": [
                                 384,
-                                385,
                                 386,
                                 387,
                                 388,
@@ -17016,7 +17093,6 @@
                             ],
                             "inputs.crudId": [
                                 407,
-                                408,
                                 409,
                                 410,
                                 411,
@@ -17063,7 +17139,6 @@
                             ],
                             "inputs.crudId": [
                                 430,
-                                431,
                                 432,
                                 433,
                                 434,
@@ -17110,7 +17185,6 @@
                             ],
                             "inputs.crudId": [
                                 453,
-                                454,
                                 455,
                                 456,
                                 457,
@@ -17157,7 +17231,6 @@
                             ],
                             "inputs.crudId": [
                                 476,
-                                477,
                                 478,
                                 479,
                                 480,
@@ -17204,7 +17277,6 @@
                             ],
                             "inputs.crudId": [
                                 499,
-                                500,
                                 501,
                                 502,
                                 503,
@@ -19105,7 +19177,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 4,
-                                5,
                                 6,
                                 7,
                                 8,
@@ -19139,7 +19210,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 26,
-                                27,
                                 28,
                                 29,
                                 30,
@@ -19173,7 +19243,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 48,
-                                49,
                                 50,
                                 51,
                                 52,
@@ -19207,7 +19276,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 70,
-                                71,
                                 72,
                                 73,
                                 74,
@@ -19241,7 +19309,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 92,
-                                93,
                                 94,
                                 95,
                                 96,
@@ -19275,7 +19342,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 114,
-                                115,
                                 116,
                                 117,
                                 118,
@@ -19309,7 +19375,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 136,
-                                137,
                                 138,
                                 139,
                                 140,
@@ -19343,7 +19408,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 158,
-                                159,
                                 160,
                                 161,
                                 162,
@@ -19377,7 +19441,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 180,
-                                181,
                                 182,
                                 183,
                                 184,
@@ -19445,7 +19508,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 224,
-                                225,
                                 226,
                                 227,
                                 228,
@@ -19479,7 +19541,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 246,
-                                247,
                                 248,
                                 249,
                                 250,
@@ -19514,7 +19575,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 269,
-                                270,
                                 271,
                                 272,
                                 273,
@@ -19549,7 +19609,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 292,
-                                293,
                                 294,
                                 295,
                                 296,
@@ -19584,7 +19643,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 315,
-                                316,
                                 317,
                                 318,
                                 319,
@@ -19619,7 +19677,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 338,
-                                339,
                                 340,
                                 341,
                                 342,
@@ -19654,7 +19711,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 361,
-                                362,
                                 363,
                                 364,
                                 365,
@@ -19689,7 +19745,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 384,
-                                385,
                                 386,
                                 387,
                                 388,
@@ -19724,7 +19779,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 407,
-                                408,
                                 409,
                                 410,
                                 411,
@@ -19759,7 +19813,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 430,
-                                431,
                                 432,
                                 433,
                                 434,
@@ -19794,7 +19847,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 453,
-                                454,
                                 455,
                                 456,
                                 457,
@@ -19829,7 +19881,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 476,
-                                477,
                                 478,
                                 479,
                                 480,
@@ -19864,7 +19915,6 @@
                         "hasMany": {
                             "inputs.panelId": [
                                 499,
-                                500,
                                 501,
                                 502,
                                 503,
@@ -20494,7 +20544,7 @@
                 "updatedAt": "2024-08-06 19:09:05"
             },
             "__tableData": {
-                "count": 551,
+                "count": 529,
                 "lastPrimaryKey": 551,
                 "index": {
                     "1": {
@@ -20507,9 +20557,6 @@
                         "hasMany": {}
                     },
                     "4": {
-                        "hasMany": {}
-                    },
-                    "5": {
                         "hasMany": {}
                     },
                     "6": {
@@ -20575,9 +20622,6 @@
                     "26": {
                         "hasMany": {}
                     },
-                    "27": {
-                        "hasMany": {}
-                    },
                     "28": {
                         "hasMany": {}
                     },
@@ -20639,9 +20683,6 @@
                         "hasMany": {}
                     },
                     "48": {
-                        "hasMany": {}
-                    },
-                    "49": {
                         "hasMany": {}
                     },
                     "50": {
@@ -20707,9 +20748,6 @@
                     "70": {
                         "hasMany": {}
                     },
-                    "71": {
-                        "hasMany": {}
-                    },
                     "72": {
                         "hasMany": {}
                     },
@@ -20771,9 +20809,6 @@
                         "hasMany": {}
                     },
                     "92": {
-                        "hasMany": {}
-                    },
-                    "93": {
                         "hasMany": {}
                     },
                     "94": {
@@ -20839,9 +20874,6 @@
                     "114": {
                         "hasMany": {}
                     },
-                    "115": {
-                        "hasMany": {}
-                    },
                     "116": {
                         "hasMany": {}
                     },
@@ -20903,9 +20935,6 @@
                         "hasMany": {}
                     },
                     "136": {
-                        "hasMany": {}
-                    },
-                    "137": {
                         "hasMany": {}
                     },
                     "138": {
@@ -20971,9 +21000,6 @@
                     "158": {
                         "hasMany": {}
                     },
-                    "159": {
-                        "hasMany": {}
-                    },
                     "160": {
                         "hasMany": {}
                     },
@@ -21035,9 +21061,6 @@
                         "hasMany": {}
                     },
                     "180": {
-                        "hasMany": {}
-                    },
-                    "181": {
                         "hasMany": {}
                     },
                     "182": {
@@ -21169,9 +21192,6 @@
                     "224": {
                         "hasMany": {}
                     },
-                    "225": {
-                        "hasMany": {}
-                    },
                     "226": {
                         "hasMany": {}
                     },
@@ -21233,9 +21253,6 @@
                         "hasMany": {}
                     },
                     "246": {
-                        "hasMany": {}
-                    },
-                    "247": {
                         "hasMany": {}
                     },
                     "248": {
@@ -21304,9 +21321,6 @@
                     "269": {
                         "hasMany": {}
                     },
-                    "270": {
-                        "hasMany": {}
-                    },
                     "271": {
                         "hasMany": {}
                     },
@@ -21371,9 +21385,6 @@
                         "hasMany": {}
                     },
                     "292": {
-                        "hasMany": {}
-                    },
-                    "293": {
                         "hasMany": {}
                     },
                     "294": {
@@ -21442,9 +21453,6 @@
                     "315": {
                         "hasMany": {}
                     },
-                    "316": {
-                        "hasMany": {}
-                    },
                     "317": {
                         "hasMany": {}
                     },
@@ -21509,9 +21517,6 @@
                         "hasMany": {}
                     },
                     "338": {
-                        "hasMany": {}
-                    },
-                    "339": {
                         "hasMany": {}
                     },
                     "340": {
@@ -21580,9 +21585,6 @@
                     "361": {
                         "hasMany": {}
                     },
-                    "362": {
-                        "hasMany": {}
-                    },
                     "363": {
                         "hasMany": {}
                     },
@@ -21647,9 +21649,6 @@
                         "hasMany": {}
                     },
                     "384": {
-                        "hasMany": {}
-                    },
-                    "385": {
                         "hasMany": {}
                     },
                     "386": {
@@ -21718,9 +21717,6 @@
                     "407": {
                         "hasMany": {}
                     },
-                    "408": {
-                        "hasMany": {}
-                    },
                     "409": {
                         "hasMany": {}
                     },
@@ -21785,9 +21781,6 @@
                         "hasMany": {}
                     },
                     "430": {
-                        "hasMany": {}
-                    },
-                    "431": {
                         "hasMany": {}
                     },
                     "432": {
@@ -21856,9 +21849,6 @@
                     "453": {
                         "hasMany": {}
                     },
-                    "454": {
-                        "hasMany": {}
-                    },
                     "455": {
                         "hasMany": {}
                     },
@@ -21925,9 +21915,6 @@
                     "476": {
                         "hasMany": {}
                     },
-                    "477": {
-                        "hasMany": {}
-                    },
                     "478": {
                         "hasMany": {}
                     },
@@ -21992,9 +21979,6 @@
                         "hasMany": {}
                     },
                     "499": {
-                        "hasMany": {}
-                    },
-                    "500": {
                         "hasMany": {}
                     },
                     "501": {
@@ -22295,44 +22279,6 @@
                 ],
                 "panelId": 2,
                 "id": 4,
-                "createdAt": "2024-08-06 19:09:05",
-                "updatedAt": "2024-08-06 19:09:05"
-            },
-            "item_5": {
-                "crudId": 2,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 2,
-                "id": 5,
                 "createdAt": "2024-08-06 19:09:05",
                 "updatedAt": "2024-08-06 19:09:05"
             },
@@ -23226,44 +23172,6 @@
                 "createdAt": "2024-08-06 19:09:10",
                 "updatedAt": "2024-08-06 19:09:10"
             },
-            "item_27": {
-                "crudId": 4,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 4,
-                "id": 27,
-                "createdAt": "2024-08-06 19:09:10",
-                "updatedAt": "2024-08-06 19:09:10"
-            },
             "item_28": {
                 "crudId": 4,
                 "columnId": 86,
@@ -24151,44 +24059,6 @@
                 ],
                 "panelId": 6,
                 "id": 48,
-                "createdAt": "2024-08-06 19:09:14",
-                "updatedAt": "2024-08-06 19:09:14"
-            },
-            "item_49": {
-                "crudId": 6,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 6,
-                "id": 49,
                 "createdAt": "2024-08-06 19:09:14",
                 "updatedAt": "2024-08-06 19:09:14"
             },
@@ -25082,44 +24952,6 @@
                 "createdAt": "2024-08-06 19:09:18",
                 "updatedAt": "2024-08-06 19:09:18"
             },
-            "item_71": {
-                "crudId": 8,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 8,
-                "id": 71,
-                "createdAt": "2024-08-06 19:09:18",
-                "updatedAt": "2024-08-06 19:09:18"
-            },
             "item_72": {
                 "crudId": 8,
                 "columnId": 86,
@@ -26007,44 +25839,6 @@
                 ],
                 "panelId": 10,
                 "id": 92,
-                "createdAt": "2024-08-06 19:09:23",
-                "updatedAt": "2024-08-06 19:09:23"
-            },
-            "item_93": {
-                "crudId": 10,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 10,
-                "id": 93,
                 "createdAt": "2024-08-06 19:09:23",
                 "updatedAt": "2024-08-06 19:09:23"
             },
@@ -26938,44 +26732,6 @@
                 "createdAt": "2024-08-06 19:09:28",
                 "updatedAt": "2024-08-06 19:09:28"
             },
-            "item_115": {
-                "crudId": 12,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 12,
-                "id": 115,
-                "createdAt": "2024-08-06 19:09:28",
-                "updatedAt": "2024-08-06 19:09:28"
-            },
             "item_116": {
                 "crudId": 12,
                 "columnId": 86,
@@ -27863,44 +27619,6 @@
                 ],
                 "panelId": 14,
                 "id": 136,
-                "createdAt": "2024-08-06 19:09:32",
-                "updatedAt": "2024-08-06 19:09:32"
-            },
-            "item_137": {
-                "crudId": 14,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 14,
-                "id": 137,
                 "createdAt": "2024-08-06 19:09:32",
                 "updatedAt": "2024-08-06 19:09:32"
             },
@@ -28794,44 +28512,6 @@
                 "createdAt": "2024-08-06 19:09:35",
                 "updatedAt": "2024-08-06 19:09:35"
             },
-            "item_159": {
-                "crudId": 16,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 16,
-                "id": 159,
-                "createdAt": "2024-08-06 19:09:35",
-                "updatedAt": "2024-08-06 19:09:35"
-            },
             "item_160": {
                 "crudId": 16,
                 "columnId": 86,
@@ -29719,44 +29399,6 @@
                 ],
                 "panelId": 18,
                 "id": 180,
-                "createdAt": "2024-08-06 19:09:39",
-                "updatedAt": "2024-08-06 19:09:39"
-            },
-            "item_181": {
-                "crudId": 18,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 18,
-                "id": 181,
                 "createdAt": "2024-08-06 19:09:39",
                 "updatedAt": "2024-08-06 19:09:39"
             },
@@ -31578,44 +31220,6 @@
                 "createdAt": "2024-08-06 19:09:48",
                 "updatedAt": "2024-08-06 19:09:48"
             },
-            "item_225": {
-                "crudId": 22,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 22,
-                "id": 225,
-                "createdAt": "2024-08-06 19:09:48",
-                "updatedAt": "2024-08-06 19:09:48"
-            },
             "item_226": {
                 "crudId": 22,
                 "columnId": 86,
@@ -32503,44 +32107,6 @@
                 ],
                 "panelId": 24,
                 "id": 246,
-                "createdAt": "2024-08-06 19:10:01",
-                "updatedAt": "2024-08-06 19:10:01"
-            },
-            "item_247": {
-                "crudId": 24,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 24,
-                "id": 247,
                 "createdAt": "2024-08-06 19:10:01",
                 "updatedAt": "2024-08-06 19:10:01"
             },
@@ -33472,44 +33038,6 @@
                 "createdAt": "2024-08-06 19:10:10",
                 "updatedAt": "2024-08-06 19:10:10"
             },
-            "item_270": {
-                "crudId": 26,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 26,
-                "id": 270,
-                "createdAt": "2024-08-06 19:10:10",
-                "updatedAt": "2024-08-06 19:10:10"
-            },
             "item_271": {
                 "crudId": 26,
                 "columnId": 86,
@@ -34435,44 +33963,6 @@
                 ],
                 "panelId": 28,
                 "id": 292,
-                "createdAt": "2024-08-06 19:10:10",
-                "updatedAt": "2024-08-06 19:10:10"
-            },
-            "item_293": {
-                "crudId": 28,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 28,
-                "id": 293,
                 "createdAt": "2024-08-06 19:10:10",
                 "updatedAt": "2024-08-06 19:10:10"
             },
@@ -35404,44 +34894,6 @@
                 "createdAt": "2024-08-06 19:10:13",
                 "updatedAt": "2024-08-06 19:10:13"
             },
-            "item_316": {
-                "crudId": 30,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 30,
-                "id": 316,
-                "createdAt": "2024-08-06 19:10:13",
-                "updatedAt": "2024-08-06 19:10:13"
-            },
             "item_317": {
                 "crudId": 30,
                 "columnId": 86,
@@ -36367,44 +35819,6 @@
                 ],
                 "panelId": 32,
                 "id": 338,
-                "createdAt": "2024-08-06 19:10:17",
-                "updatedAt": "2024-08-06 19:10:17"
-            },
-            "item_339": {
-                "crudId": 32,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 32,
-                "id": 339,
                 "createdAt": "2024-08-06 19:10:17",
                 "updatedAt": "2024-08-06 19:10:17"
             },
@@ -37336,44 +36750,6 @@
                 "createdAt": "2024-08-06 19:10:20",
                 "updatedAt": "2024-08-06 19:10:20"
             },
-            "item_362": {
-                "crudId": 34,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 34,
-                "id": 362,
-                "createdAt": "2024-08-06 19:10:20",
-                "updatedAt": "2024-08-06 19:10:20"
-            },
             "item_363": {
                 "crudId": 34,
                 "columnId": 86,
@@ -38299,44 +37675,6 @@
                 ],
                 "panelId": 36,
                 "id": 384,
-                "createdAt": "2024-08-06 19:10:23",
-                "updatedAt": "2024-08-06 19:10:23"
-            },
-            "item_385": {
-                "crudId": 36,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 36,
-                "id": 385,
                 "createdAt": "2024-08-06 19:10:23",
                 "updatedAt": "2024-08-06 19:10:23"
             },
@@ -39268,44 +38606,6 @@
                 "createdAt": "2024-08-06 19:10:26",
                 "updatedAt": "2024-08-06 19:10:26"
             },
-            "item_408": {
-                "crudId": 38,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 38,
-                "id": 408,
-                "createdAt": "2024-08-06 19:10:26",
-                "updatedAt": "2024-08-06 19:10:26"
-            },
             "item_409": {
                 "crudId": 38,
                 "columnId": 86,
@@ -40231,44 +39531,6 @@
                 ],
                 "panelId": 40,
                 "id": 430,
-                "createdAt": "2024-08-06 19:10:30",
-                "updatedAt": "2024-08-06 19:10:30"
-            },
-            "item_431": {
-                "crudId": 40,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 40,
-                "id": 431,
                 "createdAt": "2024-08-06 19:10:30",
                 "updatedAt": "2024-08-06 19:10:30"
             },
@@ -41200,44 +40462,6 @@
                 "createdAt": "2024-08-06 19:10:33",
                 "updatedAt": "2024-08-06 19:10:33"
             },
-            "item_454": {
-                "crudId": 42,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 42,
-                "id": 454,
-                "createdAt": "2024-08-06 19:10:33",
-                "updatedAt": "2024-08-06 19:10:33"
-            },
             "item_455": {
                 "crudId": 42,
                 "columnId": 86,
@@ -42166,44 +41390,6 @@
                 "createdAt": "2024-08-06 19:10:37",
                 "updatedAt": "2024-08-06 19:10:37"
             },
-            "item_477": {
-                "crudId": 44,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 44,
-                "id": 477,
-                "createdAt": "2024-08-06 19:10:37",
-                "updatedAt": "2024-08-06 19:10:37"
-            },
             "item_478": {
                 "crudId": 44,
                 "columnId": 86,
@@ -43129,44 +42315,6 @@
                 ],
                 "panelId": 46,
                 "id": 499,
-                "createdAt": "2024-08-06 19:10:40",
-                "updatedAt": "2024-08-06 19:10:40"
-            },
-            "item_500": {
-                "crudId": 46,
-                "columnId": 85,
-                "name": "cuenta_publica",
-                "label": "crud.allAuditorias.inputs.cuenta_publica.label",
-                "placeholder": "crud.allAuditorias.inputs.cuenta_publica.placeholder",
-                "readOnly": false,
-                "required": true,
-                "hidden": false,
-                "defaultValue": "",
-                "checked": false,
-                "max": 0,
-                "min": 0,
-                "step": 0,
-                "items": [],
-                "showOnCreation": true,
-                "showOnUpdate": true,
-                "showOnDetails": true,
-                "showOnIndex": true,
-                "type": "belongsTo",
-                "relationshipId": 14,
-                "creationRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "updateRules": [
-                    {
-                        "type": "textual",
-                        "value": "required"
-                    }
-                ],
-                "panelId": 46,
-                "id": 500,
                 "createdAt": "2024-08-06 19:10:40",
                 "updatedAt": "2024-08-06 19:10:40"
             },

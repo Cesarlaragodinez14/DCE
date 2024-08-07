@@ -15,11 +15,6 @@ class Auditorias extends Model
 
     protected $hidden = ['id'];
 
-    public function catCuentaPublica()
-    {
-        return $this->belongsTo(CatCuentaPublica::class, 'cuenta_publica');
-    }
-
     public function catSiglasTipoAccion()
     {
         return $this->belongsTo(CatEntrega::class, 'entrega');
@@ -77,5 +72,10 @@ class Auditorias extends Model
     public function catDgsegEf()
     {
         return $this->belongsTo(CatDgsegEf::class, 'dgseg_ef');
+    }
+
+    public function catCuentaPublica()
+    {
+        return $this->belongsTo(CatCuentaPublica::class, 'cuenta_publica');
     }
 }
