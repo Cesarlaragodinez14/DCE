@@ -14,7 +14,7 @@
         <x-ui.input
             wire:model.live="search"
             type="text"
-            placeholder="Search {{ __('crud.catClaveAccions.collectionTitle') }}..."
+            placeholder="Buscar en: {{ __('crud.catClaveAccions.collectionTitle') }}..."
         />
 
         @can('create', App\Models\CatClaveAccion::class)
@@ -22,23 +22,23 @@
             wire:navigate
             href="{{ route('dashboard.cat-clave-accions.create') }}"
         >
-            <x-ui.button>New</x-ui.button>
+            <x-ui.button>Crear</x-ui.button>
         </a>
         @endcan
     </div>
 
     {{-- Delete Modal --}}
     <x-ui.modal.confirm wire:model="confirmingDeletion">
-        <x-slot name="title"> {{ __('Delete') }} </x-slot>
+        <x-slot name="title"> {{ __('Borrar') }} </x-slot>
 
-        <x-slot name="content"> {{ __('Are you sure?') }} </x-slot>
+        <x-slot name="content"> {{ __('¿Deseas confirmar esta acción?') }} </x-slot>
 
         <x-slot name="footer">
             <x-ui.button
                 wire:click="$toggle('confirmingDeletion')"
                 wire:loading.attr="disabled"
             >
-                {{ __('Cancel') }}
+                {{ __('Cancelar') }}
             </x-ui.button>
 
             <x-ui.button.danger
@@ -46,7 +46,7 @@
                 wire:click="delete({{ $deletingCatClaveAccion }})"
                 wire:loading.attr="disabled"
             >
-                {{ __('Delete') }}
+                {{ __('Borrar') }}
             </x-ui.button.danger>
         </x-slot>
     </x-ui.modal.confirm>
@@ -67,7 +67,7 @@
                     >{{ __('crud.catClaveAccions.inputs.activo.label')
                     }}</x-ui.table.header
                 >
-                <x-ui.table.action-header>Actions</x-ui.table.action-header>
+                <x-ui.table.action-header>Acciones</x-ui.table.action-header>
             </x-slot>
 
             <x-slot name="body">
@@ -87,12 +87,12 @@
                         <x-ui.action
                             wire:navigate
                             href="{{ route('dashboard.cat-clave-accions.edit', $catClaveAccion) }}"
-                            >Edit</x-ui.action
+                            >Editar</x-ui.action
                         >
                         @endcan @can('delete', $catClaveAccion)
                         <x-ui.action.danger
                             wire:click="confirmDeletion({{ $catClaveAccion->id }})"
-                            >Delete</x-ui.action.danger
+                            >Borrar</x-ui.action.danger
                         >
                         @endcan
                     </x-ui.table.action-column>
@@ -100,7 +100,7 @@
                 @empty
                 <x-ui.table.row>
                     <x-ui.table.column colspan="4"
-                        >No {{ __('crud.catClaveAccions.collectionTitle') }} found.</x-ui.table.column
+                        >No se encontró: {{ __('crud.catClaveAccions.collectionTitle') }}.</x-ui.table.column
                     >
                 </x-ui.table.row>
                 @endforelse

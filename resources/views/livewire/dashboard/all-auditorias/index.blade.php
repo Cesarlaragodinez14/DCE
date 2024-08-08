@@ -14,28 +14,28 @@
         <x-ui.input
             wire:model.live="search"
             type="text"
-            placeholder="Search {{ __('crud.allAuditorias.collectionTitle') }}..."
+            placeholder="Buscar en: {{ __('crud.allAuditorias.collectionTitle') }}..."
         />
 
         @can('create', App\Models\Auditorias::class)
         <a wire:navigate href="{{ route('dashboard.all-auditorias.create') }}">
-            <x-ui.button>New</x-ui.button>
+            <x-ui.button>Crear</x-ui.button>
         </a>
         @endcan
     </div>
 
     {{-- Delete Modal --}}
     <x-ui.modal.confirm wire:model="confirmingDeletion">
-        <x-slot name="title"> {{ __('Delete') }} </x-slot>
+        <x-slot name="title"> {{ __('Borrar') }} </x-slot>
 
-        <x-slot name="content"> {{ __('Are you sure?') }} </x-slot>
+        <x-slot name="content"> {{ __('¿Deseas confirmar esta acción?') }} </x-slot>
 
         <x-slot name="footer">
             <x-ui.button
                 wire:click="$toggle('confirmingDeletion')"
                 wire:loading.attr="disabled"
             >
-                {{ __('Cancel') }}
+                {{ __('Cancelar') }}
             </x-ui.button>
 
             <x-ui.button.danger
@@ -43,7 +43,7 @@
                 wire:click="delete({{ $deletingAuditorias }})"
                 wire:loading.attr="disabled"
             >
-                {{ __('Delete') }}
+                {{ __('Borrar') }}
             </x-ui.button.danger>
         </x-slot>
     </x-ui.modal.confirm>
@@ -169,7 +169,7 @@
                     >{{ __('crud.allAuditorias.inputs.cuenta_publica.label')
                     }}</x-ui.table.header
                 >
-                <x-ui.table.action-header>Actions</x-ui.table.action-header>
+                <x-ui.table.action-header>Acciones</x-ui.table.action-header>
             </x-slot>
 
             <x-slot name="body">
@@ -249,12 +249,12 @@
                         <x-ui.action
                             wire:navigate
                             href="{{ route('dashboard.all-auditorias.edit', $auditorias) }}"
-                            >Edit</x-ui.action
+                            >Editar</x-ui.action
                         >
                         @endcan @can('delete', $auditorias)
                         <x-ui.action.danger
                             wire:click="confirmDeletion({{ $auditorias->id }})"
-                            >Delete</x-ui.action.danger
+                            >Borrar</x-ui.action.danger
                         >
                         @endcan
                     </x-ui.table.action-column>
@@ -262,7 +262,7 @@
                 @empty
                 <x-ui.table.row>
                     <x-ui.table.column colspan="21"
-                        >No {{ __('crud.allAuditorias.collectionTitle') }} found.</x-ui.table.column
+                        >No se encontró: {{ __('crud.allAuditorias.collectionTitle') }}.</x-ui.table.column
                     >
                 </x-ui.table.row>
                 @endforelse

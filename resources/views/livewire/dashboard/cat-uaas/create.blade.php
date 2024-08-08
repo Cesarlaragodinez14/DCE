@@ -70,7 +70,7 @@
                     <!-- Other buttons here -->
                 </div>
                 <div>
-                    <x-ui.button type="submit">Save</x-ui.button>
+                    <x-ui.button type="submit">Guardar</x-ui.button>
                 </div>
             </div>
         </form>

@@ -3,12 +3,12 @@
         <x-ui.input
             wire:model.live="detailAllAuditoriasSearch"
             type="text"
-            placeholder="Search {{ __('crud.allAuditorias.collectionTitle') }}..."
+            placeholder="Buscar en: {{ __('crud.allAuditorias.collectionTitle') }}..."
         />
 
         @can('create', App\Models\Auditorias::class)
         <a wire:click="newAuditorias()">
-            <x-ui.button>New</x-ui.button>
+            <x-ui.button>Crear</x-ui.button>
         </a>
         @endcan
     </div>
@@ -45,7 +45,7 @@
                             id="entrega"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catEntregas as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -65,7 +65,7 @@
                             id="auditoria_especial"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catAuditoriaEspecials as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -85,7 +85,7 @@
                             id="tipo_de_auditoria"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catTipoDeAuditorias as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -105,7 +105,7 @@
                             id="siglas_auditoria_especial"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catSiglasAuditoriaEspecials as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -142,7 +142,7 @@
                             id="ente_fiscalizado"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catEnteFiscalizados as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -179,7 +179,7 @@
                             id="ente_de_la_accion"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catEnteDeLaAccions as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -199,7 +199,7 @@
                             id="clave_accion"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catClaveAccions as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -219,7 +219,7 @@
                             id="siglas_tipo_accion"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catSiglasTipoAcciones as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -238,7 +238,7 @@
                             id="dgseg_ef"
                             class="w-full"
                         >
-                            <option value="">Select data</option>
+                            <option value="">Seleccionar</option>
                             @foreach ($catDgsegEfs as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -352,7 +352,7 @@
                         <!-- Other buttons here -->
                     </div>
                     <div>
-                        <x-ui.button type="submit">Save</x-ui.button>
+                        <x-ui.button type="submit">Guardar</x-ui.button>
                     </div>
                 </div>
             </form>
@@ -361,16 +361,16 @@
 
     {{-- Delete Modal --}}
     <x-ui.modal.confirm wire:model="confirmingAuditoriasDeletion">
-        <x-slot name="title"> {{ __('Delete') }} </x-slot>
+        <x-slot name="title"> {{ __('Borrar') }} </x-slot>
 
-        <x-slot name="content"> {{ __('Are you sure?') }} </x-slot>
+        <x-slot name="content"> {{ __('¿Deseas confirmar esta acción?') }} </x-slot>
 
         <x-slot name="footer">
             <x-ui.button
                 wire:click="$toggle('confirmingAuditoriasDeletion')"
                 wire:loading.attr="disabled"
             >
-                {{ __('Cancel') }}
+                {{ __('Cancelar') }}
             </x-ui.button>
 
             <x-ui.button.danger
@@ -378,7 +378,7 @@
                 wire:click="deleteAuditorias({{ $deletingAuditorias }})"
                 wire:loading.attr="disabled"
             >
-                {{ __('Delete') }}
+                {{ __('Borrar') }}
             </x-ui.button.danger>
         </x-slot>
     </x-ui.modal.confirm>
@@ -498,9 +498,97 @@
                     __('crud.allAuditorias.inputs.jefe_de_departamento.label')
                     }}</x-ui.table.header
                 >
-                <x-ui.table.action-header>Actions</x-ui.table.action-header>
+                <x-ui.table.action-header>Acciones</x-ui.table.action-header>
             </x-slot>
 
+            <x-slot name="body">
+                @forelse ($detailAllAuditorias as $auditorias)
+                <x-ui.table.row wire:loading.class.delay="opacity-75">
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->clave_de_accion }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->entrega }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->auditoria_especial
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->tipo_de_auditoria }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->siglas_auditoria_especial
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->titulo }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->ente_fiscalizado }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->numero_de_auditoria
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->ente_de_la_accion }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->clave_accion }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->siglas_tipo_accion
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->dgseg_ef }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->nombre_director_general
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->direccion_de_area }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->nombre_director_de_area
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->sub_direccion_de_area
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->nombre_sub_director_de_area
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-detailCrud
+                        >{{ $auditorias->jefe_de_departamento
+                        }}</x-ui.table.column
+                    >
+                    <x-ui.table.action-column>
+                        @can('update', $auditorias)
+                        <x-ui.action
+                            wire:click="editAuditorias({{ $auditorias->id }})"
+                            >Editar</x-ui.action
+                        >
+                        @endcan @can('delete', $auditorias)
+                        <x-ui.action.danger
+                            wire:click="confirmAuditoriasDeletion({{ $auditorias->id }})"
+                            >Borrar</x-ui.action.danger
+                        >
+                        @endcan
+                    </x-ui.table.action-column>
+                </x-ui.table.row>
+                @empty
+                <x-ui.table.row>
+                    <x-ui.table.column colspan="19"
+                        >No se encontró: {{ __('crud.allAuditorias.collectionTitle') }}.</x-ui.table.column
+                    >
+                </x-ui.table.row>
+                @endforelse
+            </x-slot>
         </x-ui.table>
 
         <div class="mt-2">{{ $detailAllAuditorias->links() }}</div>

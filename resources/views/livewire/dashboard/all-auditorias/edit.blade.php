@@ -52,7 +52,7 @@
                         id="entrega"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catEntregas as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -72,7 +72,7 @@
                         id="auditoria_especial"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catAuditoriaEspecials as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -92,7 +92,7 @@
                         id="tipo_de_auditoria"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catTipoDeAuditorias as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -112,7 +112,7 @@
                         id="siglas_auditoria_especial"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catSiglasAuditoriaEspecials as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -131,7 +131,7 @@
                         id="siglas_dg_uaa"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catUaas as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -166,7 +166,7 @@
                         id="ente_fiscalizado"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catEnteFiscalizados as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -203,7 +203,7 @@
                         id="ente_de_la_accion"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catEnteDeLaAccions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -222,7 +222,7 @@
                         id="clave_accion"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catClaveAccions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -242,7 +242,7 @@
                         id="siglas_tipo_accion"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catSiglasTipoAcciones as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -261,7 +261,7 @@
                         id="dgseg_ef"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catDgsegEfs as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -376,7 +376,7 @@
                         id="cuenta_publica"
                         class="w-full"
                     >
-                        <option value="">Select data</option>
+                        <option value="">Seleccionar</option>
                         @foreach ($catCuentaPublicas as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
@@ -390,7 +390,7 @@
                     <!-- Other buttons here -->
                 </div>
                 <div>
-                    <x-ui.button type="submit">Save</x-ui.button>
+                    <x-ui.button type="submit">Guardar</x-ui.button>
                 </div>
             </div>
         </form>
