@@ -131,7 +131,7 @@ class CatUaaAllAuditoriasDetail extends Component
             $this->authorize('update', $this->auditorias);
         }
 
-        $this->form->siglas_dg_uaa = $this->catUaa->id;
+        $this->form->uaa = $this->catUaa->id;
         $this->form->save();
 
         $this->closeModal();

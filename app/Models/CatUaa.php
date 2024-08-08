@@ -15,6 +15,6 @@ class CatUaa extends Model
 
     public function allAuditorias()
     {
-        return $this->hasMany(Auditorias::class, 'uaa');
+        return $this->hasMany(Auditorias::class, 'siglas_dg_uaa');
     }
 }

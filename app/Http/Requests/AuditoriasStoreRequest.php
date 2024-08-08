@@ -30,7 +30,7 @@ class AuditoriasStoreRequest extends FormRequest
             'auditoria_especial' => ['required'],
             'tipo_de_auditoria' => ['required'],
             'siglas_auditoria_especial' => ['required'],
-            'uaa' => ['required'],
+            'siglas_dg_uaa' => ['required'],
             'titulo' => ['required', 'string'],
             'ente_fiscalizado' => ['required'],
             'numero_de_auditoria' => ['required'],

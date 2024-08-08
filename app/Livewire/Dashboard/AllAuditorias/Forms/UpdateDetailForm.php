@@ -20,7 +20,7 @@ class UpdateDetailForm extends Form
 
     public $siglas_auditoria_especial = '';
 
-    public $siglas_dg_uaa = '';
+    public $uaa = '';
 
     public $titulo = '';
 
@@ -86,7 +86,7 @@ class UpdateDetailForm extends Form
         $this->tipo_de_auditoria = $auditorias->tipo_de_auditoria;
         $this->siglas_auditoria_especial =
             $auditorias->siglas_auditoria_especial;
-        $this->siglas_dg_uaa = $auditorias->siglas_dg_uaa;
+        $this->uaa = $auditorias->uaa;
         $this->titulo = $auditorias->titulo;
         $this->ente_fiscalizado = $auditorias->ente_fiscalizado;
         $this->numero_de_auditoria = $auditorias->numero_de_auditoria;

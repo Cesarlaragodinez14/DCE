@@ -24,7 +24,7 @@ class CreateForm extends Form
     public $siglas_auditoria_especial = '';
 
     #[Rule('required')]
-    public $siglas_dg_uaa = '';
+    public $uaa = '';
 
     #[Rule('required|string')]
     public $titulo = '';
