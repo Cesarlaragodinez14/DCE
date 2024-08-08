@@ -5,7 +5,7 @@
                 "uuid": "e486d783-8c84-4184-8213-1ae3bce5ab48",
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:48",
-                "updatedAt": "2024-08-07 14:58:26",
+                "updatedAt": "2024-08-08 11:03:32",
                 "settings": {
                     "cssFramework": "tailwind",
                     "uiStarterKit": "jetstream",
@@ -24,7 +24,7 @@
                     "schemaReaderDbDatabase": "vemto_schema_reader",
                     "laravelVersion": "11.9"
                 },
-                "canShowSchemaSourceChangesAlert": true,
+                "canShowSchemaSourceChangesAlert": false,
                 "codeGenerationSettings": {
                     "models": true,
                     "factories": true,
@@ -396,7 +396,7 @@
                 "connectionFinished": true,
                 "canIgnoreNextSchemaSourceChanges": false,
                 "lastReadSchemaDataHash": "7781022d9e3cf7c101f3db98d4598c7d",
-                "currentZoom": 80,
+                "currentZoom": 40,
                 "currentRenderedFilesPaths": [
                     "/lang/en//navigation.php",
                     "/lang/en//crud.php",
@@ -1950,9 +1950,9 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31",
-                "positionX": "586",
-                "positionY": "28",
+                "updatedAt": "2024-08-08 11:04:47",
+                "positionX": "-1716.5",
+                "positionY": "328",
                 "sectionId": 1,
                 "removed": false
             },
@@ -2801,7 +2801,7 @@
                 },
                 "id": 2,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3189,7 +3189,7 @@
                 },
                 "id": 3,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3357,7 +3357,7 @@
                 },
                 "id": 4,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3525,7 +3525,7 @@
                 },
                 "id": 5,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -3975,7 +3975,7 @@
                 },
                 "id": 6,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4425,7 +4425,7 @@
                 },
                 "id": 7,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -4875,7 +4875,7 @@
                 },
                 "id": 8,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -5117,7 +5117,7 @@
                 },
                 "id": 9,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": 0,
                 "positionY": 0,
                 "sectionId": 2,
@@ -5130,7 +5130,7 @@
                 "createdFromInterface": false,
                 "id": 13,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-1141",
                 "positionY": "-341",
                 "removed": false,
@@ -5159,36 +5159,36 @@
                                 "unique": true
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "cuenta_publica",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "entrega",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "auditoria_especial",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "tipo_de_auditoria",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
                                 "type": "bigInteger",
@@ -5199,12 +5199,12 @@
                                 "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
-                                "name": "siglas_dg_uaa",
+                                "type": "bigInteger",
+                                "name": "uaa",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
                                 "type": "string",
@@ -5214,20 +5214,20 @@
                                 "creatorMethod": "string"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "ente_fiscalizado",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "numero_de_auditoria",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
                                 "type": "bigInteger",
@@ -5246,12 +5246,12 @@
                                 "creatorMethod": "bigInteger"
                             },
                             {
-                                "type": "integer",
+                                "type": "bigInteger",
                                 "name": "siglas_tipo_accion",
                                 "autoIncrement": false,
-                                "unsigned": false,
+                                "unsigned": true,
                                 "table": "aditorias",
-                                "creatorMethod": "integer"
+                                "creatorMethod": "bigInteger"
                             },
                             {
                                 "type": "bigInteger",
@@ -5308,7 +5308,7 @@
                                 "name": "created_at",
                                 "precision": 0,
                                 "table": "aditorias",
-                                "creatorMethod": "timestamp",
+                                "creatorMethod": "timestamps",
                                 "nullable": true
                             },
                             {
@@ -5316,7 +5316,7 @@
                                 "name": "updated_at",
                                 "precision": 0,
                                 "table": "aditorias",
-                                "creatorMethod": "timestamp",
+                                "creatorMethod": "timestamps",
                                 "nullable": true
                             }
                         ],
@@ -5477,81 +5477,6 @@
                         ],
                         "renamedTables": [],
                         "droppedTables": []
-                    },
-                    {
-                        "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
-                        "relativePath": "/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
-                        "migrationName": "2024_08_07_005214_001_update_aditorias_table",
-                        "datePrefix": "2024_08_07",
-                        "fullPrefix": "2024_08_07_005214",
-                        "addedColumns": [
-                            {
-                                "type": "bigInteger",
-                                "name": "cuenta_publica",
-                                "autoIncrement": false,
-                                "unsigned": true,
-                                "table": "aditorias",
-                                "creatorMethod": "bigInteger",
-                                "after": "jefe_de_departamento"
-                            }
-                        ],
-                        "changedColumns": [],
-                        "droppedColumns": [],
-                        "renamedColumns": [],
-                        "commands": [
-                            {
-                                "name": "create",
-                                "table": "aditorias"
-                            },
-                            {
-                                "name": "foreign",
-                                "index": "aditorias_cuenta_publica_foreign",
-                                "columns": [
-                                    "cuenta_publica"
-                                ],
-                                "algorithm": null,
-                                "references": "id",
-                                "on": "cat_cuenta_publica",
-                                "onDelete": "cascade",
-                                "onUpdate": "cascade",
-                                "table": "aditorias"
-                            }
-                        ],
-                        "createdTables": [],
-                        "renamedTables": [],
-                        "droppedTables": []
-                    },
-                    {
-                        "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_193725_001_update_aditorias_table.php",
-                        "relativePath": "/database/migrations/2024_08_07_193725_001_update_aditorias_table.php",
-                        "migrationName": "2024_08_07_193725_001_update_aditorias_table",
-                        "datePrefix": "2024_08_07",
-                        "fullPrefix": "2024_08_07_193725",
-                        "addedColumns": [],
-                        "changedColumns": [],
-                        "droppedColumns": [],
-                        "renamedColumns": [
-                            {
-                                "table": "aditorias",
-                                "from": "siglas_dg_uaa",
-                                "to": "uaa"
-                            }
-                        ],
-                        "commands": [
-                            {
-                                "name": "create",
-                                "table": "aditorias"
-                            },
-                            {
-                                "name": "renameColumn",
-                                "from": "siglas_dg_uaa",
-                                "to": "uaa",
-                                "table": "aditorias"
-                            }
-                        ],
-                        "createdTables": [],
-                        "renamedTables": [],
-                        "droppedTables": []
                     }
                 ],
                 "oldNames": [],
@@ -5584,36 +5509,36 @@
                                     "unique": true
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "cuenta_publica",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "entrega",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "auditoria_especial",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "tipo_de_auditoria",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
                                     "type": "bigInteger",
@@ -5624,12 +5549,12 @@
                                     "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
-                                    "name": "siglas_dg_uaa",
+                                    "type": "bigInteger",
+                                    "name": "uaa",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
                                     "type": "string",
@@ -5639,20 +5564,20 @@
                                     "creatorMethod": "string"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "ente_fiscalizado",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "numero_de_auditoria",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
                                     "type": "bigInteger",
@@ -5671,12 +5596,12 @@
                                     "creatorMethod": "bigInteger"
                                 },
                                 {
-                                    "type": "integer",
+                                    "type": "bigInteger",
                                     "name": "siglas_tipo_accion",
                                     "autoIncrement": false,
-                                    "unsigned": false,
+                                    "unsigned": true,
                                     "table": "aditorias",
-                                    "creatorMethod": "integer"
+                                    "creatorMethod": "bigInteger"
                                 },
                                 {
                                     "type": "bigInteger",
@@ -5733,7 +5658,7 @@
                                     "name": "created_at",
                                     "precision": 0,
                                     "table": "aditorias",
-                                    "creatorMethod": "timestamp",
+                                    "creatorMethod": "timestamps",
                                     "nullable": true
                                 },
                                 {
@@ -5741,7 +5666,7 @@
                                     "name": "updated_at",
                                     "precision": 0,
                                     "table": "aditorias",
-                                    "creatorMethod": "timestamp",
+                                    "creatorMethod": "timestamps",
                                     "nullable": true
                                 }
                             ],
@@ -5902,81 +5827,6 @@
                             ],
                             "renamedTables": [],
                             "droppedTables": []
-                        },
-                        {
-                            "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
-                            "relativePath": "/database/migrations/2024_08_07_005214_001_update_aditorias_table.php",
-                            "migrationName": "2024_08_07_005214_001_update_aditorias_table",
-                            "datePrefix": "2024_08_07",
-                            "fullPrefix": "2024_08_07_005214",
-                            "addedColumns": [
-                                {
-                                    "type": "bigInteger",
-                                    "name": "cuenta_publica",
-                                    "autoIncrement": false,
-                                    "unsigned": true,
-                                    "table": "aditorias",
-                                    "creatorMethod": "bigInteger",
-                                    "after": "jefe_de_departamento"
-                                }
-                            ],
-                            "changedColumns": [],
-                            "droppedColumns": [],
-                            "renamedColumns": [],
-                            "commands": [
-                                {
-                                    "name": "create",
-                                    "table": "aditorias"
-                                },
-                                {
-                                    "name": "foreign",
-                                    "index": "aditorias_cuenta_publica_foreign",
-                                    "columns": [
-                                        "cuenta_publica"
-                                    ],
-                                    "algorithm": null,
-                                    "references": "id",
-                                    "on": "cat_cuenta_publica",
-                                    "onDelete": "cascade",
-                                    "onUpdate": "cascade",
-                                    "table": "aditorias"
-                                }
-                            ],
-                            "createdTables": [],
-                            "renamedTables": [],
-                            "droppedTables": []
-                        },
-                        {
-                            "migration": "/Users/ablz/Documents/proyectos/ASF/saes/saes/database/migrations/2024_08_07_193725_001_update_aditorias_table.php",
-                            "relativePath": "/database/migrations/2024_08_07_193725_001_update_aditorias_table.php",
-                            "migrationName": "2024_08_07_193725_001_update_aditorias_table",
-                            "datePrefix": "2024_08_07",
-                            "fullPrefix": "2024_08_07_193725",
-                            "addedColumns": [],
-                            "changedColumns": [],
-                            "droppedColumns": [],
-                            "renamedColumns": [
-                                {
-                                    "table": "aditorias",
-                                    "from": "siglas_dg_uaa",
-                                    "to": "uaa"
-                                }
-                            ],
-                            "commands": [
-                                {
-                                    "name": "create",
-                                    "table": "aditorias"
-                                },
-                                {
-                                    "name": "renameColumn",
-                                    "from": "siglas_dg_uaa",
-                                    "to": "uaa",
-                                    "table": "aditorias"
-                                }
-                            ],
-                            "createdTables": [],
-                            "renamedTables": [],
-                            "droppedTables": []
                         }
                     ]
                 }
@@ -5988,7 +5838,7 @@
                 "createdFromInterface": false,
                 "id": 14,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2605",
                 "positionY": "-30",
                 "removed": false,
@@ -6148,7 +5998,7 @@
                 "createdFromInterface": false,
                 "id": 15,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2979",
                 "positionY": "-717",
                 "removed": false,
@@ -6308,7 +6158,7 @@
                 "createdFromInterface": false,
                 "id": 16,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2605",
                 "positionY": "-719",
                 "removed": false,
@@ -6468,7 +6318,7 @@
                 "createdFromInterface": false,
                 "id": 17,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2236",
                 "positionY": "-721",
                 "removed": false,
@@ -6628,7 +6478,7 @@
                 "createdFromInterface": false,
                 "id": 18,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2604",
                 "positionY": "-372",
                 "removed": false,
@@ -6788,7 +6638,7 @@
                 "createdFromInterface": false,
                 "id": 19,
                 "createdAt": "2024-08-06 11:45:03",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-1868",
                 "positionY": "-724",
                 "removed": false,
@@ -6948,7 +6798,7 @@
                 "createdFromInterface": false,
                 "id": 20,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2979",
                 "positionY": "-372",
                 "removed": false,
@@ -7108,7 +6958,7 @@
                 "createdFromInterface": false,
                 "id": 21,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2230",
                 "positionY": "-372",
                 "removed": false,
@@ -7268,7 +7118,7 @@
                 "createdFromInterface": false,
                 "id": 22,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-1859",
                 "positionY": "-375",
                 "removed": false,
@@ -7428,7 +7278,7 @@
                 "createdFromInterface": false,
                 "id": 23,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2967",
                 "positionY": "-26",
                 "removed": false,
@@ -7588,7 +7438,7 @@
                 "createdFromInterface": false,
                 "id": 24,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "positionX": "-2231",
                 "positionY": "-29",
                 "removed": false,
@@ -7767,7 +7617,7 @@
                 "options": [],
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "__tableData": {
                 "count": 151,
@@ -9364,7 +9214,7 @@
                 "options": [],
                 "id": 2,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_3": {
                 "name": "email",
@@ -9385,7 +9235,7 @@
                 "options": [],
                 "id": 3,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_4": {
                 "name": "email_verified_at",
@@ -9404,7 +9254,7 @@
                 "options": [],
                 "id": 4,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_5": {
                 "name": "password",
@@ -9423,7 +9273,7 @@
                 "options": [],
                 "id": 5,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_6": {
                 "name": "two_factor_secret",
@@ -9442,7 +9292,7 @@
                 "options": [],
                 "id": 6,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_7": {
                 "name": "two_factor_recovery_codes",
@@ -9461,7 +9311,7 @@
                 "options": [],
                 "id": 7,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_8": {
                 "name": "two_factor_confirmed_at",
@@ -9480,7 +9330,7 @@
                 "options": [],
                 "id": 8,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_9": {
                 "name": "remember_token",
@@ -9501,7 +9351,7 @@
                 "options": [],
                 "id": 9,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_10": {
                 "name": "current_team_id",
@@ -9524,7 +9374,7 @@
                 "options": [],
                 "id": 10,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_11": {
                 "name": "profile_photo_path",
@@ -9545,7 +9395,7 @@
                 "options": [],
                 "id": 11,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_12": {
                 "name": "created_at",
@@ -9564,7 +9414,7 @@
                 "options": [],
                 "id": 12,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_13": {
                 "name": "updated_at",
@@ -9583,7 +9433,7 @@
                 "options": [],
                 "id": 13,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_14": {
                 "name": "email",
@@ -9608,7 +9458,7 @@
                 "options": [],
                 "id": 14,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_15": {
                 "name": "token",
@@ -9627,7 +9477,7 @@
                 "options": [],
                 "id": 15,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_16": {
                 "name": "created_at",
@@ -9646,7 +9496,7 @@
                 "options": [],
                 "id": 16,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_17": {
                 "name": "id",
@@ -9671,7 +9521,7 @@
                 "options": [],
                 "id": 17,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_18": {
                 "name": "user_id",
@@ -9696,7 +9546,7 @@
                 "options": [],
                 "id": 18,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_19": {
                 "name": "ip_address",
@@ -9717,7 +9567,7 @@
                 "options": [],
                 "id": 19,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_20": {
                 "name": "user_agent",
@@ -9736,7 +9586,7 @@
                 "options": [],
                 "id": 20,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_21": {
                 "name": "payload",
@@ -9753,7 +9603,7 @@
                 "options": [],
                 "id": 21,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_22": {
                 "name": "last_activity",
@@ -9776,7 +9626,7 @@
                 "options": [],
                 "id": 22,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_23": {
                 "name": "key",
@@ -9801,7 +9651,7 @@
                 "options": [],
                 "id": 23,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_24": {
                 "name": "value",
@@ -9818,7 +9668,7 @@
                 "options": [],
                 "id": 24,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_25": {
                 "name": "expiration",
@@ -9839,7 +9689,7 @@
                 "options": [],
                 "id": 25,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:31"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_26": {
                 "name": "key",
@@ -9864,7 +9714,7 @@
                 "options": [],
                 "id": 26,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_27": {
                 "name": "owner",
@@ -9883,7 +9733,7 @@
                 "options": [],
                 "id": 27,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_28": {
                 "name": "expiration",
@@ -9904,7 +9754,7 @@
                 "options": [],
                 "id": 28,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_29": {
                 "name": "id",
@@ -9930,7 +9780,7 @@
                 "options": [],
                 "id": 29,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_30": {
                 "name": "queue",
@@ -9951,7 +9801,7 @@
                 "options": [],
                 "id": 30,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_31": {
                 "name": "payload",
@@ -9968,7 +9818,7 @@
                 "options": [],
                 "id": 31,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_32": {
                 "name": "attempts",
@@ -9989,7 +9839,7 @@
                 "options": [],
                 "id": 32,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_33": {
                 "name": "reserved_at",
@@ -10012,7 +9862,7 @@
                 "options": [],
                 "id": 33,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_34": {
                 "name": "available_at",
@@ -10033,7 +9883,7 @@
                 "options": [],
                 "id": 34,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_35": {
                 "name": "created_at",
@@ -10054,7 +9904,7 @@
                 "options": [],
                 "id": 35,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_36": {
                 "name": "id",
@@ -10079,7 +9929,7 @@
                 "options": [],
                 "id": 36,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_37": {
                 "name": "name",
@@ -10098,7 +9948,7 @@
                 "options": [],
                 "id": 37,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_38": {
                 "name": "total_jobs",
@@ -10119,7 +9969,7 @@
                 "options": [],
                 "id": 38,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_39": {
                 "name": "pending_jobs",
@@ -10140,7 +9990,7 @@
                 "options": [],
                 "id": 39,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_40": {
                 "name": "failed_jobs",
@@ -10161,7 +10011,7 @@
                 "options": [],
                 "id": 40,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_41": {
                 "name": "failed_job_ids",
@@ -10178,7 +10028,7 @@
                 "options": [],
                 "id": 41,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_42": {
                 "name": "options",
@@ -10197,7 +10047,7 @@
                 "options": [],
                 "id": 42,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_43": {
                 "name": "cancelled_at",
@@ -10220,7 +10070,7 @@
                 "options": [],
                 "id": 43,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_44": {
                 "name": "created_at",
@@ -10241,7 +10091,7 @@
                 "options": [],
                 "id": 44,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_45": {
                 "name": "finished_at",
@@ -10264,7 +10114,7 @@
                 "options": [],
                 "id": 45,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_46": {
                 "name": "id",
@@ -10290,7 +10140,7 @@
                 "options": [],
                 "id": 46,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_47": {
                 "name": "uuid",
@@ -10311,7 +10161,7 @@
                 "options": [],
                 "id": 47,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_48": {
                 "name": "connection",
@@ -10328,7 +10178,7 @@
                 "options": [],
                 "id": 48,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_49": {
                 "name": "queue",
@@ -10345,7 +10195,7 @@
                 "options": [],
                 "id": 49,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_50": {
                 "name": "payload",
@@ -10362,7 +10212,7 @@
                 "options": [],
                 "id": 50,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_51": {
                 "name": "exception",
@@ -10379,7 +10229,7 @@
                 "options": [],
                 "id": 51,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_52": {
                 "name": "failed_at",
@@ -10396,7 +10246,7 @@
                 "options": [],
                 "id": 52,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_53": {
                 "name": "id",
@@ -10422,7 +10272,7 @@
                 "options": [],
                 "id": 53,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_54": {
                 "name": "tokenable_type",
@@ -10443,7 +10293,7 @@
                 "options": [],
                 "id": 54,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_55": {
                 "name": "tokenable_id",
@@ -10466,7 +10316,7 @@
                 "options": [],
                 "id": 55,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_56": {
                 "name": "name",
@@ -10485,7 +10335,7 @@
                 "options": [],
                 "id": 56,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_57": {
                 "name": "token",
@@ -10506,7 +10356,7 @@
                 "options": [],
                 "id": 57,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_58": {
                 "name": "abilities",
@@ -10525,7 +10375,7 @@
                 "options": [],
                 "id": 58,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_59": {
                 "name": "last_used_at",
@@ -10544,7 +10394,7 @@
                 "options": [],
                 "id": 59,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_60": {
                 "name": "expires_at",
@@ -10563,7 +10413,7 @@
                 "options": [],
                 "id": 60,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_61": {
                 "name": "created_at",
@@ -10582,7 +10432,7 @@
                 "options": [],
                 "id": 61,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_62": {
                 "name": "updated_at",
@@ -10601,7 +10451,7 @@
                 "options": [],
                 "id": 62,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             },
             "item_80": {
                 "name": "id",
@@ -10626,7 +10476,7 @@
                 "order": 0,
                 "id": 80,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_81": {
@@ -10642,10 +10492,10 @@
                 },
                 "nullable": true,
                 "faker": "fake()->dateTime()",
-                "order": 22,
+                "order": 21,
                 "id": 81,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_82": {
@@ -10661,10 +10511,10 @@
                 },
                 "nullable": true,
                 "faker": "fake()->dateTime()",
-                "order": 23,
+                "order": 22,
                 "id": 82,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_83": {
@@ -10684,76 +10534,76 @@
                 "faker": "fake()->word()",
                 "id": 83,
                 "createdAt": "2024-08-05 19:04:41",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
             "item_84": {
                 "name": "siglas_tipo_accion",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "siglas_tipo_accion",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 84,
                 "createdAt": "2024-08-05 19:06:16",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 13,
                 "options": []
             },
             "item_86": {
                 "name": "entrega",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "entrega",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 86,
                 "createdAt": "2024-08-05 19:06:53",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
             "item_87": {
                 "name": "auditoria_especial",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "auditoria_especial",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 87,
                 "createdAt": "2024-08-05 19:07:32",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 4,
                 "options": []
             },
@@ -10772,74 +10622,74 @@
                 "faker": "fake()->word()",
                 "id": 89,
                 "createdAt": "2024-08-05 19:08:18",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 8,
                 "options": []
             },
             "item_90": {
                 "name": "numero_de_auditoria",
-                "type": "integer",
+                "type": "bigInteger",
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "numero_de_auditoria",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 90,
                 "createdAt": "2024-08-05 19:10:34",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 10,
                 "options": []
             },
             "item_91": {
                 "name": "tipo_de_auditoria",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "tipo_de_auditoria",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 91,
                 "createdAt": "2024-08-05 19:19:19",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 5,
                 "options": []
             },
             "item_92": {
                 "name": "ente_fiscalizado",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "ente_fiscalizado",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "unsigned": false,
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->word()",
                 "id": 92,
                 "createdAt": "2024-08-05 19:35:09",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 9,
                 "options": []
             },
@@ -10866,7 +10716,7 @@
                 "order": 0,
                 "id": 93,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_94": {
@@ -10885,7 +10735,7 @@
                 "order": 4,
                 "id": 94,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_95": {
@@ -10904,7 +10754,7 @@
                 "order": 5,
                 "id": 95,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_96": {
@@ -10930,7 +10780,7 @@
                 "order": 0,
                 "id": 96,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_97": {
@@ -10949,7 +10799,7 @@
                 "order": 4,
                 "id": 97,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_98": {
@@ -10968,7 +10818,7 @@
                 "order": 5,
                 "id": 98,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_99": {
@@ -10994,7 +10844,7 @@
                 "order": 0,
                 "id": 99,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_100": {
@@ -11013,7 +10863,7 @@
                 "order": 4,
                 "id": 100,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_101": {
@@ -11032,7 +10882,7 @@
                 "order": 5,
                 "id": 101,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_102": {
@@ -11058,7 +10908,7 @@
                 "order": 0,
                 "id": 102,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_103": {
@@ -11077,7 +10927,7 @@
                 "order": 4,
                 "id": 103,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_104": {
@@ -11096,7 +10946,7 @@
                 "order": 5,
                 "id": 104,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_105": {
@@ -11122,7 +10972,7 @@
                 "order": 0,
                 "id": 105,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_106": {
@@ -11141,7 +10991,7 @@
                 "order": 4,
                 "id": 106,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_107": {
@@ -11160,7 +11010,7 @@
                 "order": 5,
                 "id": 107,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_108": {
@@ -11186,7 +11036,7 @@
                 "order": 0,
                 "id": 108,
                 "createdAt": "2024-08-06 11:45:03",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_109": {
@@ -11205,7 +11055,7 @@
                 "order": 4,
                 "id": 109,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_110": {
@@ -11224,7 +11074,7 @@
                 "order": 5,
                 "id": 110,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_111": {
@@ -11244,7 +11094,7 @@
                 "faker": "fake()->name()",
                 "id": 111,
                 "createdAt": "2024-08-06 14:04:46",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11263,7 +11113,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 112,
                 "createdAt": "2024-08-06 14:13:08",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11282,7 +11132,7 @@
                 "faker": "fake()->word()",
                 "id": 113,
                 "createdAt": "2024-08-06 14:13:19",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11303,7 +11153,7 @@
                 "faker": "fake()->word()",
                 "id": 114,
                 "createdAt": "2024-08-06 14:13:42",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11322,7 +11172,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 115,
                 "createdAt": "2024-08-06 14:13:48",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11341,7 +11191,7 @@
                 "faker": "fake()->boolean()",
                 "id": 116,
                 "createdAt": "2024-08-06 14:13:54",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11362,7 +11212,7 @@
                 "faker": "fake()->word()",
                 "id": 117,
                 "createdAt": "2024-08-06 14:14:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11381,7 +11231,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 118,
                 "createdAt": "2024-08-06 14:14:56",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11400,7 +11250,7 @@
                 "faker": "fake()->boolean()",
                 "id": 119,
                 "createdAt": "2024-08-06 14:15:07",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11421,7 +11271,7 @@
                 "faker": "fake()->word()",
                 "id": 120,
                 "createdAt": "2024-08-06 14:15:27",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11440,7 +11290,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 121,
                 "createdAt": "2024-08-06 14:15:39",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11459,7 +11309,7 @@
                 "faker": "fake()->boolean()",
                 "id": 122,
                 "createdAt": "2024-08-06 14:15:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11480,7 +11330,7 @@
                 "faker": "fake()->word()",
                 "id": 123,
                 "createdAt": "2024-08-06 14:16:02",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11499,7 +11349,7 @@
                 "faker": "fake()->word()",
                 "id": 124,
                 "createdAt": "2024-08-06 14:16:09",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11518,7 +11368,7 @@
                 "faker": "fake()->boolean()",
                 "id": 125,
                 "createdAt": "2024-08-06 14:16:15",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11539,7 +11389,7 @@
                 "faker": "fake()->word()",
                 "id": 126,
                 "createdAt": "2024-08-06 14:16:31",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11558,7 +11408,7 @@
                 "faker": "fake()->word()",
                 "id": 127,
                 "createdAt": "2024-08-06 14:16:37",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11577,7 +11427,7 @@
                 "faker": "fake()->boolean()",
                 "id": 128,
                 "createdAt": "2024-08-06 14:16:41",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11604,7 +11454,7 @@
                 "order": 0,
                 "id": 135,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_136": {
@@ -11623,7 +11473,7 @@
                 "order": 4,
                 "id": 136,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_137": {
@@ -11642,7 +11492,7 @@
                 "order": 5,
                 "id": 137,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_138": {
@@ -11662,7 +11512,7 @@
                 "faker": "fake()->word()",
                 "id": 138,
                 "createdAt": "2024-08-06 15:18:04",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11681,7 +11531,7 @@
                 "faker": "fake()->word()",
                 "id": 139,
                 "createdAt": "2024-08-06 15:18:10",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11700,7 +11550,7 @@
                 "faker": "fake()->boolean()",
                 "id": 140,
                 "createdAt": "2024-08-06 15:18:20",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11723,7 +11573,7 @@
                 "faker": "fake()->randomNumber()",
                 "id": 141,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 6,
                 "options": []
             },
@@ -11750,7 +11600,7 @@
                 "order": 0,
                 "id": 142,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_143": {
@@ -11769,7 +11619,7 @@
                 "order": 4,
                 "id": 143,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_144": {
@@ -11788,7 +11638,7 @@
                 "order": 5,
                 "id": 144,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_145": {
@@ -11808,7 +11658,7 @@
                 "faker": "fake()->word()",
                 "id": 145,
                 "createdAt": "2024-08-06 15:42:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11827,7 +11677,7 @@
                 "faker": "fake()->sentence(15)",
                 "id": 146,
                 "createdAt": "2024-08-06 15:42:57",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11846,7 +11696,7 @@
                 "faker": "fake()->boolean()",
                 "id": 147,
                 "createdAt": "2024-08-06 15:43:10",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11873,7 +11723,7 @@
                 "order": 0,
                 "id": 148,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_149": {
@@ -11892,7 +11742,7 @@
                 "order": 4,
                 "id": 149,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_150": {
@@ -11911,7 +11761,7 @@
                 "order": 5,
                 "id": 150,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_151": {
@@ -11931,7 +11781,7 @@
                 "faker": "fake()->word()",
                 "id": 151,
                 "createdAt": "2024-08-06 15:55:42",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -11950,7 +11800,7 @@
                 "faker": "fake()->word()",
                 "id": 152,
                 "createdAt": "2024-08-06 15:55:43",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -11969,7 +11819,7 @@
                 "faker": "fake()->word()",
                 "id": 153,
                 "createdAt": "2024-08-06 16:04:40",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -11992,7 +11842,7 @@
                 "faker": "fake()->randomNumber()",
                 "id": 154,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 11,
                 "options": []
             },
@@ -12019,7 +11869,7 @@
                 "order": 0,
                 "id": 155,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_156": {
@@ -12038,7 +11888,7 @@
                 "order": 4,
                 "id": 156,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_157": {
@@ -12057,7 +11907,7 @@
                 "order": 5,
                 "id": 157,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_158": {
@@ -12077,7 +11927,7 @@
                 "faker": "fake()->word()",
                 "id": 158,
                 "createdAt": "2024-08-06 17:57:55",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -12096,7 +11946,7 @@
                 "faker": "fake()->word()",
                 "id": 159,
                 "createdAt": "2024-08-06 17:58:11",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -12115,7 +11965,7 @@
                 "faker": "fake()->word()",
                 "id": 160,
                 "createdAt": "2024-08-06 17:58:17",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -12138,7 +11988,7 @@
                 "faker": "fake()->randomNumber()",
                 "id": 161,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 12,
                 "options": []
             },
@@ -12165,7 +12015,7 @@
                 "order": 0,
                 "id": 162,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_163": {
@@ -12184,7 +12034,7 @@
                 "order": 4,
                 "id": 163,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_164": {
@@ -12203,7 +12053,7 @@
                 "order": 5,
                 "id": 164,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "options": []
             },
             "item_165": {
@@ -12223,7 +12073,7 @@
                 "faker": "fake()->word()",
                 "id": 165,
                 "createdAt": "2024-08-06 18:10:42",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 1,
                 "options": []
             },
@@ -12242,7 +12092,7 @@
                 "faker": "fake()->word()",
                 "id": 166,
                 "createdAt": "2024-08-06 18:10:43",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 2,
                 "options": []
             },
@@ -12261,7 +12111,7 @@
                 "faker": "fake()->word()",
                 "id": 167,
                 "createdAt": "2024-08-06 18:17:23",
-                "updatedAt": "2024-08-07 14:37:32",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 3,
                 "options": []
             },
@@ -12284,7 +12134,7 @@
                 "faker": "fake()->randomNumber()",
                 "id": 168,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 14,
                 "options": []
             },
@@ -12303,7 +12153,7 @@
                 "faker": "fake()->word()",
                 "id": 169,
                 "createdAt": "2024-08-06 18:56:20",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 15,
                 "options": []
             },
@@ -12322,7 +12172,7 @@
                 "faker": "fake()->word()",
                 "id": 170,
                 "createdAt": "2024-08-06 18:56:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 16,
                 "options": []
             },
@@ -12341,7 +12191,7 @@
                 "faker": "fake()->word()",
                 "id": 172,
                 "createdAt": "2024-08-06 18:58:13",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 17,
                 "options": []
             },
@@ -12360,7 +12210,7 @@
                 "faker": "fake()->word()",
                 "id": 173,
                 "createdAt": "2024-08-06 18:58:35",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 18,
                 "options": []
             },
@@ -12379,7 +12229,7 @@
                 "faker": "fake()->word()",
                 "id": 174,
                 "createdAt": "2024-08-06 18:58:46",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 19,
                 "options": []
             },
@@ -12398,7 +12248,7 @@
                 "faker": "fake()->word()",
                 "id": 175,
                 "createdAt": "2024-08-06 18:59:12",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "order": 20,
                 "options": []
             },
@@ -12421,36 +12271,32 @@
                 "faker": "fake()->randomNumber()",
                 "id": 177,
                 "createdAt": "2024-08-06 19:52:09",
-                "updatedAt": "2024-08-07 14:37:33",
-                "order": 21,
+                "updatedAt": "2024-08-08 11:03:32",
+                "order": 2,
                 "options": []
             },
             "item_178": {
                 "name": "uaa",
-                "type": "integer",
+                "type": "bigInteger",
                 "index": true,
-                "length": null,
-                "unique": false,
                 "tableId": 13,
                 "removed": false,
                 "schemaState": {
                     "name": "uaa",
-                    "unsigned": false,
+                    "unsigned": true,
                     "autoIncrement": false,
-                    "type": "integer",
+                    "type": "bigInteger",
                     "index": true,
                     "options": []
                 },
-                "nullable": false,
-                "unsigned": false,
-                "default": "",
+                "unsigned": true,
                 "autoIncrement": false,
                 "faker": "fake()->randomNumber(0)",
                 "order": 7,
                 "options": [],
                 "id": 178,
                 "createdAt": "2024-08-07 14:37:32",
-                "updatedAt": "2024-08-07 14:37:32"
+                "updatedAt": "2024-08-08 11:03:32"
             }
         },
         "indices": {
@@ -12474,7 +12320,7 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:50",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false
             },
             "__tableData": {
@@ -12586,7 +12432,7 @@
                 "onDelete": "cascade",
                 "id": 11,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12617,7 +12463,7 @@
                 "onDelete": "cascade",
                 "id": 12,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12648,7 +12494,7 @@
                 "onDelete": "cascade",
                 "id": 14,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12679,7 +12525,7 @@
                 "onDelete": "cascade",
                 "id": 15,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12710,7 +12556,7 @@
                 "onDelete": "cascade",
                 "id": 16,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12741,7 +12587,7 @@
                 "onDelete": "cascade",
                 "id": 17,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12772,7 +12618,7 @@
                 "onDelete": "cascade",
                 "id": 18,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12803,7 +12649,7 @@
                 "onDelete": "cascade",
                 "id": 19,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12834,7 +12680,7 @@
                 "onDelete": "cascade",
                 "id": 20,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12865,7 +12711,7 @@
                 "onDelete": "cascade",
                 "id": 21,
                 "createdAt": "2024-08-06 19:52:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "algorithm": null,
                 "schemaState": {
@@ -12907,9 +12753,10 @@
                 },
                 "id": 22,
                 "createdAt": "2024-08-07 14:37:33",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "onTableId": 18,
-                "referencesColumnId": 105
+                "referencesColumnId": 105,
+                "removed": false
             }
         },
         "index_column": {
@@ -13165,7 +13012,7 @@
                 },
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:51",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "plural": "Users",
                 "pluralAndSingularAreSame": false,
                 "tableId": 1,
@@ -13467,7 +13314,7 @@
                 "appends": [],
                 "id": 5,
                 "createdAt": "2024-08-05 19:04:15",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "aditorias",
@@ -13541,7 +13388,7 @@
                 "appends": [],
                 "id": 6,
                 "createdAt": "2024-08-06 11:40:51",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_siglas_tipo_accion",
@@ -13613,7 +13460,7 @@
                 "appends": [],
                 "id": 7,
                 "createdAt": "2024-08-06 11:41:07",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_cuenta_publica",
@@ -13685,7 +13532,7 @@
                 "appends": [],
                 "id": 8,
                 "createdAt": "2024-08-06 11:41:39",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_entrega",
@@ -13757,7 +13604,7 @@
                 "appends": [],
                 "id": 9,
                 "createdAt": "2024-08-06 11:41:53",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_auditoria_especial",
@@ -13829,7 +13676,7 @@
                 "appends": [],
                 "id": 10,
                 "createdAt": "2024-08-06 11:43:39",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_uaa",
@@ -13901,7 +13748,7 @@
                 "appends": [],
                 "id": 11,
                 "createdAt": "2024-08-06 11:45:04",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_tipo_de_auditoria",
@@ -13973,7 +13820,7 @@
                 "appends": [],
                 "id": 13,
                 "createdAt": "2024-08-06 15:17:56",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_siglas_auditoria_especial",
@@ -14045,7 +13892,7 @@
                 "appends": [],
                 "id": 14,
                 "createdAt": "2024-08-06 15:42:40",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_ente_fiscalizado",
@@ -14117,7 +13964,7 @@
                 "appends": [],
                 "id": 15,
                 "createdAt": "2024-08-06 15:53:47",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_ente_de_la_accion",
@@ -14189,7 +14036,7 @@
                 "appends": [],
                 "id": 17,
                 "createdAt": "2024-08-06 17:56:26",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_clave_accion",
@@ -14261,7 +14108,7 @@
                 "appends": [],
                 "id": 18,
                 "createdAt": "2024-08-06 18:10:35",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "hooksWhenSchemaWasRead": {},
                 "removed": false,
                 "tableName": "cat_dgseg_ef",
@@ -14597,12 +14444,12 @@
         "schema_sections": {
             "item_1": {
                 "name": "App",
-                "scrollX": 23432,
-                "scrollY": 24665,
+                "scrollX": 23579,
+                "scrollY": 24515,
                 "projectId": 1,
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:51",
-                "updatedAt": "2024-08-07 14:33:36"
+                "updatedAt": "2024-08-08 11:04:49"
             },
             "__tableData": {
                 "count": 3,
@@ -15334,7 +15181,7 @@
                 "usingFirstDefaultName": true,
                 "id": 15,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 16,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15388,7 +15235,7 @@
                 "foreignKeyId": 86,
                 "id": 16,
                 "createdAt": "2024-08-06 15:11:28",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_entrega",
                 "relatedModelName": "App\\Models\\CatEntrega",
@@ -15440,7 +15287,7 @@
                 "usingFirstDefaultName": true,
                 "id": 17,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 18,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15494,7 +15341,7 @@
                 "foreignKeyId": 87,
                 "id": 18,
                 "createdAt": "2024-08-06 15:11:41",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_auditoria_especial",
                 "relatedModelName": "App\\Models\\CatAuditoriaEspecial",
@@ -15546,7 +15393,7 @@
                 "usingFirstDefaultName": true,
                 "id": 21,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 22,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15600,7 +15447,7 @@
                 "foreignKeyId": 91,
                 "id": 22,
                 "createdAt": "2024-08-06 15:12:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_tipo_de_auditoria",
                 "relatedModelName": "App\\Models\\CatTipoDeAuditoria",
@@ -15652,7 +15499,7 @@
                 "usingFirstDefaultName": true,
                 "id": 23,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 24,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15706,7 +15553,7 @@
                 "foreignKeyId": 141,
                 "id": 24,
                 "createdAt": "2024-08-06 15:31:08",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_siglas_auditoria_especial",
                 "relatedModelName": "App\\Models\\CatSiglasAuditoriaEspecial",
@@ -15758,7 +15605,7 @@
                 "usingFirstDefaultName": true,
                 "id": 25,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 26,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15812,7 +15659,7 @@
                 "foreignKeyId": 92,
                 "id": 26,
                 "createdAt": "2024-08-06 15:43:52",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_ente_fiscalizado",
                 "relatedModelName": "App\\Models\\CatEnteFiscalizado",
@@ -15864,7 +15711,7 @@
                 "usingFirstDefaultName": true,
                 "id": 27,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 28,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -15918,7 +15765,7 @@
                 "foreignKeyId": 154,
                 "id": 28,
                 "createdAt": "2024-08-06 16:05:42",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_ente_de_la_accion",
                 "relatedModelName": "App\\Models\\CatEnteDeLaAccion",
@@ -15970,7 +15817,7 @@
                 "usingFirstDefaultName": true,
                 "id": 29,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 30,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -16024,7 +15871,7 @@
                 "foreignKeyId": 161,
                 "id": 30,
                 "createdAt": "2024-08-06 17:59:50",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_clave_accion",
                 "relatedModelName": "App\\Models\\CatClaveAccion",
@@ -16076,7 +15923,7 @@
                 "usingFirstDefaultName": true,
                 "id": 31,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 32,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -16130,7 +15977,7 @@
                 "foreignKeyId": 84,
                 "id": 32,
                 "createdAt": "2024-08-06 18:01:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_siglas_tipo_accion",
                 "relatedModelName": "App\\Models\\CatSiglasTipoAccion",
@@ -16182,7 +16029,7 @@
                 "usingFirstDefaultName": true,
                 "id": 33,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 34,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -16236,7 +16083,7 @@
                 "foreignKeyId": 168,
                 "id": 34,
                 "createdAt": "2024-08-06 18:18:31",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_dgseg_ef",
                 "relatedModelName": "App\\Models\\CatDgsegEf",
@@ -16288,7 +16135,7 @@
                 "usingFirstDefaultName": true,
                 "id": 35,
                 "createdAt": "2024-08-06 19:52:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "inverseId": 36,
                 "removed": false,
                 "relatedTableName": "aditorias",
@@ -16342,7 +16189,7 @@
                 "foreignKeyId": 177,
                 "id": 36,
                 "createdAt": "2024-08-06 19:52:09",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "removed": false,
                 "relatedTableName": "cat_cuenta_publica",
                 "relatedModelName": "App\\Models\\CatCuentaPublica",
@@ -16425,11 +16272,12 @@
                 },
                 "id": 37,
                 "createdAt": "2024-08-07 14:37:33",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "relatedModelId": 10,
                 "parentKeyId": 105,
                 "foreignKeyId": 178,
-                "inverseId": 38
+                "inverseId": 38,
+                "removed": false
             },
             "item_38": {
                 "modelId": 10,
@@ -16475,11 +16323,12 @@
                 },
                 "id": 38,
                 "createdAt": "2024-08-07 14:37:33",
-                "updatedAt": "2024-08-07 14:37:33",
+                "updatedAt": "2024-08-08 11:03:32",
                 "relatedModelId": 5,
                 "parentKeyId": 105,
                 "foreignKeyId": 178,
-                "inverseId": 37
+                "inverseId": 37,
+                "removed": false
             }
         },
         "cruds": {
