@@ -30,7 +30,7 @@ class Auditorias extends Model
 
     public function catUaa()
     {
-        return $this->belongsTo(CatUaa::class, 'siglas_dg_uaa');
+        return $this->belongsTo(CatUaa::class, 'uaa');
     }
 
     public function catTipoDeAuditoria()

@@ -86,7 +86,7 @@ class AuditoriasResource extends Resource
                         ->preload()
                         ->native(false),
 
-                    Select::make('siglas_dg_uaa')
+                    Select::make('uaa')
                         ->required()
                         ->relationship('catUaa', 'valor')
                         ->searchable()

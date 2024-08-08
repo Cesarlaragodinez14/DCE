@@ -38,7 +38,7 @@ class CatTipoDeAuditoriasAuditoriasController extends Controller
             'entrega' => ['required'],
             'auditoria_especial' => ['required'],
             'siglas_auditoria_especial' => ['required'],
-            'siglas_dg_uaa' => ['required'],
+            'uaa' => ['required'],
             'titulo' => ['required', 'string'],
             'ente_fiscalizado' => ['required'],
             'numero_de_auditoria' => ['required'],

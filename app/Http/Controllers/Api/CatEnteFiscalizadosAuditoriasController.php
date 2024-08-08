@@ -39,7 +39,7 @@ class CatEnteFiscalizadosAuditoriasController extends Controller
             'auditoria_especial' => ['required'],
             'tipo_de_auditoria' => ['required'],
             'siglas_auditoria_especial' => ['required'],
-            'siglas_dg_uaa' => ['required'],
+            'uaa' => ['required'],
             'titulo' => ['required', 'string'],
             'numero_de_auditoria' => ['required'],
             'ente_de_la_accion' => ['required'],
