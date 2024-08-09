@@ -81,8 +81,8 @@
                     __('crud.allAuditorias.inputs.siglas_auditoria_especial.label')
                     }}</x-ui.table.header
                 >
-                <x-ui.table.header for-crud wire:click="sortBy('siglas_dg_uaa')"
-                    >{{ __('crud.allAuditorias.inputs.siglas_dg_uaa.label')
+                <x-ui.table.header for-crud wire:click="sortBy('uaa')"
+                    >{{ __('crud.allAuditorias.inputs.uaa.label')
                     }}</x-ui.table.header
                 >
                 <x-ui.table.header for-crud wire:click="sortBy('titulo')"
@@ -193,7 +193,7 @@
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->siglas_dg_uaa }}</x-ui.table.column
+                        >{{ $auditorias->uaa }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->titulo }}</x-ui.table.column

@@ -119,14 +119,14 @@
                 </div>
 
                 <div class="w-full">
-                    <x-ui.label for="siglas_dg_uaa"
-                        >{{ __('crud.allAuditorias.inputs.siglas_dg_uaa.label')
+                    <x-ui.label for="uaa "
+                        >{{ __('crud.allAuditorias.inputs.uaa .label')
                         }}</x-ui.label
                     >
                     <x-ui.input.select
-                        wire:model="form.siglas_dg_uaa"
-                        name="siglas_dg_uaa"
-                        id="siglas_dg_uaa"
+                        wire:model="form.uaa "
+                        name="uaa "
+                        id="uaa "
                         class="w-full"
                     >
                         <option value="">Seleccionar</option>
@@ -134,7 +134,7 @@
                         <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </x-ui.input.select>
-                    <x-ui.input.error for="form.siglas_dg_uaa" />
+                    <x-ui.input.error for="form.uaa " />
                 </div>
 
                 <div class="w-full">

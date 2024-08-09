@@ -3,13 +3,28 @@
     'body',
     'foot'
 ])
-
-<div class="overflow-hidden border rounded-lg">
+<style>
+    thead tr th {
+        white-space: nowrap;
+        padding: 9px 18px;
+    }
+    table{
+        min-width: 100%;
+    }
+    .overflow-x-auto{
+        max-width: 100%;
+        overflow-x: auto !important;
+    }
+    .min-w-full{
+        min-width: 100%;
+    }
+</style>
+<div class="overflow-hidden border border-gray-200 rounded-lg shadow-lg">
     <div class="overflow-x-auto">
-        <table {!! $attributes->merge(['class' => 'min-w-full divide-y divide-gray-200']) !!}>
+        <table class="min-w-full divide-y divide-gray-200">
             @if(isset($head))
-            <thead class="bg-gray-50">
-                <tr class="text-gray-500 text-center">
+            <thead class="bg-gray-800 text-white">
+                <tr class="text-center">
                     {{ $head }}
                 </tr>
             </thead>
@@ -22,10 +37,15 @@
             @endif
 
             @if(isset($foot))
-            <tfoot class="text-center">
-                {{ $foot }}
+            <tfoot class="bg-gray-50 text-gray-700 text-center">
+                <tr>
+                    {{ $foot }}
+                </tr>
             </tfoot>
             @endif
         </table>
     </div>
 </div>
+
+
+

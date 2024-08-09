@@ -5,7 +5,7 @@
                 "uuid": "e486d783-8c84-4184-8213-1ae3bce5ab48",
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:48",
-                "updatedAt": "2024-08-08 15:15:34",
+                "updatedAt": "2024-08-08 16:44:42",
                 "settings": {
                     "cssFramework": "tailwind",
                     "uiStarterKit": "jetstream",
@@ -395,7 +395,7 @@
                 "vthemeCdn": "https://cdn.tailwindcss.com",
                 "connectionFinished": true,
                 "canIgnoreNextSchemaSourceChanges": false,
-                "lastReadSchemaDataHash": "5621bda1f3f236ab3a60fb16a414c21a",
+                "lastReadSchemaDataHash": "7781022d9e3cf7c101f3db98d4598c7d",
                 "currentZoom": 40,
                 "currentRenderedFilesPaths": [
                     "/lang/en//navigation.php",

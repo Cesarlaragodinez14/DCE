@@ -62,7 +62,7 @@ return [
                 'label' => 'Siglas auditoria especial',
                 'placeholder' => 'Siglas auditoria especial',
             ],
-            'siglas_dg_uaa' => [
+            'uaa' => [
                 'label' => 'Siglas dg uaa',
                 'placeholder' => 'Siglas dg uaa',
             ],
@@ -153,7 +153,7 @@ return [
                 'search_message' => '',
                 'label' => '',
             ],
-            'siglas_dg_uaa' => [
+            'uaa' => [
                 'helper_text' => '',
                 'loading_message' => '',
                 'no_result_message' => '',
