@@ -10,14 +10,14 @@
         >
         <x-ui.breadcrumbs.separator />
         <x-ui.breadcrumbs.link active
-            >Edit {{ __('crud.catDgsegEfs.itemTitle') }}</x-ui.breadcrumbs.link
+            >Editar: {{ __('crud.catDgsegEfs.itemTitle') }}</x-ui.breadcrumbs.link
         >
     </x-ui.breadcrumbs>
 
     <x-ui.toast on="saved"> CatDgsegEf saved successfully. </x-ui.toast>
 
     <div class="w-full text-gray-500 text-lg font-semibold py-4 uppercase">
-        <h1>Edit {{ __('crud.catDgsegEfs.itemTitle') }}</h1>
+        <h1>Editar: {{ __('crud.catDgsegEfs.itemTitle') }}</h1>
     </div>
 
     <div class="overflow-hidden border rounded-lg bg-white">

@@ -2,8 +2,8 @@
 
 return [
     'catDgsegEfs' => [
-        'itemTitle' => 'Cat Dgseg Ef',
-        'collectionTitle' => 'Cat Dgseg Efs',
+        'itemTitle' => 'Catálogo Dgseg Ef',
+        'collectionTitle' => 'Catálogo Dgseg Efs',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -35,12 +35,12 @@ return [
         ],
     ],
     'allAuditorias' => [
-        'itemTitle' => 'Auditorias',
-        'collectionTitle' => 'All Auditorias',
+        'itemTitle' => 'Expedientes',
+        'collectionTitle' => 'Todos los Expedientes',
         'inputs' => [
             'clave_de_accion' => [
-                'label' => 'Clave de accion',
-                'placeholder' => 'Clave de accion',
+                'label' => 'Clave de acción',
+                'placeholder' => 'Clave de acción',
             ],
             'cuenta_publica' => [
                 'label' => 'Cuenta publica',
@@ -245,8 +245,8 @@ return [
         ],
     ],
     'catClaveAccions' => [
-        'itemTitle' => 'Cat Clave Accion',
-        'collectionTitle' => 'Cat Clave Accions',
+        'itemTitle' => 'Catálogo Clave Accion',
+        'collectionTitle' => 'Catálogo Clave Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -278,8 +278,8 @@ return [
         ],
     ],
     'catEnteDeLaAccions' => [
-        'itemTitle' => 'Cat Ente De La Accion',
-        'collectionTitle' => 'Cat Ente De La Accions',
+        'itemTitle' => 'Catálogo Ente De La Accion',
+        'collectionTitle' => 'Catálogo Ente De La Accions',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -311,8 +311,8 @@ return [
         ],
     ],
     'catEnteFiscalizados' => [
-        'itemTitle' => 'Cat Ente Fiscalizado',
-        'collectionTitle' => 'Cat Ente Fiscalizados',
+        'itemTitle' => 'Catálogo Ente Fiscalizado',
+        'collectionTitle' => 'Catálogo Ente Fiscalizados',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -344,8 +344,8 @@ return [
         ],
     ],
     'catSiglasAuditoriaEspecials' => [
-        'itemTitle' => 'Cat Siglas Auditoria Especial',
-        'collectionTitle' => 'Cat Siglas Auditoria Especials',
+        'itemTitle' => 'Catálogo Siglas Auditoria Especial',
+        'collectionTitle' => 'Catálogo Siglas Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -377,8 +377,8 @@ return [
         ],
     ],
     'catTipoDeAuditorias' => [
-        'itemTitle' => 'Cat Tipo De Auditoria',
-        'collectionTitle' => 'Cat Tipo De Auditorias',
+        'itemTitle' => 'Catálogo Tipo De Auditoria',
+        'collectionTitle' => 'Catálogo Tipo De Auditorias',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -410,8 +410,8 @@ return [
         ],
     ],
     'catUaas' => [
-        'itemTitle' => 'Cat Uaa',
-        'collectionTitle' => 'Cat Uaas',
+        'itemTitle' => 'Catálogo Uaa',
+        'collectionTitle' => 'Catálogo Uaas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -443,8 +443,8 @@ return [
         ],
     ],
     'catAuditoriaEspecials' => [
-        'itemTitle' => 'Cat Auditoria Especial',
-        'collectionTitle' => 'Cat Auditoria Especials',
+        'itemTitle' => 'Catálogo Auditoria Especial',
+        'collectionTitle' => 'Catálogo Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -476,8 +476,8 @@ return [
         ],
     ],
     'catEntregas' => [
-        'itemTitle' => 'Cat Entrega',
-        'collectionTitle' => 'Cat Entregas',
+        'itemTitle' => 'Catálogo Entrega',
+        'collectionTitle' => 'Catálogo Entregas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -509,8 +509,8 @@ return [
         ],
     ],
     'catCuentaPublicas' => [
-        'itemTitle' => 'Cat Cuenta Publica',
-        'collectionTitle' => 'Cat Cuenta Publicas',
+        'itemTitle' => 'Catálogo Cuenta Publica',
+        'collectionTitle' => 'Catálogo Cuenta Publicas',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -542,8 +542,8 @@ return [
         ],
     ],
     'catSiglasTipoAcciones' => [
-        'itemTitle' => 'Cat Siglas Tipo Accion',
-        'collectionTitle' => 'Cat Siglas Tipo Acciones',
+        'itemTitle' => 'Catálogo Siglas Tipo Accion',
+        'collectionTitle' => 'Catálogo Siglas Tipo Acciones',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',

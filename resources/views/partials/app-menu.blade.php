@@ -28,7 +28,7 @@
             </x-slot>
 
             <x-slot name="content">
-                <x-dropdown-link> No items found </x-dropdown-link>
+                <x-dropdown-link> Sin Secciones </x-dropdown-link>
             </x-slot>
         </x-dropdown>
     </div>
@@ -172,7 +172,14 @@
             </x-slot>
 
             <x-slot name="content">
-                <x-dropdown-link> No items found </x-dropdown-link>
+                @can('view-any', App\Models\Auditorias::class)
+                <x-dropdown-link
+                    wire:navigate
+                    href="{{ route('dashboard.all-auditorias.index') }}"
+                >
+                    {{ __('Expedientes') }}
+                </x-dropdown-link>
+                @endcan 
             </x-slot>
         </x-dropdown>
     </div>

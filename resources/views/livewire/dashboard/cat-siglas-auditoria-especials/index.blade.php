@@ -91,14 +91,14 @@
                                     wire:navigate
                                     href="{{ route('dashboard.cat-siglas-auditoria-especials.edit', $catSiglasAuditoriaEspecial) }}"
                                 >
-                                    Edit
+                                    Editar
                                 </x-ui.action>
                             @endcan
                             @can('delete', $catSiglasAuditoriaEspecial)
                                 <x-ui.action.danger
                                     wire:click="confirmDeletion({{ $catSiglasAuditoriaEspecial->id }})"
                                 >
-                                    Delete
+                                    Borrar
                                 </x-ui.action.danger>
                             @endcan
                         </x-ui.table.action-column>

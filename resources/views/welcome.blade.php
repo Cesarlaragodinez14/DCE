@@ -58,7 +58,7 @@
                 <div class="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     <!-- Card: Entrega Recepción de Expedientes -->
                     <div class="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-lg">
-                        <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">Entrega Recepción de Expedientes</h2>
+                        <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">Carga de acciones emitidas en la entrega</h2>
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
                             Gestiona la recepción de expedientes de acción, incluyendo la carga de archivos y programación de entregas.
                         </p>

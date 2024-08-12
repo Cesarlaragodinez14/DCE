@@ -11,7 +11,7 @@
         >
         <x-ui.breadcrumbs.separator />
         <x-ui.breadcrumbs.link active
-            >Edit {{ __('crud.catAuditoriaEspecials.itemTitle')
+            >Editar: {{ __('crud.catAuditoriaEspecials.itemTitle')
             }}</x-ui.breadcrumbs.link
         >
     </x-ui.breadcrumbs>
@@ -21,7 +21,7 @@
     </x-ui.toast>
 
     <div class="w-full text-gray-500 text-lg font-semibold py-4 uppercase">
-        <h1>Edit {{ __('crud.catAuditoriaEspecials.itemTitle') }}</h1>
+        <h1>Editar: {{ __('crud.catAuditoriaEspecials.itemTitle') }}</h1>
     </div>
 
     <div class="overflow-hidden border rounded-lg bg-white">
