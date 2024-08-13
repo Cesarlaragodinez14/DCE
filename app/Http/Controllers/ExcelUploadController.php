@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\AuditoriasImport;
 
 use App\Jobs\ProcessExcelImport;
+use App\Models\Import;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -31,14 +32,36 @@ class ExcelUploadController extends Controller
 
     public function uploadExcel(Request $request)
     {
+        ini_set('memory_limit', '1512M');
+
         $request->validate([
             'archivo' => 'required|file|mimes:xlsx,xls|max:10240',
         ]);
     
         $filePath = $request->file('archivo')->store('temp');
     
-        ProcessExcelImport::dispatch($filePath);
+        $import = Import::create([
+            'file_path' => $filePath,
+            'status' => 'pending',
+        ]);
     
-        return redirect()->back()->with('success', 'El archivo Excel se está procesando, recibirás una notificación con el cambio de estado.');
+        ProcessExcelImport::dispatch($import->id);
+    
+        return redirect()->route('dashboard.progress')->with('success', 'El archivo Excel se está procesando, recibirás una notificación con el cambio de estado.');
+    } 
+    public function showProgress()
+    {
+        $imports = Import::all();
+        return view('dashboard.progress', compact('imports'));
     }
+    public function showImportedData($id)
+    {
+        // Suponiendo que tienes un modelo Import y una relación con los datos importados
+        $import = Import::findOrFail($id);
+        $importedData = $import->importedData; // Asumiendo una relación llamada importedData
+
+        return view('imports.show', compact('import', 'importedData'));
+    }
+
+
 }
