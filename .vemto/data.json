@@ -5,7 +5,7 @@
                 "uuid": "e486d783-8c84-4184-8213-1ae3bce5ab48",
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:48",
-                "updatedAt": "2024-08-08 16:44:42",
+                "updatedAt": "2024-08-19 10:32:48",
                 "settings": {
                     "cssFramework": "tailwind",
                     "uiStarterKit": "jetstream",
@@ -24,7 +24,7 @@
                     "schemaReaderDbDatabase": "vemto_schema_reader",
                     "laravelVersion": "11.9"
                 },
-                "canShowSchemaSourceChangesAlert": true,
+                "canShowSchemaSourceChangesAlert": false,
                 "codeGenerationSettings": {
                     "models": true,
                     "factories": true,
@@ -395,8 +395,8 @@
                 "vthemeCdn": "https://cdn.tailwindcss.com",
                 "connectionFinished": true,
                 "canIgnoreNextSchemaSourceChanges": false,
-                "lastReadSchemaDataHash": "7781022d9e3cf7c101f3db98d4598c7d",
-                "currentZoom": 40,
+                "lastReadSchemaDataHash": "7febcd27b5418d925c386f51c33987be",
+                "currentZoom": 50,
                 "currentRenderedFilesPaths": [
                     "/lang/en//navigation.php",
                     "/lang/en//crud.php",
@@ -14444,12 +14444,12 @@
         "schema_sections": {
             "item_1": {
                 "name": "App",
-                "scrollX": 23579,
-                "scrollY": 24515,
+                "scrollX": 23404,
+                "scrollY": 24526,
                 "projectId": 1,
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:51",
-                "updatedAt": "2024-08-08 11:04:49"
+                "updatedAt": "2024-08-19 10:32:49"
             },
             "__tableData": {
                 "count": 3,
