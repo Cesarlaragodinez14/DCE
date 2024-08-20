@@ -142,5 +142,18 @@ class ExcelUploadController extends Controller
         ]);
     }
     
+    public function mostrarReporteOficio() {
+    
+        $acciones = DB::table('cat_siglas_tipo_accion')->pluck('valor')->toArray();
+        // Generar el reporte para la primera tabla
+        $reporte = collect($this->generarReporte()); // Convertir a colección
+    
+        // Pasar los datos de ambas tablas a la vista
+        return view('dashboard.oficio-uaa', [
+            'reporte' => $reporte,
+            'acciones' => $acciones,
+            'numAcciones' => count($acciones),
+        ]);
+    }
 
 }
