@@ -1,62 +1,99 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-                <div class="container mx-auto">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <a href="{{ route('dashboard.upload-excel.form') }}" class="flex flex-col bg-white shadow-xl sm:rounded-lg items-center justify-center p-6 bg-white text-black rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                            <div class="p-4 bg-gray-100 rounded-full">
-                                <svg class="w-10 h-10 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                            </div>
-                            <span class="mt-4 font-semibold">Cargar Acciones</span>
-                        </a>
-                        
-                        <a href="{{ route('dashboard.progress') }}" class="flex flex-col bg-white shadow-xl sm:rounded-lg items-center justify-center p-6 bg-white text-black rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                            <div class="p-4 bg-gray-100 rounded-full">
-                                <svg class="w-10 h-10 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18"></path>
-                                </svg>
-                            </div>
-                            <span class="mt-4 font-semibold">Proceso de acciones</span>
-                        </a>
-                        
-                        <a href="{{ route('dashboard.distribucion') }}" class="flex flex-col bg-white shadow-xl sm:rounded-lg items-center justify-center p-6 bg-white text-black rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                            <div class="p-4 bg-gray-100 rounded-full">
-                                <svg class="w-10 h-10 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m2 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
-                                </svg>
-                            </div>
-                            <span class="mt-4 font-semibold">Distribución de acciones</span>
-                        </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Tarjetas Principales -->
+                <a href="{{ route('dashboard.upload-excel.form') }}" class="dashboard-card">
+                    <ion-icon name="cloud-upload-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Cargar Acciones</span>
+                </a>
 
-                        <a href="{{ route('dashboard.oficio-uaa') }}" class="flex flex-col bg-white shadow-xl sm:rounded-lg items-center justify-center p-6 bg-white text-black rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                            <div class="p-4 bg-gray-100 rounded-full">
-                                <svg class="w-10 h-10 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m2 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
-                                </svg>
-                            </div>
-                            <span class="mt-4 font-semibold">Envio de Oficio a las UAA</span>
-                        </a>
-                        <a href="{{ route('dashboard.expedientes.entrega') }}" class="flex flex-col bg-white shadow-xl sm:rounded-lg items-center justify-center p-6 bg-white text-black rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                            <div class="p-4 bg-gray-100 rounded-full">
-                                <svg class="w-10 h-10 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                            </div>
-                            <span class="mt-4 font-semibold">Programación de entrega de expedientes</span>
-                        </a>
-                        
-                    </div>
+                <a href="{{ route('dashboard.progress') }}" class="dashboard-card">
+                    <ion-icon name="analytics-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Proceso de Acciones</span>
+                </a>
+
+                <a href="{{ route('dashboard.distribucion') }}" class="dashboard-card">
+                    <ion-icon name="swap-horizontal-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Distribución de Acciones</span>
+                </a>
+
+                <a href="{{ route('dashboard.oficio-uaa') }}" class="dashboard-card">
+                    <ion-icon name="mail-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Envio de Oficio a las UAA</span>
+                </a>
+
+                <a href="{{ route('dashboard.expedientes.entrega') }}" class="dashboard-card">
+                    <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Programación de Entrega de Expedientes</span>
+                </a>
+            </div>
+
+            <!-- Sección de Administración -->
+            @role('admin')
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Administración</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <a href="{{ route('admin.roles.create') }}" class="dashboard-card">
+                        <ion-icon name="people-outline" class="dashboard-icon"></ion-icon>
+                        <span class="dashboard-text">Crear Nuevo Rol</span>
+                    </a>
+
+                    <a href="{{ route('admin.permissions.create') }}" class="dashboard-card">
+                        <ion-icon name="key-outline" class="dashboard-icon"></ion-icon>
+                        <span class="dashboard-text">Crear Nuevo Permiso</span>
+                    </a>
+
+                    <a href="{{ route('admin.roles-permissions') }}" class="dashboard-card">
+                        <ion-icon name="settings-outline" class="dashboard-icon"></ion-icon>
+                        <span class="dashboard-text">Gestión de Permisos de Usuario</span>
+                    </a>
+
+                    <a href="{{ route('users.index') }}" class="dashboard-card">
+                        <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+                        <span class="dashboard-text">Gestión de Usuarios</span>
+                    </a>
                 </div>
             </div>
+            @endrole
+
         </div>
     </div>
+
+    <!-- CSS Personalizado -->
+    <style>
+        .dashboard-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-icon {
+            font-size: 36px;
+            color: #2563EB;
+        }
+        .dashboard-text {
+            margin-top: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4A5568;
+        }
+    </style>
 </x-app-layout>

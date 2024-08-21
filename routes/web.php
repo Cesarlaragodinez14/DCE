@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExcelUploadController;
+use App\Http\Controllers\ExpedientesController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +26,23 @@ Route::middleware([
     Route::get('/dashboard/progress', [ExcelUploadController::class, 'showProgress'])->name('dashboard.progress');
     Route::get('/dashboard/distribucion', [ExcelUploadController::class, 'mostrarReporte'])->name('dashboard.distribucion');
     Route::get('/dashboard/oficio-uaa', [ExcelUploadController::class, 'mostrarReporteOficio'])->name('dashboard.oficio-uaa');
+    Route::get('/dashboard/expedientes/entrega', [ExpedientesController::class, 'show'])->name('dashboard.expedientes.entrega');
     Route::get('/import/{id}/show', [ExcelUploadController::class, 'showImportedData'])->name('dashboard.show-imported-data');
+
+});
+// routes/web.php
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin/roles-permissions', [RolePermissionController::class, 'index'])->name('admin.roles-permissions');
+    Route::post('/admin/roles-permissions/{user}', [RolePermissionController::class, 'update'])->name('admin.roles-permissions.update');
+    
+    Route::get('/admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
+    Route::post('/admin/roles', [RoleController::class, 'store'])->name('admin.roles.store');
+
+    Route::get('/admin/permissions/create', [PermissionController::class, 'create'])->name('admin.permissions.create');
+    Route::post('/admin/permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
+
+    Route::resource('users', UserController::class);
 
 });

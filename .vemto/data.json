@@ -5,7 +5,7 @@
                 "uuid": "e486d783-8c84-4184-8213-1ae3bce5ab48",
                 "id": 1,
                 "createdAt": "2024-08-05 11:51:48",
-                "updatedAt": "2024-08-19 10:32:48",
+                "updatedAt": "2024-08-21 11:34:27",
                 "settings": {
                     "cssFramework": "tailwind",
                     "uiStarterKit": "jetstream",
@@ -24,7 +24,7 @@
                     "schemaReaderDbDatabase": "vemto_schema_reader",
                     "laravelVersion": "11.9"
                 },
-                "canShowSchemaSourceChangesAlert": false,
+                "canShowSchemaSourceChangesAlert": true,
                 "codeGenerationSettings": {
                     "models": true,
                     "factories": true,
@@ -395,7 +395,7 @@
                 "vthemeCdn": "https://cdn.tailwindcss.com",
                 "connectionFinished": true,
                 "canIgnoreNextSchemaSourceChanges": false,
-                "lastReadSchemaDataHash": "7febcd27b5418d925c386f51c33987be",
+                "lastReadSchemaDataHash": "c796211f5da08ad561c0ccdf9856212d",
                 "currentZoom": 50,
                 "currentRenderedFilesPaths": [
                     "/lang/en//navigation.php",
@@ -815,7 +815,9 @@
                     "database/seeders/DatabaseSeeder.php",
                     "resources/views/components/layouts/app.blade.php"
                 ],
-                "filesQueueStatus": "idle"
+                "filesQueueStatus": "idle",
+                "currentSchemaError": null,
+                "currentSchemaErrorStack": null
             },
             "__tableData": {
                 "count": 1,
