@@ -1,64 +1,62 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Usuario') }}
-        </h2>
-    </x-slot>
+<div>
+    <div class="flex justify-between items-center mb-4">
+        <x-ui.input wire:model="search" type="text" placeholder="Buscar Usuarios..." />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
-                <form method="POST" action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}">
-                    @csrf
-                    @if(isset($user))
-                        @method('PUT')
-                    @endif
-
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="name" id="name" value="{{ old('name', $user->name ?? '') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @error('name')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" id="email" value="{{ old('email', $user->email ?? '') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @error('email')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="password" id="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @error('password')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
-                        <select name="roles[]" id="roles" multiple class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            @foreach($roles as $role)
-                                <option value="{{ $role->name }}" {{ isset($user) && $user->roles->contains($role->name) ? 'selected' : '' }}>
-                                    {{ $role->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('roles')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
-                            {{ isset($user) ? 'Actualizar Usuario' : 'Crear Usuario' }}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <a href="{{ route('users.create') }}">
+            <x-ui.button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Crear Usuario
+            </x-ui.button>
+        </a>
     </div>
-</x-app-layout>
+
+    <x-ui.table.index>
+        <x-slot name="head">
+            <x-ui.table.header wire:click="sortBy('name')" class="cursor-pointer">
+                Nombre
+                @if($sortField == 'name')
+                    @if($sortDirection == 'asc') ↑ @else ↓ @endif
+                @endif
+            </x-ui.table.header>
+            <x-ui.table.header wire:click="sortBy('email')" class="cursor-pointer">
+                Email
+                @if($sortField == 'email')
+                    @if($sortDirection == 'asc') ↑ @else ↓ @endif
+                @endif
+            </x-ui.table.header>
+            <x-ui.table.header>Roles</x-ui.table.header>
+            <x-ui.table.action-header>Acciones</x-ui.table.action-header>
+        </x-slot>
+
+        <x-slot name="body">
+            @forelse($users as $user)
+                <x-ui.table.row>
+                    <x-ui.table.column>{{ $user->name }}</x-ui.table.column>
+                    <x-ui.table.column>{{ $user->email }}</x-ui.table.column>
+                    <x-ui.table.column>
+                        @foreach($user->roles as $role)
+                            <x-ui.label color="green">{{ $role->name }}</x-ui.label>
+                        @endforeach
+                    </x-ui.table.column>
+                    <x-ui.table.action-column>
+                        <x-ui.action wire:navigate href="{{ route('users.edit', $user->id) }}">
+                            Editar
+                        </x-ui.action>
+                        <x-ui.action.danger class="ml-4" wire:click="confirmDeletion({{ $user->id }})">
+                            Eliminar
+                        </x-ui.action.danger>
+                    </x-ui.table.action-column>
+                </x-ui.table.row>
+            @empty
+                <x-ui.table.row>
+                    <x-ui.table.column colspan="4">
+                        No se encontraron usuarios.
+                    </x-ui.table.column>
+                </x-ui.table.row>
+            @endforelse
+        </x-slot>
+    </x-ui.table.index>
+
+    <div class="mt-4">
+        {{ $users->links() }}
+    </div>
+</div>

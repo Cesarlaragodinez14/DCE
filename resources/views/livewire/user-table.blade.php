@@ -1,10 +1,6 @@
 <div>
-    <div class="flex justify-between mb-4">
+    <div class="mb-4">
         <x-ui.input wire:model="search" type="text" placeholder="Buscar Usuarios..." />
-
-        <a href="{{ route('users.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Crear Usuario
-        </a>
     </div>
 
     <x-ui.table.index>
@@ -30,16 +26,12 @@
                         @endforeach
                     </x-ui.table.column>
                     <x-ui.table.action-column>
-                        <a href="{{ route('users.edit', $user->id) }}" class="text-indigo-600 hover:text-indigo-900">
+                        <x-ui.action wire:navigate href="{{ route('users.edit', $user->id) }}">
                             Editar
-                        </a>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block ml-4">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900">
-                                Eliminar
-                            </button>
-                        </form>
+                        </x-ui.action>
+                        <x-ui.action.danger class="ml-4" wire:click="confirmDeletion({{ $user->id }})">
+                            Eliminar
+                        </x-ui.action.danger>
                     </x-ui.table.action-column>
                 </x-ui.table.row>
             @endforeach

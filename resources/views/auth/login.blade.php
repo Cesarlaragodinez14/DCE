@@ -32,16 +32,22 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-centers mt-4" style="text-align: center">
+                <x-button class="ms-4" style="
+                    padding: 20px 40px;
+                    border-radius: 200px;
+                    margin: 0 auto;
+                ">
+                    {{ __('Iniciar sesión') }}
+                </x-button>
+            </div>
+
+            <div class="flex items-centers mt-4" style="text-align: center">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    <a style="margin: 0 auto;" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Olvidaste tu contraseña') }}
                     </a>
                 @endif
-
-                <x-button class="ms-4">
-                    {{ __('Iniciar sesión') }}
-                </x-button>
             </div>
         </form>
     </x-authentication-card>
