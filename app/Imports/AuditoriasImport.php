@@ -112,7 +112,8 @@ class AuditoriasImport implements ToModel, WithHeadingRow
                 'nombre_director_de_area' => $row['director_de_area'],
                 'sub_direccion_de_area' => $row['sub'],
                 'nombre_sub_director_de_area' => $row['nombre_subdirector'],
-                'jefe_de_departamento' => $row['jd'],
+                'jd' => $row['jd'],
+                'jefe_de_departamento' => $row['nombre_jefe_de_departamento'],
             ]);
 
             Log::info("Fila procesada exitosamente: " . $auditoria->id);

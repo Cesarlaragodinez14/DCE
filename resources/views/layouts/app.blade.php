@@ -31,6 +31,22 @@
                     </div>
                 </header>
             @endif
+            @if(session('success'))
+                <style>
+                .alert-success {
+                    background: darkseagreen;
+                    text-align: center;
+                    font-size: 24px;
+                    margin: 10px 50px;
+                    padding: 11px;
+                }
+                </style>
+                <div class="alert alert-success bg-green-600 text-white p-4 rounded mb-4 shadow-md">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+
 
             <!-- Page Content -->
             <main>

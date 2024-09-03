@@ -33,6 +33,7 @@ return new class extends Migration {
             $table->string('nombre_director_de_area');
             $table->string('sub_direccion_de_area');
             $table->string('nombre_sub_director_de_area');
+            $table->string('jd');
             $table->string('jefe_de_departamento');
             $table->timestamps();
 

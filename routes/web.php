@@ -7,6 +7,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EntregaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,10 @@ Route::middleware([
 
     Route::get('/expedientes/detalle', [ExpedientesController::class, 'detalle'])->name('expedientes.detalle');
     Route::post('/expedientes/validar', [ExpedientesController::class, 'validarEntrega'])->name('expedientes.validar');
+
+    Route::resource('entregas', EntregaController::class);
+    Route::post('/expedientes/confirmar', [ExpedientesController::class, 'confirmEntrega'])->name('expedientes.confirmar');
+
 
 });
 // routes/web.php

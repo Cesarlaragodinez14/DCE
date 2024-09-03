@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirector;
+use App\Models\Entrega;
+use App\Models\Auditorias;
 
 class ExpedientesController extends Controller
 {
@@ -69,34 +71,68 @@ class ExpedientesController extends Controller
     }
     public function validarEntrega(Request $request)
     {
-        // Validar que haya expedientes seleccionados
-        if (!$request->has('expedientes')) {
-            return redirect()->back()->withErrors(['expedientes' => 'Debe seleccionar al menos un expediente.'])->withInput();
-        }
-    
-        // Validar que cada expediente tenga un número de legajos asignado
-        $validator = Validator::make($request->all(), [
+        // Validate the request data as before
+        $validatedData = $request->validate([
             'legajos.*' => 'required|numeric|min:1',
             'fecha_entrega' => 'required|date',
             'responsable' => 'required|string',
+            'expedientes' => 'required|array',
         ], [
             'legajos.*.required' => 'Debe ingresar el número de legajos para cada expediente seleccionado.',
             'fecha_entrega.required' => 'Debe seleccionar una fecha de entrega.',
             'responsable.required' => 'Debe seleccionar un responsable.',
         ]);
-    
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-    
-        // Obtener los expedientes seleccionados y sus detalles
-        $expedientesIds = $request->input('expedientes');
-        $fecha_entrega = $request->input('fecha_entrega');
-        $responsable = $request->input('responsable');
-    
-        // Redirigir a la vista de validación con los datos necesarios
-        return view('dashboard.expedientes.validar-entrega', compact('expedientesIds', 'fecha_entrega', 'responsable'));
+
+        // Fetch additional details for the expedientes based on their IDs
+        $expedientes = DB::table('aditorias')
+            ->join('cat_clave_accion', 'aditorias.clave_accion', '=', 'cat_clave_accion.id')
+            ->join('cat_siglas_tipo_accion', 'aditorias.siglas_tipo_accion', '=', 'cat_siglas_tipo_accion.id')
+            ->select(
+                'aditorias.id',
+                'cat_clave_accion.valor as clave_accion',
+                'cat_siglas_tipo_accion.valor as tipo_accion'
+            )
+            ->whereIn('aditorias.id', $validatedData['expedientes'])
+            ->get();
+
+        // Pass the data to the view, ensuring that both arrays have the same indices
+        return view('dashboard.expedientes.validar-entrega', [
+            'expedientes' => $expedientes,
+            'legajos' => array_values($validatedData['legajos']), // Ensure indices are numeric and consecutive
+            'fecha_entrega' => $validatedData['fecha_entrega'],
+            'responsable' => $validatedData['responsable'],
+        ]);
     }
-    
-     
+
+    public function confirmEntrega(Request $request)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'fecha_entrega' => 'required|date',
+            'responsable' => 'required|string',
+            'expedientes' => 'required|array',
+            'legajos' => 'required|array',
+        ]);
+
+        foreach ($validatedData['expedientes'] as $index => $expedienteId) {
+            // Fetch the necessary data for each expediente
+            $expediente = Auditorias::findOrFail($expedienteId);
+
+            // Save the entrega information to the database
+            Entrega::create([
+                'auditoria_id' => $expediente->id,
+                'clave_accion' => $expediente->clave_accion,
+                'tipo_accion' => $expediente->siglas_tipo_accion,
+                'CP' => $expediente->cuenta_publica,
+                'entrega' => $expediente->entrega,
+                'fecha_entrega' => $validatedData['fecha_entrega'],
+                'responsable' => $validatedData['responsable'],
+                'numero_legajos' => $validatedData['legajos'][$index],
+                'confirmado_por' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->route('dashboard.expedientes.entrega')->with('success', 'Entrega confirmada correctamente.');
+    }
+
 }
