@@ -64,7 +64,13 @@ class ExcelUploadController extends Controller
         return view('imports.show', compact('import', 'importedData'));
     }
 
-    public function generarReporte() {
+    public function generarReporte($entregaSeleccionada = null, $cuentaPublicaSeleccionada = null) {
+        // Verificar si se proporcionó una entrega, si no, usar "Entrega 3"
+        $entrega = $entregaSeleccionada ?? DB::table('cat_entrega')->where('valor', 'Entrega 3')->value('id');
+        
+        // Verificar si se proporcionó una cuenta pública, si no, usar la de menor valor
+        $cuentaPublica = $cuentaPublicaSeleccionada ?? DB::table('cat_cuenta_publica')->orderBy('valor', 'asc')->value('id');
+        
         // Construir la parte dinámica de la consulta
         $dynamicColumns = DB::table('cat_siglas_tipo_accion')
             ->selectRaw("GROUP_CONCAT(DISTINCT CONCAT(
@@ -76,7 +82,7 @@ class ExcelUploadController extends Controller
         if (!$dynamicColumns) {
             $dynamicColumns = ''; // Manejar un caso sin columnas dinámicas
         }
-        
+    
         // Construir la consulta completa
         $sql = "SELECT 
                     cat_uaa.descripcion AS 'Auditoria Especial', 
@@ -91,31 +97,42 @@ class ExcelUploadController extends Controller
                     cat_uaa ON aditorias.uaa = cat_uaa.id 
                 JOIN 
                     cat_siglas_tipo_accion ON aditorias.siglas_tipo_accion = cat_siglas_tipo_accion.id 
+                WHERE 
+                    aditorias.entrega = ? 
+                    AND aditorias.cuenta_publica = ?
                 GROUP BY 
                     cat_uaa.descripcion, cat_uaa.valor 
                 ORDER BY 
                     cat_uaa.descripcion ASC";
-        
-        // Ejecutar la consulta
-        $result = DB::select($sql);
-        
-        // Retornar los resultados o hacer algo con ellos
+    
+        // Ejecutar la consulta con los parámetros de entrega y cuenta pública
+        $result = DB::select($sql, [$entrega, $cuentaPublica]);
+    
         return $result;
     }
     
-    public function mostrarReporte() {
-        // Obtener todas las siglas de acciones distintas
+
+    public function mostrarReporte(Request $request) {
+        // Obtener el filtro de entrega y cuenta pública desde el request
+        $entregaSeleccionada = $request->input('entrega');
+        $cuentaPublicaSeleccionada = $request->input('cuenta_publica');
+    
+        // Obtener todos los valores de catálogos
+        $entregas = DB::table('cat_entrega')->get();
+        $cuentasPublicas = DB::table('cat_cuenta_publica')->get();
+    
+        // Obtener las siglas de acciones distintas
         $acciones = DB::table('cat_siglas_tipo_accion')->pluck('valor')->toArray();
     
-        // Generar el reporte para la primera tabla
-        $reporte = collect($this->generarReporte()); // Convertir a colección
+        // Generar el reporte con los filtros de entrega y cuenta pública
+        $reporte = collect($this->generarReporte($entregaSeleccionada, $cuentaPublicaSeleccionada));
     
         // Construir dinámicamente las columnas para la segunda tabla
         $dynamicColumns = collect($acciones)->map(function ($accion) {
             return "SUM(CASE WHEN cat_siglas_tipo_accion.valor = '$accion' THEN 1 ELSE 0 END) AS `$accion`";
         })->implode(', ');
     
-        // Construir la consulta completa para la segunda tabla
+        // Ejecutar la consulta para la segunda tabla
         $sql = "SELECT 
                     COALESCE(cat_dgseg_ef.valor, 'Sin asignar') AS `Direccion General de Seguimiento`,
                     $dynamicColumns,
@@ -126,33 +143,52 @@ class ExcelUploadController extends Controller
                     cat_dgseg_ef ON aditorias.dgseg_ef = cat_dgseg_ef.id
                 LEFT JOIN 
                     cat_siglas_tipo_accion ON aditorias.siglas_tipo_accion = cat_siglas_tipo_accion.id
+                WHERE 
+                    aditorias.entrega = ? 
+                    AND aditorias.cuenta_publica = ?
                 GROUP BY 
                     cat_dgseg_ef.valor
                 WITH ROLLUP";
     
-        // Ejecutar la consulta para la segunda tabla
-        $reporteSegundaTabla = DB::select($sql); // Eliminar DB::raw()
+        $reporteSegundaTabla = DB::select($sql, [
+            $entregaSeleccionada ?? DB::table('cat_entrega')->where('valor', 'Entrega 1')->value('id'), 
+            $cuentaPublicaSeleccionada ?? DB::table('cat_cuenta_publica')->orderBy('valor', 'asc')->value('valor')
+        ]);
     
-        // Pasar los datos de ambas tablas a la vista
+        // Pasar los datos a la vista
         return view('dashboard.distribucion', [
             'reporte' => $reporte,
             'acciones' => $acciones,
             'numAcciones' => count($acciones),
             'reporteSegundaTabla' => $reporteSegundaTabla,
+            'entregas' => $entregas,
+            'cuentasPublicas' => $cuentasPublicas,
         ]);
     }
     
-    public function mostrarReporteOficio() {
+      
+    
+    public function mostrarReporteOficio(Request $request) {
+
+        // Obtener el filtro de entrega y cuenta pública desde el request
+        $entregaSeleccionada = $request->input('entrega');
+        $cuentaPublicaSeleccionada = $request->input('cuenta_publica');
     
         $acciones = DB::table('cat_siglas_tipo_accion')->pluck('valor')->toArray();
         // Generar el reporte para la primera tabla
-        $reporte = collect($this->generarReporte()); // Convertir a colección
+        $reporte = collect($this->generarReporte($entregaSeleccionada, $cuentaPublicaSeleccionada));
+    
+        // Obtener todos los valores de catálogos
+        $entregas = DB::table('cat_entrega')->get();
+        $cuentasPublicas = DB::table('cat_cuenta_publica')->get();
     
         // Pasar los datos de ambas tablas a la vista
         return view('dashboard.oficio-uaa', [
             'reporte' => $reporte,
             'acciones' => $acciones,
             'numAcciones' => count($acciones),
+            'entregas' => $entregas,
+            'cuentasPublicas' => $cuentasPublicas,
         ]);
     }
 

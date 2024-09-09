@@ -2,15 +2,43 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Distribución de Auditorías') }}
+            <!-- Selectores para filtros -->
+            <div class="ml-auto flex items-center space-x-4">
+                <!-- Selector de Entrega -->
+                <form id="filterForm" method="GET" action="{{ route('dashboard.distribucion') }}" class="flex space-x-2 items-center">
+                    <!-- Selector de Entrega -->
+                    <select name="entrega" onchange="this.form.submit()" class="form-select rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        @foreach($entregas as $entrega)
+                            <option value="{{ $entrega->id }}" {{ request('entrega') == $entrega->id ? 'selected' : '' }}>
+                                {{ $entrega->valor }}
+                            </option>
+                        @endforeach
+                    </select>
+        
+                    <!-- Selector de Cuenta Pública -->
+                    <select name="cuenta_publica" onchange="this.form.submit()" class="form-select rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        @foreach($cuentasPublicas as $cuenta)
+                            <option value="{{ $cuenta->id }}" {{ request('cuenta_publica') == $cuenta->id ? 'selected' : '' }}>
+                                {{ $cuenta->valor }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
         </h2>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
-        <x-ui.breadcrumbs>
-            <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
+    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4"><x-ui.breadcrumbs>
+        <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
             <x-ui.breadcrumbs.separator />
             <x-ui.breadcrumbs.link active>{{ __('Distribución de Auditorías') }}</x-ui.breadcrumbs.link>
+           
         </x-ui.breadcrumbs>
+        @if($reporte->isEmpty() && empty($reporteSegundaTabla))
+            <div class="text-center p-6 bg-red-100 text-red-600">
+                <p>No hay información disponible para la selección actual.</p>
+            </div>
+        @else
 
         <x-ui.container.table>
             <x-ui.table>
@@ -202,5 +230,6 @@
                 </x-slot>
             </x-ui.table>
         </x-ui.container.table>
+        @endif
     </div>
 </x-app-layout>

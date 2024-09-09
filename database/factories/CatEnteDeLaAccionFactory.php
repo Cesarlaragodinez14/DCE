@@ -23,9 +23,9 @@ class CatEnteDeLaAccionFactory extends Factory
     public function definition(): array
     {
         return [
-            'valor' => fake()->word(),
-            'descripcion' => fake()->word(),
-            'activo' => fake()->word(),
+            'valor' => $faker->word,
+            'descripcion' => $faker->sentence,
+            'activo' => $faker->boolean, // Genera 0 o 1 para un campo booleano
         ];
     }
 }

@@ -19,14 +19,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($importedData as $data)
-                <tr>
-                    <td>{{ $data->id }}</td>
-                    <td>{{ $data->name }}</td>
-                    <td>{{ $data->description }}</td>
-                    <!-- Agrega más columnas según sea necesario -->
-                </tr>
-                @endforeach
+                @if (!empty($importedData) && is_iterable($importedData))
+                    @foreach ($importedData as $data)
+                    <tr>
+                        <td>{{ $data->id }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td>{{ $data->description }}</td>
+                        <!-- Agrega más columnas según sea necesario -->
+                    </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="3">No hay datos disponibles.</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>
