@@ -2,30 +2,18 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Envío de oficio a las UAA para la entrega de los expedientes de acción') }}
-            <!-- Selectores para filtros -->
-            <div class="ml-auto flex items-center space-x-4">
-                <!-- Selector de Entrega -->
-                <form id="filterForm" method="GET" action="{{ route('dashboard.oficio-uaa') }}" class="flex space-x-2 items-center">
-                    <!-- Selector de Entrega -->
-                    <select name="entrega" onchange="this.form.submit()" class="form-select rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @foreach($entregas as $entrega)
-                            <option value="{{ $entrega->id }}" {{ request('entrega') == $entrega->id ? 'selected' : '' }}>
-                                {{ $entrega->valor }}
-                            </option>
-                        @endforeach
-                    </select>
-        
-                    <!-- Selector de Cuenta Pública -->
-                    <select name="cuenta_publica" onchange="this.form.submit()" class="form-select rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @foreach($cuentasPublicas as $cuenta)
-                            <option value="{{ $cuenta->id }}" {{ request('cuenta_publica') == $cuenta->id ? 'selected' : '' }}>
-                                {{ $cuenta->valor }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
-            </div>
         </h2>
+        <!-- Selectores para filtros -->
+        <div class="ml-auto flex items-center space-x-4">
+            <!-- En tu archivo principal de la vista -->
+            <x-ui.filter-cp-en
+                :entregas="$entregas"
+                :cuentasPublicas="$cuentasPublicas"
+                route="dashboard.oficio-uaa"
+                defaultEntregaLabel="Seleccionar Entrega"
+                defaultCuentaPublicaLabel="Seleccionar Cuenta Pública"
+            />
+        </div>
     </x-slot>
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
@@ -35,7 +23,7 @@
             <x-ui.breadcrumbs.link active>{{ __('Envío de oficio a las UAA para la entrega de los expedientes de acción') }}</x-ui.breadcrumbs.link>
         </x-ui.breadcrumbs>
 
-        @if($reporte->isEmpty() && empty($reporteSegundaTabla))
+        @if($reporte->isEmpty() && empty($reporteSegundaTabla) || (empty(request('cuenta_publica')) || empty(request('entrega'))))
             <div class="text-center p-6 bg-red-100 text-red-600">
                 <p>No hay información disponible para la selección actual.</p>
             </div>

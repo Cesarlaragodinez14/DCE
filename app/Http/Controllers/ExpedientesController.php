@@ -11,9 +11,22 @@ use App\Models\Auditorias;
 
 class ExpedientesController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        // Escribir una consulta SQL usando el DB facade
+        // Obtener los filtros de cuenta_publica y entrega
+        $cuentaPublicaId = $request->input('cuenta_publica', null);
+        $entregaId = $request->input('entrega', null);
+
+        // Si no se pasan valores en el request, tomar los valores por defecto
+        if (is_null($cuentaPublicaId)) {
+            $cuentaPublicaId = DB::table('cat_cuenta_publica')->max('id');  // Tomar el valor máximo de cuenta pública
+        }
+
+        if (is_null($entregaId)) {
+            $entregaId = DB::table('cat_entrega')->min('id');  // Tomar el valor mínimo de entrega
+        }
+
+        // Construir la consulta SQL usando los filtros seleccionados
         $auditorias = DB::table('aditorias')
             ->join('cat_siglas_auditoria_especial', 'aditorias.siglas_auditoria_especial', '=', 'cat_siglas_auditoria_especial.id')
             ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
@@ -21,11 +34,13 @@ class ExpedientesController extends Controller
             ->join('cat_uaa', 'aditorias.uaa', '=', 'cat_uaa.id')
             ->select(
                 'cat_siglas_auditoria_especial.valor as auditoria_especial',
-                'cat_cuenta_publica.valor as CP',  // Cambiado para obtener el valor de cat_cuenta_publica
-                'cat_entrega.valor as entrega',  // Cambiado para obtener el valor de cat_entrega
-                'cat_uaa.valor as uaa',  // Cambiado para obtener el valor de cat_uaa
+                'cat_cuenta_publica.valor as CP',
+                'cat_entrega.valor as entrega',
+                'cat_uaa.valor as uaa',
                 DB::raw('COUNT(aditorias.id) as total_entregar')
             )
+            ->where('aditorias.cuenta_publica', '=', $cuentaPublicaId) // Aplicar filtro de cuenta pública
+            ->where('aditorias.entrega', '=', $entregaId) // Aplicar filtro de entrega
             ->groupBy(
                 'cat_siglas_auditoria_especial.valor',
                 'cat_cuenta_publica.valor',
@@ -34,21 +49,48 @@ class ExpedientesController extends Controller
             )
             ->get();
 
-        return view('dashboard.expedientes.entrega', compact('auditorias'));
+        // Obtener los valores para los selectores de los filtros
+        $cuentasPublicas = DB::table('cat_cuenta_publica')->select('id', 'valor')->get();
+        $entregas = DB::table('cat_entrega')->select('id', 'valor')->get();
+
+        return view('dashboard.expedientes.entrega', [
+            'auditorias' => $auditorias,
+            'cuentasPublicas' => $cuentasPublicas,
+            'entregas' => $entregas,
+            'selectedCuentaPublica' => $cuentaPublicaId,
+            'selectedEntrega' => $entregaId,
+        ]);
     }
+
     public function detalle(Request $request)
     {
-        // Obtener el nombre de la UAA recibido por GET
+        // Obtener los filtros de UAA, cuenta pública y entrega
         $uaaName = $request->input('uaa');
+        $cuentaPublicaId = $request->input('cuenta_publica', null);
+        $entregaId = $request->input('entrega', null);
 
-        // Buscar el ID correspondiente en el catálogo de UAA
-        $uaa = DB::table('cat_uaa')->where('valor', $uaaName)->first();
+        // Si no se pasa UAA en el request, usar la UAA de menor ID por defecto
+        if (is_null($uaaName)) {
+            $uaa = DB::table('cat_uaa')->orderBy('id', 'asc')->first();
+            $uaaName = $uaa->valor;
+        } else {
+            $uaa = DB::table('cat_uaa')->where('valor', $uaaName)->first();
+        }
 
         if (!$uaa) {
             return redirect()->back()->with('error', 'No se encontró la UAA especificada.');
         }
 
-        // Obtener los registros de auditorías basados en el ID de UAA
+        // Si no se pasan valores en el request, tomar los valores por defecto
+        if (is_null($cuentaPublicaId)) {
+            $cuentaPublicaId = DB::table('cat_cuenta_publica')->max('id');  // Valor máximo de cuenta pública
+        }
+
+        if (is_null($entregaId)) {
+            $entregaId = DB::table('cat_entrega')->min('id');  // Valor mínimo de entrega
+        }
+
+        // Obtener los registros de auditorías basados en los filtros
         $expedientes = DB::table('aditorias')
             ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
             ->join('cat_entrega', 'aditorias.entrega', '=', 'cat_entrega.id')
@@ -56,7 +98,7 @@ class ExpedientesController extends Controller
             ->join('cat_clave_accion', 'aditorias.clave_accion', '=', 'cat_clave_accion.id')
             ->join('cat_siglas_tipo_accion', 'aditorias.siglas_tipo_accion', '=', 'cat_siglas_tipo_accion.id')
             ->select(
-                'aditorias.id',  // Incluye el ID de aditorias aquí
+                'aditorias.id',
                 'cat_cuenta_publica.valor as CP',
                 'cat_entrega.valor as entrega',
                 'aditorias.auditoria_especial',
@@ -65,10 +107,24 @@ class ExpedientesController extends Controller
                 'cat_siglas_tipo_accion.valor as tipo_accion'
             )
             ->where('aditorias.uaa', $uaa->id)
+            ->where('aditorias.cuenta_publica', $cuentaPublicaId)
+            ->where('aditorias.entrega', $entregaId)
             ->get();
 
-        return view('dashboard.expedientes.detalle', compact('expedientes', 'uaaName'));
+        // Obtener los valores para los selectores de los filtros
+        $cuentasPublicas = DB::table('cat_cuenta_publica')->select('id', 'valor')->get();
+        $entregas = DB::table('cat_entrega')->select('id', 'valor')->get();
+
+        return view('dashboard.expedientes.detalle', [
+            'expedientes' => $expedientes,
+            'uaaName' => $uaaName,
+            'cuentasPublicas' => $cuentasPublicas,
+            'entregas' => $entregas,
+            'selectedCuentaPublica' => $cuentaPublicaId,
+            'selectedEntrega' => $entregaId,
+        ]);
     }
+
     public function validarEntrega(Request $request)
     {
         // Validate the request data as before

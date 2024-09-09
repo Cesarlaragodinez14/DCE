@@ -2,6 +2,16 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Validación de Entregas') }}
+            <div class="ml-auto flex items-center space-x-4">
+                <!-- En tu archivo principal de la vista -->
+                <x-ui.filter-cp-en
+                    :entregas="$entregas"
+                    :cuentasPublicas="$cuentasPublicas"
+                    route="dashboard.expedientes.entrega"
+                    defaultEntregaLabel="Seleccionar Entrega"
+                    defaultCuentaPublicaLabel="Seleccionar Cuenta Pública"
+                />
+            </div>
         </h2>
     </x-slot>
 
@@ -21,21 +31,23 @@
                     @csrf
 
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="text-lg font-medium text-gray-900">
-                                    {{ __('Auditoría: ') }} {{ $uaaName }}
-                                </h3>
+                        <div class="flex flex-col space-y-2 text-right">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-4">
+                                    <h3 class="text-lg font-medium text-gray-900">
+                                        {{ __('Auditoría: ') }} {{ $uaaName }}
+                                    </h3>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <input type="date" name="fecha_entrega" class="form-input rounded-md" 
+                                    value="{{ old('fecha_entrega', \Carbon\Carbon::now()->addDay()->format('Y-m-d')) }}" required>                                                         
+                                    <!-- Input para responsable -->
+                                    <input type="text" name="responsable" class="form-input rounded-md" placeholder="Nombre del responsable" value="{{ old('responsable') }}" required>
+                                </div>
                             </div>
-                            <div class="flex items-center space-x-4">
-                                <input type="date" name="fecha_entrega" class="form-input rounded-md" value="{{ old('fecha_entrega') }}" required>
-                                <select name="responsable" class="form-select rounded-md" required>
-                                    <option value="">Seleccione un responsable</option>
-                                    <option value="Juan Pérez" {{ old('responsable') == 'Juan Pérez' ? 'selected' : '' }}>Juan Pérez</option>
-                                    <!-- Añadir más opciones -->
-                                </select>
-                            </div>
-                        </div>
+                            <!-- Mensaje informativo -->
+                            <p class="text-sm text-gray-600">El responsable deberá acudir con identificación oficial para la entrega.</p>
+                        </div>                        
 
                         <div class="mt-6">
                             <x-ui.table.index>
@@ -118,9 +130,10 @@
                     errors.push('Debe seleccionar una fecha de entrega.');
                 }
 
-                if (!document.querySelector('select[name="responsable"]').value) {
-                    errors.push('Debe seleccionar un responsable.');
+                if (!document.querySelector('input[name="responsable"]').value) {
+                    errors.push('Debe ingresar el nombre del responsable.');
                 }
+
 
                 if (errors.length > 0) {
                     errorList.innerHTML = errors.map(error => `<li>${error}</li>`).join('');
