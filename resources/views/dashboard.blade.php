@@ -34,6 +34,10 @@
                     <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
                     <span class="dashboard-text">Programación de Entrega de Expedientes</span>
                 </a>
+                <a href="{{ route('dashboard.expedientes.recepcion') }}" class="dashboard-card">
+                    <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Recepción de Expedientes</span>
+                </a>
             </div>
 
             <!-- Sección de Administración -->
