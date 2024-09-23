@@ -68,4 +68,10 @@ class Auditorias extends Model
     {
         return $this->belongsTo(CatCuentaPublica::class, 'cuenta_publica');
     }
+
+    public function entregas()
+    {
+        return $this->hasMany(Entrega::class, 'auditoria_id');
+    }
+
 }

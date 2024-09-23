@@ -97,12 +97,12 @@ class EntregaController extends Controller
         // Filtros
         $ae = $request->input('ae');
         $dg = $request->input('dg');
-
+    
         // Obtener las auditorías especiales y direcciones generales para los selectores
         $auditoriasEspeciales = DB::table('cat_siglas_auditoria_especial')->get();
         $direccionesGenerales = DB::table('cat_dgseg_ef')->get();
-
-        // Consulta principal, con conteo y agrupamiento
+    
+        // Consulta principal, con conteo y agrupamiento correcto
         $query = DB::table('entregas')
             ->join('aditorias', 'entregas.auditoria_id', '=', 'aditorias.id')
             ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
@@ -116,7 +116,7 @@ class EntregaController extends Controller
                 'cat_dgseg_ef.valor as DG',
                 'entregas.fecha_entrega',
                 'entregas.responsable',
-                DB::raw('COUNT(entregas.id) as total_entregas')  // Realizar el count por entrega
+                DB::raw('COUNT(entregas.id) as total_entregas')  // Correct count
             )
             ->groupBy(
                 'cat_cuenta_publica.valor',
@@ -126,7 +126,7 @@ class EntregaController extends Controller
                 'entregas.fecha_entrega',
                 'entregas.responsable'
             );
-
+    
         // Aplicar filtros si existen
         if ($ae) {
             $query->where('aditorias.siglas_auditoria_especial', $ae);
@@ -134,15 +134,54 @@ class EntregaController extends Controller
         if ($dg) {
             $query->where('aditorias.dgseg_ef', $dg);
         }
-
-        // Obtener resultados
+    
+        // Obtener resultados agrupados
         $entregasContadas = $query->get();
-
+    
+        // Para cada grupo, obtener los entregas que pertenecen al grupo
+        foreach ($entregasContadas as $entregaGroup) {
+            $entregaGroup->entregas = DB::table('entregas')
+                ->join('aditorias', 'entregas.auditoria_id', '=', 'aditorias.id')
+                ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
+                ->join('cat_entrega', 'aditorias.entrega', '=', 'cat_entrega.id')
+                ->join('cat_siglas_auditoria_especial', 'aditorias.siglas_auditoria_especial', '=', 'cat_siglas_auditoria_especial.id')
+                ->join('cat_dgseg_ef', 'aditorias.dgseg_ef', '=', 'cat_dgseg_ef.id')
+                ->where('cat_cuenta_publica.valor', $entregaGroup->CP)
+                ->where('cat_entrega.valor', $entregaGroup->entrega)
+                ->where('cat_siglas_auditoria_especial.valor', $entregaGroup->AE)
+                ->where('cat_dgseg_ef.valor', $entregaGroup->DG)
+                ->where('entregas.fecha_entrega', $entregaGroup->fecha_entrega)
+                ->where('entregas.responsable', $entregaGroup->responsable)
+                ->select(
+                    'entregas.id as entrega_id',
+                    'entregas.fecha_entrega',
+                    'entregas.responsable',
+                    'aditorias.clave_de_accion',
+                    'aditorias.titulo',
+                    'aditorias.auditoria_especial',
+                    'entregas.tipo_accion',
+                    'entregas.entrega',
+                    'entregas.auditoria_id',
+                    'entregas.CP',
+                    'entregas.fecha_entrega',
+                    'entregas.responsable',
+                    'entregas.numero_legajos',
+                    'entregas.confirmado_por'
+                )
+                ->get();
+        }
+    
         // Días hábiles restantes
         $dias_habiles = 18; // Este valor puede calcularse dinámicamente si es necesario
-
-        return view('dashboard.recepcion', compact('entregasContadas', 'auditoriasEspeciales', 'direccionesGenerales', 'dias_habiles'));
+    
+        return view('dashboard.recepcion', compact(
+            'entregasContadas', 
+            'auditoriasEspeciales', 
+            'direccionesGenerales', 
+            'dias_habiles'
+        ));
     }
     
+
     
 }

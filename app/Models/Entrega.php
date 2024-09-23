@@ -32,4 +32,9 @@ class Entrega extends Model
     {
         return $this->belongsTo(User::class, 'confirmado_por');
     }
+    public function auditoria()
+    {
+        return $this->belongsTo(Auditorias::class, 'auditoria_id');
+    }
+
 }
