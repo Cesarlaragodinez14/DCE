@@ -36,7 +36,7 @@ class Auditorias extends Model
     // Relationship for "Entrega"
     public function catEntrega()
     {
-        return $this->belongsTo(catEntrega::class, 'entrega');
+        return $this->belongsTo(CatEntrega::class, 'entrega');
     }
 
     // Relationship for "UAA"
