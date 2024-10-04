@@ -62,7 +62,6 @@
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
                             Gestiona la recepción de expedientes de acción, incluyendo la carga de archivos y programación de entregas.
                         </p>
-                        <a href="{{ url('/entrega-recepcion') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
                     </div>
 
                     <!-- Card: Programación de Entrega -->
@@ -71,7 +70,6 @@
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
                             Planifica y programa la entrega de expedientes a los responsables designados, asegurando el cumplimiento de los plazos establecidos.
                         </p>
-                        <a href="{{ url('/programacion-entrega') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
                     </div>
 
                     <!-- Card: Revisión de Expedientes -->
@@ -80,7 +78,6 @@
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
                             Realiza la revisión detallada de los expedientes recibidos, verificando la integridad y completitud de la información.
                         </p>
-                        <a href="{{ url('/revision-expedientes') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
                     </div>
                 </div>
 
@@ -91,7 +88,6 @@
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
                             Accede a la normativa y documentación relacionada con la gestión de expedientes para asegurar el cumplimiento de las disposiciones legales.
                         </p>
-                        <a href="{{ url('/normatividad-documentacion') }}" class="mt-4 inline-block text-primary hover:text-red-700">Ver más &rarr;</a>
                     </div>
                 </div>
             </main>

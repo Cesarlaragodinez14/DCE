@@ -21,10 +21,22 @@ class Auditorias extends Model
         return $this->belongsTo(CatSiglasTipoAccion::class, 'siglas_tipo_accion');
     }
 
+    // Relationship for the catalog of "Siglas Tipo Acción"
+    public function catSiglasAuditoriaEspecial()
+    {
+        return $this->belongsTo(CatSiglasAuditoriaEspecial::class, 'siglas_auditoria_especial');
+    }
+
     // Relationship for "Auditoria Especial"
     public function catAuditoriaEspecial()
     {
         return $this->belongsTo(CatAuditoriaEspecial::class, 'auditoria_especial');
+    }
+
+    // Relationship for "Entrega"
+    public function catEntrega()
+    {
+        return $this->belongsTo(catEntrega::class, 'entrega');
     }
 
     // Relationship for "UAA"
@@ -72,6 +84,11 @@ class Auditorias extends Model
     public function entregas()
     {
         return $this->hasMany(Entrega::class, 'auditoria_id');
+    }
+
+    public function apartados()
+    {
+        return $this->hasMany(Apartado::class, 'auditoria_id');
     }
 
 }

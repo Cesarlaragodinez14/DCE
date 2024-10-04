@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto" style="max-width: 90%">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 
                 <!-- Tarjetas Principales -->
@@ -31,12 +31,16 @@
                 </a>
 
                 <a href="{{ route('dashboard.expedientes.entrega') }}" class="dashboard-card">
-                    <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
+                    <ion-icon name="calendar-number-outline" class="dashboard-icon"></ion-icon>
                     <span class="dashboard-text">Programación de Entrega de Expedientes</span>
                 </a>
                 <a href="{{ route('dashboard.expedientes.recepcion') }}" class="dashboard-card">
                     <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
                     <span class="dashboard-text">Recepción de Expedientes</span>
+                </a>
+                <a href="{{ route('dashboard.expedientes.recepcion') }}" class="dashboard-card">
+                    <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
+                    <span class="dashboard-text">Checklist</span>
                 </a>
             </div>
 
