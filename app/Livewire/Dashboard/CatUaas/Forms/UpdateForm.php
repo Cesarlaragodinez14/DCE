@@ -25,6 +25,7 @@ class UpdateForm extends Form
                 Rule::unique('cat_uaa', 'valor')->ignore($this->catUaa),
             ],
             'descripcion' => ['nullable', 'string'],
+            'nombre' => ['nullable', 'string'],
             'activo' => ['required', 'boolean'],
         ];
     }
@@ -35,6 +36,7 @@ class UpdateForm extends Form
 
         $this->valor = $catUaa->valor;
         $this->descripcion = $catUaa->descripcion;
+        $this->nombre = $catUaa->nombre;
         $this->activo = $catUaa->activo;
     }
 

@@ -5,9 +5,9 @@
             <div>
                 <h2 class="text-center font-bold underline">Área que entrega</h2>
                 <p><strong>Auditoría Especial:</strong> {{ $auditoria->catSiglasAuditoriaEspecial->descripcion ?? '' }}</p>
-                <p><strong>Dirección General de la UAA:</strong> {{ $auditoria->catUaa->valor ?? '' }}</p>
+                <p><strong>Dirección General de la UAA:</strong> {{ $auditoria->catUaa->nombre ?? '' }}</p>
                 <p><strong>Título de la Auditoría:</strong> {{ $auditoria->titulo }}</p>
-                <p><strong>Número de Auditoría:</strong> {{ $auditoria->numero_de_auditoria }}</p>
+                <p><strong>Número de Auditoría:</strong> {{ $auditoria->catAuditoriaEspecial->valor }}</p>
                 <p><strong>Clave de la Acción:</strong> {{ $auditoria->catClaveAccion->valor ?? '' }}</p>
                 <p><strong>Nombre del Ente de la Acción o Recomendación:</strong> {{ $auditoria->catEnteDeLaAccion->valor ?? '' }}</p>
             </div>
@@ -54,7 +54,7 @@
                         <x-button type="submit" class="bg-blue-500 hover:bg-blue-700">
                             Guardar Checklist
                         </x-button>
-                        <a href="{{ route('auditorias.pdf', $auditoria->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('auditorias.pdf', $auditoria->id) }}" class="bg-blue-500 hover:bg-blue-700">
                             Descargar PDF
                         </a>
                     </div>

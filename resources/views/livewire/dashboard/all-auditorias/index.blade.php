@@ -53,6 +53,10 @@
         <x-ui.table>
             <x-slot name="head">
                 <x-ui.table.header
+                    >{{ __('Checklist')
+                    }}</x-ui.table.header
+                >
+                <x-ui.table.header
                     for-crud
                     wire:click="sortBy('clave_de_accion')"
                     >{{ __('crud.allAuditorias.inputs.clave_de_accion.label')
@@ -175,48 +179,59 @@
             <x-slot name="body">
                 @forelse ($allAuditorias as $auditorias)
                 <x-ui.table.row wire:loading.class.delay="opacity-75">
+                    <x-ui.table.column
+                        >
+                        <a href="{{ route('auditorias.apartados', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #000;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                            <ion-icon name="create-outline"></ion-icon>
+                        </a>
+                        <br>
+                        <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                            <ion-icon name="cloud-download-outline"></ion-icon>
+                        </a>
+                        </x-ui.table.column
+                    >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->clave_de_accion }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->entrega }}</x-ui.table.column
+                        >{{ $auditorias->catEntrega->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->auditoria_especial
+                        >{{ $auditorias->catAuditoriaEspecial->valor
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->tipo_de_auditoria }}</x-ui.table.column
+                        >{{ $auditorias->catTipoDeAuditoria->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->siglas_auditoria_especial
+                        >{{ $auditorias->catSiglasAuditoriaEspecial->valor
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->uaa }}</x-ui.table.column
+                        ><b>{{ $auditorias->catUaa->valor }}</b> <br> <small>{{ $auditorias->catUaa->nombre }}</small></x-ui.table.column
                     >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->titulo }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->ente_fiscalizado }}</x-ui.table.column
+                        >{{ $auditorias->catEnteFiscalizado->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->numero_de_auditoria
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->ente_de_la_accion }}</x-ui.table.column
+                        >{{ $auditorias->catEnteDeLaAccion->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->clave_accion }}</x-ui.table.column
+                        >{{ $auditorias->catClaveAccion->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->siglas_tipo_accion
+                        >{{ $auditorias->catSiglasTipoAccion->valor
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->dgseg_ef }}</x-ui.table.column
+                        >{{ $auditorias->catDgsegEf->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->nombre_director_general
@@ -242,7 +257,7 @@
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->cuenta_publica }}</x-ui.table.column
+                        >{{ $auditorias->catCuentaPublica->valor }}</x-ui.table.column
                     >
                     <x-ui.table.action-column>
                         @can('update', $auditorias)

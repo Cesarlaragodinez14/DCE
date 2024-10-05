@@ -27,6 +27,7 @@ class CatUaaUpdateRequest extends FormRequest
                 Rule::unique('cat_uaa', 'valor')->ignore($this->catUaa),
             ],
             'descripcion' => ['nullable', 'string'],
+            'nombre' => ['nullable', 'string'],
             'activo' => ['required', 'boolean'],
         ];
     }

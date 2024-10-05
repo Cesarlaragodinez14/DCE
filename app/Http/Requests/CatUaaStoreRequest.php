@@ -23,6 +23,7 @@ class CatUaaStoreRequest extends FormRequest
         return [
             'valor' => ['required', 'string', Rule::unique('cat_uaa', 'valor')],
             'descripcion' => ['nullable', 'string'],
+            'nombre' => ['nullable', 'string'],
             'activo' => ['required', 'boolean'],
         ];
     }

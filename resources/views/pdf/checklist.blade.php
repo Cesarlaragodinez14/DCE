@@ -91,9 +91,9 @@
                 <td style="text-align: left; vertical-align: top">
                     <h2 style="text-align: center"><b><u>Área que entrega</u></b></h2>
                     <p><strong>Auditoría Especial: </strong>{{ $auditoria->catSiglasAuditoriaEspecial->descripcion ?? '' }}</p>
-                    <p><strong>Dirección General de la UAA: </strong>{{ $auditoria->catUaa->valor ?? '' }}</p>
+                    <p><strong>Dirección General de la UAA: </strong>{{ $auditoria->catUaa->nombre ?? '' }}</p>
                     <p><strong>Título de la Auditoría: </strong>{{ $auditoria->titulo }}</p>
-                    <p><strong>Número de Auditoría: </strong>{{ $auditoria->numero_de_auditoria }}</p>
+                    <p><strong>Número de Auditoría: </strong>{{ $auditoria->catAuditoriaEspecial->valor }}</p>
                     <p><strong>Clave de la Acción: </strong>{{ $auditoria->catClaveAccion->valor ?? '' }}</p>
                     <p><strong>Nombre del Ente de la Acción o Recomendación: </strong>{{ $auditoria->catEnteDeLaAccion->valor ?? '' }}</p>
                 </td>

@@ -56,7 +56,12 @@ class CatUaaResource extends Resource
                         ->unique('cat_uaa', 'valor', ignoreRecord: true)
                         ->autofocus(),
 
-                    RichEditor::make('descripcion')
+                        RichEditor::make('descripcion')
+                        ->nullable()
+                        ->string()
+                        ->fileAttachmentsVisibility('public'),
+
+                        RichEditor::make('nombre')
                         ->nullable()
                         ->string()
                         ->fileAttachmentsVisibility('public'),

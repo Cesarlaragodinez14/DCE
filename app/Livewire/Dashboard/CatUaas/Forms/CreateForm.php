@@ -14,6 +14,9 @@ class CreateForm extends Form
     #[Rule('nullable|string')]
     public $descripcion = '';
 
+    #[Rule('nullable|string')]
+    public $nombre = '';
+
     #[Rule('required|boolean')]
     public $activo = '';
 

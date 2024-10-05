@@ -38,7 +38,7 @@
                     <ion-icon name="file-tray-full-outline" class="dashboard-icon"></ion-icon>
                     <span class="dashboard-text">Recepción de Expedientes</span>
                 </a>
-                <a href="{{ route('dashboard.expedientes.recepcion') }}" class="dashboard-card">
+                <a href="{{ url('/dashboard/all-auditorias') }}" class="dashboard-card">
                     <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
                     <span class="dashboard-text">Checklist</span>
                 </a>
