@@ -46,7 +46,7 @@
 
         <!-- Checkbox para "es_aplicable" -->
         <td style="text-align: center">
-            <input type="checkbox" name="apartados[{{ $apartado->id }}][es_aplicable]" value="1" disabled
+            <input type="checkbox" name="apartados[{{ $apartado->id }}][es_aplicable]" value="1"
                 {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->es_aplicable ?? ($plantillaDatos ? $plantillaDatos->es_aplicable : false)) ? 'checked' : '' }}>
             @if ($es_aplicable === 'En su caso')
                 <span>{{ $es_aplicable }}</span>
