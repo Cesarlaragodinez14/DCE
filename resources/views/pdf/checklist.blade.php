@@ -74,7 +74,7 @@
                     <img src="{{ public_path('img/asf.png') }}" alt="Logo ASF" style="position:absolute; left: 10px; top: 10px; max-width: 200px;">
                 </td>
                 <td style="text-align: right;">
-                    <b>FORMATO 2</b><br>
+                    <b>FORMATO {{explode('-', $auditoria->catClaveAccion->valor)[5]}}</b><br>
                     <b>Auditoría Especial de Seguimiento, Informes e Investigación</b><br>
                     <b>Departamento de Control de Expedientes</b><br><br>
                     <b>Lista de verificación del Expediente de la Recomendación</b><br>

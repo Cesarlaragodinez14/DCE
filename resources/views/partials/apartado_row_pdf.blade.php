@@ -27,7 +27,7 @@
 
         <!-- Mostrar contenido sólo si el apartado no tiene subapartados -->
         <td style="text-align: center">
-            @if (isset($checklist[$apartado->id]) && $checklist[$apartado->id]->aplica)
+            @if (isset($checklist[$apartado->id]) && $checklist[$apartado->id]->se_aplica)
                 Sí
             @else
                 No
