@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CatEnteDeLaAccionSeeder::class);
         $this->call(CatClaveAccionSeeder::class);
         $this->call(CatDgsegEfSeeder::class);
+        $this->call(ApartadoPlantillasSeeder::class);
     }
 }

@@ -28,6 +28,13 @@ class Apartado extends Model
         return $this->belongsTo(Auditorias::class, 'auditoria_id');
     }
 
+    // Relación con las plantillas para este apartado
+    public function plantillas()
+    {
+        return $this->hasMany(ApartadoPlantilla::class, 'apartado_id');
+    }
+    
+
     // Cálculo de la profundidad (nivel)
     public function getDepthAttribute()
     {

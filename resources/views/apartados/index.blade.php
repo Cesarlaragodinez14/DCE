@@ -24,7 +24,6 @@
     <div class="py-12">
         <div class="mx-auto">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-
                 <form action="{{ route('apartados.checklist.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
@@ -45,7 +44,28 @@
                         <tbody>
                             <!-- Función recursiva para mostrar apartados y subapartados -->
                             @foreach ($apartados as $apartado)
-                                @include('partials.apartado_row', ['apartado' => $apartado, 'parentIteration' => $loop->iteration, 'is_subrow' => false])
+                                @php
+                                    // Obtener el formato de la acción de auditoría basado en el formato de clave
+                                    $formato = explode('-', $auditoria->catClaveAccion->valor)[5]; // Extract format from the clave de acción
+
+                                    // Obtener los valores predefinidos desde la tabla apartado_plantillas para el formato específico
+                                    $plantilla = $apartado->plantillas->filter(function ($p) use ($formato) {
+                                        return $p->plantilla === $formato;
+                                    })->first();
+
+                                    // Verificar la existencia de la plantilla y aplicar valores predefinidos si está disponible
+                                    $se_aplica = $plantilla->es_aplicable ?? false;
+                                    $es_obligatorio = $plantilla->es_obligatorio ?? false;
+                                    $se_integra = $plantilla->se_integra ?? false;
+
+                                @endphp
+
+                                @include('partials.apartado_row', [
+                                    'apartado' => $apartado, 
+                                    'parentIteration' => $loop->iteration, 
+                                    'is_subrow' => false, 
+                                    'plantilla' => $plantilla // Pasar plantilla para los valores por defecto
+                                ])
                             @endforeach
                         </tbody>
                     </table>
