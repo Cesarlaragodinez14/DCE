@@ -134,7 +134,7 @@
                 <td colspan="2">
                     @if(@$estatus_checklist == true)
                         <h2 style="text-align: center"><strong><u>ACEPTA</u></strong></h2>
-                    @elseif(@$estatus_checklist == null)
+                    @elseif(@$estatus_checklist == false)
                         <h2 style="text-align: center"><strong><u>SIN DEFINIR</u></strong></h2>
                     @else
                         <h2 style="text-align: center"><strong><u>DEVUELVE</u></strong></h2>
