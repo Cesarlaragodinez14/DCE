@@ -67,6 +67,7 @@ class CreateForm extends Form
 
     #[Rule('required')]
     public $cuenta_publica = '';
+    
 
     public function save()
     {

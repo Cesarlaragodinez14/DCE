@@ -185,9 +185,11 @@
                             <ion-icon name="create-outline"></ion-icon>
                         </a>
                         <br>
-                        <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
-                            <ion-icon name="cloud-download-outline"></ion-icon>
-                        </a>
+                        @if ($auditorias->estatus_checklist === true)
+                            <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                                <ion-icon name="cloud-download-outline"></ion-icon>
+                            </a>
+                        @endif
                         </x-ui.table.column
                     >
                     <x-ui.table.column for-crud

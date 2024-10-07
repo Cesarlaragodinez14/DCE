@@ -22,9 +22,9 @@ class PdfController extends Controller
         $auditoria = Auditorias::findOrFail($auditoria_id);
         $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
         $checklist = ChecklistApartado::where('auditoria_id', $auditoria_id)->get()->keyBy('apartado_id');
-
+        $estatus_checklist = $auditoria->estatus_checklist;
         // Generate the PDF in landscape mode
-        $pdf = PDF::loadView('pdf.checklist', compact('auditoria', 'apartados', 'checklist'))
+        $pdf = PDF::loadView('pdf.checklist', compact('auditoria', 'apartados', 'checklist', 'estatus_checklist'))
             ->setPaper('a4', 'landscape');  // Set paper size to A4 and orientation to landscape
 
         // Stream or download the generated PDF

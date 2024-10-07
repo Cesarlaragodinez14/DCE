@@ -65,6 +65,7 @@ class ApartadosController extends Controller
         }
 
         if (!empty($data)) {
+            Auditorias::where('id', $auditoria_id)->update(['estatus_checklist' => $request->estatus_checklist]);
             ChecklistApartado::upsert($data, ['apartado_id', 'auditoria_id'], ['se_aplica', 'es_obligatorio', 'se_integra', 'observaciones', 'comentarios_uaa']);
         }
 

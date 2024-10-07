@@ -63,6 +63,7 @@ class CreateDetailForm extends Form
 
     #[Rule('required|string')]
     public $jefe_de_departamento = '';
+    
 
     public function save()
     {

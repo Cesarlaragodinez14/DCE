@@ -35,6 +35,7 @@ return new class extends Migration {
             $table->string('nombre_sub_director_de_area');
             $table->string('jd');
             $table->string('jefe_de_departamento');
+            $table->boolean('estatus_checklist');
             $table->timestamps();
 
             // Foreign key constraints

@@ -131,6 +131,17 @@
     <div>
         <table>
             <tr>
+                <td colspan="2">
+                    @if(@$estatus_checklist == true)
+                        <h2 style="text-align: center"><strong><u>ACEPTA</u></strong></h2>
+                    @elseif(@$estatus_checklist == null)
+                        <h2 style="text-align: center"><strong><u>SIN DEFINIR</u></strong></h2>
+                    @else
+                        <h2 style="text-align: center"><strong><u>DEVUELVE</u></strong></h2>
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <h2 style="text-align: center"><strong><u>Servidor Público del área auditora que entrega el expediente</u></strong></h2>
                     <b>Nombre:</b><br>

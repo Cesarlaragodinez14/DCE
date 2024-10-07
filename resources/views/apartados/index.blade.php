@@ -27,7 +27,15 @@
                 <form action="{{ route('apartados.checklist.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
-
+                    <!-- Select con formato mejorado -->
+                    <div class="mb-4">
+                        <label for="estatus_checklist" class="block text-sm font-medium text-gray-700">Estatus del Checklist</label>
+                        <select name="estatus_checklist" id="estatus_checklist" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">Selecciona</option>
+                            <option value="1" {{ $auditoria->estatus_checklist == '1' ? 'selected' : '' }}>ACEPTA</option>
+                            <option value="0" {{ $auditoria->estatus_checklist == '0' ? 'selected' : '' }}>DEVUELVE</option>
+                        </select>
+                    </div>
                     <!-- Tabla de Checklist -->
                     <table class="min-w-full table-auto mb-6">
                         <thead class="bg-gray-200">
