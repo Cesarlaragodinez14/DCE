@@ -53,7 +53,11 @@
         <x-ui.table>
             <x-slot name="head">
                 <x-ui.table.header
-                    >{{ __('Checklist')
+                    >{{ __('Revisión de Expediente')
+                    }}</x-ui.table.header
+                >
+                <x-ui.table.header
+                    >{{ __('Estatus de Revisión de Expediente')
                     }}</x-ui.table.header
                 >
                 <x-ui.table.header
@@ -179,8 +183,7 @@
             <x-slot name="body">
                 @forelse ($allAuditorias as $auditorias)
                 <x-ui.table.row wire:loading.class.delay="opacity-75">
-                    <x-ui.table.column
-                        >
+                    <x-ui.table.column>
                         <a href="{{ route('auditorias.apartados', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #000;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
                             <ion-icon name="create-outline"></ion-icon>
                         </a>
@@ -190,8 +193,10 @@
                                 <ion-icon name="cloud-download-outline"></ion-icon>
                             </a>
                         @endif
-                        </x-ui.table.column
-                    >
+                    </x-ui.table.column>
+                    <x-ui.table.column>
+                        Pendiente...
+                    </x-ui.table.column>
                     <x-ui.table.column for-crud
                         >{{ $auditorias->clave_de_accion }}</x-ui.table.column
                     >
