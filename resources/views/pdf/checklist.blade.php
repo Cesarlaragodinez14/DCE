@@ -132,6 +132,14 @@
         <table>
             <tr>
                 <td colspan="2">
+                    <h2 style="text-align: center"><strong><u>Comentarios</u></strong></h2>
+                    <br>
+                    <br>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
                     @if(@$estatus_checklist == true)
                         <h2 style="text-align: center"><strong><u>ACEPTA</u></strong></h2>
                     @elseif(@$estatus_checklist == false)

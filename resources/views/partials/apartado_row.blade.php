@@ -1,5 +1,5 @@
 @php
-    // Si es el nivel principal (nivel 1), manejar numeración específica para los primeros 2 apartados
+    // Numeración del apartado
     if (isset($is_subrow) && $is_subrow === false) {
         if ($loop->iteration <= 2) {
             $currentIteration = 0;
@@ -17,78 +17,100 @@
     $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
 
     // Obtener los valores predefinidos desde la tabla apartado_plantillas
-    $plantillaDatos = $apartado->plantillas->filter(function ($p) use ($formato) {
-        return $p->plantilla === $formato;
-    })->first();
+    $plantillaDatos = $apartado->plantillas->firstWhere('plantilla', $formato);
 
-    // Establecer los valores predefinidos o mostrar 'nvp' si no están disponibles
-    $es_aplicable = $plantillaDatos->es_aplicable ?? 'En su caso';
-    $es_obligatorio = $plantillaDatos->es_obligatorio ?? 'En su caso';
+    // Establecer los valores predefinidos o null si no están disponibles
+    $es_aplicable = $plantillaDatos->es_aplicable ?? null;
+    $es_obligatorio = $plantillaDatos->es_obligatorio ?? null;
     $se_integra = $plantillaDatos->se_integra ?? 'En su caso';
+
+    // Determinar si se debe mostrar la fila
+    $mostrarFila = $es_aplicable !== 0 && $es_aplicable !== '0' && $es_aplicable !== false;
 @endphp
 
-<tr class="{{ is_null($apartado->parent_id) ? 'bg-gray-100' : '' }}">
+@if($mostrarFila)
+<tr class="{{ is_null($apartado->parent_id) ? 'bg-gray-50' : 'bg-white parent-'.$apartado->parent_id }} {{ isset($is_subrow) && $is_subrow ? 'hidden' : '' }}">
 
+    <!-- Inputs ocultos -->
     <input type="hidden" name="apartados[{{ $apartado->id }}][id]" value="{{ $apartado->id }}">
+    <input type="hidden" name="apartados[{{ $apartado->id }}][es_aplicable]" value="{{ $es_aplicable }}">
+    <input type="hidden" name="apartados[{{ $apartado->id }}][es_obligatorio]" value="{{ $es_obligatorio }}">
 
-    <td style="text-align: center">{{ $currentIteration }}</td>
+    <!-- Numeración -->
+    <td class="px-4 py-3 text-center text-gray-700 font-medium">
+        {{ $currentIteration }}
+    </td>
 
     @if($hasSubapartados)
-        <td colspan="5">{!! str_repeat('&emsp;', $apartado->depth) !!} {{ $apartado->nombre }}</td>
-
-        <input type="hidden" name="apartados[{{ $apartado->id }}][es_aplicable]" value="">
-        <input type="hidden" name="apartados[{{ $apartado->id }}][es_obligatorio]" value="">
+        <!-- Nombre del apartado con toggle -->
+        <td colspan="5" class="px-4 py-3 text-gray-800 font-semibold">
+            <button type="button" class="toggle-subapartado focus:outline-none" data-parent-id="{{ $apartado->id }}">
+                <svg class="w-4 h-4 inline-block mr-2 transition-transform transform toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+            {{ $apartado->nombre }}
+        </td>
+        <!-- Inputs ocultos para los demás campos -->
         <input type="hidden" name="apartados[{{ $apartado->id }}][se_integra]" value="">
         <input type="hidden" name="apartados[{{ $apartado->id }}][observaciones]" value="">
         <input type="hidden" name="apartados[{{ $apartado->id }}][comentarios_uaa]" value="">
     @else
-        <td>{!! str_repeat('&emsp;', $apartado->depth) !!} {{ $apartado->nombre }}</td>
+        <!-- Nombre del apartado -->
+        <td class="px-4 py-3 text-gray-700" style="padding-left: {{ $apartado->depth * 20 }}px;">
+            {{ $apartado->nombre }}
+        </td>
 
-        <!-- Checkbox para "es_aplicable" -->
-        <td style="text-align: center">
-            <input type="checkbox" name="apartados[{{ $apartado->id }}][es_aplicable]" value="1"
-                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->es_aplicable ?? ($plantillaDatos ? $plantillaDatos->es_aplicable : false)) ? 'checked' : '' }}>
-            @if ($es_aplicable === 'En su caso')
-                <span>{{ $es_aplicable }}</span>
+        <!-- ¿Obligatorio? -->
+        <td class="px-4 py-3 text-center text-gray-700">
+            @if($es_obligatorio === 1 || $es_obligatorio === '1')
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    Sí
+                </span>
+            @elseif($es_obligatorio === 0 || $es_obligatorio === '0')
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                    No
+                </span>
+            @else
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    En su caso
+                </span>
             @endif
         </td>
 
-        <!-- Checkbox para "es_obligatorio" -->
-        <td style="text-align: center">
-            <input type="checkbox" name="apartados[{{ $apartado->id }}][es_obligatorio]" value="1"
-                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->es_obligatorio ?? ($plantillaDatos ? $plantillaDatos->es_obligatorio : false)) ? 'checked' : '' }}>
-            @if ($es_obligatorio === 'En su caso')
-                <span>{{ $es_obligatorio }}</span>
-            @endif
-        </td>
-
-        <!-- Checkbox para "se_integra" -->
-        <td style="text-align: center">
+        <!-- ¿Se Integra? -->
+        <td class="px-4 py-3 text-center">
             <input type="checkbox" name="apartados[{{ $apartado->id }}][se_integra]" value="1"
-                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? ($plantillaDatos ? $plantillaDatos->se_integra : false)) ? 'checked' : '' }}>
-            @if ($se_integra === 'En su caso')
-                <span>{{ $se_integra }}</span>
-            @endif
+                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
+                class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
         </td>
 
-        <!-- Campo de texto para observaciones -->
-        <td style="text-align: center">
-            <input type="text" name="apartados[{{ $apartado->id }}][observaciones]"
-                value="{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}"
-                class="form-input rounded-md shadow-sm w-full">
+        <!-- Observaciones -->
+        <td class="px-4 py-3">
+            <textarea name="apartados[{{ $apartado->id }}][observaciones]"
+                class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}</textarea>
         </td>
 
-        <!-- Campo de texto para comentarios UAA -->
-        <td style="text-align: center">
-            <input type="text" name="apartados[{{ $apartado->id }}][comentarios_uaa]"
-                value="{{ optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa }}"
-                class="form-input rounded-md shadow-sm w-full">
+        <!-- Comentarios UAA -->
+        <td class="px-4 py-3">
+            <textarea name="apartados[{{ $apartado->id }}][comentarios_uaa]"
+                class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa }}</textarea>
         </td>
     @endif
 </tr>
+@endif
 
+<!-- Subapartados -->
 @if ($apartado->subapartados)
     @foreach ($apartado->subapartados as $subapartado)
-        @include('partials.apartado_row', ['apartado' => $subapartado, 'parentIteration' => $currentIteration, 'is_subrow' => true])
+        @include('partials.apartado_row', [
+            'apartado' => $subapartado,
+            'parentIteration' => $currentIteration,
+            'is_subrow' => true,
+            'auditoria' => $auditoria,
+            'checklist' => $checklist,
+        ])
     @endforeach
 @endif
