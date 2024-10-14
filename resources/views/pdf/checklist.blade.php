@@ -141,9 +141,9 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    @if(@$estatus_checklist == "Aceptado")
+                    @if($auditoria->estatus_checklist == "Aceptado")
                         <h2 style="text-align: center"><strong><u>ACEPTA</u></strong></h2>
-                    @elseif(@$estatus_checklist == "Devuelto")
+                    @elseif($auditoria->estatus_checklist == "Devuelto")
                         <h2 style="text-align: center"><strong><u>DEVUELVE</u></strong></h2>
                     @else
                         <h2 style="text-align: center"><strong><u>SIN ASIGNAR</u></strong></h2>
