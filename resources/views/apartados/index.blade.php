@@ -397,7 +397,11 @@
                         });
                     </script>
                 </div>
-                
+                @elseif($auditoria->estatus_checklist === 'Devuelto')
+                    <!-- Enlace para Descargar PDF -->
+                    <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
+                        <h4 class="text-lg">Descargar PDF para su firma</h4>
+                    </a>
                 @else
                 <form action="{{ route('apartados.checklist.store') }}" method="POST" id="checklist-form">
                     @csrf
@@ -498,9 +502,6 @@
                         <button type="submit" id="guardar-checklist" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Guardar Checklist
                         </button>
-                        <a href="{{ route('auditorias.pdf', $auditoria->id) }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            Descargar PDF
-                        </a>
                     </div>
                 </form>
                 @endif
