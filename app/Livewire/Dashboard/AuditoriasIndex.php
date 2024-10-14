@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use App\Models\Auditorias;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class AuditoriasIndex extends Component
 {
@@ -55,11 +56,22 @@ class AuditoriasIndex extends Component
         return $this->rowsQuery->paginate(5);
     }
 
+    
     public function getRowsQueryProperty()
     {
-        return Auditorias::query()
+        $user = Auth::user();
+
+        $query = Auditorias::query()
             ->orderBy($this->sortField, $this->sortDirection)
             ->where('clave_de_accion', 'like', "%{$this->search}%");
+
+        // Verificar si el usuario no es admin
+        if (!$user->hasRole('admin')) {
+            $userName = $user->name;
+            $query->where('jefe_de_departamento', $userName);
+        }
+
+        return $query;
     }
 
     public function render()
