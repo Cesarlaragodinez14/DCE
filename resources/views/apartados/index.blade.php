@@ -522,11 +522,15 @@
             <div class="inline-block overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl max-w-md w-full">
                 <div class="px-6 py-4">
                     <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">
-                        Confirmación
+                        ¿Está seguro que desea aceptar el expediente?
                     </h3>
                     <div class="mt-2">
                         <p class="text-sm text-gray-500">
-                            Una vez guardado, no podrá realizar ninguna modificación. ¿Desea continuar?
+                            Una vez aceptado se le hara del conocimiento a la UAA y deberá de proceder a la descarga y firma de la lista de verificación
+                            <br>
+                            En caso que no acepte, deberá de mantener el estatus de "En proceso".
+                            <br>
+                            Una vez aceptado, no podrá modificar la lista de verificación.
                         </p>
                     </div>
                 </div>
