@@ -133,7 +133,7 @@
             <tr>
                 <td colspan="2" style="text-align:center">
                     <h2 style="text-align: center"><strong><u>Comentarios</u></strong></h2>
-                    {{$auditoria->comentario}}
+                    {{$auditoria->comentarios}}
                     <br>
                     <br>
                     <br>
