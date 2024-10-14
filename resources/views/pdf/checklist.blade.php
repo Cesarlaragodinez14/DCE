@@ -131,8 +131,9 @@
     <div>
         <table>
             <tr>
-                <td colspan="2">
+                <td colspan="2" style="text-align:center">
                     <h2 style="text-align: center"><strong><u>Comentarios</u></strong></h2>
+                    <textarea name="" id="" style="text-align:center">{{$auditoria->auditor_nombre}}</textarea>
                     <br>
                     <br>
                     <br>
