@@ -141,12 +141,12 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    @if(@$estatus_checklist == true)
+                    @if(@$estatus_checklist == "Aceptado")
                         <h2 style="text-align: center"><strong><u>ACEPTA</u></strong></h2>
-                    @elseif(@$estatus_checklist == false)
-                        <h2 style="text-align: center"><strong><u>SIN DEFINIR</u></strong></h2>
-                    @else
+                    @elseif(@$estatus_checklist == "Devuelto")
                         <h2 style="text-align: center"><strong><u>DEVUELVE</u></strong></h2>
+                    @else
+                        <h2 style="text-align: center"><strong><u>SIN ASIGNAR</u></strong></h2>
                     @endif
                 </td>
             </tr>
