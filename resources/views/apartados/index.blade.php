@@ -575,7 +575,7 @@
             const cancelSaveButton = document.getElementById('cancel-save');
 
             guardarButton.addEventListener('click', (e) => {
-                if (estatusSelect.value === '1') {
+                if (estatusSelect.value === 'Aceptado') {
                     e.preventDefault();
                     // Show modal
                     modal.classList.remove('hidden');
