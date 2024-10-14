@@ -397,12 +397,13 @@
                         });
                     </script>
                 </div>
-                @elseif($auditoria->estatus_checklist === 'Devuelto')
+                @else
+                @if($auditoria->estatus_checklist === 'Devuelto')
                     <!-- Enlace para Descargar PDF -->
                     <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
                         <h4 class="text-lg">Descargar PDF para su firma</h4>
                     </a>
-                @else
+                @endif
                 <form action="{{ route('apartados.checklist.store') }}" method="POST" id="checklist-form">
                     @csrf
                     <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
