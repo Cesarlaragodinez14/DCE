@@ -56,13 +56,11 @@ Route::middleware([
     Route::post('/dashboard/auditorias/apartados/checklist', [ApartadosController::class, 'storeChecklist'])->name('apartados.checklist.store');
 
     Route::get('/auditorias/{auditoria_id}/pdf', [PdfController::class, 'generateChecklistPdf'])->name('auditorias.pdf');
-    
-    // Ruta para subir Seguimiento con Firma
-    Route::post('/apartados/seguimiento', [ApartadosController::class, 'storeSeguimiento'])->name('apartados.storeSeguimiento');
+    Route::get('/auditorias/{id}/downloadUua', [PdfController::class, 'downloadUua'])->name('auditorias.downloadUua')->middleware('auth');
 
     // Ruta para subir Firma de la UAA
-    Route::post('/apartados/uua', [ApartadosController::class, 'storeUua'])->name('apartados.storeUua');
-    
+    Route::post('/apartados/uua', [ApartadosController::class, 'storeUua'])->name('apartados.storeUua');   
+
     Route::get('/expedientes/detalle', [ExpedientesController::class, 'detalle'])->name('expedientes.detalle');
     Route::post('/expedientes/validar', [ExpedientesController::class, 'validarEntrega'])->name('expedientes.validar');
     Route::post('/expedientes/confirmar', [ExpedientesController::class, 'confirmEntrega'])->name('expedientes.confirmar');

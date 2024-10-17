@@ -20,7 +20,7 @@
                     </a>
                     <a href="{{ url('/dashboard/all-auditorias') }}" class="dashboard-card">
                         <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
-                        <span class="dashboard-text">Checklist</span>
+                        <span class="dashboard-text">Revisión de expediente</span>
                     </a>
                 </div>
             @endrole
@@ -35,7 +35,7 @@
 
                     <a href="{{ url('/dashboard/all-auditorias') }}" class="dashboard-card">
                         <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
-                        <span class="dashboard-text">Checklist</span>
+                        <span class="dashboard-text">Revisión de expediente</span>
                     </a>
                 </div>
             @endrole
@@ -44,7 +44,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <a href="{{ url('/dashboard/all-auditorias') }}" class="dashboard-card">
                         <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
-                        <span class="dashboard-text">Checklist</span>
+                        <span class="dashboard-text">Revisión de expediente</span>
                     </a>
                 </div>
             @endrole
@@ -83,7 +83,7 @@
                     </a>
                     <a href="{{ url('/dashboard/all-auditorias') }}" class="dashboard-card">
                         <ion-icon name="checkbox-outline" class="dashboard-icon"></ion-icon>
-                        <span class="dashboard-text">Checklist</span>
+                        <span class="dashboard-text">Revisión de expediente</span>
                     </a>
                 </div>
                 <div class="mt-8">

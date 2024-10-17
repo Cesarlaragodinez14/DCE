@@ -38,6 +38,7 @@
         .header {
             padding-bottom: 40px; /* Mayor espacio debajo del logo */
             text-align: center;
+            max-width: 200px;
         }
         .header img {
             width: 150px;
@@ -92,8 +93,8 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="600" class="container">
                     <!-- Header con Logo -->
                     <tr>
-                        <td class="header">
-                            <img src="https://saes-asf.icu/img/logo-v.png" alt="{{ config('app.name') }}" />
+                        <td class="header" style="text-align: center">
+                            <img style="max-width: 250px;" src="https://saes-asf.icu/img/logo-v.png" alt="{{ config('app.name') }}" />
                         </td>
                     </tr>
                     <!-- Título del Correo -->

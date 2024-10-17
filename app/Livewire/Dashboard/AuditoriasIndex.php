@@ -53,7 +53,7 @@ class AuditoriasIndex extends Component
 
     public function getRowsProperty()
     {
-        return $this->rowsQuery->paginate(5);
+        return $this->rowsQuery->paginate(50);
     }
 
     

@@ -8,6 +8,7 @@ use App\Models\Auditorias;
 use App\Models\ApartadoPlantilla; // Asegúrate de importar ApartadoPlantilla
 use Illuminate\Http\Request;
 use App\Models\Archivo; // Suponiendo que tienes un modelo Archivo
+use App\Helpers\MailHelper;
 
 class ApartadosController extends Controller
 {
@@ -82,37 +83,7 @@ class ApartadosController extends Controller
     }
 
     /**
-     * Almacena el archivo de Seguimiento con Firma.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function storeSeguimiento(Request $request)
-    {
-        // Validación del servidor
-        $request->validate([
-            'auditoria_id' => 'required|exists:auditorias,id',
-            'seguimiento_archivo' => 'required|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048',
-        ]);
-
-        $auditoria = Auditorias::findOrFail($request->auditoria_id);
-
-        // Almacenar el archivo
-        $path = $request->file('seguimiento_archivo')->store('auditorias_seguimiento', 'public');
-
-        // Guardar la información en la base de datos
-        $auditoria->archivo_seguimiento = $path;
-        $auditoria->estatus_firmas = 'Paso 1 Completado';
-        $auditoria->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Seguimiento cargado exitosamente.'
-        ]);
-    }
-
-    /**
-     * Almacena el archivo de Firma de la UAA.
+     * Almacena la Firma de la UAA.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -120,32 +91,64 @@ class ApartadosController extends Controller
     public function storeUua(Request $request)
     {
         // Validación del servidor
-        $request->validate([
-            'auditoria_id' => 'required|exists:auditorias,id',
-            'uua_archivo' => 'required|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048',
+        $validated = $request->validate([
+            'auditoria_id' => 'required|exists:aditorias,id', // Corregido
+            'uua_archivo' => 'required|file|mimes:pdf|max:2048',
         ]);
 
-        $auditoria = Auditorias::findOrFail($request->auditoria_id);
+        try {
+            $auditoria = Auditorias::findOrFail($validated['auditoria_id']);
 
-        // Verificar que el Paso 1 ya esté completado
-        if (is_null($auditoria->archivo_seguimiento)) {
+            // Almacenar el archivo
+            $path = $request->file('uua_archivo')->store('auditorias_uua', 'public');
+
+            // Guardar la información en la base de datos
+            $auditoria->archivo_uua = $path;
+            $auditoria->estatus_firmas = 'En espera de revisión';
+            $auditoria->save();
+
+            // Enviar correo al jefe de departamento y al equipo de revisión
+            $subject = 'Firma de la UAA Subida con Éxito';
+            $content = "<p>Hola {$auditoria->jefe_de_departamento},</p>
+                        <p>La UAA ha subido su firma para la auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
+                        <p>El expediente está ahora en espera de revisión.</p>
+                        <p>Gracias.</p>";
+            
+            $recipients = [
+                'ablozano@asf.gob.mx', // Reemplaza con los correos reales del equipo de revisión
+                // Agrega más correos si es necesario
+            ];
+
+            $data = [
+                'footer' => 'Este es un correo automático, por favor no respondas.',
+                'action' => [
+                    'text' => 'Ver Auditoría',
+                    'url' => route('auditorias.apartados', $auditoria->id)
+                ]
+            ];
+
+            MailHelper::sendDynamicMail($recipients, $subject, $content, $data);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Firma de la UAA cargada exitosamente y notificaciones enviadas.'
+            ]);
+        } catch (\Exception $e) {
+            $recipient = env("ASF_SUPPORT_EMAIL");
+            $subject = "Se ha detectado un error en el SAES";
+            $content = "<p>Hola Administradores,</p>
+                        <p>La UAA ha intentado subir su firma para la auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
+                        <p>Pero ha ocurrido un error en el sistema.</p>
+                        <p>{$e->getMessage()}</p>
+                        <p>Recuerda que este correo es detonado en 'ApartadosControlle.php' para su pronta solució .</p>
+                        <p>Gracias.</p>";
+                        
+            MailHelper::sendDynamicMail($recipients, $subject, $content, $data);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Debe completar el Paso 1 antes de subir la Firma de la UAA.'
-            ]);
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        // Almacenar el archivo
-        $path = $request->file('uua_archivo')->store('auditorias_uua', 'public');
-
-        // Guardar la información en la base de datos
-        $auditoria->archivo_uua = $path;
-        $auditoria->estatus_firmas = 'En espera de revisión';
-        $auditoria->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Firma de la UAA cargada exitosamente.'
-        ]);
     }
 }

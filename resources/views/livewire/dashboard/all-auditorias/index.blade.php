@@ -57,6 +57,10 @@
                     }}</x-ui.table.header
                 >
                 <x-ui.table.header
+                    >{{ __('Checklist Pdf')
+                    }}</x-ui.table.header
+                >
+                <x-ui.table.header
                     >{{ __('Estatus de Revisión de Expediente')
                     }}</x-ui.table.header
                 >
@@ -139,11 +143,18 @@
                         <a href="{{ route('auditorias.apartados', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #000;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
                             <ion-icon name="create-outline"></ion-icon>
                         </a>
-                        <br>
+                    </x-ui.table.column>
+                    <x-ui.table.column>
                         @if ($auditorias->estatus_checklist == "Aceptado")
-                            <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
-                                <ion-icon name="cloud-download-outline"></ion-icon>
+                            <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                                <ion-icon name="cloud-download-outline"></ion-icon> Con Firma de Seguimiento
                             </a>
+                        @elseif($auditorias->archivo_uua)
+                            <a href="{{ route('auditorias.downloadUua', $auditorias->id) }}" style="padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                                <ion-icon name="cloud-download-outline"></ion-icon> Completado
+                            </a>
+                        @else
+                            Sin pdf generado
                         @endif
                     </x-ui.table.column>
                     <x-ui.table.column>

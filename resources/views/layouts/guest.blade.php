@@ -16,6 +16,7 @@
 
         <!-- Styles -->
         @livewireStyles
+        @stack('styles')
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">
@@ -23,6 +24,7 @@
         </div>
 
         @livewireScripts
+        @stack('scripts')
 
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

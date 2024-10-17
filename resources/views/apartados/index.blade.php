@@ -32,372 +32,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl rounded-lg p-6">
                 @if($auditoria->estatus_checklist === 'Aceptado')
-                <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 text-center">
-                    <!-- Título Principal -->
-                    <h3 class="text-2xl font-bold text-green-600 mb-4">
-                        Se ha aceptado este expediente, en espera de firmas
-                    </h3>
-                
-                    <!-- Mensajes de Sesión -->
-                    @if (session()->has('message'))
-                        <div class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                
-                    <!-- Enlace para Descargar PDF -->
-                    <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
-                        <h4 class="text-lg">Descargar PDF para su firma</h4>
-                    </a>
-                
-                    <!-- Stepper de Progreso -->
-                    <div class="mt-6">
-                        <div class="flex justify-between items-center">
-                            <!-- Paso 1: Descargar Archivo Inicial -->
-                            <div class="flex flex-col items-center">
-                                <div class="relative">
-                                    <div class="w-8 h-8 flex items-center justify-center rounded-full 
-                                        @if($auditoria->archivo_seguimiento || $auditoria->archivo_uua)
-                                            bg-green-500 text-white
-                                        @else
-                                            bg-gray-300 text-gray-700
-                                        @endif
-                                    ">
-                                        @if($auditoria->archivo_seguimiento || $auditoria->archivo_uua)
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                        @else
-                                            <span>1</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <span class="mt-2 text-sm font-medium">Descargar</span>
+                    <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 text-center relative">
+                        
+                        <!-- Mensajes de Sesión -->
+                        @if (session()->has('message'))
+                            <div class="absolute top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg animate__animated animate__fadeInDown">
+                                {{ session('message') }}
                             </div>
-                
-                            <!-- Línea de Conexión -->
-                            <div class="flex-1 h-1 bg-gray-300"></div>
-                
-                            <!-- Paso 2: Subir Seguimiento con Firma -->
-                            <div class="flex flex-col items-center">
-                                <div class="relative">
-                                    <div class="w-8 h-8 flex items-center justify-center rounded-full 
-                                        @if($auditoria->archivo_seguimiento)
-                                            bg-green-500 text-white
-                                        @else
-                                            bg-gray-300 text-gray-700
-                                        @endif
-                                    ">
-                                        @if($auditoria->archivo_seguimiento)
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                        @else
-                                            <span>2</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <span class="mt-2 text-sm font-medium">Seguimiento</span>
+                        @endif
+                    
+                        @if($auditoria->archivo_uua)
+                    
+                        <!-- Verificar si ya se ha subido el archivo de la UAA -->
+                            <div class="mt-6">
+                                <h3 class="text-lg font-medium text-gray-700">Se ha terminado el proceso de verificación para esta clave de acción</h3>
+                                <p class="text-lg font-medium text-gray-700">Archivo de la UAA ya subido:</p>
+                                <a href="{{ route('auditorias.downloadUua', $auditoria->id) }}" class="mt-2 inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-300">
+                                    <ion-icon name="download-outline" class="mr-2"></ion-icon> Descargar Firma de la UAA
+                                </a>
                             </div>
+                        @else
+                            <h3><b>Se ha completado el proceso de revisión para este expediente:</b></h3>
+                            <!-- Incluir el Stepper -->
+                            @include('apartados.partials.stepper', ['auditoria' => $auditoria])
+                            <!-- Incluir el Formulario de Carga de la UAA -->
+                            @include('apartados.partials.upload_uua_form', ['auditoria' => $auditoria])
+                        @endif
                 
-                            <!-- Línea de Conexión -->
-                            <div class="flex-1 h-1 bg-gray-300"></div>
-                
-                            <!-- Paso 3: Subir Firma de la UAA -->
-                            <div class="flex flex-col items-center">
-                                <div class="relative">
-                                    <div class="w-8 h-8 flex items-center justify-center rounded-full 
-                                        @if($auditoria->archivo_uua)
-                                            bg-green-500 text-white
-                                        @else
-                                            bg-gray-300 text-gray-700
-                                        @endif
-                                    ">
-                                        @if($auditoria->archivo_uua)
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                        @else
-                                            <span>3</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <span class="mt-2 text-sm font-medium">Firma UAA</span>
-                            </div>
-                        </div>
-                
-                        <!-- Descripciones de los Pasos -->
-                        <div class="mt-4 space-y-2">
-                            <div class="flex justify-between">
-                                <!-- Descripción Paso 1 -->
-                                <div class="text-center">
-                                    <p class="text-sm font-semibold">Paso 1: Descargar Archivo Inicial</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-sm font-semibold">Paso 2: Subir Seguimiento con Firma</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-sm font-semibold">Paso 3: Subir Firma de la UAA</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                
-                    <!-- Formulario de Carga de Seguimiento con Firma -->
-                    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 mt-8">
-                        <h4 class="text-xl font-semibold text-gray-700 mb-4">Subir Seguimiento con Firma</h4>
-                        <form id="uploadSeguimientoForm" class="space-y-4">
-                            @csrf
-                            <!-- Campo de archivo -->
-                            <div>
-                                <label for="seguimiento_archivo" class="block text-sm font-medium text-gray-700">Selecciona el archivo de Seguimiento</label>
-                                <input type="file" name="seguimiento_archivo" id="seguimiento_archivo" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" required
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                                <p class="mt-1 text-xs text-gray-500">Archivos permitidos: PDF, DOC, DOCX, PNG, JPG, JPEG. Tamaño máximo: 2MB.</p>
-                                <span id="seguimientoError" class="text-red-500 text-sm hidden">Por favor, selecciona un archivo válido.</span>
-                            </div>
-                
-                            <!-- Botón de envío -->
-                            <div>
-                                <button type="submit"
-                                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                    Subir Seguimiento
-                                </button>
-                            </div>
-                        </form>
-                
-                        <!-- Mensajes de Éxito o Error -->
-                        <div id="seguimientoMessage" class="mt-4 hidden text-center"></div>
-                    </div>
-                
-                    <!-- Formulario de Carga de Firma de la UAA -->
-                    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 mt-8">
-                        <h4 class="text-xl font-semibold text-gray-700 mb-4">Subir Firma de la UAA</h4>
-                        <form id="uploadUuaForm" class="space-y-4">
-                            @csrf
-                            <!-- Campo de archivo -->
-                            <div>
-                                <label for="uua_archivo" class="block text-sm font-medium text-gray-700">Selecciona el archivo firmado por la UAA</label>
-                                <input type="file" name="uua_archivo" id="uua_archivo" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" required
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                                <p class="mt-1 text-xs text-gray-500">Archivos permitidos: PDF, DOC, DOCX, PNG, JPG, JPEG. Tamaño máximo: 2MB.</p>
-                                <span id="uuaError" class="text-red-500 text-sm hidden">Por favor, selecciona un archivo válido.</span>
-                            </div>
-                
-                            <!-- Botón de envío -->
-                            <div>
-                                <button type="submit"
-                                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Subir Firma de la UAA
-                                </button>
-                            </div>
-                        </form>
-                
-                        <!-- Mensajes de Éxito o Error -->
-                        <div id="uuaMessage" class="mt-4 hidden text-center"></div>
-                    </div>
-                
-                    <!-- Scripts -->
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            // Formulario de Seguimiento
-                            const seguimientoForm = document.getElementById('uploadSeguimientoForm');
-                            const seguimientoInput = document.getElementById('seguimiento_archivo');
-                            const seguimientoError = document.getElementById('seguimientoError');
-                            const seguimientoMessage = document.getElementById('seguimientoMessage');
-                
-                            // Formulario de UUA
-                            const uuaForm = document.getElementById('uploadUuaForm');
-                            const uuaInput = document.getElementById('uua_archivo');
-                            const uuaError = document.getElementById('uuaError');
-                            const uuaMessage = document.getElementById('uuaMessage');
-                
-                            // Función para actualizar el stepper
-                            function updateStepper(paso) {
-                                // Paso 1: Descargar (si ya descargó, no cambia)
-                                // Paso 2: Seguimiento
-                                const step2 = document.querySelectorAll('.flex.flex-col.items-center')[1].querySelector('div.relative div');
-                                if (paso >= 2) {
-                                    step2.classList.remove('bg-gray-300', 'text-gray-700');
-                                    step2.classList.add('bg-green-500', 'text-white');
-                                    step2.innerHTML = `
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    `;
-                                }
-                
-                                // Paso 3: Firma UAA
-                                const step3 = document.querySelectorAll('.flex.flex-col.items-center')[2].querySelector('div.relative div');
-                                if (paso >= 3) {
-                                    step3.classList.remove('bg-gray-300', 'text-gray-700');
-                                    step3.classList.add('bg-green-500', 'text-white');
-                                    step3.innerHTML = `
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    `;
-                                }
-                            }
-                
-                            // Manejador de envío del formulario de Seguimiento
-                            seguimientoForm.addEventListener('submit', function (e) {
-                                e.preventDefault();
-                
-                                // Limpiar mensajes anteriores
-                                seguimientoError.classList.add('hidden');
-                                seguimientoMessage.classList.add('hidden');
-                                seguimientoMessage.innerHTML = '';
-                
-                                // Validación del archivo
-                                const archivo = seguimientoInput.files[0];
-                                if (!archivo) {
-                                    seguimientoError.textContent = 'Por favor, selecciona un archivo.';
-                                    seguimientoError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                const allowedTypes = [
-                                    'application/pdf',
-                                    'application/msword',
-                                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                    'image/png',
-                                    'image/jpeg',
-                                    'image/jpg'
-                                ];
-                                if (!allowedTypes.includes(archivo.type)) {
-                                    seguimientoError.textContent = 'Tipo de archivo no permitido.';
-                                    seguimientoError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                const maxSize = 2 * 1024 * 1024; // 2MB
-                                if (archivo.size > maxSize) {
-                                    seguimientoError.textContent = 'El archivo excede el tamaño máximo de 2MB.';
-                                    seguimientoError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                // Preparar los datos para enviar
-                                const formData = new FormData(seguimientoForm);
-                
-                                // Enviar la solicitud AJAX
-                                fetch('{{ route('apartados.storeSeguimiento') }}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Accept': 'application/json',
-                                    },
-                                    body: formData
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        seguimientoMessage.classList.remove('hidden', 'text-red-500');
-                                        seguimientoMessage.classList.add('text-green-500');
-                                        seguimientoMessage.textContent = data.message || 'Seguimiento cargado exitosamente.';
-                
-                                        // Actualizar el stepper
-                                        updateStepper(2);
-                
-                                        // Deshabilitar el formulario de Seguimiento
-                                        seguimientoForm.querySelector('button[type="submit"]').disabled = true;
-                
-                                        // Activar el formulario de UUA
-                                        uuaForm.querySelector('button[type="submit"]').disabled = false;
-                                    } else {
-                                        seguimientoMessage.classList.remove('hidden', 'text-green-500');
-                                        seguimientoMessage.classList.add('text-red-500');
-                                        seguimientoMessage.textContent = data.message || 'Hubo un error al cargar el Seguimiento.';
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    seguimientoMessage.classList.remove('hidden', 'text-green-500');
-                                    seguimientoMessage.classList.add('text-red-500');
-                                    seguimientoMessage.textContent = 'Hubo un error al cargar el Seguimiento.';
-                                });
-                            });
-                
-                            // Manejador de envío del formulario de UUA
-                            uuaForm.addEventListener('submit', function (e) {
-                                e.preventDefault();
-                
-                                // Limpiar mensajes anteriores
-                                uuaError.classList.add('hidden');
-                                uuaMessage.classList.add('hidden');
-                                uuaMessage.innerHTML = '';
-                
-                                // Validación del archivo
-                                const archivo = uuaInput.files[0];
-                                if (!archivo) {
-                                    uuaError.textContent = 'Por favor, selecciona un archivo.';
-                                    uuaError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                const allowedTypes = [
-                                    'application/pdf',
-                                    'application/msword',
-                                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                    'image/png',
-                                    'image/jpeg',
-                                    'image/jpg'
-                                ];
-                                if (!allowedTypes.includes(archivo.type)) {
-                                    uuaError.textContent = 'Tipo de archivo no permitido.';
-                                    uuaError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                const maxSize = 2 * 1024 * 1024; // 2MB
-                                if (archivo.size > maxSize) {
-                                    uuaError.textContent = 'El archivo excede el tamaño máximo de 2MB.';
-                                    uuaError.classList.remove('hidden');
-                                    return;
-                                }
-                
-                                // Preparar los datos para enviar
-                                const formData = new FormData(uuaForm);
-                
-                                // Enviar la solicitud AJAX
-                                fetch('{{ route('apartados.storeUua') }}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Accept': 'application/json',
-                                    },
-                                    body: formData
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        uuaMessage.classList.remove('hidden', 'text-red-500');
-                                        uuaMessage.classList.add('text-green-500');
-                                        uuaMessage.textContent = data.message || 'Firma de la UAA cargada exitosamente.';
-                
-                                        // Actualizar el stepper
-                                        updateStepper(3);
-                
-                                        // Deshabilitar el formulario de UUA
-                                        uuaForm.querySelector('button[type="submit"]').disabled = true;
-                                    } else {
-                                        uuaMessage.classList.remove('hidden', 'text-green-500');
-                                        uuaMessage.classList.add('text-red-500');
-                                        uuaMessage.textContent = data.message || 'Hubo un error al cargar la Firma de la UAA.';
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    uuaMessage.classList.remove('hidden', 'text-green-500');
-                                    uuaMessage.classList.add('text-red-500');
-                                    uuaMessage.textContent = 'Hubo un error al cargar la Firma de la UAA.';
-                                });
-                            });
-                        });
-                    </script>
-                </div>
                 @else
+                    <!-- Otro contenido para casos donde el estatus_checklist no es 'Aceptado' -->
+                    <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 mt-8 text-center">
+                        <p class="text-gray-700">La auditoría aún no ha sido aceptada para subir la firma de la UAA.</p>
+                    </div>
                 @if($auditoria->estatus_checklist === 'Devuelto')
                     <!-- Enlace para Descargar PDF -->
                     <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
@@ -546,7 +213,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle subapartados

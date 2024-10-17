@@ -14,6 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        @stack('styles')
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -55,6 +56,7 @@
         </div>
 
         @stack('modals')
+        @stack('scripts')
 
         @livewireScripts
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
