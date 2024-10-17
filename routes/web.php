@@ -10,9 +10,24 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\ApartadosController;
 use App\Http\Controllers\PdfController;
+use Illuminate\Support\Facades\Mail;
+use App\Helpers\MailHelper;
+
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/test-dynamic-email', function () {
+    $subject = 'Correo de Prueba Dinámico';
+    $content = '<p>Este es un <strong>correo de prueba</strong> usando la plantilla dinámica.</p>';
+    $recipients = ['al@mdtch.mx', 'al@pwa.mx'];
+
+    MailHelper::sendDynamicMail($recipients, $subject, $content, [
+        'footer' => 'Este es un correo de prueba.'
+    ]);
+
+    return 'Correo de prueba enviado!';
 });
 
 Route::middleware([
