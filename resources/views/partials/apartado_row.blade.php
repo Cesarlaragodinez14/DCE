@@ -29,8 +29,14 @@
 @endphp
 
 @if($mostrarFila)
-<tr class="{{ is_null($apartado->parent_id) ? 'bg-gray-50' : 'bg-white parent-'.$apartado->parent_id }} {{ isset($is_subrow) && $is_subrow ? 'hidden' : '' }}">
-
+<tr 
+    class="{{ is_null($apartado->parent_id) ? 'bg-gray-50' : 'bg-white parent-'.$apartado->parent_id }} 
+           {{ isset($is_subrow) && $is_subrow ? 'hidden' : '' }} 
+           {{ (($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados) ? 'mandatory' : '' }}" 
+        @if(($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados)
+            data-nombre-apartado="{{ $apartado->nombre }}"
+        @endif
+    >
     <!-- Inputs ocultos -->
     <input type="hidden" name="apartados[{{ $apartado->id }}][id]" value="{{ $apartado->id }}">
     <input type="hidden" name="apartados[{{ $apartado->id }}][es_aplicable]" value="{{ $es_aplicable }}">
@@ -80,16 +86,23 @@
 
         <!-- ¿Se Integra? -->
         <td class="px-4 py-3 text-center">
-            <input type="checkbox" name="apartados[{{ $apartado->id }}][se_integra]" value="1"
+            <input 
+                type="checkbox" 
+                name="apartados[{{ $apartado->id }}][se_integra]" 
+                value="1"
                 {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
                 class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
         </td>
 
         <!-- Observaciones -->
         <td class="px-4 py-3">
-            <textarea name="apartados[{{ $apartado->id }}][observaciones]"
-                class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}</textarea>
+            @if ( auth()->user()->roles->pluck('name')[0] === 'Jefe de Departamento' || auth()->user()->roles->pluck('name')[0] === 'admin' )
+                <textarea name="apartados[{{ $apartado->id }}][observaciones]"
+                    class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}</textarea>
+            @elseif ( auth()->user()->roles->pluck('name')[0] !== 'Jefe de Departamento' && auth()->user()->roles->pluck('name')[0] !== 'admin' )
+                {{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones ?? 'Sin Observaciones de seguimiento' }}
+            @endif
         </td>
 
         <!-- Comentarios UAA -->

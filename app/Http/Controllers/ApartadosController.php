@@ -115,7 +115,9 @@ class ApartadosController extends Controller
                         <p>Gracias.</p>";
             
             $recipients = [
-                'ablozano@asf.gob.mx', // Reemplaza con los correos reales del equipo de revisión
+                'janarvaez@asf.gob.mx', // 
+                'clara@asf.gob.mx', // 
+                'ablozano@asf.gob.mx', // 
                 // Agrega más correos si es necesario
             ];
 

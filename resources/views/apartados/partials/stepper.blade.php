@@ -4,7 +4,7 @@
     <div class="flex flex-col md:flex-row md:justify-between items-center">
         <!-- Título Principal -->
         <h3 class="text-2xl font-bold text-green-600 mb-4">
-            Se ha aceptado este expediente y formado por la DCE, en espera de la firmaa de la UAA
+            El expediente ha sido aceptado por la DGSEG a cargo, en espera de la firma del responsable designado por la UAA.
         </h3>
     
         <!-- Paso 1: Descargar PDF -->
