@@ -65,6 +65,7 @@ class ApartadosController extends Controller
                 ];
             }
         }
+        $auditoria = Auditorias::findOrFail($auditoria_id);
 
         if (!empty($data)) {
             Auditorias::where('id', $auditoria_id)->update([
@@ -77,6 +78,31 @@ class ApartadosController extends Controller
                 'estatus_firmas' => $request->estatus_firmas,
             ]);
             ChecklistApartado::upsert($data, ['apartado_id', 'auditoria_id'], ['se_aplica', 'es_obligatorio', 'se_integra', 'observaciones', 'comentarios_uaa']);
+
+            // Enviar correo al jefe de departamento y al equipo de revisión
+            $subject = 'Clave de acción aprobada por Seguimiento';
+            $content = "<p>Hola,</p>
+                        <p>Seguimiento ha aprobado la revisión de expediente para auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
+                        <p>El expediente está ahora en espera de firma de la UAA, sube el archivo firmado lo antes posible, tienes un máximo de 7 días habiles.</p>
+                        <p>Gracias.</p>";
+            
+            $recipients = [
+                'softpiratas@gmail.com', // 
+                'al@mdtch.mx', // 
+                'ablozano@asf.gob.mx', // NO FUNCION EN ASF
+                // Agrega más correos si es necesario
+            ];
+
+            $data = [
+                'footer' => 'Este es un correo automático, por favor no respondas.',
+                'action' => [
+                    'text' => 'Ver Auditoría',
+                    'url' => route('auditorias.apartados', $auditoria->id)
+                ]
+            ];
+
+            MailHelper::sendDynamicMail($recipients, $subject, $content, $data);
+
         }
 
         return redirect()->back()->with('success', 'Checklist guardado exitosamente.');
@@ -109,15 +135,15 @@ class ApartadosController extends Controller
 
             // Enviar correo al jefe de departamento y al equipo de revisión
             $subject = 'Firma de la UAA Subida con Éxito';
-            $content = "<p>Hola {$auditoria->jefe_de_departamento},</p>
+            $content = "
                         <p>La UAA ha subido su firma para la auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
                         <p>El expediente está ahora en espera de revisión.</p>
                         <p>Gracias.</p>";
             
             $recipients = [
-                'janarvaez@asf.gob.mx', // 
-                'clara@asf.gob.mx', // 
-                'ablozano@asf.gob.mx', // 
+                'softpiratas@gmail.com', // 
+                'al@mdtch.mx', // 
+                'ablozano@asf.gob.mx', // NO FUNCION EN ASF
                 // Agrega más correos si es necesario
             ];
 

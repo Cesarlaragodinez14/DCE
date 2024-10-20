@@ -155,6 +155,7 @@
                     <h2 style="text-align: center"><strong><u>Servidor Público del área auditora que entrega el expediente</u></strong></h2>
                     <b>Nombre: {{$auditoria->auditor_nombre}}</b><br>
                     <b>Puesto: {{$auditoria->auditor_puesto}}</b><br>
+                    <b>Clave de Acción: {{ $auditoria->catClaveAccion->valor}}</b>
                     <br>
                     <br>
                     <br>
@@ -169,6 +170,7 @@
                     <h2 style="text-align: center"><strong><u>Servidor Público de seguimiento que revisa, acepta o devuelve el expediente</u></strong></h2>
                     <b>Nombre: {{$auditoria->seguimiento_nombre}} </b><br>
                     <b>Puesto: {{$auditoria->seguimiento_puesto}} </b><br>
+                    <b>Clave de Acción: {{ $auditoria->catClaveAccion->valor}}</b>
                     <br>
                     <br>
                     <br>
