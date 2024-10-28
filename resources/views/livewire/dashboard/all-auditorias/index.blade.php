@@ -1,27 +1,54 @@
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
     <x-ui.breadcrumbs>
-        <x-ui.breadcrumbs.link href="/dashboard"
-            >Dashboard</x-ui.breadcrumbs.link
-        >
+        <x-ui.breadcrumbs.link href="/dashboard">
+            Dashboard
+        </x-ui.breadcrumbs.link>
         <x-ui.breadcrumbs.separator />
-        <x-ui.breadcrumbs.link active
-            >{{ __('crud.allAuditorias.collectionTitle')
-            }}</x-ui.breadcrumbs.link
-        >
+        <x-ui.breadcrumbs.link active>
+            {{ __('crud.allAuditorias.collectionTitle') }}
+        </x-ui.breadcrumbs.link>
     </x-ui.breadcrumbs>
 
-    <div class="flex justify-between align-top py-4">
-        <x-ui.input
-            wire:model.live="search"
-            type="text"
-            placeholder="Buscar en: {{ __('crud.allAuditorias.collectionTitle') }}..."
-        />
+    @if(session()->has('success'))
+        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @can('create', App\Models\Auditorias::class)
-        <a wire:navigate href="{{ route('dashboard.all-auditorias.create') }}">
-            <x-ui.button>Crear</x-ui.button>
-        </a>
-        @endcan
+    @if(session()->has('error'))
+        <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="flex justify-between items-center py-4">
+        <div class="flex space-x-4">
+            <x-ui.input
+                wire:model.debounce.300ms="search"
+                type="text"
+                placeholder="Buscar en: {{ __('crud.allAuditorias.collectionTitle') }}..."
+            />
+
+            <x-ui.filter-cp-en
+                :entregas="$entrega"
+                :cuentasPublicas="$cuentaPublica"
+                route="dashboard.all-auditorias.index"
+                defaultEntregaLabel="Seleccionar Entrega"
+                defaultCuentaPublicaLabel="Seleccionar Cuenta Pública"
+            />
+        </div>
+
+        <div class="flex space-x-4">
+            @role('admin')
+                <a wire:navigate href="{{ route('dashboard.all-auditorias.create') }}">
+                    <x-ui.button>Crear</x-ui.button>
+                </a>
+            @endrole
+
+            <button wire:click="exportExcel" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" wire:loading.attr="disabled">
+                <ion-icon name="download-outline" class="mr-1"></ion-icon> Descargar
+            </button>
+        </div>
     </div>
 
     {{-- Delete Modal --}}

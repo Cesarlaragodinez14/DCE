@@ -22,8 +22,6 @@ class MailHelper
         $mail = new DynamicMail($subject, $content, $data);
 
         // Envía el correo a cada destinatario
-        foreach ($recipients as $recipient) {
-            Mail::to($recipient)->send($mail);
-        }
+        Mail::to($recipients)->send($mail);
     }
 }

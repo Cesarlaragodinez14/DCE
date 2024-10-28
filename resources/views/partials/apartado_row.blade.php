@@ -83,15 +83,29 @@
                 </span>
             @endif
         </td>
-
+        
         <!-- ¿Se Integra? -->
         <td class="px-4 py-3 text-center">
-            <input 
-                type="checkbox" 
-                name="apartados[{{ $apartado->id }}][se_integra]" 
-                value="1"
-                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
-                class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
+            @role('admin|Jefe de Departamento')
+                <input 
+                    type="checkbox" 
+                    name="apartados[{{ $apartado->id }}][se_integra]" 
+                    value="1"
+                    {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
+                    class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
+            @else
+                @php
+                    $seIntegra = optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra;
+                    if ($seIntegra === 1) {
+                        $displayText = 'Si';
+                    } elseif ($seIntegra === 0) {
+                        $displayText = 'No';
+                    } else {
+                        $displayText = 'Sin revisión de seguimiento';
+                    }
+                @endphp
+                <span class="text-gray-700">{{ $displayText }}</span>
+            @endrole
         </td>
 
         <!-- Observaciones -->

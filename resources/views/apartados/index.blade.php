@@ -147,31 +147,30 @@
                         @endif
                 
                     </div>
-                @else
-                    <!-- Otro contenido para casos donde el estatus_checklist no es 'Aceptado' -->
-                    <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 mt-8 text-center">
-                        <p class="text-gray-700">La auditoría aún no ha sido aceptada para subir la firma de la UAA.</p>
-                    </div>
-                @if($auditoria->estatus_checklist === 'Devuelto')
-                    <!-- Enlace para Descargar PDF -->
-                    <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
-                        <h4 class="text-lg">Descargar PDF para su firma</h4>
-                    </a>
-                @endif
+
+                    @hasrole('admin|Jefe de Departamento')
+
                 <form action="{{ route('apartados.checklist.store') }}" method="POST" id="checklist-form">
                     @csrf
                     <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
-
                     <!-- Estatus del Checklist -->
                     <div class="mb-8">
                         <label for="estatus_checklist" class="block text-lg font-medium text-gray-700">Estatus del Checklist</label>
                         <!-- Custom Select Component -->
                         <div class="relative mt-2">
-                            <select name="estatus_checklist" id="estatus_checklist" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="En Proceso" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'En Proceso' ? 'selected' : '' }}>EN PROCESO</option>
-                                <option value="Aceptado" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Aceptado' ? 'selected' : '' }}>ACEPTA</option>
-                                <option value="Devuelto" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Devuelto' ? 'selected' : '' }}>DEVUELVE</option>
-                            </select>
+                            @role('admin|Jefe de Departamento')
+                                <select name="estatus_checklist" id="estatus_checklist" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="En Proceso" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'En Proceso' ? 'selected' : '' }}>EN PROCESO</option>
+                                    <option value="Aceptado" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Aceptado' ? 'selected' : '' }}>ACEPTA</option>
+                                    <option value="Devuelto" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Devuelto' ? 'selected' : '' }}>DEVUELVE</option>
+                                </select>
+                            @else
+                                <select name="estatus_checklist" id="estatus_checklist" class="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-500 py-2 px-3 pr-8 rounded-md leading-tight" disabled>
+                                    <option value="En Proceso" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'En Proceso' ? 'selected' : '' }}>EN PROCESO</option>
+                                    <option value="Aceptado" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Aceptado' ? 'selected' : '' }}>ACEPTA</option>
+                                    <option value="Devuelto" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Devuelto' ? 'selected' : '' }}>DEVUELVE</option>
+                                </select>
+                            @endrole
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
                                     <path d="M5.516 7.548L9.951 12l4.435-4.452-1.024-1.024L9.951 9.952 6.541 6.524z"/>
@@ -190,11 +189,19 @@
                                 <div class="space-y-4">
                                     <div>
                                         <label for="auditor_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                        <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? $auditoria->jefe_de_departamento) ?: $auditoria->jefe_de_departamento) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
                                     </div>
                                     <div>
                                         <label for="auditor_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
-                                        <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? $auditoria->jd) ?: $auditoria->jd) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
                                     </div>
                                 </div>
                             </div>
@@ -205,61 +212,291 @@
                                 <div class="space-y-4">
                                     <div>
                                         <label for="seguimiento_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                        <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
                                     </div>
                                     <div>
                                         <label for="seguimiento_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
-                                        <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
                     <!-- Comentarios -->
                     <div class="mb-8">
                         <label for="comentarios" class="block text-lg font-medium text-gray-700">Comentarios</label>
-                        <textarea name="comentarios" id="comentarios" rows="4" class="mt-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">{{ old('comentarios', $auditoria->comentarios ?? '') }}</textarea>
+                        @role('admin|Jefe de Departamento')
+                            <textarea name="comentarios" id="comentarios" rows="4" class="mt-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">{{ old('comentarios', $auditoria->comentarios ?? '') }}</textarea>
+                        @else
+                            <textarea name="comentarios" id="comentarios" rows="4" class="mt-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>{{ old('comentarios', $auditoria->comentarios ?? '') }}</textarea>
+                        @endrole
                     </div>
 
                     <!-- Tabla de Checklist -->
                     <div class="mb-8">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Checklist</h3>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full table-auto border-collapse">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th class="border-b px-4 py-2 text-left text-gray-600">N°</th>
-                                        <th class="border-b px-4 py-2 text-left text-gray-600">Apartado / Subapartado</th>
-                                        <th class="border-b px-4 py-2 text-center text-gray-600">¿Obligatorio?</th>
-                                        <th class="border-b px-4 py-2 text-center text-gray-600">¿Se Integra?</th>
-                                        <th class="border-b px-4 py-2 text-left text-gray-600">Observaciones</th>
-                                        <th class="border-b px-4 py-2 text-left text-gray-600">Comentarios UAA</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="checklist-body">
-                                    <!-- Filas de Apartados -->
-                                    @foreach ($apartados as $apartado)
-                                        @include('partials.apartado_row', [
-                                            'apartado' => $apartado,
-                                            'parentIteration' => $loop->iteration,
-                                            'is_subrow' => false,
-                                            'auditoria' => $auditoria,
-                                            'checklist' => $checklist,
-                                        ])
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        
+                        @hasrole('Director General')
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">El expediente aún en proceso de revisión</h3>
+                        @if ($auditoria->estatus_checklist === 'Devuelto')
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full table-auto border-collapse">
+                                        <thead class="bg-gray-100">
+                                            <tr>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">N°</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Apartado / Subapartado</th>
+                                                <th class="border-b px-4 py-2 text-center text-gray-600">¿Obligatorio?</th>
+                                                <th class="border-b px-4 py-2 text-center text-gray-600">¿Se Integra?</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Observaciones</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Comentarios UAA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="checklist-body">
+                                            <!-- Filas de Apartados -->
+                                            @foreach ($apartados as $apartado)
+                                                @include('partials.apartado_row', [
+                                                    'apartado' => $apartado,
+                                                    'parentIteration' => $loop->iteration,
+                                                    'is_subrow' => false,
+                                                    'auditoria' => $auditoria,
+                                                    'checklist' => $checklist,
+                                                ])
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @elseif ($auditoria->estatus_checklist !== 'Devuelto' || $auditoria->estatus_checklist !== 'Aceptado')
+                                <div class="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg" role="alert">
+                                    <strong>Atención:</strong> La revisión de expediente aún está en proceso y recibirás una notificación cuando exista alguna actualización.
+                                </div>
+                            @endif
+                        @else
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Checklist</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full table-auto border-collapse">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">N°</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Apartado / Subapartado</th>
+                                            <th class="border-b px-4 py-2 text-center text-gray-600">¿Obligatorio?</th>
+                                            <th class="border-b px-4 py-2 text-center text-gray-600">¿Se Integra?</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Observaciones</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Comentarios UAA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="checklist-body">
+                                        <!-- Filas de Apartados -->
+                                        @foreach ($apartados as $apartado)
+                                            @include('partials.apartado_row', [
+                                                'apartado' => $apartado,
+                                                'parentIteration' => $loop->iteration,
+                                                'is_subrow' => false,
+                                                'auditoria' => $auditoria,
+                                                'checklist' => $checklist,
+                                            ])
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="flex items-center justify-between mt-4">
+                                @hasrole('admin|Jefe de Departamento')
+                                    <button type="submit" id="guardar-checklist" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Guardar Checklist
+                                    </button>
+                                @endhasrole
+                            </div>
+                        @endhasrole
+                    </div>
+
+                </form>
+                    @endhasrole
+                @else
+                @if($auditoria->estatus_checklist === 'Devuelto')
+                    <!-- Enlace para Descargar PDF -->
+                    <a href="/auditorias/{{ $auditoria->id }}/pdf" class="text-blue-500 hover:text-blue-700 underline">
+                        <h4 class="text-lg">Descargar PDF para su previsualización</h4>
+                    </a>
+                @endif
+                <form action="{{ route('apartados.checklist.store') }}" method="POST" id="checklist-form">
+                    @csrf
+                    <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
+                    <!-- Estatus del Checklist -->
+                    <div class="mb-8">
+                        <label for="estatus_checklist" class="block text-lg font-medium text-gray-700">Estatus del Checklist</label>
+                        <!-- Custom Select Component -->
+                        <div class="relative mt-2">
+                            @role('admin|Jefe de Departamento')
+                                <select name="estatus_checklist" id="estatus_checklist" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="En Proceso" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'En Proceso' ? 'selected' : '' }}>EN PROCESO</option>
+                                    <option value="Aceptado" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Aceptado' ? 'selected' : '' }}>ACEPTA</option>
+                                    <option value="Devuelto" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Devuelto' ? 'selected' : '' }}>DEVUELVE</option>
+                                </select>
+                            @else
+                                <select style="display: none" name="estatus_checklist" id="estatus_checklist" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="Devuelto" {{ old('estatus_checklist', $auditoria->estatus_checklist) == 'Devuelto' ? 'selected' : '' }}>DEVUELVE</option>
+                                </select>
+                            @endrole
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+                                    <path d="M5.516 7.548L9.951 12l4.435-4.452-1.024-1.024L9.951 9.952 6.541 6.524z"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Botones de Acción -->
-                    <div class="flex items-center justify-between">
-                        <button type="submit" id="guardar-checklist" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Guardar Checklist
-                        </button>
+                    <!-- Datos del Servidor Público -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Datos del Servidor Público</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Área auditora -->
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+                                <h4 class="text-lg font-medium text-gray-800 mb-4">Área auditora que entrega el expediente</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="auditor_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
+                                    </div>
+                                    <div>
+                                        <label for="auditor_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seguimiento -->
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+                                <h4 class="text-lg font-medium text-gray-800 mb-4">Seguimiento que revisa, acepta o devuelve el expediente</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="seguimiento_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
+                                    </div>
+                                    <div>
+                                        <label for="seguimiento_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
+                                        @role('admin|Jefe de Departamento')
+                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                        @else
+                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                        @endrole
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Comentarios -->
+                    <div class="mb-8">
+                        <label for="comentarios" class="block text-lg font-medium text-gray-700">Comentarios</label>
+                        @role('admin|Jefe de Departamento')
+                            <textarea name="comentarios" id="comentarios" rows="4" class="mt-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">{{ old('comentarios', $auditoria->comentarios ?? '') }}</textarea>
+                        @else
+                            <textarea name="comentarios" id="comentarios" rows="4" class="mt-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>{{ old('comentarios', $auditoria->comentarios ?? '') }}</textarea>
+                        @endrole
+                    </div>
+
+                    <!-- Tabla de Checklist -->
+                    <div class="mb-8">
+                        
+                        @hasrole('Director General')
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">El expediente aún en proceso de revisión</h3>
+                        @if ($auditoria->estatus_checklist === 'Devuelto')
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full table-auto border-collapse">
+                                        <thead class="bg-gray-100">
+                                            <tr>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">N°</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Apartado / Subapartado</th>
+                                                <th class="border-b px-4 py-2 text-center text-gray-600">¿Obligatorio?</th>
+                                                <th class="border-b px-4 py-2 text-center text-gray-600">¿Se Integra?</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Observaciones</th>
+                                                <th class="border-b px-4 py-2 text-left text-gray-600">Comentarios UAA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="checklist-body">
+                                            <!-- Filas de Apartados -->
+                                            @foreach ($apartados as $apartado)
+                                                @include('partials.apartado_row', [
+                                                    'apartado' => $apartado,
+                                                    'parentIteration' => $loop->iteration,
+                                                    'is_subrow' => false,
+                                                    'auditoria' => $auditoria,
+                                                    'checklist' => $checklist,
+                                                ])
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Botones de Acción -->
+                                <div class="flex items-center justify-between mt-4">
+                                    <button type="submit" id="guardar-checklist" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Guardar Checklist
+                                    </button>
+                                </div>
+                            @elseif ($auditoria->estatus_checklist !== 'Devuelto' || $auditoria->estatus_checklist !== 'Aceptado')
+                                <div class="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg" role="alert">
+                                    <strong>Atención:</strong> La revisión de expediente aún está en proceso y recibirás una notificación cuando exista alguna actualización.
+                                </div>
+                            @endif
+                        @else
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Checklist</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full table-auto border-collapse">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">N°</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Apartado / Subapartado</th>
+                                            <th class="border-b px-4 py-2 text-center text-gray-600">¿Obligatorio?</th>
+                                            <th class="border-b px-4 py-2 text-center text-gray-600">¿Se Integra?</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Observaciones</th>
+                                            <th class="border-b px-4 py-2 text-left text-gray-600">Comentarios UAA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="checklist-body">
+                                        <!-- Filas de Apartados -->
+                                        @foreach ($apartados as $apartado)
+                                            @include('partials.apartado_row', [
+                                                'apartado' => $apartado,
+                                                'parentIteration' => $loop->iteration,
+                                                'is_subrow' => false,
+                                                'auditoria' => $auditoria,
+                                                'checklist' => $checklist,
+                                            ])
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Botones de Acción -->
+                            <div class="flex items-center justify-between mt-4">
+                                <button type="submit" id="guardar-checklist" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Guardar Checklist
+                                </button>
+                            </div>
+
+                        @endhasrole
+                    </div>
+
                 </form>
                 @endif
             </div>
@@ -347,7 +584,7 @@
                 });
 
                 guardarButton.addEventListener('click', (e) => {
-                    if (estatusSelect.value === 'Aceptado') {
+                    if (estatusSelect.value === 'Aceptado' || estatusSelect.value === 'Devuelto') {
                         e.preventDefault();
 
                         // Realizar la validación antes de mostrar el modal
