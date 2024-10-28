@@ -143,8 +143,13 @@
                             <!-- Incluir el Stepper -->
                             @include('apartados.partials.stepper', ['auditoria' => $auditoria])
                             <!-- Incluir el Formulario de Carga de la UAA -->
+                            @hasrole('admin|Director General')
                             @include('apartados.partials.upload_uua_form', ['auditoria' => $auditoria])
-                        @endif
+                            @endhasrole
+                            @hasrole('Jefe de Departamento|admin')
+                            <p>En espera de firma de la UAA</p>
+                            @endhasrole
+                            @endif
                 
                     </div>
 

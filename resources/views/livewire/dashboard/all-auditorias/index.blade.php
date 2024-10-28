@@ -43,11 +43,11 @@
                 <a wire:navigate href="{{ route('dashboard.all-auditorias.create') }}">
                     <x-ui.button>Crear</x-ui.button>
                 </a>
-            @endrole
 
             <button wire:click="exportExcel" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" wire:loading.attr="disabled">
-                <ion-icon name="download-outline" class="mr-1"></ion-icon> Descargar
+                Exportar
             </button>
+            @endrole
         </div>
     </div>
 
@@ -229,6 +229,7 @@
                         >{{ $auditorias->catCuentaPublica->valor }}</x-ui.table.column
                     >
                     <x-ui.table.action-column>
+                        @role('admin')
                         @can('update', $auditorias)
                         <x-ui.action
                             wire:navigate
@@ -241,6 +242,7 @@
                             >Borrar</x-ui.action.danger
                         >
                         @endcan
+                        @endrole
                     </x-ui.table.action-column>
                 </x-ui.table.row>
                 @empty

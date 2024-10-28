@@ -1,4 +1,5 @@
 <div class="hidden sm:flex sm:items-center sm:ml-6">
+    @role('admin')
     <div class="ml-3 relative">
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
@@ -143,6 +144,7 @@
             </x-slot>
         </x-dropdown>
     </div>
+    @endrole
     <div class="ml-3 relative">
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
