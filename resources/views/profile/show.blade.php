@@ -7,6 +7,16 @@
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+
+            <!-- Mostrar el mensaje si existe -->
+            @if(session('message'))
+                <div class="max-w-7xl mx-auto py-4 sm:px-6 lg:px-8">
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
+                        <p class="font-medium">{{ session('message') }}</p>
+                    </div>
+                </div>
+            @endif
+            
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
 

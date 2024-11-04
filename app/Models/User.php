@@ -31,6 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'firma_autografa',
+        'puesto',
         'uaa_id',
     ];
 

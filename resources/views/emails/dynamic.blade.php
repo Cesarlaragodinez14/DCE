@@ -115,7 +115,7 @@
                         </td>
                     </tr>
                     <!-- Botón de Acción -->
-                    @isset($data['action'])
+                    @isset($data['action']['url'])
                         <tr>
                             <td align="center">
                                 <a href="{{ $data['action']['url'] }}" target="_blank" class="button">

@@ -105,6 +105,12 @@
                     }
                 @endphp
                 <span class="text-gray-700">{{ $displayText }}</span>
+                <input 
+                type="hidden" 
+                name="apartados[{{ $apartado->id }}][se_integra]" 
+                value="1"
+                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
+                class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
             @endrole
         </td>
 
@@ -116,6 +122,9 @@
                     rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}</textarea>
             @elseif ( auth()->user()->roles->pluck('name')[0] !== 'Jefe de Departamento' && auth()->user()->roles->pluck('name')[0] !== 'admin' )
                 {{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones ?? 'Sin Observaciones de seguimiento' }}
+                <input type="hidden" name="apartados[{{ $apartado->id }}][observaciones]"
+                    class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    rows="2" value="{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}">
             @endif
         </td>
 

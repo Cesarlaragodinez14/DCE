@@ -16,6 +16,13 @@
         </div>
     </x-slot>
 
+    <style>
+        .bg-blue-200, .bg-gray-300, .bg-blue-100 {
+            --tw-bg-opacity: 1;
+            background-color: #243c64!important;
+            color: #FFF!important;
+        }
+    </style>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
         <x-ui.breadcrumbs>
             <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>

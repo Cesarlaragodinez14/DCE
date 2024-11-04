@@ -25,12 +25,17 @@ class PdfController extends Controller
         $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
         $checklist = ChecklistApartado::where('auditoria_id', $auditoria_id)->get()->keyBy('apartado_id');
         $estatus_checklist = $auditoria->estatus_checklist;
+        // Obtener la ruta absoluta de la firma del usuario autenticado
+        $firmaPath = null;
+        if (Auth::user()->firma_autografa) {
+            $firmaPath = storage_path('app/public/' . Auth::user()->firma_autografa);
+        }
         // Generate the PDF in landscape mode
-        $pdf = PDF::loadView('pdf.checklist', compact('auditoria', 'apartados', 'checklist', 'estatus_checklist'))
+        $pdf = PDF::loadView('pdf.checklist', compact('auditoria', 'apartados', 'checklist', 'estatus_checklist', 'firmaPath'))
             ->setPaper('a4', 'landscape');  // Set paper size to A4 and orientation to landscape
 
         // Stream or download the generated PDF
-        return $pdf->download('checklist_auditoria_' . $auditoria->id . '.pdf');
+        return $pdf->download($auditoria->clave_de_accion . '-' . $estatus_checklist . '.pdf');
     }
     /**
      * Descargar el archivo firmado por la UAA.
@@ -55,6 +60,6 @@ class PdfController extends Controller
         }
 
         // Descargar el archivo
-        return Storage::disk('public')->download($auditoria->archivo_uua, 'Firma_UAA_' . $auditoria->id . '.pdf');
+        return Storage::disk('public')->download($auditoria->archivo_uua, 'Firma_UAA_' . $auditoria->clave_de_accion . '.pdf');
     }
 }

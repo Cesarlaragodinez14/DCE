@@ -22,64 +22,96 @@ class UserController extends Controller
         return view('users.create', compact('roles', 'uaas'));
     }
 
-
     public function store(Request $request)
     {
-        // Validar los datos
+        // Validar los datos iniciales
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'roles' => 'required|array',
-            'roles.*' => 'exists:roles,id', // Validamos que los roles existan
-            'uaa_id' => 'nullable|exists:cat_uaa,id', // Validar que la UAA exista o permitir "ninguna"
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|string|email|max:255|unique:users',
+            'password'   => 'required|string|min:8|confirmed',
+            'roles'      => 'required|array',
+            'roles.*'    => 'exists:roles,id',
+            'uaa_id'     => 'nullable|exists:cat_uaa,id',
+            // Campos adicionales
+            'firma_autografa' => 'nullable|string|max:255',
+            'puesto'          => 'nullable|string|max:255',
         ]);
 
-        // Crear el usuario con el campo UAA
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-            'uaa_id' => $validated['uaa_id'] ?? null, // Guardar UAA o null si no se asignó
-        ]);
-
-        // Convertir IDs de roles a nombres de roles
+        // Obtener los nombres de los roles seleccionados
         $roleNames = Role::whereIn('id', $validated['roles'])->pluck('name')->toArray();
 
-        // Sincronizar los roles con el usuario
+        // Verificar si el rol 'Jefe de departamento' está seleccionado
+        if (in_array('Jefe de departamento', $roleNames)) {
+            // Si es 'Jefe de departamento', los campos 'firma_autógrafa' y 'puesto' son obligatorios
+            $request->validate([
+                'firma_autografa' => 'required|string|max:255',
+                'puesto'          => 'required|string|max:255',
+            ]);
+        }
+
+        // Crear el usuario con los campos adicionales
+        $user = User::create([
+            'name'            => $validated['name'],
+            'email'           => $validated['email'],
+            'password'        => bcrypt($validated['password']),
+            'uaa_id'          => $validated['uaa_id'] ?? null,
+            'firma_autografa' => $validated['firma_autografa'] ?? null,
+            'puesto'          => $validated['puesto'] ?? null,
+        ]);
+
+        // Asignar los roles al usuario
         $user->syncRoles($roleNames);
 
         return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente.');
     }
 
-
     public function edit(User $user)
     {
         $roles = Role::all();
-        $uaas = CatUaa::all();  // Obtener todas las UAA
+        $uaas = CatUaa::all();
         $isAdmin = auth()->user()->hasRole('admin');
-        
+
         return view('users.edit', compact('user', 'roles', 'uaas', 'isAdmin'));
     }
 
     public function update(Request $request, User $user)
     {
+        // Validar los datos iniciales
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'roles' => 'required|array',
-            'uaa_id' => 'nullable|exists:cat_uaa,id', // Validar que la UAA exista o permitir nulo
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password'   => 'nullable|string|min:8|confirmed',
+            'roles'      => 'required|array',
+            'roles.*'    => 'exists:roles,id',
+            'uaa_id'     => 'nullable|exists:cat_uaa,id',
+            // Campos adicionales
+            'firma_autografa' => 'nullable|string|max:255',
+            'puesto'          => 'nullable|string|max:255',
         ]);
 
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
-            'uaa_id' => $validated['uaa_id'], // Actualizar la UAA
-        ]);
-
+        // Obtener los nombres de los roles seleccionados
         $roleNames = Role::whereIn('id', $validated['roles'])->pluck('name')->toArray();
+
+        // Verificar si el rol 'Jefe de departamento' está seleccionado
+        if (in_array('Jefe de departamento', $roleNames)) {
+            // Si es 'Jefe de departamento', los campos 'firma_autógrafa' y 'puesto' son obligatorios
+            $request->validate([
+                'firma_autografa' => 'required|string|max:255',
+                'puesto'          => 'required|string|max:255',
+            ]);
+        }
+
+        // Actualizar el usuario con los campos adicionales
+        $user->update([
+            'name'            => $validated['name'],
+            'email'           => $validated['email'],
+            'password'        => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+            'uaa_id'          => $validated['uaa_id'],
+            'firma_autografa' => $validated['firma_autografa'] ?? $user->firma_autografa,
+            'puesto'          => $validated['puesto'] ?? $user->puesto,
+        ]);
+
+        // Sincronizar los roles del usuario
         $user->syncRoles($roleNames);
 
         return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');

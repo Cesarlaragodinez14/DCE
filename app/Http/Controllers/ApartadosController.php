@@ -114,7 +114,7 @@ class ApartadosController extends Controller
             // Verificar el estatus del checklist para determinar el contenido del correo
             if (in_array($request->estatus_checklist, ["Devuelto", "Aceptado"])) {
                 if ($request->estatus_checklist == "Aceptado") {
-                    $subject = 'Clave de acción aprobada por Seguimiento';
+                    $subject = 'La clave de acción ' . $auditoria->clave_de_accion . ' fue aprobada por Seguimiento';
                     $content = "<p>El usuario {$currentUserName} ({$currentUserRole}), ha aprobado la revisión de expediente para auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
                                 <p>El expediente está ahora en espera de firma de la UAA, sube el archivo firmado lo antes posible, tienes un máximo de 7 días hábiles.</p>
                                 <p>Gracias.</p>";
@@ -129,7 +129,7 @@ class ApartadosController extends Controller
                     'footer' => 'Este es un correo automático, por favor no respondas.',
                     'action' => [
                         'text' => 'Ver Auditoría',
-                        'url' => route('auditorias.apartados', $auditoria->id)
+                        //'url' => route('auditorias.apartados', $auditoria->id)
                     ]
                 ];
 
@@ -202,11 +202,11 @@ class ApartadosController extends Controller
             ])->unique()->values()->toArray();
 
             // Contenido del correo
-            $subject = 'Firma de la UAA Subida con Éxito';
+            $subject = 'Firma de la UAA Subida con Éxito para la Clave de Acción - ' . $auditoria->clave_de_accion;
             $content = "
                 <p>El usuario {$currentUserName} ({$currentUserRole}),</p>
                 <p>ha subido su firma para la auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>
-                <p>El expediente está ahora en espera de revisión.</p>
+                <p>El expediente está ahora Aceptado.</p>
                 <p>Gracias.</p>
             ";
 
@@ -214,7 +214,7 @@ class ApartadosController extends Controller
                 'footer' => 'Este es un correo automático, por favor no respondas.',
                 'action' => [
                     'text' => 'Ver Auditoría',
-                    'url' => route('auditorias.apartados', $auditoria->id)
+                    //'url' => route('auditorias.apartados', $auditoria->id)
                 ]
             ];
 

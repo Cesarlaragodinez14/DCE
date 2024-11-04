@@ -85,7 +85,7 @@ class AuditoriasIndex extends Component
             session()->flash('error', 'Hubo un problema al generar el archivo Excel.');
             return redirect()->back();
         }
-    }
+    } 
 
     public function getRowsProperty()
     {

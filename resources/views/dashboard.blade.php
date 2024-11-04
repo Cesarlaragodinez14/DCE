@@ -1,12 +1,41 @@
 @php
     // Definición de las tarjetas del dashboard
     $dashboardCards = [
+
+        [
+            'route' => route('dashboard.upload-excel.form'),
+            'icon' => 'cloud-upload-outline',
+            'text' => 'Cargar Acciones',
+            'roles' => ['admin'],
+            'section' => 'Principal',
+        ],
+        [
+            'route' => route('dashboard.progress'),
+            'icon' => 'analytics-outline',
+            'text' => 'Proceso de Acciones',
+            'roles' => ['admin'],
+            'section' => 'Principal',
+        ],
+        [
+            'route' => route('dashboard.oficio-uaa'),
+            'icon' => 'mail-outline',
+            'text' => 'Envío de Oficio a las UAA',
+            'roles' => ['admin'],
+            'section' => 'Principal',
+        ],
         // Sección Principal
         [
             'route' => route('dashboard.distribucion'),
             'icon' => 'swap-horizontal-outline',
             'text' => 'Distribución de Acciones',
             'roles' => ['Auditor habilitado', 'admin'],
+            'section' => 'Principal',
+        ],
+        [
+            'route' => route('dashboard.expedientes.entrega'),
+            'icon' => 'calendar-number-outline',
+            'text' => 'Programación de Entrega de Expedientes',
+            'roles' => ['Director General', 'admin'],
             'section' => 'Principal',
         ],
         [
@@ -21,13 +50,6 @@
             'icon' => 'checkbox-outline',
             'text' => 'Revisión de expediente',
             'roles' => ['Auditor habilitado', 'Director General', 'Jefe de Departamento', 'admin'],
-            'section' => 'Principal',
-        ],
-        [
-            'route' => route('dashboard.expedientes.entrega'),
-            'icon' => 'calendar-number-outline',
-            'text' => 'Programación de Entrega de Expedientes',
-            'roles' => ['Director General', 'admin'],
             'section' => 'Principal',
         ],
 
@@ -59,29 +81,6 @@
             'text' => 'Gestión de Usuarios',
             'roles' => ['admin'],
             'section' => 'Administración',
-        ],
-        
-        // Tarjetas adicionales para 'admin' en Sección Principal
-        [
-            'route' => route('dashboard.upload-excel.form'),
-            'icon' => 'cloud-upload-outline',
-            'text' => 'Cargar Acciones',
-            'roles' => ['admin'],
-            'section' => 'Principal',
-        ],
-        [
-            'route' => route('dashboard.progress'),
-            'icon' => 'analytics-outline',
-            'text' => 'Proceso de Acciones',
-            'roles' => ['admin'],
-            'section' => 'Principal',
-        ],
-        [
-            'route' => route('dashboard.oficio-uaa'),
-            'icon' => 'mail-outline',
-            'text' => 'Envío de Oficio a las UAA',
-            'roles' => ['admin'],
-            'section' => 'Principal',
         ],
     ];
 

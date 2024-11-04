@@ -133,7 +133,7 @@
                         <!-- Verificar si ya se ha subido el archivo de la UAA -->
                             <div class="mt-6">
                                 <h3 class="text-lg font-medium text-gray-700">Se ha terminado el proceso de verificación para esta clave de acción</h3>
-                                <p class="text-lg font-medium text-gray-700">Archivo de la UAA ya subido:</p>
+                                <p class="text-lg font-medium text-gray-700">La UAA ha firmado el archivo de revisión de expediente para la clave de acción<br>{{ $auditoria->catClaveAccion->valor ?? '' }}</p>
                                 <a href="{{ route('auditorias.downloadUua', $auditoria->id) }}" class="mt-2 inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-300">
                                     <ion-icon name="download-outline" class="mr-2"></ion-icon> Descargar Firma de la UAA
                                 </a>
@@ -520,17 +520,8 @@
             <div class="inline-block overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl max-w-md w-full">
                 <div class="px-6 py-4">
                     <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">
-                        ¿Está seguro que desea aceptar el expediente?
+                        ¿Está seguro que desea guardar los cambios?
                     </h3>
-                    <div class="mt-2">
-                        <p class="text-sm text-gray-500">
-                            Una vez aceptado se le hara del conocimiento a la UAA y deberá de proceder a la descarga y firma de la lista de verificación
-                            <br>
-                            En caso que no acepte, deberá de mantener el estatus de "En proceso".
-                            <br>
-                            Una vez aceptado, no podrá modificar la lista de verificación.
-                        </p>
-                    </div>
                 </div>
                 <div class="px-6 py-3 sm:flex sm:flex-row-reverse">
                     <button id="confirm-save" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 sm:ml-3 sm:w-auto sm:text-sm">
@@ -599,10 +590,10 @@
 
                         mandatoryRows.forEach(row => {
                             const seIntegraCheckbox = row.querySelector('input[name*="se_integra"]');
-                            const comentariosUaaTextarea = row.querySelector('textarea[name*="comentarios_uaa"]');
+                            const observacionesSeguimiento = row.querySelector('[name*="observaciones"]');
 
                             const seIntegraChecked = seIntegraCheckbox && seIntegraCheckbox.checked;
-                            const comentariosUaaFilled = comentariosUaaTextarea && comentariosUaaTextarea.value.trim() !== '';
+                            const comentariosUaaFilled = observacionesSeguimiento && observacionesSeguimiento.value.trim() !== '';
 
                             if (!seIntegraChecked && !comentariosUaaFilled) {
                                 isValid = false;

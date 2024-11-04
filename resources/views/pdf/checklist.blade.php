@@ -175,6 +175,15 @@
                     <br>
                     <br>
                     <div style="text-align: center">
+                        @if($auditoria->estatus_checklist == "Aceptado" || $auditoria->estatus_checklist == "Devuelto")
+                            @if($firmaPath && file_exists($firmaPath))
+                                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($firmaPath)) }}" alt="Firma Autógrafa" style="max-width: 200px;">
+                            @else
+                                <br><br><br>
+                            @endif
+                        @else
+                            <br><br><br>
+                        @endif
                         <br>
                         ________________________________________________________
                         <br>

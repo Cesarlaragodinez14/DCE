@@ -18,117 +18,216 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Import;
 use Log;
+use Illuminate\Support\Facades\DB;
 
 class AuditoriasImport implements ToModel, WithHeadingRow
 {
     protected $import;
 
+    // Almacén de IDs de catálogos
+    protected $catalogs = [
+        'cuenta_publica' => CatCuentaPublica::class,
+        'entrega' => CatEntrega::class,
+        'auditoria' => CatAuditoriaEspecial::class,
+        'modalidad' => CatTipoDeAuditoria::class,
+        'siglas_ae' => CatSiglasAuditoriaEspecial::class,
+        'siglas_dg_uaa' => CatUaa::class,
+        'ente_fiscalizado' => CatEnteFiscalizado::class,
+        'ente_de_la_accion' => CatEnteDeLaAccion::class,
+        'clave_de_accion' => CatClaveAccion::class,
+        'siglas_tipo_accion' => CatSiglasTipoAccion::class,
+        'dgseg_x_ef' => CatDgsegEf::class,
+    ];
+
+    // Almacena los mapas de valores a IDs
+    protected $catalogMaps = [];
+
     public function __construct(Import $import)
     {
         $this->import = $import;
+        $this->initializeCatalogMaps();
     }
 
+    /**
+     * Inicializa los mapas de los catálogos para evitar múltiples consultas
+     */
+    protected function initializeCatalogMaps()
+    {
+        foreach ($this->catalogs as $key => $model) {
+            $this->catalogMaps[$key] = $model::pluck('id', 'valor')->toArray();
+        }
+    }
+
+    /**
+     * Maneja la creación o actualización de registros en los catálogos
+     *
+     * @param string $catalogKey
+     * @param string $value
+     * @return int
+     */
+    protected function getCatalogId(string $catalogKey, string $value): int
+    {
+        if (isset($this->catalogMaps[$catalogKey][$value])) {
+            return $this->catalogMaps[$catalogKey][$value];
+        }
+
+        // Crear nuevo registro en el catálogo
+        $modelClass = $this->catalogs[$catalogKey];
+        $newRecord = $modelClass::create(['valor' => $value]);
+        $this->catalogMaps[$catalogKey][$value] = $newRecord->id;
+
+        return $newRecord->id;
+    }
+
+    /**
+     * Crea o actualiza una auditoría basada en la fila de datos
+     *
+     * @param array $row
+     * @return void
+     */
+    protected function processRow(array $row)
+    {
+        // Obtener o crear IDs de los catálogos
+        $data = [
+            'clave_de_accion' => $this->getCatalogId('clave_de_accion', $row['clave_de_accion']),
+            'cuenta_publica' => $this->getCatalogId('cuenta_publica', $row['cuenta_publica']),
+            'entrega' => $this->getCatalogId('entrega', $row['entrega']),
+            'auditoria_especial' => $this->getCatalogId('auditoria', $row['auditoria']),
+            'tipo_de_auditoria' => $this->getCatalogId('modalidad', $row['modalidad']),
+            'siglas_auditoria_especial' => $this->getCatalogId('siglas_ae', $row['siglas_ae']),
+            'uaa' => $this->getCatalogId('siglas_dg_uaa', $row['siglas_dg_uaa']),
+            'ente_fiscalizado' => $this->getCatalogId('ente_fiscalizado', $row['ente_fiscalizado']),
+            'ente_de_la_accion' => $this->getCatalogId('ente_de_la_accion', $row['ente_de_la_accion']),
+            'clave_accion' => $this->getCatalogId('clave_de_accion', $row['clave_de_accion']),
+            'siglas_tipo_accion' => $this->getCatalogId('siglas_tipo_accion', $row['siglas_tipo_accion']),
+            'dgseg_ef' => $this->getCatalogId('dgseg_x_ef', $row['dgseg_x_ef']),
+        ];
+
+        // Determinar si se debe actualizar una auditoría existente
+        $estatusChecklist = $row['estatus_checklist'] ?? null;
+        $debeActualizar = empty($estatusChecklist) || strtolower($estatusChecklist) === 'sin revisar';
+
+        if ($debeActualizar) {
+            $auditoriaExistente = Auditorias::where('clave_de_accion', $row['clave_de_accion'])->first();
+            if ($auditoriaExistente) {
+                $this->updateAuditoria($auditoriaExistente, $data, $row);
+                Log::info("Fila actualizada exitosamente: " . $auditoriaExistente->id);
+                $this->import->increment('processed_rows');
+                return;
+            }
+        }
+
+        // Crear una nueva auditoría
+        $auditoria = $this->createAuditoria($data, $row);
+        Log::info("Fila procesada exitosamente: " . $auditoria->id);
+        $this->import->increment('processed_rows');
+    }
+
+    /**
+     * Crea una nueva auditoría
+     *
+     * @param array $data
+     * @param array $row
+     * @return Auditorias
+     */
+    protected function createAuditoria(array $data, array $row): Auditorias
+    {
+        return Auditorias::create([
+            'clave_de_accion' => $row['clave_de_accion'],
+            'cuenta_publica' => $data['cuenta_publica'],
+            'entrega' => $data['entrega'],
+            'auditoria_especial' => $data['auditoria_especial'],
+            'tipo_de_auditoria' => $data['tipo_de_auditoria'],
+            'siglas_auditoria_especial' => $data['siglas_auditoria_especial'],
+            'uaa' => $data['uaa'],
+            'ente_fiscalizado' => $data['ente_fiscalizado'],
+            'ente_de_la_accion' => $data['ente_de_la_accion'],
+            'clave_accion' => $data['clave_accion'],
+            'siglas_tipo_accion' => $data['siglas_tipo_accion'],
+            'dgseg_ef' => $data['dgseg_ef'],
+            'titulo' => $row['titulo'],
+            'numero_de_auditoria' => $data['auditoria_especial'], // Verifica si este campo es correcto
+            'nombre_director_general' => $row['nombre_director_general'],
+            'direccion_de_area' => $row['da'],
+            'nombre_director_de_area' => $row['director_de_area'],
+            'sub_direccion_de_area' => $row['sub'],
+            'nombre_sub_director_de_area' => $row['nombre_subdirector'],
+            'jd' => $row['jd'],
+            'jefe_de_departamento' => $row['nombre_jefe_de_departamento'],
+            // Si deseas establecer un valor por defecto para estatus_checklist al crear una nueva auditoría, puedes agregarlo aquí
+            'estatus_checklist' => $row['estatus_checklist'] ?? 'Sin Revisar',
+        ]);
+    }
+
+    /**
+     * Actualiza una auditoría existente
+     *
+     * @param Auditorias $auditoria
+     * @param array $data
+     * @param array $row
+     * @return void
+     */
+    protected function updateAuditoria(Auditorias $auditoria, array $data, array $row): void
+    {
+        $auditoria->update([
+            'clave_de_accion' => $row['clave_de_accion'],
+            'cuenta_publica' => $data['cuenta_publica'],
+            'entrega' => $data['entrega'],
+            'auditoria_especial' => $data['auditoria_especial'],
+            'tipo_de_auditoria' => $data['tipo_de_auditoria'],
+            'siglas_auditoria_especial' => $data['siglas_auditoria_especial'],
+            'uaa' => $data['uaa'],
+            'ente_fiscalizado' => $data['ente_fiscalizado'],
+            'ente_de_la_accion' => $data['ente_de_la_accion'],
+            'clave_accion' => $data['clave_accion'],
+            'siglas_tipo_accion' => $data['siglas_tipo_accion'],
+            'dgseg_ef' => $data['dgseg_ef'],
+            'titulo' => $row['titulo'],
+            'numero_de_auditoria' => $data['auditoria_especial'], // Verifica si este campo es correcto
+            'nombre_director_general' => $row['nombre_director_general'],
+            'direccion_de_area' => $row['da'],
+            'nombre_director_de_area' => $row['director_de_area'],
+            'sub_direccion_de_area' => $row['sub'],
+            'nombre_sub_director_de_area' => $row['nombre_subdirector'],
+            'jd' => $row['jd'],
+            'jefe_de_departamento' => $row['nombre_jefe_de_departamento'],
+            // Actualizar estatus_checklist a "Sin Revisar - Actualizado"
+            'estatus_checklist' => 'Sin Revisar - Actualizado',
+        ]);
+    }
+
+    /**
+     * Implementación de ToModel para cada fila
+     *
+     * @param array $row
+     * @return Auditorias|null
+     */
     public function model(array $row)
     {
         try {
             // Iniciar transacción
-            \DB::beginTransaction();
+            DB::beginTransaction();
 
             // Desactivar eventos de Eloquent
             Auditorias::unsetEventDispatcher();
 
             Log::info("Procesando fila: " . json_encode($row));
 
-            // Cargar todos los valores existentes de los catálogos en un solo paso
-            static $cuentaPublicaIds = null;
-            static $entregaIds = null;
-            static $auditoriaEspecialIds = null;
-            static $tipoDeAuditoriaIds = null;
-            static $siglasAuditoriaEspecialIds = null;
-            static $uaaIds = null;
-            static $enteFiscalizadoIds = null;
-            static $enteDeLaAccionIds = null;
-            static $claveAccionIds = null;
-            static $siglasTipoAccionIds = null;
-            static $dgsegEfIds = null;
-
-            // Si los valores no están cargados en memoria, cargarlos
-            if ($cuentaPublicaIds === null) {
-                $cuentaPublicaIds = CatCuentaPublica::pluck('id', 'valor');
-                $entregaIds = CatEntrega::pluck('id', 'valor');
-                $auditoriaEspecialIds = CatAuditoriaEspecial::pluck('id', 'valor');
-                $tipoDeAuditoriaIds = CatTipoDeAuditoria::pluck('id', 'valor');
-                $siglasAuditoriaEspecialIds = CatSiglasAuditoriaEspecial::pluck('id', 'valor');
-                $uaaIds = CatUaa::pluck('id', 'valor');
-                $enteFiscalizadoIds = CatEnteFiscalizado::pluck('id', 'valor');
-                $enteDeLaAccionIds = CatEnteDeLaAccion::pluck('id', 'valor');
-                $claveAccionIds = CatClaveAccion::pluck('id', 'valor');
-                $siglasTipoAccionIds = CatSiglasTipoAccion::pluck('id', 'valor');
-                $dgsegEfIds = CatDgsegEf::pluck('id', 'valor');
-            }
-
-            // Obtener o crear nuevos registros en la memoria antes de insertarlos
-            $cuentaPublicaId = $cuentaPublicaIds[$row['cuenta_publica']] ?? 
-                $cuentaPublicaIds[$row['cuenta_publica']] = CatCuentaPublica::create(['valor' => $row['cuenta_publica']])->id;
-            $entregaId = $entregaIds[$row['entrega']] ?? 
-                $entregaIds[$row['entrega']] = CatEntrega::create(['valor' => $row['entrega']])->id;
-            $auditoriaEspecialId = $auditoriaEspecialIds[$row['auditoria']] ?? 
-                $auditoriaEspecialIds[$row['auditoria']] = CatAuditoriaEspecial::create(['valor' => $row['auditoria']])->id;
-            $tipoDeAuditoriaId = $tipoDeAuditoriaIds[$row['modalidad']] ?? 
-                $tipoDeAuditoriaIds[$row['modalidad']] = CatTipoDeAuditoria::create(['valor' => $row['modalidad']])->id;
-            $siglasAuditoriaEspecialId = $siglasAuditoriaEspecialIds[$row['siglas_ae']] ?? 
-                $siglasAuditoriaEspecialIds[$row['siglas_ae']] = CatSiglasAuditoriaEspecial::create(['valor' => $row['siglas_ae']])->id;
-            $uaaId = $uaaIds[$row['siglas_dg_uaa']] ?? 
-                $uaaIds[$row['siglas_dg_uaa']] = CatUaa::create(['valor' => $row['siglas_dg_uaa']])->id;
-            $enteFiscalizadoId = $enteFiscalizadoIds[$row['ente_fiscalizado']] ?? 
-                $enteFiscalizadoIds[$row['ente_fiscalizado']] = CatEnteFiscalizado::create(['valor' => $row['ente_fiscalizado']])->id;
-            $enteDeLaAccionId = $enteDeLaAccionIds[$row['ente_de_la_accion']] ?? 
-                $enteDeLaAccionIds[$row['ente_de_la_accion']] = CatEnteDeLaAccion::create(['valor' => $row['ente_de_la_accion']])->id;
-            $claveAccionId = $claveAccionIds[$row['clave_de_accion']] ?? 
-                $claveAccionIds[$row['clave_de_accion']] = CatClaveAccion::create(['valor' => $row['clave_de_accion']])->id;
-            $siglasTipoAccionId = $siglasTipoAccionIds[$row['siglas_tipo_accion']] ?? 
-                $siglasTipoAccionIds[$row['siglas_tipo_accion']] = CatSiglasTipoAccion::create(['valor' => $row['siglas_tipo_accion']])->id;
-            $dgsegEfId = $dgsegEfIds[$row['dgseg_x_ef']] ?? 
-                $dgsegEfIds[$row['dgseg_x_ef']] = CatDgsegEf::create(['valor' => $row['dgseg_x_ef']])->id;
-
-            // Crear la auditoría
-            $auditoria = Auditorias::create([
-                'clave_de_accion' => $row['clave_de_accion'],
-                'cuenta_publica' => $cuentaPublicaId,
-                'entrega' => $entregaId,
-                'auditoria_especial' => $auditoriaEspecialId,
-                'tipo_de_auditoria' => $tipoDeAuditoriaId,
-                'siglas_auditoria_especial' => $siglasAuditoriaEspecialId,
-                'uaa' => $uaaId,
-                'ente_fiscalizado' => $enteFiscalizadoId,
-                'ente_de_la_accion' => $enteDeLaAccionId,
-                'clave_accion' => $claveAccionId,
-                'siglas_tipo_accion' => $siglasTipoAccionId,
-                'dgseg_ef' => $dgsegEfId,
-                'titulo' => $row['titulo'],
-                'numero_de_auditoria' => $auditoriaEspecialId,
-                'nombre_director_general' => $row['nombre_director_general'],
-                'direccion_de_area' => $row['da'],
-                'nombre_director_de_area' => $row['director_de_area'],
-                'sub_direccion_de_area' => $row['sub'],
-                'nombre_sub_director_de_area' => $row['nombre_subdirector'],
-                'jd' => $row['jd'],
-                'jefe_de_departamento' => $row['nombre_jefe_de_departamento'],
-            ]);
-
-            Log::info("Fila procesada exitosamente: " . $auditoria->id);
-            $this->import->increment('processed_rows');
+            // Procesar la fila
+            $this->processRow($row);
 
             // Confirmar la transacción
-            \DB::commit();
+            DB::commit();
         } catch (\Exception $e) {
             // Revertir la transacción si ocurre un error
-            \DB::rollBack();
+            DB::rollBack();
             Log::error("Error al procesar la fila: " . $e->getMessage());
         } finally {
             // Volver a activar los eventos de Eloquent
             Auditorias::setEventDispatcher(new \Illuminate\Events\Dispatcher());
         }
-    }
 
+        // Retornar null ya que manejamos la creación directamente
+        return null;
+    }
 }
