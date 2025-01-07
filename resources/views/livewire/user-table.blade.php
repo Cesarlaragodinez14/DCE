@@ -21,6 +21,9 @@
     <x-ui.table.index>
         <x-slot name="head">
             <x-ui.table.header wire:click="sortBy('name')" class="cursor-pointer">
+                ID
+            </x-ui.table.header>
+            <x-ui.table.header wire:click="sortBy('name')" class="cursor-pointer">
                 Nombre @if($sortField == 'name') @if($sortDirection == 'asc') ↑ @else ↓ @endif @endif
             </x-ui.table.header>
             <x-ui.table.header wire:click="sortBy('email')" class="cursor-pointer">
@@ -38,6 +41,7 @@
         <x-slot name="body">
             @foreach($users as $user)
                 <x-ui.table.row>
+                    <x-ui.table.column>{{ $user->id }}</x-ui.table.column>
                     <x-ui.table.column>{{ $user->name }}</x-ui.table.column>
                     <x-ui.table.column>{{ $user->email }}</x-ui.table.column>
                     <x-ui.table.column>
@@ -55,6 +59,15 @@
                         <x-ui.action.danger class="ml-4" onclick="openDeleteModal({{ $user->id }})">
                             Eliminar
                         </x-ui.action.danger>
+                        <!-- Impersonate Button -->
+                        @if(Auth::user()->canImpersonate() && $user->canBeImpersonated())
+                        <x-ui.action class="ml-4">
+                            <a href="{{ route('impersonate', $user->id) }}">
+                                Impersonar
+                            </a>
+                        </x-ui.action>
+                        @endif
+
                     </x-ui.table.action-column>
                 </x-ui.table.row>
             @endforeach

@@ -195,17 +195,17 @@
                                     <div>
                                         <label for="auditor_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
                                         @role('admin|Jefe de Departamento')
-                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                            <input type="text" name="auditor_nombre" required id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                                         @else
-                                            <input type="text" name="auditor_nombre" id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                            <input type="text" name="auditor_nombre" required id="auditor_nombre" value="{{ old('auditor_nombre', trim($auditoria->auditor_nombre ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
                                         @endrole
                                     </div>
                                     <div>
                                         <label for="auditor_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
                                         @role('admin|Jefe de Departamento')
-                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                            <input type="text" name="auditor_puesto" required id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                                         @else
-                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                            <input type="text" name="auditor_puesto" required id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
                                         @endrole
                                     </div>
                                 </div>
@@ -218,17 +218,17 @@
                                     <div>
                                         <label for="seguimiento_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
                                         @role('admin|Jefe de Departamento')
-                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                            <input type="text" name="seguimiento_nombre" required id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                                         @else
-                                            <input type="text" name="seguimiento_nombre" id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                            <input type="text" name="seguimiento_nombre" required id="seguimiento_nombre" value="{{ old('seguimiento_nombre', trim($auditoria->seguimiento_nombre ?? auth()->user()->name) ?: auth()->user()->name) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
                                         @endrole
                                     </div>
                                     <div>
                                         <label for="seguimiento_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
                                         @role('admin|Jefe de Departamento')
-                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                            <input type="text" name="seguimiento_puesto" required id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                                         @else
-                                            <input type="text" name="seguimiento_puesto" id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                            <input type="text" name="seguimiento_puesto" required id="seguimiento_puesto" value="{{ old('seguimiento_puesto', trim($auditoria->seguimiento_puesto ?? auth()->user()->puesto) ?: auth()->user()->puesto) }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
                                         @endrole
                                     </div>
                                 </div>
@@ -551,18 +551,6 @@
                         button.querySelector('.toggle-icon').classList.toggle('rotate-90');
                     });
                 });
-
-                // Smooth horizontal scroll on mouse wheel
-                const tableContainer = document.querySelector('.overflow-x-auto');
-                if (tableContainer) {
-                    tableContainer.addEventListener('wheel', (evt) => {
-                        if (evt.deltaY !== 0) {
-                            evt.preventDefault();
-                            tableContainer.scrollLeft += evt.deltaY;
-                        }
-                    });
-                }
-
                 // Modal confirmation on form submit
                 const form = document.getElementById('checklist-form');
                 const estatusSelect = document.getElementById('estatus_checklist');
@@ -595,6 +583,7 @@
                             const seIntegraChecked = seIntegraCheckbox && seIntegraCheckbox.checked;
                             const comentariosUaaFilled = observacionesSeguimiento && observacionesSeguimiento.value.trim() !== '';
 
+                            @role('admin|Jefe de Departamento')
                             if (!seIntegraChecked && !comentariosUaaFilled) {
                                 isValid = false;
 
@@ -608,6 +597,7 @@
                                 // Remover resaltado si ya no es inválido
                                 row.classList.remove('border-red-500', 'bg-red-50');
                             }
+                            @endrole
                         });
 
                         if (isValid) {
@@ -616,9 +606,101 @@
                             validationError.classList.add('hidden');
                         } else {
                             // Mostrar mensaje de error indicando qué apartados faltan
-                            validationErrorText.innerHTML = `No puedes marcar como "Aceptado" porque los siguientes apartados obligatorios no están completos:<br> <b>${invalidApartados.join('<br>')}</b>`;
+                            validationErrorText.innerHTML = `No puedes cambiar el estatus del expediente, ya que los siguientes apartados obligatorios no estan marcados.:<br> <b>${invalidApartados.join('<br>')}</b>`;
                             validationError.classList.remove('hidden');
                         }
+                    } else {
+                        const form = document.getElementById('checklist-form');
+
+                        // Campos de entrada
+                        const auditorNombre = document.getElementById('auditor_nombre');
+                        const auditorPuesto = document.getElementById('auditor_puesto');
+                        const seguimientoNombre = document.getElementById('seguimiento_nombre');
+                        const seguimientoPuesto = document.getElementById('seguimiento_puesto');
+
+                        // Lista de campos a validar
+                        const campos = [
+                            { campo: auditorNombre, mensajeId: 'auditor_nombre_error', nombre: 'Nombre del Auditor' },
+                            { campo: auditorPuesto, mensajeId: 'auditor_puesto_error', nombre: 'Puesto del Auditor' },
+                            { campo: seguimientoNombre, mensajeId: 'seguimiento_nombre_error', nombre: 'Nombre del Personal de la UAA que Entrega el Expediente' },
+                            { campo: seguimientoPuesto, mensajeId: 'seguimiento_puesto_error', nombre: 'Puesto del Personal de la UAA' },
+                        ];
+
+                        // Función para crear contenedor de mensaje de error si no existe
+                        function crearContenedorError(mensajeId) {
+                            let mensaje = document.getElementById(mensajeId);
+                            if (!mensaje) {
+                                mensaje = document.createElement('div');
+                                mensaje.id = mensajeId;
+                                mensaje.className = 'error-message';
+                                mensaje.setAttribute('aria-live', 'polite');
+                                // Insertar después del campo de entrada
+                                const campo = document.getElementById(mensajeId.replace('_error', ''));
+                                campo.parentNode.appendChild(mensaje);
+                            }
+                            return mensaje;
+                        }
+
+                        // Función para limpiar todos los mensajes de error
+                        function limpiarErrores() {
+                            campos.forEach(({ mensajeId, campo }) => {
+                                const mensaje = document.getElementById(mensajeId);
+                                if (mensaje) {
+                                    mensaje.textContent = '';
+                                    mensaje.classList.remove('visible');
+                                }
+                                campo.classList.remove('error-border');
+                            });
+                        }
+
+                        // Función de validación
+                        function validarFormulario(event) {
+                            let tieneErrores = false;
+                            let primerError = null;
+
+                            limpiarErrores(); // Limpiar errores previos
+
+                            campos.forEach(({ campo, mensajeId, nombre }) => {
+                                if (campo.value.trim() === '') {
+                                    tieneErrores = true;
+                                    const mensaje = crearContenedorError(mensajeId);
+                                    mensaje.textContent = 'Estos campos son necesarios.';
+                                    mensaje.classList.add('visible');
+                                    campo.classList.add('error-border');
+
+                                    // Si es el primer error encontrado, guardarlo para hacer scroll
+                                    if (!primerError) {
+                                        primerError = campo;
+                                    }
+                                }
+                            });
+
+                            if (tieneErrores) {
+                                event.preventDefault(); // Prevenir envío del formulario
+
+                                // Hacer autoscroll al primer campo con error
+                                if (primerError) {
+                                    primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    // Opcional: Enfocar el campo
+                                    primerError.focus();
+                                }
+                            }
+                        }
+                        // Añadir evento de envío al formulario
+                        form.addEventListener('submit', validarFormulario);
+                        // Añadir eventos de entrada para limpiar errores en tiempo real
+                        campos.forEach(({ campo, mensajeId }) => {
+                            campo.addEventListener('input', function() {
+                                if (campo.value.trim() !== '') {
+                                    const mensaje = document.getElementById(mensajeId);
+                                    if (mensaje) {
+                                        mensaje.textContent = '';
+                                        mensaje.classList.remove('visible');
+                                    }
+                                    campo.classList.remove('error-border');
+                                }
+                            });
+                        });
                     }
                 });
 

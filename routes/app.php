@@ -196,6 +196,16 @@ Route::prefix('/dashboard')
             '/all-auditorias/{auditorias}',
             App\Livewire\Dashboard\AuditoriasEdit::class
         )->name('all-auditorias.edit');
+
+        Route::get(
+            '/pdf-histories', 
+            App\Livewire\Dashboard\PdfHistoryIndex::class
+        )->name('pdf-histories.index');
+        /*Route::get(
+            '/dashboard/auditorias/historico', 
+            App\Livewire\AuditoriasHistorico::class
+        )->name('auditorias-historico');*/
+
     });
 
 // API

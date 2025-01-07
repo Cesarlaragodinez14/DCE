@@ -14,12 +14,18 @@ class ChecklistApartado extends Model
     // Relación con el apartado
     public function apartado()
     {
-        return $this->belongsTo(Apartado::class);
+        return $this->belongsTo(Apartado::class, 'apartado_id', 'id');
     }
+
 
     // Relación con la auditoría
     public function auditoria()
     {
         return $this->belongsTo(Auditorias::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(ChecklistApartadoHistory::class, 'checklist_apartado_id');
     }
 }

@@ -101,19 +101,6 @@
             @endif
         </div>
 
-        <!-- Firma Autógrafa -->
-        <div class="md:col-span-2">
-            <x-label for="firma_autografa" value="{{ __('Firma Autógrafa (PNG)') }}" />
-            <input type="file" id="firma_autografa" name="firma_autografa" accept="image/png" class="mt-1 block w-full" />
-            <x-input-error for="firma_autografa" class="mt-2" />
-
-            @if (Auth::user()->firma_autografa)
-                <div class="mt-2">
-                    <span class="block text-sm text-gray-600">{{ __('Firma Actual:') }}</span>
-                    <img src="{{ route('firma.show', basename(Auth::user()->firma_autografa)) }}" alt="Firma Autógrafa" class="mt-2 max-w-xs border border-gray-300 rounded-md">
-                </div>
-            @endif
-        </div>
     </div>
 
     <!-- Botón de Guardar -->

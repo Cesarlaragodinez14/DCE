@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'reset_auditoria' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/reset_auditoria.log'),
+            'level' => 'info',
+        ],
+
     ],
 
 ];

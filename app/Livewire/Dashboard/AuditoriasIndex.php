@@ -15,6 +15,8 @@ class AuditoriasIndex extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['resetClaveAccion'];
+
     public $search;
     public $sortField = 'updated_at';
     public $sortDirection = 'desc';
@@ -123,11 +125,11 @@ class AuditoriasIndex extends Component
         }
 
         // Verificar roles y ajustar la consulta
-        if (!$user->hasRole(['admin', 'Director General'])) {
+        if (!$user->hasRole(['admin', 'Director General']) AND $user->email != "uaapruebas@asf.gob.mx") {
             $query->where('jefe_de_departamento', $user->name);
         }
 
-        if ($user->hasRole('Director General')) {
+        if ($user->hasRole('Director General') AND $user->email != "uaapruebas@asf.gob.mx") {
             $userUAA = $user->uaa_id;
             $query->where('uaa', $userUAA);
         }
@@ -143,4 +145,5 @@ class AuditoriasIndex extends Component
             'entrega' => $this->entrega,
         ]);
     }
+
 }

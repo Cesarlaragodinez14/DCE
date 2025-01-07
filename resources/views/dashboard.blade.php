@@ -52,6 +52,27 @@
             'roles' => ['Auditor habilitado', 'Director General', 'Jefe de Departamento', 'admin'],
             'section' => 'Principal',
         ],
+        [
+            'route' => route('dashboard.pdf-histories.index'),
+            'icon' => 'search-outline',
+            'text' => 'Consulta de Observaciones',
+            'roles' => ['Jefe de Departamento', 'admin'],
+            'section' => 'Principal',
+        ],
+        [
+            'route' => route('auditorias.show'),
+            'icon' => 'hourglass-outline',
+            'text' => 'Consulta de Historico',
+            'roles' => ['admin'],
+            'section' => 'Principal',
+        ],
+        [
+            'route' => route('dashboard.charts.index'),
+            'icon' => 'pie-chart-outline',
+            'text' => 'Graficos y estadisticas',
+            'roles' => ['admin'],
+            'section' => 'Principal',
+        ],
 
         // Sección Administración (solo para 'admin')
         [

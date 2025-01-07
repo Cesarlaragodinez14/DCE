@@ -35,6 +35,8 @@
            {{ (($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados) ? 'mandatory' : '' }}" 
         @if(($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados)
             data-nombre-apartado="{{ $apartado->nombre }}"
+        @elseif (($formato === "01" || $formato === "07") && $apartado->id === 51)
+            style="display: none"
         @endif
     >
     <!-- Inputs ocultos -->
@@ -96,21 +98,22 @@
             @else
                 @php
                     $seIntegra = optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra;
-                    if ($seIntegra === 1) {
-                        $displayText = 'Si';
-                    } elseif ($seIntegra === 0) {
+                    if ($seIntegra === 1 || $seIntegra === '1') {
+                        $displayText = 'Sí';
+                        $seIntegraValue = '1';
+                    } elseif ($seIntegra === 0 || $seIntegra === '0') {
                         $displayText = 'No';
+                        $seIntegraValue = '0';
                     } else {
                         $displayText = 'Sin revisión de seguimiento';
+                        $seIntegraValue = '';
                     }
                 @endphp
                 <span class="text-gray-700">{{ $displayText }}</span>
                 <input 
-                type="hidden" 
-                name="apartados[{{ $apartado->id }}][se_integra]" 
-                value="1"
-                {{ (optional($checklist->where('apartado_id', $apartado->id)->first())->se_integra ?? false) ? 'checked' : '' }}
-                class="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out">
+                    type="hidden" 
+                    name="apartados[{{ $apartado->id }}][se_integra]" 
+                    value="{{ $seIntegraValue }}">
             @endrole
         </td>
 

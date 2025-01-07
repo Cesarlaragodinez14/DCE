@@ -73,11 +73,12 @@
         <div class="flex flex-col md:flex-row justify-between">
             <!-- Descripción Paso 1 -->
             <div class="text-center md:text-left md:w-1/2">
-                <p class="text-sm font-semibold">Paso 1: Descargar PDF</p>
+                <p class="text-sm font-semibold">Paso 1: Descargar PDF <br><small>En el PDF podrás validar la información del documento firmado por el responsable del área de seguimiento, descargalo verificalo y continua a su firma</small></p>
             </div>
+            <br><br>
             <!-- Descripción Paso 2 -->
             <div class="text-center md:text-right md:w-1/2 mt-2 md:mt-0">
-                <p class="text-sm font-semibold">Paso 2: Subir Firma de la UAA</p>
+                <p class="text-sm font-semibold">Paso 2: Firma del desponsable de la UAA <br><small>Una vez verificada y validada la información aceptada por el área de seguimiento y estando de acuerdo con la información dentro del checklist procede a hacer la firma digital del documento, para completar este proceso necesitaras tu teléfono para el acceso a la aplicación 2-FA en la cual obtendrás el código para realizar la firma del documento </small></p>
             </div>
         </div>
     </div>

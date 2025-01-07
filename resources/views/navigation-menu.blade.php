@@ -89,7 +89,7 @@
                                         <span>{{ Auth::user()->name }}</span>
                                         <!-- Tipo de Usuario (Rol) -->
                                         <small class="block text-xs text-gray-400 dark:text-gray-500">
-                                            {{ Auth::user()->getRoleNames()->implode(', ') }}
+                                            {{ Auth::user()->puesto }}
                                         </small>
                                     </div>
                             

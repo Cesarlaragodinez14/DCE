@@ -44,9 +44,9 @@
                     <x-ui.button>Crear</x-ui.button>
                 </a>
 
-            <button wire:click="exportExcel" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" wire:loading.attr="disabled">
-                Exportar
-            </button>
+                <button wire:click="exportExcel" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" wire:loading.attr="disabled">
+                    Exportar
+                </button>
             @endrole
         </div>
     </div>
@@ -167,9 +167,17 @@
                 @forelse ($allAuditorias as $auditorias)
                 <x-ui.table.row wire:loading.class.delay="opacity-75">
                     <x-ui.table.column>
+
                         <a href="{{ route('auditorias.apartados', $auditorias->id) }}" style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #000;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
                             <ion-icon name="create-outline"></ion-icon>
                         </a>
+                        @if(Auth::user()->id === 1 || Auth::user()->id === 2)
+                        <a onclick="openResetModal({{ $auditorias->id }}, '{{ addslashes($auditorias->clave_de_accion) }}')" 
+                            style="width: 40px; padding: 10px !important; margin-bottom: 5px; background: #c82306; cursor: pointer" 
+                            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                            <ion-icon name="refresh-circle-outline"></ion-icon>
+                        </a>
+                        @endif
                     </x-ui.table.column>
                     <x-ui.table.column>
                         @if ($auditorias->estatus_checklist == "Aceptado" && empty($auditorias->archivo_uua))
@@ -257,4 +265,100 @@
 
         <div class="mt-2">{{ $allAuditorias->links() }}</div>
     </x-ui.container.table>
+    <!-- Modal de Confirmación de Reset -->
+    <div
+    id="resetModal"
+    class="fixed inset-0 z-50 hidden overflow-y-auto"
+    aria-labelledby="resetModalTitle"
+    role="dialog"
+    aria-modal="true"
+    >
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full z-50">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="resetModalTitle">
+                        Confirmar Reseteo de Clave de Acción
+                    </h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                            Estás a punto de reiniciar las firmas de la clave de acción <strong id="modalClaveAccion"></strong>. Esta acción es irreversible.
+                            Para confirmar, por favor escribe "Deseo reiniciar esta clave de acción".
+                        </p>
+                        <form id="resetForm" method="POST" action="">
+                            @csrf
+                            @method('POST')
+                            <div class="mt-4">
+                                <input
+                                    type="text"
+                                    name="confirmation_text"
+                                    id="confirmation_text"
+                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    placeholder='Escribe "Deseo reiniciar esta clave de acción"'
+                                    required
+                                />
+                            </div>
+                            <input type="hidden" name="auditoria_id" id="auditoria_id" value="">
+                            <input type="hidden" name="clave_accion" id="clave_accion" value="">
+                        </form>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button
+                        type="button"
+                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+                        onclick="submitReset()"
+                    >
+                        Confirmar Reseteo
+                    </button>
+                    <button
+                        type="button"
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                        onclick="closeResetModal()"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Función para abrir el modal de reset
+        function openResetModal(auditoriaId, claveAccion) {
+            document.getElementById('resetModal').classList.remove('hidden');
+            document.getElementById('modalClaveAccion').innerText = claveAccion;
+            document.getElementById('auditoria_id').value = auditoriaId;
+            document.getElementById('clave_accion').value = claveAccion;
+            document.getElementById('resetForm').action = `/dashboard/all-auditorias/${auditoriaId}/reset`;
+        }
+    
+        // Función para cerrar el modal de reset
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.add('hidden');
+            document.getElementById('resetForm').reset();
+        }
+    
+        // Función para enviar el formulario de reset
+        function submitReset() {
+            const confirmationText = document.getElementById('confirmation_text').value;
+            if (confirmationText === 'Deseo reiniciar esta clave de acción') {
+                document.getElementById('resetForm').submit();
+            } else {
+                alert('La confirmación no coincide. Por favor, escribe "Deseo reiniciar esta clave de acción" para confirmar.');
+            }
+        }
+    
+        // Cerrar el modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('resetModal');
+            if (event.target === modal) {
+                closeResetModal();
+            }
+        }
+    </script>
+    
 </div>
+

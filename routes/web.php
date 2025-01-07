@@ -10,7 +10,11 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SignatureController;
+use App\Http\Controllers\ImpersonationController;
+use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\DashboardController;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +79,8 @@ Route::middleware([
     Route::get('/dashboard/auditorias/{auditoria_id}/apartados', [ApartadosController::class, 'index'])->name('auditorias.apartados');
     // Ruta para guardar el checklist de apartados
     Route::post('/dashboard/auditorias/apartados/checklist', [ApartadosController::class, 'storeChecklist'])->name('apartados.checklist.store');
+    Route::get('/dashboard/auditorias/historico', [ApartadosController::class, 'show'])->name('auditorias.show');
+    
 
     Route::get('/auditorias/{auditoria_id}/pdf', [PdfController::class, 'generateChecklistPdf'])->name('auditorias.pdf');
     Route::get('/auditorias/{id}/downloadUua', [PdfController::class, 'downloadUua'])->name('auditorias.downloadUua');
@@ -87,7 +93,21 @@ Route::middleware([
     Route::post('/expedientes/confirmar', [ExpedientesController::class, 'confirmEntrega'])->name('expedientes.confirmar');
     
     Route::resource('entregas', EntregaController::class);
+
+    Route::get('/exportar-reporte', [ReporteController::class, 'exportarReporte'])->name('exportar.reporte');
+    Route::post('/pdf/generate-signed/{auditoria_id}', [PdfController::class, 'generateSignedChecklistPdf'])->name('pdf.generateSignedChecklistPdf');
+    Route::get('/dashboard/charts', [DashboardController::class, 'dashboardIndex'])->name('dashboard.charts.index');
+
+    
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users/impersonate/{user}', [UserController::class, 'impersonate'])->name('impersonate');
+    Route::get('/users/stop-impersonation', [UserController::class, 'stopImpersonation'])->name('stopImpersonation');
+});
+
+Route::get('/validador/{hash}', [PdfController::class, 'validador'])->name('validador');
+Route::get('/validador/download/{hash}', [PdfController::class, 'downloadPdf'])->name('validador.download');
 
 // Rutas de administración con middleware de rol y verificación de perfil
 Route::middleware(['auth', 'role:admin', 'check.user.profile'])->group(function () {
@@ -99,6 +119,8 @@ Route::middleware(['auth', 'role:admin', 'check.user.profile'])->group(function 
 
     Route::get('/admin/permissions/create', [PermissionController::class, 'create'])->name('admin.permissions.create');
     Route::post('/admin/permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
+    
+    Route::post('/dashboard/all-auditorias/{auditoria}/reset', [AuditoriaController::class, 'reset'])->name('dashboard.all-auditorias.reset');
 
     Route::resource('users', UserController::class);
 });

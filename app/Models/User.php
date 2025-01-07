@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;  // Agrega Roles
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;  // Agrega roles
-    
+    use Impersonate;
+
     protected $guard_name = 'web'; // or whatever guard you want to use
 
     /**
@@ -73,5 +75,23 @@ class User extends Authenticatable
     public function uaa()
     {
         return $this->belongsTo(CatUaa::class, 'uaa_id');
+    }
+
+     /**
+     * Por defecto, todos los usuarios pueden impersonar a cualquiera
+     * este ejemplo lo limita a solo los admins.
+     */
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole('admin'); // Asegúrate de que este método verifica correctamente si el usuario es admin
+    }
+    
+    /**
+     * Por defecto, todos los usuarios pueden ser impersonados,
+     * esto lo limita a solo ciertos usuarios.
+     */
+    public function canBeImpersonated(): bool
+    {
+        return ! $this->hasRole('admin'); // Asegúrate de que los admins no puedan ser impersonados
     }
 }

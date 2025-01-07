@@ -33,6 +33,11 @@ class Apartado extends Model
     {
         return $this->hasMany(ApartadoPlantilla::class, 'apartado_id');
     }
+
+    public function histories()
+    {
+        return $this->hasMany(AuditoriasHistory::class, 'auditoria_id');
+    }
     
 
     // Cálculo de la profundidad (nivel)

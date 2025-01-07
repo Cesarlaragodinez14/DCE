@@ -23,7 +23,13 @@
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
-
+            @if(session()->has('impersonated_by'))
+            <form action="{{ route('stopImpersonation') }}" method="GET">
+                @csrf
+                <button type="submit">Dejar de Impersonar</button>
+            </form>
+        @endif
+        
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">

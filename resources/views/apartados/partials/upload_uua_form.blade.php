@@ -1,40 +1,42 @@
 <!-- resources/views/apartados/partials/upload_uua_form.blade.php -->
 
 <div class="container">
-    <h4>Subir Firma de la UAA</h4>
-    <form id="uploadUuaForm" enctype="multipart/form-data">
+    <h4>Firma de Confirmación de Conformidad de la UAA</h4>
+    <form id="confirmUuaForm" action="{{ route('pdf.generateSignedChecklistPdf', ['auditoria_id' => $auditoria->id]) }}" method="POST">
         @csrf
         <!-- Campo Oculto para auditoria_id -->
         <input type="hidden" name="auditoria_id" value="{{ $auditoria->id }}">
-
-        <!-- Campo de archivo con área de arrastrar y soltar -->
-        <div class="file-upload-wrapper">
-            <label for="uua_archivo" class="file-upload-label">
-                <div id="drop-zone" class="drop-zone">
-                    <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
-                    <p class="upload-text">Haz clic para seleccionar un archivo o arrástralo y suéltalo aquí</p>
-                </div>
-            </label>
-            <input id="uua_archivo" name="uua_archivo" type="file" accept=".pdf" class="file-input">
-            <div id="file-preview" class="file-preview hidden">
-                <ion-icon name="document-outline" class="file-icon"></ion-icon>
-                <span id="file-name"></span>
-                <button type="button" id="remove-file" class="remove-file-button" aria-label="Eliminar archivo seleccionado">
-                    <ion-icon name="close-circle-outline"></ion-icon>
-                </button>
-            </div>
-        </div>
-        <span id="uuaError" class="error-message">Por favor, selecciona un archivo válido.</span>
-
-        <!-- Botón de envío con spinner de carga -->
+    
+        <p>Al confirmar esta acción, usted declara bajo protesta de decir verdad que está de acuerdo con la información proporcionada en el documento anterior generado por el área de seguimiento. ¿Desea continuar?</p>
+        <!-- Botón de confirmación -->
         <div class="submit-button-wrapper">
             <button type="submit" id="submitUuaButton" class="submit-button">
-                <span id="submitUuaText">Subir Firma de la UAA</span>
-                <ion-icon id="submitUuaSpinner" name="sync-outline" class="spinner hidden"></ion-icon>
+                <span id="submitUuaText">Sí, Firmar de Conformidad</span>
             </button>
         </div>
     </form>
-
+    
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const uuaForm = document.getElementById('confirmUuaForm');
+            const submitUuaButton = document.getElementById('submitUuaButton');
+    
+            submitUuaButton.addEventListener('click', function (e) {
+                e.preventDefault();
+    
+                const confirmation = confirm('Al confirmar esta acción, usted declara bajo protesta de decir verdad que está de acuerdo con la información proporcionada en el documento anterior generado por el área de seguimiento. ¿Desea continuar?');
+    
+                if (confirmation) {
+                    uuaForm.submit();
+                } else {
+                    // El usuario canceló la acción
+                    return;
+                }
+            });
+        });
+    </script>
+    @endpush
     <!-- Mensajes de Éxito o Error -->
     <div id="uuaMessage" class="message hidden">
         <span id="uuaMessageText"></span>
@@ -265,219 +267,3 @@
 </style>
 @endpush
 
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Elementos del formulario
-        const uuaForm = document.getElementById('uploadUuaForm');
-        const uuaInput = document.getElementById('uua_archivo');
-        const uuaError = document.getElementById('uuaError');
-        const uuaMessage = document.getElementById('uuaMessage');
-        const uuaMessageText = document.getElementById('uuaMessageText');
-        const submitUuaButton = document.getElementById('submitUuaButton');
-        const submitUuaText = document.getElementById('submitUuaText');
-        const submitUuaSpinner = document.getElementById('submitUuaSpinner');
-        const dropZone = document.getElementById('drop-zone');
-        const filePreview = document.getElementById('file-preview');
-        const fileName = document.getElementById('file-name');
-        const removeFileButton = document.getElementById('remove-file');
-
-        let isUploading = false; // Estado de carga
-
-        // Función para actualizar el stepper
-        function updateStepper(paso) {
-            const stepElement = document.querySelector(`[data-step="${paso}"]`);
-            if (stepElement) {
-                const circle = stepElement.querySelector('div.relative div');
-                const description = stepElement.querySelector('span.text-sm.font-medium');
-
-                // Cambiar clases para indicar completado
-                circle.classList.remove('bg-gray-300', 'text-gray-700');
-                circle.classList.add('bg-green-500', 'text-white', 'animate__animated', 'animate__bounceIn');
-
-                // Reemplazar el contenido con Ionicon de checkmark-circle
-                circle.innerHTML = `<ion-icon name="checkmark-circle" class="text-2xl"></ion-icon>`;
-
-                // Actualizar descripción si es necesario
-                description.classList.add('text-green-500');
-            }
-        }
-
-        // Función para mostrar mensajes
-        function showMessage(message, type = 'success') {
-            uuaMessageText.textContent = message;
-            uuaMessage.classList.remove('hidden', 'success', 'error');
-            if (type === 'success') {
-                uuaMessage.classList.add('success');
-            } else {
-                uuaMessage.classList.add('error');
-            }
-        }
-
-        // Validación en el cliente
-        function validateFile(file) {
-            const allowedTypes = ['application/pdf'];
-            const maxSize = 2 * 1024 * 1024; // 2MB
-
-            if (!file) {
-                return { valid: false, message: 'Por favor, selecciona un archivo.' };
-            }
-
-            if (!allowedTypes.includes(file.type)) {
-                return { valid: false, message: 'Tipo de archivo no permitido. Solo se permiten PDF.' };
-            }
-
-            if (file.size > maxSize) {
-                return { valid: false, message: 'El archivo excede el tamaño máximo de 2MB.' };
-            }
-
-            return { valid: true };
-        }
-
-        // Mostrar previsualización del archivo
-        function showFilePreview(file) {
-            fileName.textContent = file.name;
-            filePreview.classList.remove('hidden');
-        }
-
-        // Ocultar previsualización del archivo
-        function hideFilePreview() {
-            fileName.textContent = '';
-            filePreview.classList.add('hidden');
-        }
-
-        // Manejo de arrastrar y soltar
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                dropZone.classList.add('hover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                dropZone.classList.remove('hover');
-            }, false);
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                uuaInput.files = files;
-                handleFile(files[0]);
-            }
-        });
-
-        // Manejo de selección de archivo
-        uuaInput.addEventListener('change', function () {
-            if (uuaInput.files.length > 0) {
-                handleFile(uuaInput.files[0]);
-            }
-        });
-
-        // Función para manejar el archivo seleccionado
-        function handleFile(file) {
-            const validation = validateFile(file);
-            if (!validation.valid) {
-                uuaError.textContent = validation.message;
-                uuaError.style.display = 'block';
-                hideFilePreview();
-                return;
-            }
-
-            uuaError.style.display = 'none';
-            showFilePreview(file);
-        }
-
-        // Manejo de eliminación de archivo
-        if (removeFileButton) {
-            removeFileButton.addEventListener('click', function () {
-                uuaInput.value = '';
-                hideFilePreview();
-                uuaError.style.display = 'none';
-            });
-        }
-
-        // Manejador de envío del formulario de UUA
-        uuaForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            if (isUploading) return; // Evitar múltiples envíos
-
-            // Limpiar mensajes anteriores
-            uuaError.style.display = 'none';
-            uuaMessage.classList.remove('success', 'error');
-            uuaMessage.classList.add('hidden');
-            uuaMessageText.textContent = '';
-
-            const archivo = uuaInput.files[0];
-            const validation = validateFile(archivo);
-
-            if (!validation.valid) {
-                uuaError.textContent = validation.message;
-                uuaError.style.display = 'block';
-                return;
-            }
-
-            // Preparar los datos para enviar
-            const formData = new FormData(uuaForm);
-
-            try {
-                isUploading = true;
-                // Mostrar el spinner y deshabilitar el botón
-                submitUuaSpinner.classList.remove('hidden');
-                submitUuaText.textContent = 'Subiendo...';
-                submitUuaButton.disabled = true;
-
-                const response = await fetch('{{ route('apartados.storeUua') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    // Mostrar mensaje de éxito
-                    showMessage(data.message || 'Firma de la UAA cargada exitosamente.', 'success');
-
-                    // Actualizar el stepper
-                    updateStepper(2);
-
-                    // Deshabilitar el formulario de UUA
-                    submitUuaButton.disabled = true;
-                } else {
-                    // Mostrar mensaje de error
-                    showMessage(data.message || 'Hubo un error al cargar la Firma de la UAA.', 'error');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                // Mostrar mensaje de error genérico
-                showMessage('Hubo un error al cargar la Firma de la UAA. Por favor, inténtalo de nuevo más tarde.', 'error');
-            } finally {
-                // Ocultar el spinner y habilitar el botón si no se ha deshabilitado
-                submitUuaSpinner.classList.add('hidden');
-                if (!submitUuaButton.disabled) {
-                    submitUuaText.textContent = 'Subir Firma de la UAA';
-                    submitUuaButton.disabled = false;
-                }
-                isUploading = false;
-            }
-        });
-
-        // Inicializar el estado de los formularios basados en las auditorías existentes
-        @if($auditoria->archivo_uua)
-            // Paso 2 completado
-            updateStepper(2);
-
-            // Deshabilitar el formulario de UUA
-            submitUuaButton.disabled = true;
-        @endif
-    });
-</script>
-@endpush

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\CatUaa;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -122,4 +123,23 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
     }
+
+    public function impersonate(User $user)
+    {
+        if (Auth::user()->canImpersonate()) {
+            Auth::user()->impersonate($user);
+            return redirect()->route('dashboard');
+        }
+        abort(403);
+    }
+
+    public function stopImpersonation()
+    {
+        if (Auth::user()->canImpersonate()) {
+            Auth::user()->stopImpersonating();
+            return redirect()->route('dashboard');
+        }
+        abort(403);
+    }
+
 }

@@ -91,4 +91,17 @@ class Auditorias extends Model
         return $this->hasMany(Apartado::class, 'auditoria_id');
     }
 
+    public function checklistApartados()
+    {
+        return $this->hasMany(ChecklistApartado::class, 'auditoria_id', 'id');
+    }
+
+    /**
+     * Relación con PdfHistory.
+     */
+    public function pdfHistories()
+    {
+        return $this->hasMany(PdfHistory::class, 'auditoria_id');
+    }
+    
 }

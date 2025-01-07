@@ -77,7 +77,17 @@
                     <b>FORMATO 2</b><br> 
                     <b>Auditoría Especial de Seguimiento, Informes e Investigación</b><br>
                     <b>Departamento de Control de Expedientes</b><br><br>
-                    <b>Lista de verificación del Expediente de la Recomendación</b><br>
+                    @if ($formato == "01")
+                        <b>Lista de verificación del Expediente de la Recomendación </b><br>
+                    @elseif ($formato == "03")
+                        <b>Lista de verificación del Expediente de la Solicitud de Aclaración</b><br>
+                    @elseif ($formato == "06")
+                        <b>Lista de verificación del Expediente de Pliego de Observaciones</b><br>
+                    @elseif ($formato == "07")
+                        <b>Lista de verificación del Expediente de la Recomendación al Desempeño</b><br>
+                    @else
+                        <b>Lista de verificación del Expediente de la Recomendación </b><br>
+                    @endif
                     <small>({{ $auditoria->catEntrega->valor ?? '' }} C.P. {{ $auditoria->catCuentaPublica->valor ?? '' }})</small>
                 </td>
             </tr>
@@ -157,14 +167,6 @@
                     <b>Puesto: {{$auditoria->auditor_puesto}}</b><br>
                     <b>Clave de Acción: {{ $auditoria->catClaveAccion->valor}}</b>
                     <br>
-                    <br>
-                    <br>
-                    <div style="text-align: center">
-                        <br>
-                        ________________________________________________________
-                        <br>
-                        <b>Firma</b>
-                    </div>
                 </td>
                 <td>
                     <h2 style="text-align: center"><strong><u>Servidor Público de seguimiento que revisa, acepta o devuelve el expediente</u></strong></h2>
@@ -172,26 +174,21 @@
                     <b>Puesto: {{$auditoria->seguimiento_puesto}} </b><br>
                     <b>Clave de Acción: {{ $auditoria->catClaveAccion->valor}}</b>
                     <br>
-                    <br>
-                    <br>
-                    <div style="text-align: center">
-                        @if($auditoria->estatus_checklist == "Aceptado" || $auditoria->estatus_checklist == "Devuelto")
-                            @if($firmaPath && file_exists($firmaPath))
-                                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($firmaPath)) }}" alt="Firma Autógrafa" style="max-width: 200px;">
-                            @else
-                                <br><br><br>
-                            @endif
-                        @else
-                            <br><br><br>
-                        @endif
-                        <br>
-                        ________________________________________________________
-                        <br>
-                        <b>Firma</b>
-                    </div>
                 </td>
             </tr>
         </table>
     </div>
+    @if (auth()->user()->roles->pluck('name')[0] === 'Jefe de Departamento' || auth()->user()->roles->pluck('name')[0] === 'admin') 
+     <!-- Incluir el parcial hash_info.blade.php para el hash de seguimiento -->
+     @include('pdf.hash_info', [
+        'qrCodeDataUri' => $qrCodeDataUri,
+        'hash' => $hash,
+        'currentUserName' => $user->name,
+        'currentUserRole' => $auditoria->seguimiento_puesto, // Puedes ajustar según necesites
+        'email' => $user->email,
+        'ipAddress' => $ipAddress,
+        'generatedAt' => \Carbon\Carbon::parse($generatedAt)->format('d/m/Y H:i:s'),
+    ])
+    @endif
 </body>
 </html>
