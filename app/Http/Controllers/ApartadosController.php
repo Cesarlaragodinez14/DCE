@@ -33,7 +33,7 @@ class ApartadosController extends Controller
     public function index($auditoria_id)
     {
         // Obtener la auditoría
-        $auditoria = Auditorias::findOrFail($auditoria_id);
+        $auditoria = Auditorias::with('catSiglasTipoAccion')->findOrFail($auditoria_id);
 
         // Obtener los apartados principales y subapartados
         $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
@@ -195,7 +195,7 @@ class ApartadosController extends Controller
 
             // Verificar el estatus del checklist para determinar el contenido del correo
             if (in_array($request->estatus_checklist, ["Devuelto", "Aceptado"])) {
-                PdfController::generateChecklistPdf($auditoria_id);
+                PdfController::generateChecklistPdf($auditoria_id, 1);
                 if ($request->estatus_checklist == "Aceptado") {
                     $subject = 'La clave de acción ' . $auditoria->clave_de_accion . ' fue aprobada por Seguimiento';
                     $content = "<p>El usuario {$currentUserName} ({$currentUserRole}), ha aprobado la revisión de expediente para auditoría con clave de acción: <strong>{$auditoria->clave_de_accion}</strong>.</p>

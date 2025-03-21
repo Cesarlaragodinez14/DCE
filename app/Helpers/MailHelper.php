@@ -23,6 +23,6 @@ class MailHelper
 
         // Envía el correo a cada destinatario
         
-        //Mail::to($recipients)->send($mail);
+        Mail::to($recipients)->send($mail);
     }
 } 

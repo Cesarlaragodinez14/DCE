@@ -36,6 +36,7 @@ return new class extends Migration {
             $table->string('jd');
             $table->string('jefe_de_departamento');
             $table->string('estatus_checklist');
+            $table->string('estatus_entrega');
             $table->string('auditor_nombre');
             $table->string('auditor_puesto');
             $table->string('seguimiento_nombre');

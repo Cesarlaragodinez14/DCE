@@ -66,7 +66,7 @@
     @else
         <!-- Nombre del apartado -->
         <td class="px-4 py-3 text-gray-700" style="padding-left: {{ $apartado->depth * 20 }}px;">
-            {{ $apartado->nombre }}
+            {!! $apartado->nombre !!}
         </td>
 
         <!-- ¿Obligatorio? -->
@@ -88,7 +88,7 @@
         
         <!-- ¿Se Integra? -->
         <td class="px-4 py-3 text-center">
-            @role('admin|Jefe de Departamento')
+            @role('admin|Jefe de Departamento|Auditor habilitado')
                 <input 
                     type="checkbox" 
                     name="apartados[{{ $apartado->id }}][se_integra]" 
@@ -119,13 +119,20 @@
 
         <!-- Observaciones -->
         <td class="px-4 py-3">
-            @if ( auth()->user()->roles->pluck('name')[0] === 'Jefe de Departamento' || auth()->user()->roles->pluck('name')[0] === 'admin' )
-                <textarea name="apartados[{{ $apartado->id }}][observaciones]"
+            @if ( 
+                    auth()->user()->roles->pluck('name')[0] === 'admin' 
+                ||  auth()->user()->roles->pluck('name')[0] === 'Auditor habilitado'
+                ||  auth()->user()->roles->pluck('name')[0] === 'Jefe de Departamento' 
+                )
+                    <textarea name="apartados[{{ $apartado->id }}][observaciones]"
                     class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}</textarea>
-            @elseif ( auth()->user()->roles->pluck('name')[0] !== 'Jefe de Departamento' && auth()->user()->roles->pluck('name')[0] !== 'admin' )
+            @elseif ( 
+                        auth()->user()->roles->pluck('name')[0] !== 'Jefe de Departamento' 
+                    &&  auth()->user()->roles->pluck('name')[0] !== 'admin' 
+                )
                 {{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones ?? 'Sin Observaciones de seguimiento' }}
-                <input type="hidden" name="apartados[{{ $apartado->id }}][observaciones]"
+                    <input type="hidden" name="apartados[{{ $apartado->id }}][observaciones]"
                     class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     rows="2" value="{{ optional($checklist->where('apartado_id', $apartado->id)->first())->observaciones }}">
             @endif
@@ -133,9 +140,21 @@
 
         <!-- Comentarios UAA -->
         <td class="px-4 py-3">
-            <textarea name="apartados[{{ $apartado->id }}][comentarios_uaa]"
-                class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa }}</textarea>
+            @if (
+                        auth()->user()->roles->pluck('name')[0] === 'Director General'
+                    ||  auth()->user()->roles->pluck('name')[0] === 'Auditor habilitado UAA'
+                    ||  auth()->user()->roles->pluck('name')[0] === 'admin'
+                )
+                <textarea name="apartados[{{ $apartado->id }}][comentarios_uaa]"
+                    class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    rows="2">{{ optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa }}</textarea>
+            @else
+                {!! optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa ?? '<span style="color:rgb(185, 185, 185)">Sin comentarios de la UAA</span>' !!}
+                <input type="hidden" name="apartados[{{ $apartado->id }}][comentarios_uaa]"
+                    class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    rows="2" value="{{ optional($checklist->where('apartado_id', $apartado->id)->first())->comentarios_uaa }}">
+       
+            @endif
         </td>
     @endif
 </tr>

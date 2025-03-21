@@ -134,7 +134,7 @@ class ExcelUploadController extends Controller
     
         // Ejecutar la consulta para la segunda tabla
         $sql = "SELECT 
-                    COALESCE(cat_dgseg_ef.valor, 'Sin asignar') AS `Direccion General de Seguimiento`,
+                    COALESCE(cat_dgseg_ef.valor, 'Total de Acciones') AS `Direccion General de Seguimiento`,
                     $dynamicColumns,
                     COUNT(*) AS `Total general`
                 FROM 

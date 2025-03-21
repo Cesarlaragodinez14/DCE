@@ -17,4 +17,9 @@ class CatUaa extends Model
     {
         return $this->hasMany(Auditorias::class, 'uaa');
     }
+
+    public function dgsegEf()
+    {
+        return $this->belongsTo(CatDgsegEf::class, 'dgseg_ef_id');
+    }
 }

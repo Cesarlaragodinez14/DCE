@@ -6,6 +6,8 @@ use App\Models\Entrega;
 use App\Models\RecepcionEntrega;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;    // si quieres loguear errores
+use Illuminate\Support\Facades\Auth;   // para obtener el user actual
 
 class EntregaController extends Controller
 {
@@ -92,96 +94,32 @@ class EntregaController extends Controller
 
         return redirect()->route('entregas.index')->with('success', 'Entrega eliminada correctamente.');
     }
+    
+    public function confirmarEntrega(Request $request)
+    {
+        $request->validate([
+            'entrega_id' => 'required|exists:entregas,id',
+        ]);
 
-    public function mostrarRecepcion(Request $request) {
-        // Filtros
-        $ae = $request->input('ae');
-        $dg = $request->input('dg');
-    
-        // Obtener las auditorías especiales y direcciones generales para los selectores
-        $auditoriasEspeciales = DB::table('cat_siglas_auditoria_especial')->get();
-        $direccionesGenerales = DB::table('cat_dgseg_ef')->get();
-    
-        // Consulta principal, con conteo y agrupamiento correcto
-        $query = DB::table('entregas')
-            ->join('aditorias', 'entregas.auditoria_id', '=', 'aditorias.id')
-            ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
-            ->join('cat_entrega', 'aditorias.entrega', '=', 'cat_entrega.id')
-            ->join('cat_siglas_auditoria_especial', 'aditorias.siglas_auditoria_especial', '=', 'cat_siglas_auditoria_especial.id')
-            ->join('cat_dgseg_ef', 'aditorias.dgseg_ef', '=', 'cat_dgseg_ef.id')
-            ->select(
-                'cat_cuenta_publica.valor as CP',
-                'cat_entrega.valor as entrega',
-                'cat_siglas_auditoria_especial.valor as AE',
-                'cat_dgseg_ef.valor as DG',
-                'entregas.fecha_entrega',
-                'entregas.responsable',
-                DB::raw('COUNT(entregas.id) as total_entregas')  // Correct count
-            )
-            ->groupBy(
-                'cat_cuenta_publica.valor',
-                'cat_entrega.valor',
-                'cat_siglas_auditoria_especial.valor',
-                'cat_dgseg_ef.valor',
-                'entregas.fecha_entrega',
-                'entregas.responsable'
-            );
-    
-        // Aplicar filtros si existen
-        if ($ae) {
-            $query->where('aditorias.siglas_auditoria_especial', $ae);
+        try {
+            DB::beginTransaction();
+
+            $entrega = Entrega::findOrFail($request->entrega_id);
+            $entrega->estado = 'Entregado';
+            $entrega->fecha_real_entrega = now();
+            $entrega->recibido_por = Auth::id();
+            $entrega->save();
+
+            DB::commit();
+
+            return redirect()->route('dashboard.expedientes.recepcion')
+                ->with('success', 'La entrega se confirmó correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error confirmando la entrega: '.$e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al confirmar la entrega.');
         }
-        if ($dg) {
-            $query->where('aditorias.dgseg_ef', $dg);
-        }
-    
-        // Obtener resultados agrupados
-        $entregasContadas = $query->get();
-    
-        // Para cada grupo, obtener los entregas que pertenecen al grupo
-        foreach ($entregasContadas as $entregaGroup) {
-            $entregaGroup->entregas = DB::table('entregas')
-                ->join('aditorias', 'entregas.auditoria_id', '=', 'aditorias.id')
-                ->join('cat_cuenta_publica', 'aditorias.cuenta_publica', '=', 'cat_cuenta_publica.id')
-                ->join('cat_entrega', 'aditorias.entrega', '=', 'cat_entrega.id')
-                ->join('cat_siglas_auditoria_especial', 'aditorias.siglas_auditoria_especial', '=', 'cat_siglas_auditoria_especial.id')
-                ->join('cat_dgseg_ef', 'aditorias.dgseg_ef', '=', 'cat_dgseg_ef.id')
-                ->where('cat_cuenta_publica.valor', $entregaGroup->CP)
-                ->where('cat_entrega.valor', $entregaGroup->entrega)
-                ->where('cat_siglas_auditoria_especial.valor', $entregaGroup->AE)
-                ->where('cat_dgseg_ef.valor', $entregaGroup->DG)
-                ->where('entregas.fecha_entrega', $entregaGroup->fecha_entrega)
-                ->where('entregas.responsable', $entregaGroup->responsable)
-                ->select(
-                    'entregas.id as entrega_id',
-                    'entregas.fecha_entrega',
-                    'entregas.responsable',
-                    'aditorias.clave_de_accion',
-                    'aditorias.titulo',
-                    'aditorias.auditoria_especial',
-                    'entregas.tipo_accion',
-                    'entregas.entrega',
-                    'entregas.auditoria_id',
-                    'entregas.CP',
-                    'entregas.fecha_entrega',
-                    'entregas.responsable',
-                    'entregas.numero_legajos',
-                    'entregas.confirmado_por'
-                )
-                ->get();
-        }
-    
-        // Días hábiles restantes
-        $dias_habiles = 18; // Este valor puede calcularse dinámicamente si es necesario
-    
-        return view('dashboard.recepcion', compact(
-            'entregasContadas', 
-            'auditoriasEspeciales', 
-            'direccionesGenerales', 
-            'dias_habiles'
-        ));
     }
-    
 
     
 }

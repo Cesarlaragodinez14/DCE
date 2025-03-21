@@ -17,6 +17,12 @@
         @stack('styles')
         <!-- Styles -->
         @livewireStyles
+
+        <style>
+            .max-w-7xl {
+                max-width: 100%!important;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <x-banner />

@@ -81,6 +81,41 @@
 
                     <!-- Roles (solo admin puede ver y modificar roles) -->
                     @if($isAdmin)
+
+                    <!-- 2FA Secret -->
+                    <div class="mb-4">
+                        <label for="two_factor_secret" class="block text-sm font-medium text-gray-700">2FA Secret</label>
+                        <input type="text" id="two_factor_secret" name="two_factor_secret" value="{{ old('two_factor_secret', $user->two_factor_secret) }}" 
+                               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                               >
+                        @error('two_factor_secret')
+                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+
+                    <!-- 2FA Recovery -->
+                    <div class="mb-4">
+                        <label for="two_factor_recovery_codes" class="block text-sm font-medium text-gray-700">2FA Recovery</label>
+                        <input type="text" id="two_factor_recovery_codes" name="two_factor_recovery_codes" value="{{ old('two_factor_recovery_codes', $user->two_factor_recovery_codes) }}" 
+                               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                               >
+                        @error('two_factor_recovery_codes')
+                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- 2FA Confirmed -->
+                    <div class="mb-4">
+                        <label for="two_factor_confirmed_at" class="block text-sm font-medium text-gray-700">2FA Confirmed</label>
+                        <input type="text" id="two_factor_confirmed_at" name="two_factor_confirmed_at" value="{{ old('two_factor_confirmed_at', $user->two_factor_confirmed_at) }}" 
+                               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                               >
+                        @error('two_factor_confirmed_at')
+                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                         <div class="mb-8">
                             <label for="roles" class="block text-lg font-semibold text-gray-900 mb-2">Asignar Roles</label>
                             <div class="bg-white shadow rounded-lg p-4">

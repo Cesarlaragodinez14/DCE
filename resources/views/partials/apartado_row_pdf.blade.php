@@ -23,8 +23,11 @@
     <!-- Mostrar columnas sólo si no tiene subapartados (en caso de tener, se ocultan) -->
     @if (!$hasSubapartados)
         <!-- Indentación según el nivel de profundidad -->
-        <td style="width:600px">{!! isset($parent) ? str_repeat('&emsp;', $parent->depth + 1) : '' !!}{{ $apartado->nombre }}</td>
-
+        <td style="width:600px">
+            {!! isset($parent) ? str_repeat('&emsp;', $parent->depth + 1) : '' !!}
+            {!! $apartado->nombre !!}
+        </td>
+        
         <!-- Mostrar contenido sólo si el apartado no tiene subapartados -->
         <td style="text-align: center">
             @if (isset($checklist[$apartado->id]) && $checklist[$apartado->id]->se_aplica)

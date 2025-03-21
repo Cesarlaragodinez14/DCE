@@ -15,6 +15,9 @@ use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RecepcionController;
+use App\Http\Controllers\RecepcionHistoryController;
+use App\Http\Controllers\DashboardEntregasController;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +77,7 @@ Route::middleware([
 
     Route::get('/dashboard/expedientes/entrega', [ExpedientesController::class, 'show'])->name('dashboard.expedientes.entrega');
     Route::get('/dashboard/expedientes/recepcion', [EntregaController::class, 'mostrarRecepcion'])->name('dashboard.expedientes.recepcion');
+    Route::post('/dashboard/entregas/confirmar', [EntregaController::class, 'confirmarEntrega'])->name('entregas.confirmar');
 
     // Ruta para mostrar los apartados de una auditoría
     Route::get('/dashboard/auditorias/{auditoria_id}/apartados', [ApartadosController::class, 'index'])->name('auditorias.apartados');
@@ -97,8 +101,25 @@ Route::middleware([
     Route::get('/exportar-reporte', [ReporteController::class, 'exportarReporte'])->name('exportar.reporte');
     Route::post('/pdf/generate-signed/{auditoria_id}', [PdfController::class, 'generateSignedChecklistPdf'])->name('pdf.generateSignedChecklistPdf');
     Route::get('/dashboard/charts', [DashboardController::class, 'dashboardIndex'])->name('dashboard.charts.index');
+    Route::get('/dashboard/charts/entregas', [DashboardEntregasController::class, 'dashboardEntregasIndex'])->name('dashboard.charts.entregas');
 
+    Route::prefix('dashboard/expedientes')->group(function () {
+        Route::get('/recepcion', [RecepcionController::class, 'index'])
+             ->name('recepcion.index');
+
+        Route::get('/historial-programacion', [RecepcionHistoryController::class, 'index'])
+            ->name('programacion-historial.index');
     
+        Route::post('/ajax-toggle-entregado', [RecepcionController::class, 'ajaxToggleEntregado'])
+             ->name('recepcion.ajaxToggleEntregado');
+    
+        Route::post('/generar-acuse', [RecepcionController::class, 'generarAcuse'])
+             ->name('recepcion.generarAcuse');
+    });
+    Route::get('/contraparte/firma/{entregaId}', [RecepcionController::class, 'generateAcusePdfContraparte'])
+    ->name('contraparte.firma');
+    Route::get('/recepcion/rastreo/{id}', [RecepcionController::class, 'getRastreo'])
+    ->name('recepcion.rastreo');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -108,6 +129,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/validador/{hash}', [PdfController::class, 'validador'])->name('validador');
 Route::get('/validador/download/{hash}', [PdfController::class, 'downloadPdf'])->name('validador.download');
+Route::get('validador-entregas/{hash}', [RecepcionController::class, 'validadorEntregas'])
+    ->name('validador-entregas');
+Route::get('validador-entregas/{hash}/download', [RecepcionController::class, 'downloadValidadorEntregas'])
+    ->name('validador-entregas.download');
+
 
 // Rutas de administración con middleware de rol y verificación de perfil
 Route::middleware(['auth', 'role:admin', 'check.user.profile'])->group(function () {

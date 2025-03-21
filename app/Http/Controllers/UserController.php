@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
+use App\Helpers\MailHelper;
+
 class UserController extends Controller
 {
     public function index()
@@ -60,6 +62,22 @@ class UserController extends Controller
             'puesto'          => $validated['puesto'] ?? null,
         ]);
 
+         // 9) Enviar mail a la contraparte
+         $user_email = $validated['email'];
+         //$user_email = "ablozano@asf.gob.mx";
+         $subject  = 'Te damos la bienvenida';
+         $content = '<b>¡Te damos la bienvenida a la plataforma SAES!</b><br><br> Tu correo ha sido registrado exitosamente. Para comenzar, haz clic en el botón. <br><br>Si no has actualizado tu contraseña. Esta se construye por defailt con tus iniciales (Ejemplo - Juan Pérez Reyez = JPR) seguidas por 2025* <br><small>En dígitos: Dos Mil Veiticinco Asterisco</small><br> Ejemplo: <b>JPR2025*</b>.<br><br><a href="https://saes-asf.icu/" target="_blank" style="background-color: #007bff; color: #ffffff; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">Ir a la plataforma</a>.<br><br> Si tu cuenta lo requiere, configura el 2FA con una aplicación de autenticathor.<br><br> Para cambiar tu contraseña, ingresa a “Mi perfil” haciendo clic en tu nombre en la esquina superior derecha de la pantalla ingresa tu nueva contraseña y presiona actualizar.<br><br>';
+
+         $mailData = [
+             'footer' => 'Correo automático, no supervisado.',
+             'action' => [
+                 'text' => 'Ir a la plataforma',
+                 'url'  => 'https://saes-asf.icu/'
+             ]
+         ];
+ 
+         MailHelper::sendDynamicMail([$user_email], $subject, $content, $mailData);
+
         // Asignar los roles al usuario
         $user->syncRoles($roleNames);
 
@@ -81,6 +99,9 @@ class UserController extends Controller
         $validated = $request->validate([
             'name'       => 'required|string|max:255',
             'email'      => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'two_factor_secret' => 'nullable|string|max:255',
+            'two_factor_recovery_codes' => 'nullable|string|max:255',
+            'two_factor_confirmed_at' => 'nullable|string|max:255',
             'password'   => 'nullable|string|min:8|confirmed',
             'roles'      => 'required|array',
             'roles.*'    => 'exists:roles,id',
@@ -106,6 +127,9 @@ class UserController extends Controller
         $user->update([
             'name'            => $validated['name'],
             'email'           => $validated['email'],
+            'two_factor_secret'           => $validated['two_factor_secret'],
+            'two_factor_recovery_codes'           => $validated['two_factor_recovery_codes'],
+            'two_factor_confirmed_at'           => $validated['two_factor_confirmed_at'],
             'password'        => $validated['password'] ? bcrypt($validated['password']) : $user->password,
             'uaa_id'          => $validated['uaa_id'],
             'firma_autografa' => $validated['firma_autografa'] ?? $user->firma_autografa,

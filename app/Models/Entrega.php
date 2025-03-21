@@ -19,6 +19,7 @@ class Entrega extends Model
         'responsable',
         'numero_legajos',
         'confirmado_por',
+        'estado',
     ];
 
     // Relación con el modelo Auditoria (expediente)

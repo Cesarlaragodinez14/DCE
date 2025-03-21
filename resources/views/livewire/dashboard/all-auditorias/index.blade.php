@@ -84,7 +84,7 @@
                     }}</x-ui.table.header
                 >
                 <x-ui.table.header
-                    >{{ __('Checklist Pdf')
+                    >{{ __('Estatus de Firma')
                     }}</x-ui.table.header
                 >
                 <x-ui.table.header
@@ -96,6 +96,11 @@
                     wire:click="sortBy('clave_de_accion')"
                     >{{ __('crud.allAuditorias.inputs.clave_de_accion.label')
                     }}</x-ui.table.header
+                >
+
+                <x-ui.table.header
+                    for-crud
+                    >Tipo de Acción</x-ui.table.header
                 >
                 <x-ui.table.header for-crud wire:click="sortBy('entrega')"
                     >{{ __('crud.allAuditorias.inputs.entrega.label')
@@ -182,11 +187,15 @@
                     <x-ui.table.column>
                         @if ($auditorias->estatus_checklist == "Aceptado" && empty($auditorias->archivo_uua))
                             <a href="{{ route('auditorias.pdf', $auditorias->id) }}" style="padding: 10px !important; margin-bottom: 5px; background: #22125e;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
-                                <ion-icon name="cloud-download-outline"></ion-icon> - Con Firma de Seguimiento
+                                <ion-icon name="cloud-download-outline"></ion-icon> &nbsp; Con Firma de Seguimiento
                             </a>
                         @elseif($auditorias->estatus_checklist == "Aceptado" && !empty($auditorias->archivo_uua))
                             <a href="{{ route('auditorias.downloadUua', $auditorias->id) }}" style="padding: 10px !important; margin-bottom: 5px; background: #14ae1f;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
-                                <ion-icon name="cloud-download-outline"></ion-icon> - Completado
+                                <ion-icon name="cloud-download-outline"></ion-icon> &nbsp; Completado
+                            </a>
+                        @elseif ($auditorias->estatus_checklist == "Devuelto")
+                            <a href="/auditorias/{{ $auditorias->id }}/pdf" style="padding: 10px !important; margin-bottom: 5px; background: #064990;" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:shadow-outline focus:outline-none">
+                                <ion-icon name="repeat-outline"></ion-icon> &nbsp; Devuelto
                             </a>
                         @else
                             Sin pdf generado
@@ -197,6 +206,9 @@
                     </x-ui.table.column>
                     <x-ui.table.column for-crud
                         >{{ $auditorias->clave_de_accion }}</x-ui.table.column
+                    >
+                    <x-ui.table.column for-crud
+                        >{{ $auditorias->catSiglasTipoAccion->valor }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
                         >{{ $auditorias->catEntrega->valor }}</x-ui.table.column
@@ -212,7 +224,7 @@
                         >{{ $auditorias->titulo }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud
-                        >{{ $auditorias->numero_de_auditoria
+                        >{{ $auditorias->catAuditoriaEspecial->valor
                         }}</x-ui.table.column
                     >
                     <x-ui.table.column for-crud

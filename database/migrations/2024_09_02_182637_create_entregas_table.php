@@ -20,10 +20,14 @@ class CreateEntregasTable extends Migration
             $table->integer('numero_legajos');
             $table->unsignedBigInteger('confirmado_por'); // ID del usuario que confirmó la entrega
             $table->timestamps();
+            $table->string('estado')->default('Pendiente'); // o 'Programado'
+            $table->unsignedBigInteger('recibido_por')->nullable();
+            $table->timestamp('fecha_real_entrega')->nullable();
 
             // Relaciones
             $table->foreign('auditoria_id')->references('id')->on('aditorias')->onDelete('cascade');
             $table->foreign('confirmado_por')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('recibido_por')->references('id')->on('users')->onDelete('set null');
         });
     }
 

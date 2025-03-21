@@ -74,7 +74,7 @@ class AuditoriasIndex extends Component
     public function exportExcel()
     {
         // Verificar permisos
-        if (!Auth::user()->hasAnyRole(['admin', 'Jefe de departamento', 'Director General'])) {
+        if (!Auth::user()->hasAnyRole(['admin', 'Jefe de departamento', 'Director General', 'Auditor habilitado UAA'])) {
             abort(403, 'No tienes permiso para exportar datos.');
         }
 
@@ -115,23 +115,38 @@ class AuditoriasIndex extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->where('clave_de_accion', 'like', "%{$this->search}%");
 
-        // Aplicar filtros si están definidos
+        // Aplicar filtros si están definidos, especificando la tabla de "entrega"
         if ($this->entregaId) {
-            $query->where('entrega', $this->entregaId);
+            $query->where('aditorias.entrega', $this->entregaId); // Evita ambigüedad
         }
 
         if ($this->cuentaPublicaId) {
-            $query->where('cuenta_publica', $this->cuentaPublicaId);
+            $query->where('aditorias.cuenta_publica', $this->cuentaPublicaId); // Evita ambigüedad
+        }
+
+
+        // Si el usuario tiene el rol "Auditor habilitado UAA", hacemos el join con "entregas"
+        if ($user->hasRole('Auditor habilitado UAA')) {
+            return $query->select('aditorias.*') // Especificamos explícitamente que tomamos las columnas de aditorias
+                ->leftJoin('entregas', 'aditorias.id', '=', 'entregas.auditoria_id')
+                ->where('entregas.responsable', 'LIKE', "%{$user->name}%");
         }
 
         // Verificar roles y ajustar la consulta
-        if (!$user->hasRole(['admin', 'Director General']) AND $user->email != "uaapruebas@asf.gob.mx") {
-            $query->where('jefe_de_departamento', $user->name);
+        if (
+            !$user->hasRole(['admin', 'Director General', 'Auditor habilitado UAA', 'Auditor habilitado'])
+            && $user->email != "uaapruebas@asf.gob.mx"
+        ) {
+            $query->where('aditorias.jefe_de_departamento', $user->name); // Evita ambigüedad
         }
 
-        if ($user->hasRole('Director General') AND $user->email != "uaapruebas@asf.gob.mx") {
+        if (($user->hasRole('Director General') || $user->hasRole('Auditor habilitado UAA')) && $user->email != "uaapruebas@asf.gob.mx") {
             $userUAA = $user->uaa_id;
-            $query->where('uaa', $userUAA);
+            $query->where('aditorias.uaa', $userUAA); // Evita ambigüedad
+        }
+
+        if ($user->hasRole('Auditor habilitado')) {
+            $query->where('aditorias.seguimiento_nombre', $user->name); // Evita ambigüedad
         }
 
         return $query;

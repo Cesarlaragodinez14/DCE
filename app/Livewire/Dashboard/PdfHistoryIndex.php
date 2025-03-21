@@ -78,8 +78,12 @@ class PdfHistoryIndex extends Component
             });
         }
 
+        if(Auth::user()->hasRole('Director General')){
+            $query->where('aditorias.uaa', Auth::user()->uaa_id);
+        }
+
         // Filtrado adicional basado en el rol del usuario
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasRole('admin') AND !Auth::user()->hasRole('Director General')) {
             $query->where('aditorias.jefe_de_departamento', Auth::user()->name);
         }
 

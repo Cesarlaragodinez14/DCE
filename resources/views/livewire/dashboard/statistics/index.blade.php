@@ -11,7 +11,7 @@
         <x-ui.input
             wire:model.live="search"
             type="text"
-            placeholder="Buscar auditorías..."
+            placeholder="“Buscar por clave de acción..."
         />
     </div>
 

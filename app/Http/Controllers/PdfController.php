@@ -24,13 +24,20 @@ use Endroid\QrCode\Color\Color;
 class PdfController extends Controller
 {
    /**
-     * Generate a PDF for the checklist of a given Auditoria.
+      * Generate a PDF for the checklist of a given Auditoria.
      *
      * @param int $auditoria_id
      * @return \Illuminate\Http\Response
      */
-    public static function generateChecklistPdf($auditoria_id)
+    public static function generateChecklistPdf($auditoria_id, $regenerate = 0)
     {
+        // Verificar si se solicita regeneración
+        $regenerate_par = request()->query('regenerate') == 1;
+
+        if($regenerate_par == 1){
+            $regenerate = 1;
+        }
+
         // Obtener la auditoría y los datos relacionados
         $auditoria = Auditorias::findOrFail($auditoria_id);
         $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
@@ -38,71 +45,52 @@ class PdfController extends Controller
         $estatus_checklist = $auditoria->estatus_checklist;
         $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
 
-        // Verificar si ya existe un PDF generado en el historial
-        $pdfHistory = PdfHistory::where('auditoria_id', $auditoria->id)
-                                    ->orderBy('id', 'desc')
-                                    ->first();
-        if ($pdfHistory) {
-            // Verificar si el 'pdf_path' contiene la palabra 'aceptado'
-            if (stripos($pdfHistory->pdf_path, 'Aceptado') !== false) {
-                // Buscar el hash correspondiente en PdfHash
-                $pdfHash = PdfHash::where('auditoria_id', $auditoria->id)
-                    ->orderBy('id', 'desc')
-                    ->first();
-        
-                if ($pdfHash) {
-                    // Redirigir al validador con el hash del PDF existente
-                    return redirect()->route('validador', ['hash' => $pdfHash->hash]);
+        // Si no se solicita regeneración, verificar si ya existe un PDF generado en el historial
+        if (!$regenerate) {
+            $pdfHistory = PdfHistory::where('auditoria_id', $auditoria->id)
+                                        ->orderBy('id', 'desc')
+                                        ->first();
+            if ($pdfHistory) {
+                if (stripos($pdfHistory->pdf_path, 'Aceptado') !== false || stripos($pdfHistory->pdf_path, 'Devuelto') !== false) {
+                    $pdfHash = PdfHash::where('auditoria_id', $auditoria->id)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    if ($pdfHash) {
+                        return redirect()->route('validador', ['hash' => $pdfHash->hash]);
+                    }
                 }
             }
         }
-        
+
         // Si no se encontró un PDF con 'aceptado' en el 'pdf_path', continuar con la lógica existente
-        
-        // Verificar si ya existe un PDF generado en el historial por el mismo usuario y estatus
-        $pdfHistory = PdfHistory::where('auditoria_id', $auditoria->id)
-            ->where('generated_by', Auth::id()) // Comparar con el usuario actual
-            ->orderBy('id', 'desc') // Ordenar por el más reciente
-            ->first();
-        
-        if ($pdfHistory) {
-            // Si ya existe el PDF, buscar el hash correspondiente en PdfHash
-            $pdfHash = PdfHash::where('auditoria_id', $auditoria->id)
-                ->where('email', Auth::user()->email) // Asegurarse que el hash pertenece al mismo usuario
-                ->orderBy('id', 'desc') // Ordenar por el más reciente
+
+        if (!$regenerate) {
+            $pdfHistory = PdfHistory::where('auditoria_id', $auditoria->id)
+                ->where('generated_by', Auth::id())
+                ->orderBy('id', 'desc')
                 ->first();
-        
-            if ($pdfHash) {
-                // Redirigir al validador con el hash del PDF existente
-                return redirect()->route('validador', ['hash' => $pdfHash->hash]);
+            if ($pdfHistory) {
+                $pdfHash = PdfHash::where('auditoria_id', $auditoria->id)
+                    ->where('email', Auth::user()->email)
+                    ->orderBy('id', 'desc')
+                    ->first();
+                if ($pdfHash) {
+                    return redirect()->route('validador', ['hash' => $pdfHash->hash]);
+                }
             }
         }
 
         // Obtener el usuario basado en seguimiento_nombre
         $usuarioSeguimiento = User::where('name', $auditoria->seguimiento_nombre)->first();
-
-        // Inicializar firmaPath como null
-        $firmaPath = null;
-
-        // Verificar si se encontró el usuario y si tiene una firma
-        if ($usuarioSeguimiento && $usuarioSeguimiento->firma_autografa) {
-            $firmaPath = storage_path('app/public/' . $usuarioSeguimiento->firma_autografa);
-        }
+        $firmaPath = $usuarioSeguimiento && $usuarioSeguimiento->firma_autografa ? storage_path('app/public/' . $usuarioSeguimiento->firma_autografa) : null;
 
         // Obtener el usuario actual
         $user = Auth::user();
-
-        // Obtener la dirección IP actual
         $ipAddress = request()->ip();
-
-        // Obtener la fecha y hora actual del servidor
         $generatedAt = now();
-
-        // Generar un hash único (puedes utilizar un UUID o SHA256)
         $hashString = $user->email . '|' . $ipAddress . '|' . $generatedAt->toDateTimeString();
         $hash = hash('sha256', $hashString);
 
-        // Almacenar el hash y la información en la base de datos (modelo PdfHash)
         PdfHash::create([
             'auditoria_id' => $auditoria->id,
             'hash' => $hash,
@@ -111,10 +99,7 @@ class PdfController extends Controller
             'generated_at' => $generatedAt,
         ]);
 
-        // Generar la URL para el QR
         $url = route('validador', ['hash' => $hash]);
-
-        // Generar el código QR usando endroid/qr-code
         $qrCode = new QrCode(
             data: $url,
             encoding: new Encoding('UTF-8'),
@@ -126,50 +111,37 @@ class PdfController extends Controller
             backgroundColor: new Color(255, 255, 255)
         );
 
-        // Crear el escritor PNG
         $writer = new PngWriter();
-
-        // Generar la imagen del código QR
         $qrCodeImage = $writer->write($qrCode);
-
-        // Obtener la URI de datos para incrustar la imagen en el PDF
         $qrCodeDataUri = $qrCodeImage->getDataUri();
 
-        // Pasar el código QR y la información del hash a la vista
         $pdf = PDF::loadView('pdf.checklist', compact(
-                                'auditoria',
-                                'apartados',
-                                'checklist',
-                                'estatus_checklist',
-                                'firmaPath',
-                                'formato',
-                                'qrCodeDataUri',
-                                'hash',
-                                'ipAddress',
-                                'generatedAt',
-                                'user')) // Si necesitas el usuario
-                            ->setPaper('a4', 'landscape');
+            'auditoria',
+            'apartados',
+            'checklist',
+            'estatus_checklist',
+            'firmaPath',
+            'formato',
+            'qrCodeDataUri',
+            'hash',
+            'ipAddress',
+            'generatedAt',
+            'user'))
+            ->setPaper('a4', 'landscape');
 
-        // Obtener el contenido del PDF generado
         $pdfContent = $pdf->output();
-
-        // Definir el nombre del archivo con la clave de acción y fecha
         $fileName = $auditoria->clave_de_accion . '-' . $estatus_checklist . '-' . now()->format('YmdHis') . '.pdf';
-
-        // Almacenar el PDF en el disco público (storage/app/public/pdfs)
         $filePath = 'pdfs/' . $fileName;
         Storage::disk('public')->put($filePath, $pdfContent);
 
-        // Registrar el histórico en la tabla 'pdf_histories'
         PdfHistory::create([
             'auditoria_id'    => $auditoria->id,
             'clave_de_accion' => $auditoria->clave_de_accion,
             'pdf_path'        => $filePath,
             'generated_by'    => Auth::id(),
-            'hash'            => $hash, // Guardamos el hash también en el historial
+            'hash'            => $hash,
         ]);
 
-        // Descargar el PDF generado con un nombre descriptivo
         return response()->streamDownload(function () use ($pdfContent) {
             echo $pdfContent;
         }, $fileName);

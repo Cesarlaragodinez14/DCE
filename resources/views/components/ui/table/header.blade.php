@@ -11,6 +11,6 @@ $allClasses = [
 $classes = join(' ', array_keys(array_filter($allClasses)));
 @endphp
 
-<th {!! $attributes->merge(['class' => $classes]) !!}>
-    {{ $slot }}
+<th {!! $attributes->merge(['class' => $classes]) !!} style="text-align:center">
+    <b>{{ $slot }}</b>
 </th>

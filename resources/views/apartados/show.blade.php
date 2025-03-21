@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Histórico de Auditorías') }}
+            {{ __('Consulta de históricos de listas de verificación') }}
         </h2>
     </x-slot>
 

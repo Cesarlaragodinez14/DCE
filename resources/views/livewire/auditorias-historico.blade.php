@@ -1,14 +1,14 @@
 <div>
     <!-- Listado de Auditorías -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Listado de Historico de Acciones y checklists</h3>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Consulta de observaciones a los expedientes de acción</h3>
 
         <!-- Barra de Búsqueda -->
         <div class="mb-6">
             <input
                 type="text"
                 wire:model.debounce.300ms="search"
-                placeholder="Buscar Auditorías..."
+                placeholder="“Buscar por clave de acción..."
                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
             >
         </div>
@@ -92,7 +92,7 @@
 
                         <div class="mt-3 w-full">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-6" id="modal-title">
-                                Historial de Auditoría ID: {{ $selectedAuditoriaId }}
+                                Historial del expediente de acción no, {{ $selectedAuditoriaId }}
                             </h3>
 
                             <!-- Indicador de Carga -->
@@ -107,7 +107,7 @@
                             @else
                                 <!-- Historial de Cambios en Auditoría -->
                                 <div class="mb-8">
-                                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Cambios en Auditoría</h4>
+                                    <h4 class="text-xl font-semibold text-gray-800 mb-4">“Cambios en la acción</h4>
                                     @if(count($dataForAuditoria) > 0)
                                         <x-historial-table :historiales="$dataForAuditoria" />
                                     @else

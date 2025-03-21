@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Distribución de Auditorías') }}
+            {{ __('Distribución de Expedientes de Acción') }}
             <!-- Selectores para filtros -->
             <div class="ml-auto flex items-center space-x-4">
                 <!-- En tu archivo principal de la vista -->
@@ -28,7 +28,7 @@
         <x-ui.breadcrumbs>
             <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
                 <x-ui.breadcrumbs.separator />
-                <x-ui.breadcrumbs.link active>{{ __('Distribución de Auditorías') }}</x-ui.breadcrumbs.link>
+                <x-ui.breadcrumbs.link active>{{ __('Distribución de Expedientes de Acción') }}</x-ui.breadcrumbs.link>
            
         </x-ui.breadcrumbs>
         @if($reporte->isEmpty() && empty($reporteSegundaTabla) || (empty(request('cuenta_publica')) || empty(request('entrega'))))

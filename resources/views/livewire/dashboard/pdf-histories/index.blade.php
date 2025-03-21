@@ -5,7 +5,7 @@
         </x-ui.breadcrumbs.link>
         <x-ui.breadcrumbs.separator />
         <x-ui.breadcrumbs.link active>
-            Histórico de PDFs
+            Consulta de históricos de listas de verificación
         </x-ui.breadcrumbs.link>
     </x-ui.breadcrumbs> 
 
@@ -32,7 +32,7 @@
 
         <div class="flex space-x-4">
             <a href="{{ route('dashboard.all-auditorias.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Volver a Auditorías
+                Volver a los Expedientes de Acción
             </a>
         </div>
     </div>
@@ -154,9 +154,15 @@
                             {{ $history->auditoria->catEntrega->valor ?? 'N/A' }}
                         </x-ui.table.column>
             
-                        <!-- Estado del Checklist -->
                         <x-ui.table.column>
-                            {{ $history->auditoria->estatus_checklist ?? 'N/A' }}
+                            @php 
+                                $statusToPrint = "Desconocido"; // Valor por defecto en caso de que no coincida
+                                
+                                if (preg_match('/\/[\dA-Za-z\-]+-(Conformidad-UAA|Devuelto|Aceptado)-\d{14}\.pdf$/', $history->pdf_path, $matches)) {
+                                    $statusToPrint = str_replace('-', ' ', $matches[1]); // Extrae el estado y reemplaza guiones
+                                }
+                            @endphp
+                            {{ $statusToPrint }}
                         </x-ui.table.column>
             
                         <!-- Siglas DG UAA -->
