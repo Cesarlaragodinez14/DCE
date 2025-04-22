@@ -98,6 +98,9 @@ class ApartadosController extends Controller
             // Registrar cambios en AuditoriasHistory antes de actualizar
             $originalAuditoria = $auditoria->replicate(); // Clonar el objeto original
 
+            if(empty($request->auditor_puesto)){
+                return redirect()->back()->with('error', 'El puesto del auditor esta vacio.');
+            }
             // Actualización de la auditoría
             $auditoria->update([
                 'estatus_checklist' => $request->estatus_checklist,

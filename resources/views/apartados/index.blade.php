@@ -390,9 +390,9 @@
                                     <div>
                                         <label for="auditor_puesto" class="block text-sm font-medium text-gray-700">Puesto</label>
                                         @role('admin|Jefe de Departamento')
-                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                            <input type="text" name="auditor_puesto" required id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                                         @else
-                                            <input type="text" name="auditor_puesto" id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
+                                            <input type="text" name="auditor_puesto" required id="auditor_puesto" value="{{ old('auditor_puesto', trim($auditoria->auditor_puesto ?? '') ?: '') }}" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500" readonly>
                                         @endrole
                                     </div>
                                 </div>

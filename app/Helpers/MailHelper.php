@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Mail\DynamicMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class MailHelper
 {
@@ -22,7 +23,10 @@ class MailHelper
         $mail = new DynamicMail($subject, $content, $data);
 
         // Envía el correo a cada destinatario
-        
-        Mail::to($recipients)->send($mail);
+        if(Auth::user()->id == 519 || Auth::user()->id == 2){
+
+        } else {
+            Mail::to($recipients)->send($mail);
+        }
     }
 } 

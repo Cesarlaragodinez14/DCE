@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\CatUaa;
+use App\Models\CatSiglasAuditoriaEspecial;
 use App\Models\Apartado;
 use App\Models\Auditorias;
 use App\Models\AuditoriasHistory;
@@ -30,7 +31,7 @@ class DashboardController extends Controller
         
         // Mapeamos los sinónimos y nuevas categorías a las 4 originales
         if (str_contains($estatus, 'Sin Revisar')) {
-            return "Sin Revisar";
+            return "Sin Revisar (No entregados + Entregados sin revisar)";
         } elseif ($estatus === "Aceptado") {
             return "Aceptado";
         } elseif ($estatus === "Devuelto") {
@@ -67,10 +68,11 @@ class DashboardController extends Controller
             'cuenta_publica' => 'nullable|exists:cat_cuenta_publica,id',
             'uaa_id' => 'nullable|exists:cat_uaa,id',
             'dg_id' => 'nullable|exists:cat_dgseg_ef,id',
+            'sae_id' => 'nullable|exists:cat_siglas_auditoria_especial,id',
         ]);
 
         // Si el usuario es Director General SEG, forzamos su dg_id en la URL
-        if (Auth::user()->hasRole(['Director General SEG', 'AECF', 'AED', 'AEGF'])) {
+        if (Auth::user()->hasRole(['Director General SEG'])) {
             $dgReal = CatUaa::find(Auth::user()->uaa_id)->dgseg_ef_id;
             
             // Chequear si ya existe un dg_id en la petición o si es distinto
@@ -80,6 +82,22 @@ class DashboardController extends Controller
                 // Mantenemos los demás parámetros que tenía la petición (entrega, cuenta_publica, etc.)
                 return redirect()->route('dashboard.charts.index', array_merge($request->query(), [
                     'dg_id' => $dgReal
+                ]));
+            }
+        } else if (Auth::user()->hasRole(['AECF', 'AED', 'AEGF'])) {
+            if(!empty(Auth::user()->uaa_id)){
+                return null;
+            }
+
+            $saeReal = CatSiglasAuditoriaEspecial::where('valor', auth()->user()->roles->pluck('name')->first())->first()->id;
+
+            // Chequear si ya existe un dg_id en la petición o si es distinto
+            // para evitar bucles de redirección
+            if ($request->sae_id != $saeReal) {
+                // Redirigir a la misma ruta con dg_id forzado
+                // Mantenemos los demás parámetros que tenía la petición (entrega, cuenta_publica, etc.)
+                return redirect()->route('dashboard.charts.index', array_merge($request->query(), [
+                    'sae_id' => $saeReal
                 ]));
             }
         } else if (Auth::user()->hasRole(['DGUAA'])) {
@@ -127,6 +145,9 @@ class DashboardController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('siglas_auditoria_especial', $request->sae_id);
+            })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
             })
@@ -170,6 +191,9 @@ class DashboardController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('siglas_auditoria_especial', $request->sae_id);
+            })
             // NUEVO: Filtros por entrega y cuenta_publica
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
@@ -192,6 +216,9 @@ class DashboardController extends Controller
             })
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
+            })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
@@ -247,6 +274,9 @@ class DashboardController extends Controller
         })
         ->when($request->filled('dg_id'), function($q) use ($request) {
             $q->where('aditorias.dgseg_ef', $request->dg_id);
+        })
+        ->when($request->filled('sae_id'), function($q) use ($request) {
+            $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
         })
         // Filtros por entrega y cuenta_publica
         ->when($request->filled('entrega'), function($q) use ($request) {
@@ -306,6 +336,9 @@ class DashboardController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('siglas_auditoria_especial', $request->sae_id);
+            })
             // NUEVO: Filtros por entrega y cuenta_publica
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
@@ -361,6 +394,9 @@ class DashboardController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('aditorias.dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
+            })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('aditorias.entrega', $request->entrega);
             })
@@ -385,6 +421,9 @@ class DashboardController extends Controller
         }
         if($request->filled('dg_id')){
             $query->where('aditorias.dgseg_ef', $request->dg_id);
+        }
+        if($request->filled('sae_id')){
+            $query->where('aditorias.siglas_auditoria_especial', $request->dg_id);
         }
         if($request->filled('entrega')){
             $query->where('aditorias.entrega', $request->entrega);
@@ -449,6 +488,9 @@ class DashboardController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('auds.dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('auds.siglas_auditoria_especial', $request->sae_id);
+            })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('auds.entrega', $request->entrega);
             })
@@ -478,6 +520,9 @@ class DashboardController extends Controller
             })
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
+            })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
@@ -518,6 +563,9 @@ class DashboardController extends Controller
             })
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('dgseg_ef', $request->dg_id);
+            })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
@@ -564,6 +612,9 @@ class DashboardController extends Controller
             })
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('aditorias.dgseg_ef', $request->dg_id);
+            })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('aditorias.entrega', $request->entrega);

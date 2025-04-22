@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Recibidos', 'En Proceso de Aceptación', 'No Entregados'],
+                labels: ['Aceptados', 'En Proceso de Aceptación', 'No Entregados'],
                 datasets: [{
                     data: [data.delivered, data.in_process, data.unscheduled],
                     backgroundColor: [

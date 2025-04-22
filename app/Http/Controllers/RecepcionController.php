@@ -23,19 +23,25 @@ class RecepcionController extends Controller
     public function index(Request $request)
     {
         // Tus filtros y combos, sin cambios
-        $entregaId   = $request->input('entrega');
-        $cpId        = $request->input('cuenta_publica');
-        $estatus     = $request->input('estatus');
-        $responsable = $request->input('responsable');
+        $entregaId          = $request->input('entrega');
+        $cpId               = $request->input('cuenta_publica');
+        $estatus            = $request->input('estatus');
+        $responsable        = $request->input('responsable');
+        $ente_fiscalizado   = $request->input('ente_fiscalizado');
+        $ente_de_la_accion  = $request->input('ente_de_la_accion');
+        $dgseg_ef           = $request->input('dgseg_ef');
 
         $entregas = DB::table('cat_entrega')->get();
         $cuentasPublicas = DB::table('cat_cuenta_publica')->get();
+        $enteFiscalizado = DB::table('cat_ente_fiscalizado')->get();
+        $enteDeLaAccion = DB::table('cat_ente_de_la_accion')->get();
+        $dgSegEf = DB::table('cat_dgseg_ef')->get();
 
         // Ejemplo de UAA por defecto, o algo similar
         $uaa = DB::table('cat_uaa')->orderBy('id','asc')->first();
         $uaaName = $uaa ? $uaa->valor : 'Sin UAA';
-
-        // Consulta principal
+        
+        // Consulta modificada
         $query = DB::table('aditorias')
             ->leftJoin('entregas', 'entregas.auditoria_id', '=', 'aditorias.id')
             ->leftJoin('cat_cuenta_publica','aditorias.cuenta_publica','=','cat_cuenta_publica.id')
@@ -43,29 +49,35 @@ class RecepcionController extends Controller
             ->leftJoin('cat_siglas_tipo_accion','aditorias.siglas_tipo_accion','=','cat_siglas_tipo_accion.id')
             ->leftJoin('cat_siglas_auditoria_especial as csae','aditorias.siglas_auditoria_especial','=','csae.id')
             ->leftJoin('cat_uaa','aditorias.uaa','=','cat_uaa.id')
+            ->leftJoin('cat_ente_fiscalizado','aditorias.ente_fiscalizado','=','cat_ente_fiscalizado.id')
+            ->leftJoin('cat_ente_de_la_accion','aditorias.ente_de_la_accion','=','cat_ente_de_la_accion.id')
+            ->leftJoin('cat_dgseg_ef','aditorias.dgseg_ef','=','cat_dgseg_ef.id')
             ->leftJoin('cat_auditoria_especial as n_auditoria','aditorias.auditoria_especial','=','n_auditoria.id')
             ->select(
                 'aditorias.id',
-                'cat_cuenta_publica.valor as cuenta_publica_valor',
-                'cat_entrega.valor as entrega_valor',
-                'csae.valor as ae_siglas',
-                'cat_uaa.valor as uaa_valor',
+                DB::raw("COALESCE(cat_cuenta_publica.valor, 'Sin información') as cuenta_publica_valor"),
+                DB::raw("COALESCE(cat_entrega.valor, 'Sin información') as entrega_valor"),
+                DB::raw("COALESCE(csae.valor, 'Sin información') as ae_siglas"),
+                DB::raw("COALESCE(cat_uaa.valor, 'Sin información') as uaa_valor"),
                 'aditorias.auditoria_especial',
                 'aditorias.estatus_checklist as estatus_revision',
-                'n_auditoria.valor as numero_auditoria',
+                DB::raw("COALESCE(n_auditoria.valor, 'Sin información') as numero_auditoria"),
                 'aditorias.titulo',
                 'aditorias.clave_de_accion',
-                'cat_siglas_tipo_accion.valor as tipo_accion_valor',
-                'entregas.id as id_entrega',
-                'entregas.estado',
-                'entregas.numero_legajos',
-                'entregas.fecha_entrega',
-                'entregas.fecha_real_entrega',
-                'entregas.responsable as responsable_uaa',
-                // Suponiendo "responsable_seg" o algo similar
+                DB::raw("COALESCE(cat_siglas_tipo_accion.valor, 'Sin información') as tipo_accion_valor"),
+                'aditorias.ente_fiscalizado',
+                'aditorias.ente_de_la_accion',
+                'aditorias.dgseg_ef',
+                DB::raw("COALESCE(cat_ente_fiscalizado.valor, 'Sin información') as valor_ente_fiscalizado"),
+                DB::raw("COALESCE(cat_ente_de_la_accion.valor, 'Sin información') as valor_ente_de_la_accion"),
+                DB::raw("COALESCE(cat_dgseg_ef.valor, 'Sin información') as valor_dgseg_ef"),
                 'aditorias.jefe_de_departamento as responsable_seg',
+                'entregas.id as id_entrega',
+                DB::raw("COALESCE(entregas.estado, 'Sin programar') as estado"),
+                DB::raw("COALESCE(entregas.numero_legajos, 'Sin programar') as numero_legajos"),
+                DB::raw("COALESCE(entregas.responsable, 'Sin programar') as responsable_uaa"),
                 // "ya_entregado" => si la 'estado' no es nula y es un valor no "Recibido..."
-                DB::raw("CASE WHEN entregas.estado not like '%Recibido%' THEN 1 ELSE 0 END as ya_entregado")
+                DB::raw("CASE WHEN entregas.estado IS NULL THEN 0 WHEN entregas.estado not like '%Recibido%' THEN 1 ELSE 0 END as ya_entregado")
             );
 
         // Aplicar filtros
@@ -76,14 +88,31 @@ class RecepcionController extends Controller
             $query->where('aditorias.cuenta_publica', $cpId);
         }
         if ($estatus) {
-            // Ejemplo: filtrar donde la "estado" sea "Programado" o "Entregado"
-            $query->where('entregas.estado', $estatus);
+            // Modificado para manejar correctamente el filtro "Sin Programar"
+            if ($estatus === 'Sin Programar') {
+                $query->whereNull('entregas.id');
+            } else {
+                $query->where('entregas.estado', $estatus);
+            }
         }
         if ($responsable) {
-            $query->where('entregas.responsable', 'like', '%' . $responsable . '%');
+            $query->where(function($q) use ($responsable) {
+                $q->where('entregas.responsable', 'like', '%' . $responsable . '%')
+                ->orWhere(function($inner) use ($responsable) {
+                    $inner->whereNull('entregas.responsable')
+                            ->where(DB::raw("'Sin programar'"), 'like', '%' . $responsable . '%');
+                });
+            });
         }
-        
-        $query->whereNotNull('entregas.id');
+        if ($ente_fiscalizado) {
+            $query->where('aditorias.ente_fiscalizado', $ente_fiscalizado);
+        }
+        if ($ente_de_la_accion) {
+            $query->where('aditorias.ente_de_la_accion', $ente_de_la_accion);
+        }
+        if ($dgseg_ef) {
+            $query->where('aditorias.dgseg_ef', $dgseg_ef);
+        }
 
         $query->orderBy('aditorias.id');
 
@@ -91,11 +120,14 @@ class RecepcionController extends Controller
         $users = DB::table('users')->pluck('name')->toArray();
 
         return view('dashboard.recepcion', [
-            'expedientes' => $expedientes,
-            'entregas' => $entregas,
-            'cuentasPublicas' => $cuentasPublicas,
-            'uaaName' => $uaaName,
-            'users' => $users,
+            'expedientes'       => $expedientes,
+            'entregas'          => $entregas,
+            'enteFiscalizado'   => $enteFiscalizado,
+            'enteDeLaAccion'    => $enteDeLaAccion,
+            'dgSegEf'           => $dgSegEf,
+            'cuentasPublicas'   => $cuentasPublicas,
+            'uaaName'           => $uaaName,
+            'users'             => $users,
         ]);
     }
 

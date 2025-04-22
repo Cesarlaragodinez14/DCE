@@ -25,7 +25,7 @@
         </div>
         <div id="legend-unscheduled" class="flex items-center mr-6 mb-2 cursor-pointer hover:bg-gray-100 p-1 rounded transition-colors" data-index="2" data-active="true">
             <div class="w-4 h-4 rounded mr-2" style="background-color: #f87171;"></div>
-            <span>No Aceptados</span>
+            <span>No Entregados</span>
         </div>
         <div class="ml-auto text-xs text-gray-500 italic">* Haga clic en las leyendas para filtrar</div>
     </div>
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusColors = {
         delivered: '#4ade80',     // Verde para Aceptados
         in_process: '#facc15',    // Amarillo para en proceso
-        unscheduled: '#f87171'    // Rojo para no Aceptados
+        unscheduled: '#f87171'    // Rojo para no Entregados
     };
     
     // 1) Recuperar los datos
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             tableRows.push({
                 'Sigla': '',
-                'Estado': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #f87171;"></span>No Aceptados</span>',
+                'Estado': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #f87171;"></span>No Entregados</span>',
                 'Cantidad': unscheduled,
                 'Porcentaje': `<div class="w-full bg-gray-200 rounded-full h-2.5">
                     <div class="bg-red-400 h-2.5 rounded-full" style="width: ${unscheduledPct}%"></div>
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="text-xs text-gray-500">(${inProcessPct}%)</span>
         </div>
         <div>
-            <span class="text-red-600 font-medium">No Aceptados:</span>
+            <span class="text-red-600 font-medium">No Entregados:</span>
             <span class="font-bold">${grandTotal.unscheduled}</span>
             <span class="text-xs text-gray-500">(${unscheduledPct}%)</span>
         </div>
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 procesoRow.appendChild(porcentajeProcesoCell);
                 tbody.appendChild(procesoRow);
                 
-                // Fila No Aceptados
+                // Fila No Entregados
                 const noAceptadosRow = document.createElement('tr');
                 
                 const siglaVaciaCell3 = document.createElement('td');
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 noAceptadosIndicator.className = 'w-3 h-3 rounded-full mr-2';
                 noAceptadosIndicator.style.backgroundColor = '#f87171';
                 
-                const noAceptadosText = document.createTextNode('No Aceptados');
+                const noAceptadosText = document.createTextNode('No Entregados');
                 
                 noAceptadosWrapper.appendChild(noAceptadosIndicator);
                 noAceptadosWrapper.appendChild(noAceptadosText);
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
             borderWidth: 0
         },
         {
-            label: 'No Aceptados',
+            label: 'No Entregados',
             data: allSiglas.map(sigla => grouping[sigla].unscheduled),
             backgroundColor: statusColors.unscheduled,
             hoverBackgroundColor: '#ef4444',
@@ -677,7 +677,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dataset.hidden = isActive;
                 
                 // Actualizar la tabla también si está visible
-                const stateLabels = ['Aceptados', 'En Proceso', 'No Aceptados'];
+                const stateLabels = ['Aceptados', 'En Proceso', 'No Entregados'];
                 const rows = document.querySelectorAll(`td div.flex.items-center`);
                 rows.forEach(row => {
                     if (row.textContent.includes(stateLabels[index])) {
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', function() {
             csvContent += `${sigla},Total,${totalSigla},100\n`;
             csvContent += `${sigla},Aceptados,${delivered},${deliveredPct}\n`;
             csvContent += `${sigla},En Proceso,${in_process},${inProcessPct}\n`;
-            csvContent += `${sigla},No Aceptados,${unscheduled},${unscheduledPct}\n`;
+            csvContent += `${sigla},No Entregados,${unscheduled},${unscheduledPct}\n`;
         });
         
         // Crear enlace de descarga

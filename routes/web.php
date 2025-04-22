@@ -22,6 +22,19 @@ use App\Http\Controllers\DashboardEntregasController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AIController;
+
+Route::prefix('dashboard')->group(function () {
+    // Ruta para mostrar la página del Asistente IA
+    Route::get('ai', [AIController::class, 'index'])->name('ai.index');
+
+    // Ruta para enviar el mensaje del usuario y recibir la respuesta
+    Route::post('ai/send-message', [AIController::class, 'sendMessage'])->name('ai.sendMessage');
+
+    // Opcional: ruta para limpiar el chat o manejar otras acciones
+    Route::post('ai/clear', [AIController::class, 'clearChat'])->name('ai.clearChat');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

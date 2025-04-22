@@ -57,7 +57,9 @@
                             Editar
                         </x-ui.action>
                         <x-ui.action.danger class="ml-4" onclick="openDeleteModal({{ $user->id }})">
+                        @if(Auth::user()->id === 1 || Auth::user()->id === 2 || Auth::user()->id === 3)
                             Eliminar
+                        @endif
                         </x-ui.action.danger>
                         <!-- Impersonate Button -->
                         @if(Auth::user()->canImpersonate() && $user->canBeImpersonated())

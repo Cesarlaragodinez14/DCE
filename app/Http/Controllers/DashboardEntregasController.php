@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\CatUaa;
+use App\Models\CatSiglasAuditoriaEspecial;
 use App\Models\Apartado;
 use App\Models\Auditorias;
 use App\Models\AuditoriasHistory;
@@ -79,18 +80,37 @@ class DashboardEntregasController extends Controller
      */
     private function handleRoleBasedRedirects(Request $request)
     {
-        if (Auth::user()->hasRole(['Director General SEG', 'AECF', 'AED', 'AEGF'])) {
+        if (Auth::user()->hasRole(['Director General SEG'])) {
             $dgReal = CatUaa::find(Auth::user()->uaa_id)->dgseg_ef_id;
             
             if ($request->dg_id != $dgReal) {
-                return redirect()->route('dashboard.charts.index', array_merge($request->query(), [
+                return redirect()->route('dashboard.charts.entregas', array_merge($request->query(), [
                     'dg_id' => $dgReal
                 ]));
             }
+
+        } else if (Auth::user()->hasRole(['AECF', 'AED', 'AEGF'])) {
+            if(!empty(Auth::user()->uaa_id)){
+                return null;
+            }
+
+            $saeReal = CatSiglasAuditoriaEspecial::where('valor', auth()->user()->roles->pluck('name')->first())->first()->id;
+
+            // Chequear si ya existe un dg_id en la petición o si es distinto
+            // para evitar bucles de redirección
+            if ($request->sae_id != $saeReal) {
+                // Redirigir a la misma ruta con dg_id forzado
+                // Mantenemos los demás parámetros que tenía la petición (entrega, cuenta_publica, etc.)
+                return redirect()->route('dashboard.charts.entregas', array_merge($request->query(), [
+                    'sae_id' => $saeReal
+                ]));
+            }
         } else if (Auth::user()->hasRole(['DGUAA'])) {
-            if ($request->uaa_id != Auth::user()->uaa_id) {
-                return redirect()->route('dashboard.charts.index', array_merge($request->query(), [
-                    'uaa_id' => Auth::user()->uaa_id
+            $uaaReal = Auth::user()->uaa_id;
+            
+            if ($request->uaa_id != $uaaReal) {
+                return redirect()->route('dashboard.charts.entregas', array_merge($request->query(), [
+                    'uaa_id' => $uaaReal
                 ]));
             }
         }
@@ -157,12 +177,16 @@ class DashboardEntregasController extends Controller
             ->when($request->filled('dg_id'), function($q) use ($request) {
                 $q->where('aditorias.dgseg_ef', $request->dg_id);
             })
+            ->when($request->filled('sae_id'), function($q) use ($request) {
+                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
+            })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('aditorias.entrega', $request->entrega);
             })
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('aditorias.cuenta_publica', $request->cuenta_publica);
-            });
+            })
+            ->whereNot(['aditorias.entrega' => 20, 'aditorias.cuenta_publica' => 1]);
     }
     
     /**

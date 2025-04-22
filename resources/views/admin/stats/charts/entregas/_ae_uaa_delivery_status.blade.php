@@ -5,13 +5,13 @@
         
         <!-- Controles de filtrado y visualización -->
         <div class="flex space-x-2">
-            <select id="view-mode-selector" class="px-2 py-1 border rounded text-sm">
+            <select id="view-mode-selector" style="padding-right: 30px;" class="px-2 py-1 border rounded text-sm">
                 <option value="chart">Vista de Gráfico</option>
                 <option value="table">Vista de Tabla</option>
                 <option value="both">Gráfico y Tabla</option>
             </select>
             
-            <select id="chart-type-selector" class="px-2 py-1 border rounded text-sm">
+            <select id="chart-type-selector" style="padding-right: 30px;" class="px-2 py-1 border rounded text-sm">
                 <option value="stacked">Barras Apiladas</option>
                 <option value="grouped">Barras Agrupadas</option>
                 <option value="percentage">Porcentajes</option>
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
         progressText.innerHTML = `
             <span>Aceptados: ${deliveredAE} (${(deliveredAE/totalAE*100).toFixed(1)}%)</span>
             <span>En Proceso: ${inProcessAE} (${(inProcessAE/totalAE*100).toFixed(1)}%)</span>
-            <span>No Programados: ${unscheduledAE} (${(unscheduledAE/totalAE*100).toFixed(1)}%)</span>
+            <span>No Entregados: ${unscheduledAE} (${(unscheduledAE/totalAE*100).toFixed(1)}%)</span>
         `;
         titleDiv.appendChild(progressBar);
         titleDiv.appendChild(progressText);
@@ -254,7 +254,18 @@ document.addEventListener('DOMContentLoaded', function() {
         chartDiv.className = "chart-container mb-4";
         const canvas = document.createElement('canvas');
         canvas.id = `ae-delivery-chart-${aeIndex}`;
-        canvas.height = Math.max(100, 100 + sortedUaa.length * 10); // Altura dinámica según número de UAAs
+        // Modificación para la creación del canvas en la función createAeSection
+// Reemplazar la línea:
+        canvas.height = Math.max(100, 100 + sortedUaa.length * 10);
+
+        // Con esta nueva implementación que asigna más espacio por UAA:
+        canvas.height = Math.max(250, 100 + sortedUaa.length * 30);
+
+        // También es importante asegurar que el contenedor del canvas tenga una altura adecuada
+        // Añadir estas propiedades de estilo al div chartDiv:
+        chartDiv.style.height = `${Math.max(300, 150 + sortedUaa.length * 30)}px`;
+        chartDiv.style.minHeight = '400px';
+
         chartDiv.appendChild(canvas);
         
         // Crear tabla de datos
@@ -271,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UAA</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aceptados</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">En Proceso</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Programados</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Entregados</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
             </tr>
         `;
@@ -296,11 +307,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.in_process} (${inProcessPerc}%)</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.unscheduled} (${unscheduledPerc}%)</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.total}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-green-500 h-2.5 rounded-full" style="width: ${deliveredPerc}%"></div>
-                    </div>
-                </td>
             `;
             
             tbody.appendChild(row);
@@ -456,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         borderWidth: 1
                     },
                     {
-                        label: 'No Programados',
+                        label: 'No Entregados',
                         data: newDatasetUnscheduled,
                         backgroundColor: COLORS.unscheduled,
                         borderColor: COLORS.unscheduled,
@@ -485,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     borderWidth: 1
                 },
                 {
-                    label: 'No Programados',
+                    label: 'No Entregados',
                     data: datasetUnscheduled,
                     backgroundColor: COLORS.unscheduled,
                     borderColor: COLORS.unscheduled,
@@ -592,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="text-sm">${(data.in_process/data.total*100).toFixed(1)}%</p>
                 </div>
                 <div class="border rounded p-3 text-center">
-                    <h5 class="text-sm text-gray-500">No Programados</h5>
+                    <h5 class="text-sm text-gray-500">No Entregados</h5>
                     <p class="text-xl font-semibold" style="color: ${COLORS.unscheduled}">${data.unscheduled}</p>
                     <p class="text-sm">${(data.unscheduled/data.total*100).toFixed(1)}%</p>
                 </div>
@@ -630,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Exporta los datos de todas las AEs
      */
     function exportAllData() {
-        let csv = 'Auditoría Especial,UAA,Aceptados,En Proceso,No Programados,Total\n';
+        let csv = 'Auditoría Especial,UAA,Aceptados,En Proceso,No Entregados,Total\n';
         
         chartInstances.forEach(instance => {
             instance.labels.forEach(uaa => {
@@ -646,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Exporta los datos de una AE específica
      */
     function exportAEData(aeSigla, data, labels) {
-        let csv = 'UAA,Aceptados,En Proceso,No Programados,Total\n';
+        let csv = 'UAA,Aceptados,En Proceso,No Entregados,Total\n';
         
         labels.forEach(uaa => {
             const item = data[uaa];
