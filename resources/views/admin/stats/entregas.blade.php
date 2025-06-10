@@ -1,3 +1,4 @@
+
 {{-- resources/views/admin/stats/index.blade.php --}}
 
 <x-app-layout>
@@ -6,7 +7,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Estadísticas Generales de Recepción y Entrega de Expedientes') }}
+                {{ __('Graficos y Estadisticas') }}
             </h2>
             <div class="flex items-center space-x-2">
                 <span class="text-sm text-gray-500">Última actualización: {{ now()->format('d/m/Y H:i') }}</span>
@@ -16,6 +17,147 @@
             </div>
         </div>
     </x-slot>
+
+    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-6 pb-20">
+        <!-- Breadcrumbs Mejorados -->
+        <div class="breadcrumb">
+            <a href="/dashboard" class="breadcrumb-link">
+                <ion-icon name="home-outline" class="inline-block mr-1"></ion-icon> Dashboard
+            </a>
+            <span class="breadcrumb-separator">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </span>
+            <span class="breadcrumb-current">Entrega-recepción de expedientes de acción</span>
+            <span class="breadcrumb-separator">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </span>
+            <span class="breadcrumb-current">Gráficas y estadisticas</span>
+        </div>
+
+        <!-- Formulario de Filtros Mejorado -->
+        <div class="" style="background-color: #FFF">
+            <div class="filter-header">
+                <h3 class="filter-title">
+                    <ion-icon name="options-outline" class="filter-icon"></ion-icon>
+                    Filtros de Búsqueda
+                </h3>
+                <button id="toggle-filters" class="chart-action-btn">
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+            </div>
+            
+            <div id="filter-content" class="filter-body">
+                <form method="GET" action="{{ route('dashboard.charts.entregas') }}" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                        <!-- Filtro Entrega -->
+                        <div>
+                            <label for="entrega" class="block text-gray-700 text-sm font-medium mb-1">
+                                <ion-icon name="archive-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
+                                Entrega:
+                            </label>
+                            <select name="entrega" id="entrega" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <option value="">Todas</option>
+                                @foreach($entregas ?? [] as $entrega)
+                                    <option value="{{ $entrega->id }}" {{ request('entrega') == $entrega->id ? 'selected' : '' }}>
+                                        {{ $entrega->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Filtro Cuenta Pública -->
+                        <div>
+                            <label for="cuenta_publica" class="block text-gray-700 text-sm font-medium mb-1">
+                                <ion-icon name="document-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
+                                Cuenta Pública:
+                            </label>
+                            <select name="cuenta_publica" id="cuenta_publica" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <option value="">Todas</option>
+                                @foreach($cuentasPublicas ?? [] as $cuenta)
+                                    <option value="{{ $cuenta->id }}" {{ request('cuenta_publica') == $cuenta->id ? 'selected' : '' }}>
+                                        {{ $cuenta->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        @role("admin|AUDITOR ESPECIAL")
+                        <!-- Filtro UAA -->
+                        <div>
+                            <label for="uaa_id" class="block text-gray-700 text-sm font-medium mb-1">
+                                <ion-icon name="school-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
+                                UAA:
+                            </label>
+                            <select name="uaa_id" id="uaa_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <option value="">Todas</option>
+                                @foreach($uaas ?? [] as $uaa)
+                                    <option value="{{ $uaa->id }}" {{ request('uaa_id') == $uaa->id ? 'selected' : '' }}>
+                                        {{ $uaa->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Filtro DGSEG EF -->
+                        <div>
+                            <label for="dg_id" class="block text-gray-700 text-sm font-medium mb-1">
+                                <ion-icon name="people-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
+                                DG SEG:
+                            </label>
+                            <select name="dg_id" id="dg_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <option value="">Todas</option>
+                                @foreach($dgsegs ?? [] as $dgseg)
+                                    <option value="{{ $dgseg->id }}" {{ request('dg_id') == $dgseg->id ? 'selected' : '' }}>
+                                        {{ $dgseg->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endrole
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+                        <button type="submit" class="btn-primary">
+                            <ion-icon name="filter-outline"></ion-icon> Aplicar Filtros
+                        </button>
+
+                        <a href="{{ route('dashboard.charts.index') }}" class="btn-secondary">
+                            <ion-icon name="refresh-outline"></ion-icon> Limpiar Filtros
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contenedor principal para las gráficas -->
+        <div class="space-y-8 pb-16">
+            
+            @include('admin.stats.charts.entregas._delivery_status', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
+            @include('admin.stats.charts.entregas._delivery_status_by_sigla', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
+            @include('admin.stats.charts.entregas._ae_uaa_delivery_status', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
+
+        </div>
+
+        <!-- Barra de Navegación Fija Mejorada -->
+        <nav aria-label="Barra de navegación principal" class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-links">
+                    <a href="#delivery-status" class="navbar-link" aria-label="Ir a Cambios 30D">
+                        <ion-icon name="archive-outline" class="navbar-icon"></ion-icon>
+                        <span class="navbar-text">Entregas</span>
+                    </a> 
+                    <a href="#delivery-status-by-sigla" class="navbar-link" aria-label="Ir a Siglas AudEsp">
+                        <ion-icon name="clipboard-outline" class="navbar-icon"></ion-icon>
+                        <span class="navbar-text">Siglas AE</span>
+                    </a>
+                    <a href="#ae-delivery-charts-container" class="navbar-link" aria-label="Ir a Expedientes por Estatus AE UAA">
+                        <ion-icon name="grid-outline" class="navbar-icon"></ion-icon>
+                        <span class="navbar-text">AE UAA</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
     @push('styles')
     <style>
@@ -473,151 +615,18 @@
     </style>
     @endpush
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-6 pb-20">
-        <!-- Breadcrumbs Mejorados -->
-        <div class="breadcrumb">
-            <a href="/dashboard" class="breadcrumb-link">
-                <ion-icon name="home-outline" class="inline-block mr-1"></ion-icon> Dashboard
-            </a>
-            <span class="breadcrumb-separator">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-            </span>
-            <span class="breadcrumb-current">Graficos</span>
-            <span class="breadcrumb-separator">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-            </span>
-            <span class="breadcrumb-current">Recepción y Entrega de Expedientes</span>
-        </div>
-
-        <!-- Formulario de Filtros Mejorado -->
-        <div class="" style="background-color: #FFF">
-            <div class="filter-header">
-                <h3 class="filter-title">
-                    <ion-icon name="options-outline" class="filter-icon"></ion-icon>
-                    Filtros de Búsqueda
-                </h3>
-                <button id="toggle-filters" class="chart-action-btn">
-                    <ion-icon name="chevron-down-outline"></ion-icon>
-                </button>
-            </div>
-            
-            <div id="filter-content" class="filter-body">
-                <form method="GET" action="{{ route('dashboard.charts.entregas') }}" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-                        <!-- Filtro Entrega -->
-                        <div>
-                            <label for="entrega" class="block text-gray-700 text-sm font-medium mb-1">
-                                <ion-icon name="archive-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
-                                Entrega:
-                            </label>
-                            <select name="entrega" id="entrega" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">Todas</option>
-                                @foreach($entregas as $entrega)
-                                    <option value="{{ $entrega->id }}" {{ request('entrega') == $entrega->id ? 'selected' : '' }}>
-                                        {{ $entrega->valor }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Filtro Cuenta Pública -->
-                        <div>
-                            <label for="cuenta_publica" class="block text-gray-700 text-sm font-medium mb-1">
-                                <ion-icon name="document-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
-                                Cuenta Pública:
-                            </label>
-                            <select name="cuenta_publica" id="cuenta_publica" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">Todas</option>
-                                @foreach($cuentasPublicas as $cuenta)
-                                    <option value="{{ $cuenta->id }}" {{ request('cuenta_publica') == $cuenta->id ? 'selected' : '' }}>
-                                        {{ $cuenta->valor }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        @role("admin|AUDITOR ESPECIAL")
-                        <!-- Filtro UAA -->
-                        <div>
-                            <label for="uaa_id" class="block text-gray-700 text-sm font-medium mb-1">
-                                <ion-icon name="school-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
-                                UAA:
-                            </label>
-                            <select name="uaa_id" id="uaa_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">Todas</option>
-                                @foreach($uaas as $uaa)
-                                    <option value="{{ $uaa->id }}" {{ request('uaa_id') == $uaa->id ? 'selected' : '' }}>
-                                        {{ $uaa->valor }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Filtro DGSEG EF -->
-                        <div>
-                            <label for="dg_id" class="block text-gray-700 text-sm font-medium mb-1">
-                                <ion-icon name="people-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
-                                DGSEG EF:
-                            </label>
-                            <select name="dg_id" id="dg_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">Todas</option>
-                                @foreach($dgsegs as $dgseg)
-                                    <option value="{{ $dgseg->id }}" {{ request('dg_id') == $dgseg->id ? 'selected' : '' }}>
-                                        {{ $dgseg->valor }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endrole
-                    </div>
-
-                    <div class="flex justify-end gap-3">
-                        <button type="submit" class="btn-primary">
-                            <ion-icon name="filter-outline"></ion-icon> Aplicar Filtros
-                        </button>
-
-                        <a href="{{ route('dashboard.charts.index') }}" class="btn-secondary">
-                            <ion-icon name="refresh-outline"></ion-icon> Limpiar Filtros
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Contenedor principal para las gráficas -->
-        <div class="space-y-8 pb-16">
-            
-            @include('admin.stats.charts.entregas._delivery_status', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
-            @include('admin.stats.charts.entregas._delivery_status_by_sigla', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
-            @include('admin.stats.charts.entregas._ae_uaa_delivery_status', ['containerClass' => 'chart-container animate-fade-in animate-delay-200'])
-
-        </div>
-
-        <!-- Barra de Navegación Fija Mejorada -->
-        <nav aria-label="Barra de navegación principal" class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-links">
-                    <a href="#delivery-status" class="navbar-link" aria-label="Ir a Cambios 30D">
-                        <ion-icon name="archive-outline" class="navbar-icon"></ion-icon>
-                        <span class="navbar-text">Entregas</span>
-                    </a> 
-                    <a href="#delivery-status-by-sigla" class="navbar-link" aria-label="Ir a Siglas AudEsp">
-                        <ion-icon name="clipboard-outline" class="navbar-icon"></ion-icon>
-                        <span class="navbar-text">Siglas AE</span>
-                    </a>
-                    <a href="#ae-delivery-charts-container" class="navbar-link" aria-label="Ir a Expedientes por Estatus AE UAA">
-                        <ion-icon name="grid-outline" class="navbar-icon"></ion-icon>
-                        <span class="navbar-text">AE UAA</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-
     {{-- Exponer los datos en JSON para JavaScript --}}
     @php
         // Suponiendo que tu controlador pasa la variable $dashboardData
-        $jsonData = json_encode($dashboardData);
+        $jsonData = isset($dashboardData) ? json_encode($dashboardData) : json_encode([
+            'deliveryStatus' => [],
+            'deliveryStatusBySigla' => [],
+            'deliveryStatusByAeUaa' => [],
+            'labels' => [],
+            'datasetDelivered' => [],
+            'datasetInProcess' => [],
+            'datasetUnscheduled' => []
+        ]);
     @endphp
 
     <script>
@@ -695,6 +704,13 @@
         
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                // Verificar si los datos del dashboard están definidos
+                if (typeof window.dashboardData === 'undefined') {
+                    console.error('Error: Los datos del dashboard no están definidos. Verifique que $dashboardData esté definido en el controlador.');
+                    // Podríamos mostrar un mensaje al usuario si es necesario
+                    return;
+                }
+                
                 // Inicializar los selectores con Tom-Select
                 const selects = ["#entrega", "#cuenta_publica", "#uaa_id", "#dg_id"];
                 selects.forEach(selector => {
@@ -811,5 +827,4 @@
             }
         });
         </script>
-    @endpush
 </x-app-layout>

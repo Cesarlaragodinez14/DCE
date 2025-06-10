@@ -49,7 +49,6 @@
         </div>
         <div id="table-status" class="mt-6 hidden">
             <div class="flex justify-between items-center mb-3">
-                <h4 class="font-medium text-gray-700">Desglose por Estatus</h4>
                 <div class="flex space-x-2">
                     <div class="relative">
                         <input type="text" id="statusTableSearch" placeholder="Buscar estatus..." class="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -290,10 +289,9 @@ function createStatusTable(data, totalSum) {
         <table class="status-table w-full" id="status-table">
             <thead>
                 <tr>
-                    <th class="text-left">Estatus</th>
-                    <th class="text-right">Expedientes</th>
+                    <th class="text-left">Estatus de la Revisión</th>
+                    <th class="text-right">Total de Expedientes de acción</th>
                     <th class="text-center">Porcentaje</th>
-                    <th class="text-center">Gráfico</th>
                 </tr>
             </thead>
             <tbody>

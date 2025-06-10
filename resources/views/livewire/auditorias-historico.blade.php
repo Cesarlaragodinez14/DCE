@@ -1,7 +1,7 @@
 <div>
     <!-- Listado de Auditorías -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Consulta de observaciones a los expedientes de acción</h3>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Consultar observaciones derivadas en la revisión de los Expediente de acción</h3>
 
         <!-- Barra de Búsqueda -->
         <div class="mb-6">
@@ -27,7 +27,7 @@
                             </th>
                         @endforeach
                         <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Acciones
+                            Historial de modificaciones
                         </th>
                     </tr>
                 </thead>
@@ -92,7 +92,7 @@
 
                         <div class="mt-3 w-full">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-6" id="modal-title">
-                                Historial del expediente de acción no, {{ $selectedAuditoriaId }}
+                                Historico de modificaciones en la lista de verificación no, {{ $selectedAuditoriaId }}
                             </h3>
 
                             <!-- Indicador de Carga -->

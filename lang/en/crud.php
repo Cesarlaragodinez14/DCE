@@ -2,8 +2,8 @@
 
 return [
     'catDgsegEfs' => [
-        'itemTitle' => 'Catálogo Dgseg Ef',
-        'collectionTitle' => 'Catálogo Dgseg Efs',
+        'itemTitle' => 'Catálogo DG SEG.',
+        'collectionTitle' => 'Catálogo DG SEG.s',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',
@@ -36,15 +36,15 @@ return [
     ],
     'allAuditorias' => [
         'itemTitle' => 'Expedientes',
-        'collectionTitle' => 'Todos los Expedientes',
+        'collectionTitle' => 'Revisión de Expedientes',
         'inputs' => [
             'clave_de_accion' => [
                 'label' => 'Clave de acción',
                 'placeholder' => 'Clave de acción',
             ],
             'cuenta_publica' => [
-                'label' => 'Cuenta publica',
-                'placeholder' => 'Cuenta publica',
+                'label' => 'C.P.',
+                'placeholder' => 'C.P.',
             ],
             'entrega' => [
                 'label' => 'Entrega',
@@ -75,8 +75,8 @@ return [
                 'placeholder' => 'Ente fiscalizado',
             ],
             'numero_de_auditoria' => [
-                'label' => 'Numero de auditoria',
-                'placeholder' => 'Numero de auditoria',
+                'label' => '# Auditoría',
+                'placeholder' => '# Auditoría',
             ],
             'ente_de_la_accion' => [
                 'label' => 'Ente de la accion',
@@ -103,8 +103,8 @@ return [
                 'placeholder' => 'Nombre director de area',
             ],
             'sub_direccion_de_area' => [
-                'label' => 'Sub direccion de area',
-                'placeholder' => 'Sub direccion de area',
+                'label' => 'SD SEG',
+                'placeholder' => 'SD SEG',
             ],
             'nombre_sub_director_de_area' => [
                 'label' => 'Nombre sub director de area',
@@ -115,8 +115,8 @@ return [
                 'placeholder' => 'Jefe de departamento',
             ],
             'dgseg_ef' => [
-                'label' => 'Dgseg ef',
-                'placeholder' => 'Dgseg ef',
+                'label' => 'DG SEG.',
+                'placeholder' => 'DG SEG.',
             ],
         ],
         'filament' => [
@@ -344,8 +344,8 @@ return [
         ],
     ],
     'catSiglasAuditoriaEspecials' => [
-        'itemTitle' => 'Catálogo Siglas Auditoria Especial',
-        'collectionTitle' => 'Catálogo Siglas Auditoria Especials',
+        'itemTitle' => 'Auditoria Especial',
+        'collectionTitle' => 'Auditoria Especials',
         'inputs' => [
             'valor' => [
                 'label' => 'Valor',

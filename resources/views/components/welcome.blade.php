@@ -11,14 +11,14 @@
 </div>
 
 <div class="bg-gray-200 dark:bg-gray-800 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
-    <!-- Card: Recepción de Expedientes -->
+    <!-- Card: Recepción de Expedientes --> 
     <div>
         <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-gray-400">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5v9h18v-9H3zm15 0V6a3 3 0 00-3-3H9a3 3 0 00-3 3v1.5M6 10.5h12M6 13.5h12M9 16.5h6" />
             </svg>
             <h2 class="ms-3 text-xl font-semibold text-gray-900 dark:text-white">
-                Carga de acciones emitidas en la entrega
+                Carga de información de los Expedientes de Acción
             </h2>
         </div>
 

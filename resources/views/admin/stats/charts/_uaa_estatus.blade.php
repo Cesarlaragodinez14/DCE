@@ -1,6 +1,6 @@
 {{-- resources/views/admin/stats/charts/_uaa_estatus.blade.php --}}
 <section id="uaa-estatus" class="mb-8">
-    <h3 class="text-lg font-semibold mb-2">Expedientes por UAA y Estatus</h3>
+    <h3 class="text-lg font-semibold mb-2">Estatus de la revisión de Expedientes de Acción por DG de las UAA´s</h3>
     <canvas id="uaaEstatusChart" height="100"></canvas>
     <div id="table-uaa-estatus" class="overflow-x-auto mt-4"></div>
     <p class="text-sm text-gray-600 mt-2">
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 title: {
                     display: true,
-                    text: `Expedientes por UAA y Estatus`
+                    text: `Estatus de la revisión de Expedientes de Acción por DG de las UAA´s`
                 },
                 tooltip: {
                     callbacks: {

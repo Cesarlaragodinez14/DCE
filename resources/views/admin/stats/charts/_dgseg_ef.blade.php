@@ -1,6 +1,6 @@
 {{-- resources/views/admin/stats/charts/_dgseg_ef.blade.php --}}
 <section id="dgseg-ef" class="mb-8">
-    <h3 class="text-lg font-semibold mb-2">Expedientes por Dirección General de Seguimiento</h3>
+    <h3 class="text-lg font-semibold mb-2">Estatus de la revisión de expedientes de acción por DGS</h3>
     <canvas id="dgsegEfChart" height="100"></canvas>
     <div id="table-dgseg-ef" class="overflow-x-auto mt-4"></div>
 </section>
@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const data = window.dashboardData?.countsByDgsegEf;
     if (!data) return;
 
-    // 1. Agrupar datos por DGSEG EF y Estatus
+    // 1. Agrupar datos por DG SEG y Estatus
     const processedData = {};
     const statusSet = new Set();
-    const totalSumByDgsegEf = {}; // Para almacenar el total de cada DGSEG EF
+    const totalSumByDgsegEf = {}; // Para almacenar el total de cada DG SEG
 
     data.forEach(item => {
         const dgsegEf = item.dgseg_ef_valor;
@@ -28,40 +28,40 @@ document.addEventListener('DOMContentLoaded', function() {
             totalSumByDgsegEf[dgsegEf] = 0;
         }
         processedData[dgsegEf][estatus] = (processedData[dgsegEf][estatus] || 0) + total;
-        totalSumByDgsegEf[dgsegEf] += total; // Sumar total de cada DGSEG EF
+        totalSumByDgsegEf[dgsegEf] += total; // Sumar total de cada DG SEG
         statusSet.add(estatus);
     });
 
     const allDgsegEfs = Object.keys(processedData);
     const allStatuses = [...statusSet];
 
-    // 2. Construcción de la tabla con totales por DGSEG EF y porcentaje por DGSEG EF
+    // 2. Construcción de la tabla con totales por DG SEG y porcentaje por DG SEG
     let tableData = [];
 
     allDgsegEfs.forEach(dgsegEf => {
         const totalDgsegEf = totalSumByDgsegEf[dgsegEf];
 
-        // Agregar fila de total por DGSEG EF antes de los detalles
+        // Agregar fila de total por DG SEG antes de los detalles
         tableData.push({
-            'DGSEG EF': dgsegEf,
-            'Estatus': 'Total por DGSEG EF',
-            'Total': totalDgsegEf,
+            'DG SEG': dgsegEf,
+            'Estatus de la revisión': 'Total por DG SEG',
+            'Total de Expedientes': totalDgsegEf,
             'Porcentaje': '100%'
         });
 
         allStatuses.forEach(estatus => {
             const totalEstatus = processedData[dgsegEf][estatus] || 0;
             tableData.push({
-                'DGSEG EF': '',
-                'Estatus': estatus,
-                'Total': totalEstatus,
+                'DG SEG': '',
+                'Estatus de la revisión': estatus,
+                'Total de Expedientes de acción': totalEstatus,
                 'Porcentaje': ((totalEstatus / totalDgsegEf) * 100).toFixed(2) + '%'
             });
         });
     });
 
     // Generar la tabla utilizando createTable()
-    const table = createTable(['DGSEG EF', 'Estatus', 'Total', 'Porcentaje'], tableData);
+    const table = createTable(['DG SEG', 'Estatus de la revisión', 'Total de Expedientes de acción', 'Porcentaje'], tableData);
     document.getElementById('table-dgseg-ef')?.appendChild(table);
 
     // 3. Construcción del gráfico apilado **con valores totales** pero mostrando porcentaje en tooltip
@@ -84,10 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             plugins: {
-                title: {
-                    display: true,
-                    text: `Expedientes por DGSEG EF`
-                },
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {

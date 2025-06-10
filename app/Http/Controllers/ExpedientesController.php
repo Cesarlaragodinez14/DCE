@@ -305,7 +305,7 @@ class ExpedientesController extends Controller
             </div>
             <br>
             Se le informa que se realizó una programación de entrega de expedientes
-            de acción con la siguiente información:<br>
+            de acción por la UAA con la siguiente información:<br>
             <br>
             <b>Datos de la Programación</b><br>
             <br>

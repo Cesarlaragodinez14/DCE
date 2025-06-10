@@ -1,5 +1,5 @@
 <section id="siglas-tipo-accion" class="mb-8">
-    <h3 class="text-lg font-semibold mb-2">Expedientes por Siglas Tipo Acción</h3>
+    <h3 class="text-lg font-semibold mb-2">Estatus de la revisión de expedientes por Tipo de Acción</h3>
 
     <!-- Tabla -->
     <canvas id="siglasTipoAccionChart" height="100"></canvas>
@@ -7,7 +7,7 @@
 
     <!-- Gráfico -->
     <p class="text-sm text-gray-600 mt-2">
-        * Cada color representa un Estatus, cada barra corresponde a una Sigla de Tipo Acción.
+        *Color (estatus), barra (tipo de acción)
     </p>
 </section>
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Verificar que los datos existen
     if (!rawData || Object.keys(rawData).length === 0) {
-        console.error('No se encontraron datos para el gráfico de Siglas Tipo Acción');
+        console.error('No se encontraron datos para el gráfico de Tipo de acción');
         document.getElementById('table-siglas-tipo-accion').innerHTML = 
             '<div class="text-red-500">No hay datos disponibles para mostrar</div>';
         return;
@@ -48,17 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     processedData.forEach(item => {
         tableData.push({
-            'Siglas Tipo Acción': item.sigla,
-            'Estatus': 'Total por Sigla',
+            'Tipo de acción': item.sigla,
+            'Estatus de la revisión del expediente': 'Total por Auditoria Especial',
             'Total': item.total,
             'Porcentaje': '100%' // La suma de cada Sigla es su 100%
         });
 
         Object.entries(item.estatusMap).forEach(([estatus, count]) => {
             tableData.push({
-                'Siglas Tipo Acción': '',
-                'Estatus': estatus,
-                'Total': count,
+                'Tipo de acción': '',
+                'Estatus de la revisión del expediente': estatus,
+                'Total por tipo de acción': count,
                 'Porcentaje': ((count / item.total) * 100).toFixed(2) + '%'
             });
         });
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Agregar total global
     const totalSum = processedData.reduce((sum, item) => sum + item.total, 0);
     tableData.push({
-        'Siglas Tipo Acción': 'Gran Total',
-        'Estatus': '',
+        'Tipo de acción': 'Gran Total',
+        'Estatus de la revisión del expediente': '',
         'Total': totalSum,
         'Porcentaje': '100%'
     });
@@ -100,11 +100,11 @@ document.addEventListener('DOMContentLoaded', function() {
             tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
             
             // Si es fila de total, darle estilo especial
-            if (row['Siglas Tipo Acción'] === 'Gran Total') {
+            if (row['Tipo de acción'] === 'Gran Total') {
                 tr.className = 'bg-gray-200 font-bold';
             }
             // Si es fila de total por sigla, darle estilo
-            else if (row['Estatus'] === 'Total por Sigla') {
+            else if (row['Estatus de la revisión del expediente'] === 'Total por Auditoria Especial') {
                 tr.className = 'bg-gray-100 font-semibold';
             }
             
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return table;
     }
 
-    const tableSiglasTipo = createTable(['Siglas Tipo Acción', 'Estatus', 'Total', 'Porcentaje'], tableData);
+    const tableSiglasTipo = createTable(['Tipo de acción', 'Estatus de la revisión del expediente', 'Total', 'Porcentaje'], tableData);
     const tableContainer = document.getElementById('table-siglas-tipo-accion');
     if (tableContainer) {
         tableContainer.innerHTML = '';
@@ -178,10 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
             options: {
                 responsive: true,
                 plugins: {
-                    title: {
-                        display: true,
-                        text: `Expedientes por Siglas Tipo Acción`
-                    },
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {

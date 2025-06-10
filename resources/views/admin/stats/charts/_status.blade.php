@@ -1,6 +1,6 @@
 {{-- resources/views/admin/stats/charts/_ae_uaa_status_multiple.blade.php --}}
 <section id="ae-uaa-status-multiple" class="mb-8">
-    <h3 class="text-lg font-semibold mb-2">Expedientes por Auditoría Especial, UAA y Estatus</h3>
+    <h3 class="text-lg font-semibold mb-2">Estatus de la revisión de Expedientes de Acción por Auditoría Especial y DG.</h3>
 
     <!-- Contenedor principal -->
     <div id="ae-charts-container" class="space-y-8">

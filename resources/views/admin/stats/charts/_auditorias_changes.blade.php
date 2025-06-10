@@ -1,5 +1,5 @@
 <section id="auditorias-changes" class="mb-8">
-    <h3 class="text-lg font-semibold mb-2">Cambios en Expedientes (Últimos 30 días)</h3>
+    <h3 class="text-lg font-semibold mb-2">Movimientos en el sistema por día</h3>
     <canvas id="auditoriasChangesChart" height="100"></canvas>
     <div id="table-auditorias-changes" class="overflow-x-auto"></div>
 </section>

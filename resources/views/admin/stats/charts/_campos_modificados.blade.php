@@ -1,9 +1,9 @@
 {{-- resources/views/admin/stats/charts/_campos_modificados.blade.php --}}
 <section id="campos-modificados" class="mb-8">
-    <h2 class="text-xl font-semibold mb-4">Apartados con mayores observaciones presentadas.</h2>
+    <h2 class="text-xl font-semibold mb-4">Observaciones recurrentes en la revisión de los Expedientes de Acción (Por apartado de la lista de Verificación).</h2>
 
     <div class="mt-6 mb-4">
-        <h3 class="text-lg font-medium mb-2">Gráfico de Cambios en Apartados (Observaciones)</h3>
+        <h3 style="display: none;" class="text-lg font-medium mb-2">Gráfico de Cambios en Apartados (Observaciones)</h3>
         <canvas id="fieldsChangesChart" height="100"></canvas>
     </div>
 

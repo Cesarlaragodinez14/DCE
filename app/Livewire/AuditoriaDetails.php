@@ -34,11 +34,11 @@ class AuditoriaDetails extends Component
 
         // Procesar los cambios de la auditoría
         $auditoriaFields = [
-            'estatus_checklist' => 'Estatus Checklist',
-            'auditor_nombre' => 'Auditor Nombre',
-            'auditor_puesto' => 'Auditor Puesto',
-            'seguimiento_nombre' => 'Seguimiento Nombre',
-            'seguimiento_puesto' => 'Seguimiento Puesto',
+            'estatus_checklist' => 'Estatus de la revisión',
+            'auditor_nombre' => 'Responsable de la UAA',
+            'auditor_puesto' => 'Puesto del responsable de la UAA',
+            'seguimiento_nombre' => 'Responsable de Seguimiento',
+            'seguimiento_puesto' => 'Puesto del responsable de Seguimiento',
             'comentarios' => 'Comentarios',
             'estatus_firmas' => 'Estatus Firmas',
             // Agrega más campos si es necesario

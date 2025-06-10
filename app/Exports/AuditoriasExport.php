@@ -89,7 +89,7 @@ class AuditoriasExport implements FromCollection, WithHeadings, WithMapping
             'Nombre Sub Director de Área',
             'Jefatura de Departamento',
             'Nombre Jefe de Departamento',
-            'Estatus Checklist',
+            'Estatus de la revisión',
             'Nombre Auditor',
             'Puesto Auditor',
             'Nombre Seguimiento',

@@ -1,7 +1,7 @@
 {{-- resources/views/admin/stats/charts/_siglas_audesp.blade.php --}}
 <section id="siglas-audesp" class="mb-8">
     <h3 class="text-lg font-semibold mb-2">
-        Expedientes por Siglas de Auditoría Especial (Apilado por Estatus)
+        Estatus de la revisión de Expedientes de Acción por Auditoría Especial
     </h3>
 
     <!-- Gráfico -->
@@ -11,7 +11,6 @@
     <div id="table-siglas-audesp" class="overflow-x-auto mt-4"></div>
     
     <p class="text-sm text-gray-600 mt-2">
-        * Cada color representa un estatus, cada barra una Sigla.
     </p>
 </section>
 
@@ -59,16 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let tableData = [];
     sortedData.forEach(item => {
         tableData.push({
-            'Siglas Auditoría Especial': item.sigla,
-            'Estatus': 'Total por Sigla',
-            'Total': item.total,
+            'Auditoria Especial': item.sigla,
+            'Estatus de la revisión': 'Total por Auditoria Especial',
+            'Total de Auditoria Especial': item.total,
             'Porcentaje': '100%'
         });
         Object.entries(item.estatusMap).forEach(([estatus, count]) => {
             tableData.push({
                 'Siglas Auditoría Especial': '',
-                'Estatus': estatus,
-                'Total': count,
+                'Estatus de la revisión': estatus,
+                'Total de Auditoria Especial': count,
                 'Porcentaje': ((count / item.total) * 100).toFixed(2) + '%'
             });
         });
@@ -76,15 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Agregar fila de Gran Total
     tableData.push({
         'Siglas Auditoría Especial': 'Gran Total',
-        'Estatus': '',
-        'Total': globalTotal,
+        'Estatus de la revisión': '',
+        'Total de Auditoria Especial': globalTotal,
         'Porcentaje': '100%'
     });
 
     // 4) Si se dispone de una función global "createTable", crear la tabla y agregarla al contenedor.
     const tableContainer = document.getElementById('table-siglas-audesp');
     if (tableContainer && typeof createTable === 'function') {
-        const tableEl = createTable(['Siglas Auditoría Especial', 'Estatus', 'Total', 'Porcentaje'], tableData);
+        const tableEl = createTable(['Siglas Auditoría Especial', 'Estatus', 'Total de Auditoria Especial', 'Porcentaje'], tableData);
         tableContainer.appendChild(tableEl);
     }
 
@@ -118,10 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: { stacked: true, beginAtZero: true }
             },
             plugins: {
-                title: {
-                    display: true,
-                    text: 'Expedientes por Siglas de Auditoría Especial'
-                },
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {

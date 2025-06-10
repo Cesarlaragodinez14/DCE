@@ -31,14 +31,14 @@ class DashboardController extends Controller
         
         // Mapeamos los sinónimos y nuevas categorías a las 4 originales
         if (str_contains($estatus, 'Sin Revisar')) {
-            return "Sin Revisar (No entregados + Entregados sin revisar)";
+            return "Pendientes de Revisión";
         } elseif ($estatus === "Aceptado") {
             return "Aceptado";
         } elseif ($estatus === "Devuelto") {
             return "Devuelto";
         } else {
             // Todos los demás son sinónimos de "En Proceso"
-            return "En Proceso de Revisión del Checklist";
+            return "En proceso de revisión (lista de verificación)";
         }
     }
     
@@ -59,6 +59,40 @@ class DashboardController extends Controller
             }
             return $item;
         });
+    }
+    
+    /**
+     * Aplica el filtro especial cuando entrega=18 y cuenta_publica=1
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param Request $request
+     * @param string $tableAlias Alias de la tabla principal (por defecto vacío)
+     * @return \Illuminate\Database\Query\Builder
+     */
+    private function applySpecialFilter($query, $request, $tableAlias = '')
+    {
+        // Solo aplicar el filtro especial cuando entrega=18 Y cuenta_publica=1
+        if ($request->filled('entrega') && $request->entrega == 18 && 
+            $request->filled('cuenta_publica') && $request->cuenta_publica == 1) {
+            
+            $prefix = $tableAlias ? $tableAlias . '.' : '';
+            
+            $query->where(function($q) use ($prefix) {
+                $q->where(function($subQ) use ($prefix) {
+                    // Excluir todos los registros donde siglas_auditoria_especial = 38
+                    $subQ->where($prefix . 'siglas_auditoria_especial', '!=', 38);
+                })->where(function($subQ) use ($prefix) {
+                    // Para siglas_auditoria_especial = 39, solo incluir siglas_tipo_accion = 35
+                    $subQ->where($prefix . 'siglas_auditoria_especial', '!=', 39)
+                         ->orWhere(function($innerQ) use ($prefix) {
+                             $innerQ->where($prefix . 'siglas_auditoria_especial', 39)
+                                    ->where($prefix . 'siglas_tipo_accion', 35);
+                         });
+                });
+            });
+        }
+        
+        return $query;
     }
     
     public function dashboardIndex(Request $request)
@@ -154,6 +188,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
+            })
             ->groupBy('estatus_checklist')
             ->get();
             
@@ -201,6 +238,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
+            })
             ->groupBy('ente_fiscalizado')
             ->get();
 
@@ -225,6 +265,9 @@ class DashboardController extends Controller
             })
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
+            })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
             })
             ->groupBy('siglas_auditoria_especial', 'estatus_checklist')
             ->get();
@@ -284,6 +327,9 @@ class DashboardController extends Controller
         })
         ->when($request->filled('cuenta_publica'), function($q) use ($request) {
             $q->where('aditorias.cuenta_publica', $request->cuenta_publica);
+        })
+        ->when(true, function($q) use ($request) {
+            $this->applySpecialFilter($q, $request, 'aditorias');
         })
         ->groupBy('csta.valor', 'aditorias.estatus_checklist')
         ->orderByDesc('total')
@@ -346,6 +392,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
+            })
             ->groupBy('dgseg_ef', 'estatus_checklist')
             ->get();
             
@@ -403,6 +452,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('aditorias.cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request, 'aditorias');
+            })
             ->groupBy(DB::raw('DATE(auditorias_histories.created_at)'))
             ->orderBy(DB::raw('DATE(auditorias_histories.created_at)'))
             ->get();
@@ -431,6 +483,9 @@ class DashboardController extends Controller
         if($request->filled('cuenta_publica')){
             $query->where('aditorias.cuenta_publica', $request->cuenta_publica);
         }
+        
+        // Aplicar filtro especial
+        $this->applySpecialFilter($query, $request, 'aditorias');
     
         // Obtenemos los registros agrupando por (responsable, dg)
         $rawData = $query->groupBy('aditorias.seguimiento_nombre','dg.valor','aditorias.id')
@@ -497,6 +552,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('auds.cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request, 'auds');
+            })
             ->groupBy('a.id','a.nombre')
             ->orderByDesc('total_obs_changes')
             ->get();
@@ -522,13 +580,16 @@ class DashboardController extends Controller
                 $q->where('dgseg_ef', $request->dg_id);
             })
             ->when($request->filled('sae_id'), function($q) use ($request) {
-                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
+                $q->where('siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
             })
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
+            })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
             })
             ->groupBy('uaa', 'estatus_checklist')
             ->orderBy('total','desc')
@@ -565,13 +626,16 @@ class DashboardController extends Controller
                 $q->where('dgseg_ef', $request->dg_id);
             })
             ->when($request->filled('sae_id'), function($q) use ($request) {
-                $q->where('aditorias.siglas_auditoria_especial', $request->sae_id);
+                $q->where('siglas_auditoria_especial', $request->sae_id);
             })
             ->when($request->filled('entrega'), function($q) use ($request) {
                 $q->where('entrega', $request->entrega);
             })
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('cuenta_publica', $request->cuenta_publica);
+            })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request);
             })
             ->groupBy('uaa', 'estatus_checklist')
             ->get();
@@ -622,6 +686,9 @@ class DashboardController extends Controller
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('aditorias.cuenta_publica', $request->cuenta_publica);
             })
+            ->when(true, function($q) use ($request) {
+                $this->applySpecialFilter($q, $request, 'aditorias');
+            })
             ->groupBy('ae.valor', 'cu.nombre', 'aditorias.estatus_checklist')
             ->orderBy('ae.valor')
             ->get();
@@ -665,5 +732,178 @@ class DashboardController extends Controller
         ];
 
         return view('admin.stats.index', compact('dashboardData', 'uaas', 'dgsegs', 'entregas', 'cuentasPublicas'));
+    }
+
+    /**
+     * Obtiene los datos del dashboard para el AI
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getDashboardData(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'entrega' => 'nullable|exists:cat_entrega,id',
+                'cuenta_publica' => 'nullable|exists:cat_cuenta_publica,id',
+                'uaa_id' => 'nullable|exists:cat_uaa,id',
+                'dg_id' => 'nullable|exists:cat_dgseg_ef,id',
+                'sae_id' => 'nullable|exists:cat_siglas_auditoria_especial,id',
+            ]);
+
+            // Si el usuario es Director General SEG, forzamos su dg_id en la URL
+            if (Auth::user()->hasRole(['Director General SEG'])) {
+                $dgReal = CatUaa::find(Auth::user()->uaa_id)->dgseg_ef_id;
+                if ($request->dg_id != $dgReal) {
+                    return ['error' => 'Redirección requerida', 'redirect' => route('dashboard.charts.index', array_merge($request->query(), ['dg_id' => $dgReal]))];
+                }
+            } else if (Auth::user()->hasRole(['AECF', 'AED', 'AEGF'])) {
+                if(!empty(Auth::user()->uaa_id)){
+                    return null;
+                }
+                $saeReal = CatSiglasAuditoriaEspecial::where('valor', auth()->user()->roles->pluck('name')->first())->first()->id;
+                if ($request->sae_id != $saeReal) {
+                    return ['error' => 'Redirección requerida', 'redirect' => route('dashboard.charts.index', array_merge($request->query(), ['sae_id' => $saeReal]))];
+                }
+            } else if (Auth::user()->hasRole(['DGUAA'])) {
+                if ($request->uaa_id != Auth::user()->uaa_id) {
+                    return ['error' => 'Redirección requerida', 'redirect' => route('dashboard.charts.index', array_merge($request->query(), ['uaa_id' => Auth::user()->uaa_id]))];
+                }
+            }
+
+            // Obtener datos de expedientes por estatus
+            $rawCountsByStatus = Auditorias::select(DB::raw('IFNULL(estatus_checklist, "Sin Revisar") as estatus_checklist'), DB::raw('COUNT(*) as total'))
+                ->when($request->filled('uaa_id'), function($q) use ($request) {
+                    $q->where('uaa', $request->uaa_id);
+                })
+                ->when($request->filled('dg_id'), function($q) use ($request) {
+                    $q->where('dgseg_ef', $request->dg_id);
+                })
+                ->when($request->filled('sae_id'), function($q) use ($request) {
+                    $q->where('siglas_auditoria_especial', $request->sae_id);
+                })
+                ->when($request->filled('entrega'), function($q) use ($request) {
+                    $q->where('entrega', $request->entrega);
+                })
+                ->when($request->filled('cuenta_publica'), function($q) use ($request) {
+                    $q->where('cuenta_publica', $request->cuenta_publica);
+                })
+                ->when(true, function($q) use ($request) {
+                    $this->applySpecialFilter($q, $request);
+                })
+                ->groupBy('estatus_checklist')
+                ->get();
+
+            // Normalizar y reagrupar los estatus
+            $countsByStatus = collect();
+            foreach ($rawCountsByStatus as $item) {
+                $normalizedStatus = $this->normalizeChecklistStatus($item->estatus_checklist);
+                $existingIndex = $countsByStatus->search(function($existing) use ($normalizedStatus) {
+                    return $existing->estatus_checklist === $normalizedStatus;
+                });
+                
+                if ($existingIndex !== false) {
+                    $countsByStatus[$existingIndex]->total += $item->total;
+                } else {
+                    $countsByStatus->push((object)[
+                        'estatus_checklist' => $normalizedStatus,
+                        'total' => $item->total
+                    ]);
+                }
+            }
+            $countsByStatus = $countsByStatus->sortByDesc('total')->values();
+
+            // Obtener datos de expedientes por Ente Fiscalizado
+            $countsByEnteFiscalizado = Auditorias::with('catEnteFiscalizado')
+                ->select('ente_fiscalizado', DB::raw('COUNT(*) as total'))
+                ->when($request->filled('uaa_id'), function($q) use ($request) {
+                    $q->where('uaa', $request->uaa_id);
+                })
+                ->when($request->filled('dg_id'), function($q) use ($request) {
+                    $q->where('dgseg_ef', $request->dg_id);
+                })
+                ->when($request->filled('sae_id'), function($q) use ($request) {
+                    $q->where('siglas_auditoria_especial', $request->sae_id);
+                })
+                // NUEVO: Filtros por entrega y cuenta_publica
+                ->when($request->filled('entrega'), function($q) use ($request) {
+                    $q->where('entrega', $request->entrega);
+                })
+                ->when($request->filled('cuenta_publica'), function($q) use ($request) {
+                    $q->where('cuenta_publica', $request->cuenta_publica);
+                })
+                ->when(true, function($q) use ($request) {
+                    $this->applySpecialFilter($q, $request);
+                })
+                ->groupBy('ente_fiscalizado')
+                ->get();
+
+            // Obtener datos de expedientes por Siglas de Auditoría Especial
+            $rawCountsBySiglasAuditoriaEspecial = Auditorias::with('catSiglasAuditoriaEspecial')
+                ->select(
+                    'siglas_auditoria_especial',
+                    'estatus_checklist',
+                    DB::raw('COUNT(*) as total')
+                )
+                ->when($request->filled('uaa_id'), function($q) use ($request) {
+                    $q->where('uaa', $request->uaa_id);
+                })
+                ->when($request->filled('dg_id'), function($q) use ($request) {
+                    $q->where('dgseg_ef', $request->dg_id);
+                })
+                ->when($request->filled('sae_id'), function($q) use ($request) {
+                    $q->where('siglas_auditoria_especial', $request->sae_id);
+                })
+                ->when($request->filled('entrega'), function($q) use ($request) {
+                    $q->where('entrega', $request->entrega);
+                })
+                ->when($request->filled('cuenta_publica'), function($q) use ($request) {
+                    $q->where('cuenta_publica', $request->cuenta_publica);
+                })
+                ->when(true, function($q) use ($request) {
+                    $this->applySpecialFilter($q, $request);
+                })
+                ->groupBy('siglas_auditoria_especial', 'estatus_checklist')
+                ->get();
+
+            // Obtener catálogos
+            $catalogos = [
+                'uaas' => DB::table('cat_uaa')
+                    ->join('aditorias', 'cat_uaa.id', '=', 'aditorias.uaa')
+                    ->select('cat_uaa.id', 'cat_uaa.valor')
+                    ->distinct()
+                    ->get(),
+                'dgsegs' => DB::table('cat_dgseg_ef')
+                    ->join('aditorias', 'cat_dgseg_ef.id', '=', 'aditorias.dgseg_ef')
+                    ->select('cat_dgseg_ef.id', 'cat_dgseg_ef.valor')
+                    ->distinct()
+                    ->get(),
+                'entregas' => DB::table('cat_entrega')
+                    ->join('aditorias', 'cat_entrega.id', '=', 'aditorias.entrega')
+                    ->select('cat_entrega.id', 'cat_entrega.valor')
+                    ->distinct()
+                    ->get(),
+                'cuentasPublicas' => DB::table('cat_cuenta_publica')
+                    ->join('aditorias', 'cat_cuenta_publica.id', '=', 'aditorias.cuenta_publica')
+                    ->select('cat_cuenta_publica.id', 'cat_cuenta_publica.valor')
+                    ->distinct()
+                    ->get()
+            ];
+
+            return [
+                'success' => true,
+                'data' => [
+                    'expedientes_por_estatus' => $countsByStatus,
+                    'expedientes_por_ente_fiscalizado' => $countsByEnteFiscalizado,
+                    'expedientes_por_siglas' => $rawCountsBySiglasAuditoriaEspecial,
+                    'catalogos' => $catalogos
+                ]
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => 'Error al obtener datos del dashboard: ' . $e->getMessage()
+            ];
+        }
     }
 }

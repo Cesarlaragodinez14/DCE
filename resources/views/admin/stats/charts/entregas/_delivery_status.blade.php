@@ -1,7 +1,7 @@
 {{-- resources/views/admin/stats/charts/_delivery_status.blade.php --}}
 <section id="delivery-status" class="mb-8 bg-white rounded-lg shadow-md p-5" style="padding: 20px">
     <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-bold text-gray-800">Estado de Entregas a la Fecha</h3>
+        <h3 class="text-xl font-bold text-gray-800">Estatus de la entrega de expedientes de Acción.</h3>
         <div class="flex space-x-2">
             <button id="viewDoughnutBtn" class="px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Gráfico</button>
             <button id="viewTableBtn" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">Tabla</button>
@@ -61,7 +61,6 @@
     </div>
     
     <p class="text-sm text-gray-600 mt-3 italic">
-        * Muestra la proporción de expedientes según su estado actual en el sistema.
     </p>
 </section>
 

@@ -124,42 +124,52 @@ class DashboardEntregasController extends Controller
      * @param Request $request
      * @return array
      */
-    private function getCatalogos()
+    public function getCatalogos()
     {
-        // Obtener solo las UAA que tienen registros en aditorias
-        $uaas = DB::table('cat_uaa')
-            ->join('aditorias', 'cat_uaa.id', '=', 'aditorias.uaa')
-            ->select('cat_uaa.id', 'cat_uaa.valor')
-            ->distinct()
-            ->get();
+        try {
+            // Obtener solo las UAA que tienen registros en aditorias
+            $uaas = DB::table('cat_uaa')
+                ->join('aditorias', 'cat_uaa.id', '=', 'aditorias.uaa')
+                ->select('cat_uaa.id', 'cat_uaa.valor as nombre')
+                ->distinct()
+                ->get();
 
-        // Obtener solo las DGSEG EF que tienen registros en aditorias
-        $dgsegs = DB::table('cat_dgseg_ef')
-            ->join('aditorias', 'cat_dgseg_ef.id', '=', 'aditorias.dgseg_ef')
-            ->select('cat_dgseg_ef.id', 'cat_dgseg_ef.valor')
-            ->distinct()
-            ->get();
+            // Obtener solo las DGSEG EF que tienen registros en aditorias
+            $dgs = DB::table('cat_dgseg_ef')
+                ->join('aditorias', 'cat_dgseg_ef.id', '=', 'aditorias.dgseg_ef')
+                ->select('cat_dgseg_ef.id', 'cat_dgseg_ef.valor as nombre')
+                ->distinct()
+                ->get();
 
-        // Obtener solo las Entregas que tienen registros en aditorias
-        $entregas = DB::table('cat_entrega')
-            ->join('aditorias', 'cat_entrega.id', '=', 'aditorias.entrega')
-            ->select('cat_entrega.id', 'cat_entrega.valor')
-            ->distinct()
-            ->get();
+            // Obtener solo las Entregas que tienen registros en aditorias
+            $entregas = DB::table('cat_entrega')
+                ->join('aditorias', 'cat_entrega.id', '=', 'aditorias.entrega')
+                ->select('cat_entrega.id', 'cat_entrega.valor as nombre')
+                ->distinct()
+                ->get();
 
-        // Obtener solo las Cuentas Públicas que tienen registros en aditorias
-        $cuentasPublicas = DB::table('cat_cuenta_publica')
-            ->join('aditorias', 'cat_cuenta_publica.id', '=', 'aditorias.cuenta_publica')
-            ->select('cat_cuenta_publica.id', 'cat_cuenta_publica.valor')
-            ->distinct()
-            ->get();
-            
-        return [
-            'uaas' => $uaas,
-            'dgsegs' => $dgsegs,
-            'entregas' => $entregas,
-            'cuentasPublicas' => $cuentasPublicas
-        ];
+            // Obtener solo las Cuentas Públicas que tienen registros en aditorias
+            $cuentas_publicas = DB::table('cat_cuenta_publica')
+                ->join('aditorias', 'cat_cuenta_publica.id', '=', 'aditorias.cuenta_publica')
+                ->select('cat_cuenta_publica.id', 'cat_cuenta_publica.valor as nombre')
+                ->distinct()
+                ->get();
+                
+            return [
+                'uaas' => $uaas,
+                'dgsegs' => $dgs,
+                'entregas' => $entregas,
+                'cuentasPublicas' => $cuentas_publicas
+            ];
+        } catch (\Exception $e) {
+            \Log::error("Error al obtener catálogos: " . $e->getMessage());
+            return [
+                'uaas' => collect(),
+                'dgsegs' => collect(),
+                'entregas' => collect(),
+                'cuentasPublicas' => collect()
+            ];
+        }
     }
     
     /**
@@ -429,5 +439,49 @@ class DashboardEntregasController extends Controller
             ['dashboardData' => $dashboardData],
             $catalogos
         ));
+    }
+
+    /**
+     * Obtiene los datos del dashboard para el AI
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getDashboardData(Request $request)
+    {
+        try {
+            // Aplicar redirecciones basadas en roles si es necesario
+            $redirect = $this->handleRoleBasedRedirects($request);
+            if ($redirect) {
+                return ['error' => 'Redirección requerida', 'redirect' => $redirect->getTargetUrl()];
+            }
+
+            // Obtener resumen de estados de entrega
+            $deliveryStatusSummary = $this->getDeliveryStatusSummary($request);
+            
+            // Obtener estado de entregas por sigla
+            $deliveryStatusBySigla = $this->getDeliveryStatusBySigla($request);
+            
+            // Obtener estado de entregas por AE/UAA
+            $deliveryStatusByAeUaa = $this->getDeliveryStatusByAeUaa($request);
+
+            // Obtener catálogos
+            $catalogos = $this->getCatalogos();
+
+            return [
+                'success' => true,
+                'data' => [
+                    'resumen_estados' => $deliveryStatusSummary,
+                    'estados_por_sigla' => $deliveryStatusBySigla,
+                    'estados_por_ae_uaa' => $deliveryStatusByAeUaa,
+                    'catalogos' => $catalogos
+                ]
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => 'Error al obtener datos del dashboard: ' . $e->getMessage()
+            ];
+        }
     }
 }

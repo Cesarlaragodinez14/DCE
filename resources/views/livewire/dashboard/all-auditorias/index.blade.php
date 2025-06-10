@@ -1,1126 +1,46 @@
 <div class="mx-auto sm:px-6 lg:px-8">
-    <style>
-:root {
-    --primary-color: #1e40af;
-    --primary-light: #3b82f6;
-    --primary-dark: #1e3a8a;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --success-color: #10b981;
-    --success-light: #34d399;
-    --success-dark: #059669;
-    --success-gradient: linear-gradient(135deg, var(--success-color), var(--success-light));
-    --border-color: #e5e7eb;
-    --text-color: #1f2937;
-    --text-muted: #6b7280;
-    --white: #ffffff;
-    --bg-light: #f9fafb;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --radius-sm: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --transition-normal: all 0.3s ease;
-    --transition-fast: all 0.15s ease;
-}
-
-/* Contenedor principal */
-.filter-action-container {
-    background-color: var(--white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-    margin-bottom: 1rem;
-    transition: var(--transition-normal);
-    font-size: 0.875rem;
-}
-
-.filter-action-container:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
-}
-
-/* Header con gradiente */
-.filter-action-header {
-    background: var(--primary-gradient);
-    color: var(--white);
-    padding: 0.625rem 0.875rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.filter-action-title {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    font-size: 0.875rem;
-}
-
-.filter-icon {
-    margin-right: 0.375rem;
-    font-size: 1rem;
-}
-
-.filter-counter {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    backdrop-filter: blur(4px);
-}
-
-/* Contenido principal */
-.filter-action-content {
-    padding: 0.875rem;
-}
-
-.filter-action-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-}
-
-@media (min-width: 768px) {
-    .filter-action-body {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-}
-
-/* Controles de filtro */
-.filter-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .filter-controls {
-        flex-direction: row;
-        align-items: center;
-        max-width: 70%;
-    }
-}
-
-/* Control de búsqueda */
-.search-control {
-    position: relative;
-    width: 100%;
-}
-
-.search-icon-container {
-    position: absolute;
-    left: 0.625rem;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.search-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    color: var(--primary-light);
-}
-
-.search-input {
-    width: 100%;
-    padding: 0.375rem 0.5rem 0.375rem 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    font-size: 0.8125rem;
-    color: var(--text-color);
-    background-color: var(--white);
-    transition: var(--transition-fast);
-    box-shadow: var(--shadow-sm);
-    height: 2.25rem;
-}
-
-.search-input:focus {
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
-    outline: none;
-}
-
-.search-input::placeholder {
-    color: var(--text-muted);
-}
-
-/* Selectores de filtro */
-.filter-selectors {
-    display: flex;
-    gap: 0.5rem;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-/* Botones de acción */
-.action-controls {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-}
-
-@media (min-width: 768px) {
-    .action-controls {
-        margin-top: 0;
-    }
-}
-
-.action-button {
-    position: relative;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.375rem 0.75rem;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    color: var(--white);
-    cursor: pointer;
-    transition: var(--transition-normal);
-    border: none;
-    text-decoration: none;
-    box-shadow: var(--shadow-sm);
-    height: 2.25rem;
-}
-
-.action-button:focus {
-    outline: none;
-}
-
-.action-button:active {
-    transform: translateY(1px);
-}
-
-.action-button-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-}
-
-.action-create {
-    background: var(--primary-gradient);
-}
-
-.action-export {
-    background: var(--success-gradient);
-}
-
-.action-icon {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.375rem;
-}
-
-.action-text {
-    font-weight: 500;
-}
-
-/* Efecto de brillo al pasar el cursor */
-.action-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    transition: var(--transition-normal);
-}
-
-.action-button:hover .action-shine {
-    left: 100%;
-    transition: all 0.8s ease;
-}
-
-.action-button:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-/* Animación de carga */
-.loading-icon {
-    animation: spin 1s linear infinite;
-    width: 0.875rem;
-    height: 0.875rem;
-    margin-right: 0.375rem;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.action-button.loading {
-    opacity: 0.8;
-    cursor: not-allowed;
-}
-
-/* Mejoras para animaciones y transiciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.filter-action-container {
-    animation: fadeIn 0.4s ease-out forwards;
-}
-
-:root {
-    /* Colores base */
-    --primary-color: #1e40af;
-    --primary-light: #3b82f6;
-    --primary-dark: #1e3a8a;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    @include('livewire.dashboard.all-auditorias.auditorias_assets.styles')
     
-    /* Colores de estado */
-    --success-color: #10b981;
-    --success-light: #d1fae5;
-    --success-border: #34d399;
-    --warning-color: #f59e0b;
-    --warning-light: #fef3c7;
-    --warning-border: #fbbf24;
-    --danger-color: #ef4444;
-    --danger-light: #fee2e2;
-    --danger-border: #f87171;
-    --neutral-color: #6b7280;
-    --neutral-light: #f3f4f6;
-    --neutral-border: #d1d5db;
+    <!-- Notificaciones: Toast de Error y Éxito -->
+    <div id="errorAlert" class="fixed top-4 right-4 z-50 hidden animate-fade-in max-w-md">
+        <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg flex items-start">
+            <div class="flex-shrink-0 mt-0.5">
+                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3 flex-grow">
+                <p class="text-sm font-medium">Se encontraron errores:</p>
+                <ul id="errorList" class="mt-1 text-sm list-disc list-inside"></ul>
+            </div>
+            <button id="closeErrorBtn" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8">
+                <span class="sr-only">Cerrar</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
     
-    /* Colores de acción */
-    --purple-color: #8b5cf6;
-    --purple-light: #ede9fe;
-    --purple-border: #a78bfa;
-    --blue-color: #3b82f6;
-    --blue-light: #dbeafe;
-    --blue-border: #60a5fa;
+    <div id="successToast" class="fixed bottom-4 right-4 z-50 hidden animate-fade-in">
+        <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg flex items-center">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p id="successMessage" class="text-sm font-medium">Operación completada correctamente</p>
+            </div>
+            <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8">
+                <span class="sr-only">Cerrar</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
     
-    /* Colores de interfaz */
-    --bg-white: #ffffff;
-    --bg-light: #f9fafb;
-    --text-primary: #1f2937;
-    --text-secondary: #4b5563;
-    --text-muted: #6b7280;
-    --border-color: #e5e7eb;
-    --border-color-hover: #d1d5db;
-    
-    /* Sombras */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 3px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 3px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 8px 10px -3px rgba(0, 0, 0, 0.1), 0 3px 4px -2px rgba(0, 0, 0, 0.05);
-    --shadow-inner: inset 0 1px 3px 0 rgba(0, 0, 0, 0.06);
-    
-    /* Radios */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.625rem;
-    --radius-full: 9999px;
-    
-    /* Transiciones */
-    --transition-normal: all 0.3s ease;
-    --transition-fast: all 0.15s ease;
-}
-
-/* Contenedor principal de la tabla */
-.premium-table-container {
-    background-color: var(--bg-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-    transition: var(--transition-normal);
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-}
-
-.premium-table-container:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
-}
-
-/* Wrapper de tabla con scrolling */
-.premium-table-wrapper {
-    overflow-x: auto;
-    position: relative;
-}
-
-/* Tabla premium */
-.premium-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 0.8125rem;
-}
-
-/* Encabezado de tabla */
-.premium-table-head {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-/* Estilos para celdas de encabezado */
-.premium-th {
-    padding: 0.625rem 0.75rem;
-    background: var(--primary-gradient);
-    color: white;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-align: left;
-    position: relative;
-    transition: var(--transition-fast);
-    white-space: nowrap;
-}
-
-/* Efecto hover en encabezados */
-.premium-th.sortable:hover {
-    background: var(--primary-gradient-hover);
-    cursor: pointer;
-}
-
-/* Contenido de celda de encabezado */
-.th-content {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.375rem;
-}
-
-/* Ícono de ordenamiento */
-.sort-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    fill: none;
-    stroke: currentColor;
-    transition: var(--transition-fast);
-}
-
-.premium-th.sortable:hover .sort-icon {
-    transform: scale(1.1);
-}
-
-/* Columnas específicas */
-.action-column, .status-column, .admin-column {
-    width: 1%;
-    white-space: nowrap;
-}
-
-/* Filas de datos */
-.premium-row {
-    transition: var(--transition-normal);
-    position: relative;
-}
-
-.premium-row:hover {
-    background-color: rgba(219, 234, 254, 0.5);
-    z-index: 5;
-}
-
-.premium-row:hover .premium-td {
-    border-color: var(--border-color-hover);
-}
-
-/* Celdas de datos */
-.premium-td {
-    padding: 0.625rem 0.75rem;
-    border-bottom: 1px solid var(--border-color);
-    transition: var(--transition-normal);
-    vertical-align: top;
-}
-
-/* Contenido de celda */
-.cell-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-}
-
-/* Texto primario y secundario */
-.primary-text {
-    font-weight: 500;
-    color: var(--text-primary);
-    font-size: 0.8125rem;
-}
-
-.secondary-text {
-    font-size: 0.6875rem;
-    color: var(--text-muted);
-}
-
-/* Celda destacada */
-.highlight-cell {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-/* Truncamiento de texto */
-.truncate-text {
-    max-width: 14rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Contenedor de botones de acción rápida */
-.action-buttons-container {
-    display: flex;
-    gap: 0.375rem;
-}
-
-/* Botones de acción rápida */
-.quick-action-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.875rem;
-    height: 1.875rem;
-    border-radius: var(--radius-md);
-    transition: var(--transition-normal);
-    border: 1px solid transparent;
-    box-shadow: var(--shadow-sm);
-}
-
-.quick-action-button svg {
-    width: 1rem;
-    height: 1rem;
-    fill: none;
-    stroke: currentColor;
-    transition: var(--transition-fast);
-}
-
-.quick-action-button:hover {
-    transform: translateY(-1px) scale(1.03);
-    box-shadow: var(--shadow-md);
-}
-
-.quick-action-button:active {
-    transform: translateY(0) scale(0.97);
-}
-
-/* Estilos específicos para botones de acción */
-.edit-action {
-    background-color: var(--blue-light);
-    color: var(--blue-color);
-    border-color: var(--blue-border);
-}
-
-.edit-action:hover {
-    background-color: var(--blue-color);
-    color: white;
-}
-
-.reset-action {
-    background-color: var(--danger-light);
-    color: var(--danger-color);
-    border-color: var(--danger-border);
-}
-
-.reset-action:hover {
-    background-color: var(--danger-color);
-    color: white;
-}
-
-/* Botones de admin */
-.admin-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-}
-
-.admin-button {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-md);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    transition: var(--transition-normal);
-    border: 1px solid transparent;
-    box-shadow: var(--shadow-sm);
-}
-
-.admin-button-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    fill: none;
-    stroke: currentColor;
-    margin-right: 0.25rem;
-}
-
-.admin-button:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-.edit-button {
-    background-color: var(--blue-light);
-    color: var(--blue-color);
-    border-color: var(--blue-border);
-}
-
-.edit-button:hover {
-    background-color: var(--blue-color);
-    color: white;
-}
-
-.delete-button {
-    background-color: var(--danger-light);
-    color: var(--danger-color);
-    border-color: var(--danger-border);
-}
-
-.delete-button:hover {
-    background-color: var(--danger-color);
-    color: white;
-}
-
-/* Estado vacío */
-.premium-td-empty {
-    padding: 2rem 1rem;
-    text-align: center;
-}
-
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 28rem;
-    margin: 0 auto;
-}
-
-.empty-state-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    background-color: var(--neutral-light);
-    border-radius: var(--radius-full);
-    margin-bottom: 0.75rem;
-}
-
-.empty-state-icon svg {
-    width: 1.75rem;
-    height: 1.75rem;
-    stroke: var(--text-muted);
-}
-
-.empty-state-title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 0.375rem;
-}
-
-.empty-state-description {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    max-width: 22rem;
-}
-
-.empty-state-button {
-    display: flex;
-    align-items: center;
-    padding: 0.375rem 0.75rem;
-    background-color: var(--blue-light);
-    color: var(--blue-color);
-    border: 1px solid var(--blue-border);
-    border-radius: var(--radius-md);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    transition: var(--transition-normal);
-}
-
-.empty-state-button-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    stroke: currentColor;
-    margin-right: 0.375rem;
-}
-
-.empty-state-button:hover {
-    background-color: var(--blue-color);
-    color: white;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-/* Paginación */
-.premium-pagination {
-    padding: 0.75rem 1rem;
-    background-color: var(--bg-light);
-    border-top: 1px solid var(--border-color);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    font-size: 0.8125rem;
-}
-
-/* ESTILOS PARA STATUS Y BOTONES */
-/* Tarjeta de estado */
-.status-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 250px;
-}
-
-/* Badges de estado */
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-full);
-    font-weight: 600;
-    font-size: 0.75rem;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-normal);
-    border: 1px solid transparent;
-}
-
-.status-badge:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-.status-badge-success {
-    background-color: var(--success-light);
-    color: var(--success-color);
-    border-color: var(--success-border);
-}
-
-.status-badge-warning {
-    background-color: var(--warning-light);
-    color: var(--warning-color);
-    border-color: var(--warning-border);
-}
-
-.status-badge-neutral {
-    background-color: var(--neutral-light);
-    color: var(--neutral-color);
-    border-color: var(--neutral-border);
-}
-
-.status-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.375rem;
-}
-
-.status-svg {
-    width: 0.75rem;
-    height: 0.75rem;
-    fill: none;
-}
-
-.status-text {
-    font-weight: 600;
-    font-size: 0.75rem;
-}
-
-/* Botones de acción */
-.action-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-}
-
-.action-button {
-    display: flex;
-    align-items: center;
-    padding: 0.375rem 0.625rem;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    font-size: 0.75rem;
-    transition: var(--transition-normal);
-    border: 1px solid transparent;
-    box-shadow: var(--shadow-sm);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.action-button:hover {
-    transform: translateY(-1px) scale(1.01);
-    box-shadow: var(--shadow-md);
-}
-
-.action-button:active {
-    transform: translateY(0) scale(0.98);
-}
-
-.action-signature {
-    background: linear-gradient(135deg, var(--purple-color), #9333ea);
-    color: white;
-    border-color: var(--purple-border);
-    background-size: 200% 200%;
-}
-
-.action-completed {
-    background: linear-gradient(135deg, var(--success-color), #059669);
-    color: white;
-    border-color: var(--success-border);
-    background-size: 200% 200%;
-}
-
-.action-returned {
-    background: linear-gradient(135deg, var(--blue-color), #2563eb);
-    color: white;
-    border-color: var(--blue-border);
-    background-size: 200% 200%;
-}
-
-.action-disabled {
-    background-color: var(--neutral-light);
-    color: var(--neutral-color);
-    border-color: var(--neutral-border);
-    cursor: not-allowed;
-}
-
-.action-disabled:hover {
-    transform: none;
-    box-shadow: var(--shadow-sm);
-}
-
-.action-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.375rem;
-}
-
-.action-svg {
-    width: 0.875rem;
-    height: 0.875rem;
-    fill: none;
-}
-
-.action-text {
-    font-weight: 500;
-    font-size: 0.75rem;
-}
-
-/* Animación para brillar en hover */
-@keyframes shine {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.action-button:not(.action-disabled):hover {
-    animation: shine 2s linear infinite;
-}
-
-/* Animaciones adicionales */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.premium-table-container {
-    animation: fadeIn 0.4s ease-out forwards;
-}
-
-/* ESTILOS MEJORADOS PARA STATUS Y BOTONES */
-/* Tarjeta de estado */
-.status-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 220px;
-    padding: 0.125rem;
-}
-
-/* Badges de estado */
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.325rem 0.625rem;
-    border-radius: var(--radius-full);
-    font-weight: 600;
-    font-size: 0.75rem;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
-}
-
-.status-badge:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-.status-badge-success {
-    background-color: rgba(16, 185, 129, 0.12);
-    color: var(--success-color);
-    border-color: rgba(52, 211, 153, 0.4);
-}
-
-.status-badge-warning {
-    background-color: rgba(245, 158, 11, 0.12);
-    color: var(--warning-color);
-    border-color: rgba(251, 191, 36, 0.4);
-}
-
-.status-badge-neutral {
-    background-color: rgba(107, 114, 128, 0.12);
-    color: var(--neutral-color);
-    border-color: rgba(209, 213, 219, 0.4);
-}
-
-.status-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.375rem;
-}
-
-.status-svg {
-    width: 0.875rem;
-    height: 0.875rem;
-    fill: none;
-    stroke-width: 2;
-}
-
-.status-text {
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    line-height: 1.2;
-    font-size: 0.75rem;
-}
-
-/* Botones de acción */
-.action-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-}
-
-.action-button {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 0.375rem 0.625rem;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    font-size: 0.75rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
-    box-shadow: var(--shadow-sm);
-    text-decoration: none;
-    cursor: pointer;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.action-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    z-index: -1;
-    transition: all 0.6s ease;
-}
-
-.action-button:hover::before {
-    left: 100%;
-}
-
-.action-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-}
-
-.action-button:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
-}
-
-.action-signature {
-    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-    color: white;
-    border-color: #a78bfa;
-}
-
-.action-completed {
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-    border-color: #34d399;
-}
-
-.action-returned {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
-    border-color: #60a5fa;
-}
-
-.action-disabled {
-    background-color: #f3f4f6;
-    color: #6b7280;
-    border-color: #d1d5db;
-    cursor: not-allowed;
-    opacity: 0.8;
-}
-
-/* Mejoras para dispositivos móviles */
-@media (max-width: 640px) {
-    .status-card {
-        max-width: 100%;
-    }
-    
-    .action-button {
-        width: 100%;
-    }
-}
-
-/* Animación para destacar la tarjeta cuando cambia de estado */
-@keyframes highlight {
-    0% {
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
-    }
-    70% {
-        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-    }
-}
-
-.status-badge.recently-updated {
-    animation: highlight 2s ease-out;
-}
-
-/* Reset Modal */
-#resetModal .bg-white {
-    border-radius: var(--radius-lg);
-    max-width: 480px;
-}
-
-#resetModal .bg-red-50 {
-    padding: 0.625rem 1rem;
-}
-
-#resetModal .bg-indigo-50 {
-    padding: 0.5rem 1rem;
-}
-
-#resetModal .bg-yellow-50 {
-    padding: 0.625rem;
-}
-
-#resetModal h3 {
-    font-size: 1rem;
-}
-
-#resetModal p {
-    font-size: 0.875rem;
-}
-
-#resetModal .text-lg {
-    font-size: 0.9375rem;
-}
-
-#resetModal .text-sm {
-    font-size: 0.8125rem;
-}
-
-#resetModal .text-xs {
-    font-size: 0.75rem;
-}
-
-#resetModal .p-4 {
-    padding: 0.75rem;
-}
-
-#resetModal .mt-5 {
-    margin-top: 1rem;
-}
-
-#resetModal .mt-4 {
-    margin-top: 0.75rem;
-}
-
-#resetModal .mt-3 {
-    margin-top: 0.625rem;
-}
-
-#resetModal .mt-2 {
-    margin-top: 0.375rem;
-}
-
-#resetModal .mt-1 {
-    margin-top: 0.25rem;
-}
-
-#resetModal .mb-4 {
-    margin-bottom: 0.75rem;
-}
-
-#resetModal .mb-2 {
-    margin-bottom: 0.375rem;
-}
-
-#resetModal .pl-1 {
-    padding-left: 0.25rem;
-}
-
-#resetModal input {
-    height: 2.5rem;
-    font-size: 0.875rem;
-}
-
-#resetModal button {
-    font-size: 0.8125rem;
-    padding: 0.375rem 0.75rem;
-}
-    </style>
     <!-- Header Section -->
     <div class="mb-6">
         <x-ui.breadcrumbs class="mb-4">
@@ -1272,12 +192,12 @@
                     <tr>
                         <th class="premium-th action-column">
                             <div class="th-content">
-                                <span>{{ __('Acciones Rápidas') }}</span>
+                                <span>{{ __('Editar') }}</span>
                             </div>
                         </th>
                         <th class="premium-th status-column">
                             <div class="th-content">
-                                <span>{{ __('Estado') }}</span>
+                                <span>{{ __('Estatus de la Revisión') }}</span>
                             </div>
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('clave_de_accion')">
@@ -1293,6 +213,14 @@
                                 <span>Tipo de Acción</span>
                             </div>
                         </th>
+                        <th class="premium-th sortable" wire:click="sortBy('cuenta_publica')">
+                            <div class="th-content">
+                                <span>{{ __('crud.allAuditorias.inputs.cuenta_publica.label') }}</span>
+                                <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
                         <th class="premium-th sortable" wire:click="sortBy('entrega')">
                             <div class="th-content">
                                 <span>{{ __('crud.allAuditorias.inputs.entrega.label') }}</span>
@@ -1303,7 +231,7 @@
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('siglas_auditoria_especial')">
                             <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.siglas_auditoria_especial.label') }}</span>
+                                <span>AE</span>
                                 <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
@@ -1311,7 +239,7 @@
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('uaa')">
                             <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.uaa.label') }}</span>
+                                <span>UAA</span>
                                 <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
@@ -1319,7 +247,7 @@
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('titulo')">
                             <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.titulo.label') }}</span>
+                                <span>Titulo de la Auditoría</span>
                                 <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
@@ -1359,7 +287,7 @@
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('nombre_sub_director_de_area')">
                             <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.nombre_sub_director_de_area.label') }}</span>
+                                <span>Nombre SD SEG</span>
                                 <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
@@ -1367,15 +295,7 @@
                         </th>
                         <th class="premium-th sortable" wire:click="sortBy('jefe_de_departamento')">
                             <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.jefe_de_departamento.label') }}</span>
-                                <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
-                            </div>
-                        </th>
-                        <th class="premium-th sortable" wire:click="sortBy('cuenta_publica')">
-                            <div class="th-content">
-                                <span>{{ __('crud.allAuditorias.inputs.cuenta_publica.label') }}</span>
+                                <span>JD SEG</span>
                                 <svg class="sort-icon" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
@@ -1496,6 +416,13 @@
                         
                         <td class="premium-td">
                             <div class="cell-content">
+                                {{ $auditorias->catCuentaPublica->valor }}
+                            </div>
+                        </td>
+                        
+                        
+                        <td class="premium-td">
+                            <div class="cell-content">
                                 {{ $auditorias->catEntrega->valor }}
                             </div>
                         </td>
@@ -1554,13 +481,7 @@
                                 {{ $auditorias->jefe_de_departamento }}
                             </div>
                         </td>
-                        
-                        <td class="premium-td">
-                            <div class="cell-content">
-                                {{ $auditorias->catCuentaPublica->valor }}
-                            </div>
-                        </td>
-                        
+
                         <!-- Botones de Admin -->
                         <td class="premium-td">
                             @role('admin')
@@ -1625,7 +546,7 @@
     <!-- Reset Modal mejorado para mejor UX -->
     <div
         id="resetModal"
-        class="fixed inset-0 z-50 hidden overflow-y-auto"
+        class="fixed inset-0 z-50 hidden overflow-y-auto modal-overlay"
         aria-labelledby="resetModalTitle"
         role="dialog"
         aria-modal="true"
@@ -1726,237 +647,26 @@
             </div>
         </div>
     </div>
-
+    @include('livewire.dashboard.all-auditorias.auditorias_assets.scripts')
+    
     <script>
-        // Inicializar los scripts cuando el DOM está listo
+        // Inicializar manejadores de eventos para los toasts
         document.addEventListener('DOMContentLoaded', function() {
-            // Validación interactiva para el campo de confirmación
-            const confirmField = document.getElementById('confirmation_text');
-            const confirmButton = document.getElementById('confirmResetBtn');
-            const checkIcon = document.querySelector('.confirmation-check');
+            // Cerrar el toast de error con el botón de cierre
+            const closeErrorBtn = document.getElementById('closeErrorBtn');
+            if (closeErrorBtn) {
+                closeErrorBtn.addEventListener('click', function() {
+                    hideError();
+                });
+            }
             
-            if (confirmField) {
-                confirmField.addEventListener('input', function() {
-                    const isValid = this.value === 'Deseo reiniciar esta clave de acción';
-                    
-                    // Habilitar/deshabilitar botón
-                    confirmButton.disabled = !isValid;
-                    
-                    // Mostrar/ocultar el ícono de verificación
-                    checkIcon.classList.toggle('opacity-0', !isValid);
-                    checkIcon.classList.toggle('opacity-100', isValid);
-                    
-                    // Estilizar el campo según validación
-                    if (this.value && !isValid) {
-                        this.classList.add('border-red-300', 'bg-red-50');
-                        this.classList.remove('border-green-300', 'bg-green-50');
-                    } else if (isValid) {
-                        this.classList.add('border-green-300', 'bg-green-50');
-                        this.classList.remove('border-red-300', 'bg-red-50');
-                    } else {
-                        this.classList.remove('border-red-300', 'bg-red-50', 'border-green-300', 'bg-green-50');
-                    }
+            // Cerrar el toast de éxito con el botón de cierre
+            const closeSuccessBtn = document.querySelector('#successToast button');
+            if (closeSuccessBtn) {
+                closeSuccessBtn.addEventListener('click', function() {
+                    hideSuccess();
                 });
             }
         });
-    
-        // Función para abrir el modal de reset con animación mejorada
-        function openResetModal(auditoriaId, claveAccion) {
-            const modal = document.getElementById('resetModal');
-            modal.classList.remove('hidden');
-            
-            // Animar entrada
-            const modalContent = modal.querySelector('.bg-white');
-            modalContent.classList.add('animate-modal-in');
-            
-            // Configurar datos
-            document.getElementById('modalClaveAccion').innerText = claveAccion;
-            document.getElementById('auditoria_id').value = auditoriaId;
-            document.getElementById('clave_accion').value = claveAccion;
-            document.getElementById('resetForm').action = `/dashboard/all-auditorias/${auditoriaId}/reset`;
-            
-            // Restablecer campo de confirmación
-            const confirmField = document.getElementById('confirmation_text');
-            confirmField.value = '';
-            confirmField.classList.remove('border-red-300', 'bg-red-50', 'border-green-300', 'bg-green-50');
-            document.getElementById('confirmResetBtn').disabled = true;
-            document.querySelector('.confirmation-check').classList.add('opacity-0');
-            document.querySelector('.confirmation-check').classList.remove('opacity-100');
-            
-            // Enfocar en el campo de confirmación
-            setTimeout(() => {
-                confirmField.focus();
-            }, 300);
-            
-            // Eliminar mensajes de error previos
-            const errorMessage = document.querySelector('.confirmation-error');
-            if (errorMessage) {
-                errorMessage.remove();
-            }
-        }
-    
-        // Función para cerrar el modal con animación
-        function closeResetModal() {
-            const modal = document.getElementById('resetModal');
-            const modalContent = modal.querySelector('.bg-white');
-            
-            // Animar salida
-            modalContent.classList.remove('animate-modal-in');
-            modalContent.classList.add('animate-modal-out');
-            
-            // Ocultar después de la animación
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modalContent.classList.remove('animate-modal-out');
-                document.getElementById('resetForm').reset();
-            }, 300);
-        }
-    
-        // Función para enviar el formulario con validación mejorada
-        function submitReset() {
-            const confirmationText = document.getElementById('confirmation_text').value;
-            if (confirmationText === 'Deseo reiniciar esta clave de acción') {
-                // Mostrar indicador de carga en el botón
-                const confirmButton = document.getElementById('confirmResetBtn');
-                const originalContent = confirmButton.innerHTML;
-                confirmButton.innerHTML = `
-                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Procesando...
-                `;
-                confirmButton.disabled = true;
-                
-                // Enviar el formulario
-                document.getElementById('resetForm').submit();
-            } else {
-                // Mostrar error con efectos visuales mejorados
-                const inputElement = document.getElementById('confirmation_text');
-                inputElement.classList.add('border-red-300', 'bg-red-50');
-                inputElement.classList.remove('border-green-300', 'bg-green-50');
-                
-                // Agregar mensaje de error si no existe
-                let errorContainer = document.querySelector('.confirmation-error');
-                if (!errorContainer) {
-                    const errorMessage = document.createElement('p');
-                    errorMessage.className = 'text-xs text-red-600 mt-2 confirmation-error animate-bounce-once';
-                    errorMessage.innerHTML = `
-                        <svg class="inline-block h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        La confirmación no coincide. Por favor, escribe exactamente la frase indicada.
-                    `;
-                    inputElement.parentNode.appendChild(errorMessage);
-                }
-                
-                // Enfocar el campo de entrada y seleccionar todo el texto
-                inputElement.focus();
-                inputElement.select();
-                
-                // Sacudir el modal para indicar error
-                const modal = document.querySelector('#resetModal > div > div.bg-white');
-                modal.classList.add('animate-shake');
-                setTimeout(() => {
-                    modal.classList.remove('animate-shake');
-                }, 600);
-            }
-        }
-    
-        // Cerrar el modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            const modal = document.getElementById('resetModal');
-            if (event.target === modal) {
-                closeResetModal();
-            }
-        }
-        
-        // Escuchar la tecla Escape para cerrar el modal
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeResetModal();
-            }
-            
-            // Enviar el formulario al presionar Enter si la validación es correcta
-            if (event.key === 'Enter' && document.activeElement === document.getElementById('confirmation_text')) {
-                if (document.getElementById('confirmation_text').value === 'Deseo reiniciar esta clave de acción') {
-                    submitReset();
-                    event.preventDefault();
-                }
-            }
-        });
-        
-        // Función para resetear filtros (para el mensaje de "no hay resultados")
-        function resetFilters() {
-            // Aquí puedes agregar código para resetear los filtros de LiveWire o redirigir a la página sin filtros
-            window.location.href = window.location.pathname;
-        }
-        
-        // Agregar animación de sacudida y otras animaciones si no existen
-        if (!document.querySelector('style#custom-animations')) {
-            const styleElement = document.createElement('style');
-            styleElement.id = 'custom-animations';
-            styleElement.textContent = `
-                @keyframes shake {
-                    0%, 100% { transform: translateX(0); }
-                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                    20%, 40%, 60%, 80% { transform: translateX(5px); }
-                }
-                .animate-shake {
-                    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
-                }
-                
-                @keyframes fadeInDown {
-                    from {
-                        opacity: 0;
-                        transform: translate3d(0, -20px, 0);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translate3d(0, 0, 0);
-                    }
-                }
-                .animate-fade-in-down {
-                    animation: fadeInDown 0.3s ease-out forwards;
-                }
-                
-                @keyframes bounceOnce {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-5px); }
-                }
-                .animate-bounce-once {
-                    animation: bounceOnce 0.5s ease-in-out;
-                }
-                
-                @keyframes modalIn {
-                    from {
-                        opacity: 0;
-                        transform: scale(0.95);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: scale(1);
-                    }
-                }
-                .animate-modal-in {
-                    animation: modalIn 0.3s ease-out forwards;
-                }
-                
-                @keyframes modalOut {
-                    from {
-                        opacity: 1;
-                        transform: scale(1);
-                    }
-                    to {
-                        opacity: 0;
-                        transform: scale(0.95);
-                    }
-                }
-                .animate-modal-out {
-                    animation: modalOut 0.2s ease-in forwards;
-                }
-            `;
-            document.head.appendChild(styleElement);
-        }
     </script>
 </div>

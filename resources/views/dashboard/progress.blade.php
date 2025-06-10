@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Carga de Acciones - Progreso') }}
+            {{ __('Proceso de Carga de Información de los Expedientes de Acción') }}
         </h2>
     </x-slot>
 
@@ -10,12 +10,12 @@
         <x-ui.breadcrumbs>
             <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
             <x-ui.breadcrumbs.separator />
-            <x-ui.breadcrumbs.link active>{{ __('Progreso de Carga de Acciones') }}</x-ui.breadcrumbs.link>
+            <x-ui.breadcrumbs.link active>{{ __('Proceso de Carga de Información de los Expedientes de Acción') }}</x-ui.breadcrumbs.link>
         </x-ui.breadcrumbs>
 
         <!-- Progreso de Importaciones -->
         <div class="bg-white shadow-md rounded-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-6">Progreso de Importaciones</h2>
+            <h2 class="text-xl font-semibold text-gray-700 mb-6">Progreso de la Carga de Información</h2>
         
             @if (session('success'))
                 <div class="bg-green-500 text-white p-4 rounded mb-6">

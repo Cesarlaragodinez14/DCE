@@ -23,7 +23,7 @@
 
         /* Padding horizontal y vertical */
         .py-1 {
-            padding-top: 0.25rem;
+            padding-top: 0.25rem; 
             padding-bottom: 0.25rem;
         }
 
@@ -189,7 +189,7 @@
         /* Estilos de layout para el chat */
         .chat-layout {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 250px 300px 1fr;
             height: calc(100vh - 140px);
             min-height: 600px;
             gap: 0;
@@ -198,19 +198,44 @@
             overflow: hidden;
         }
 
+        @media (max-width: 1200px) {
+            .chat-layout {
+                grid-template-columns: 250px 1fr;
+            }
+            
+            .chat-sidebar {
+                grid-column: 2;
+            }
+        }
+
         @media (max-width: 768px) {
             .chat-layout {
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr auto;
             }
             
-            .chat-sidebar {
+            .filters-sidebar, .chat-sidebar {
                 display: none;
             }
 
-            .mobile-sidebar-toggle {
+            .mobile-sidebar-toggle, .mobile-filters-toggle {
                 display: flex;
             }
+        }
+
+        /* Estilo para el panel de filtros */
+        .filters-sidebar {
+            background-color: white;
+            border-right: 1px solid var(--border-color);
+            padding: 1.25rem;
+            overflow-y: auto;
+        }
+
+        .filters-heading {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
         }
 
         /* Mejoras en los mensajes */
@@ -445,6 +470,46 @@
             padding: 1.5rem;
             background-color: var(--bg-light);
             overflow-y: auto;
+            height: calc(100vh - 300px); /* Altura fija restando header y footer */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) var(--bg-light);
+        }
+
+        .chat-messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages-container::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        .chat-messages-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary-light);
+            border-radius: 4px;
+        }
+
+        /* Estilos para el historial de conversaciones */
+        .conversation-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+
+        .conversation-item:hover {
+            background-color: var(--bg-light);
+        }
+
+        .conversation-item.active {
+            background-color: var(--primary-light);
+            color: white;
         }
 
         /* Atajos de comandos */
@@ -484,15 +549,22 @@
         }
 
         /* Botón de toggle para móvil */
-        .mobile-sidebar-toggle {
+        .mobile-sidebar-toggle, .mobile-filters-toggle {
             display: none;
             background: none;
             border: none;
             color: var(--text-muted);
             margin-right: 0.5rem;
+            cursor: pointer;
+            padding: 0.375rem;
+            border-radius: 0.375rem;
         }
 
-        /* Media queries adicionales */
+        .mobile-sidebar-toggle:hover, .mobile-filters-toggle:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+
         @media (max-width: 640px) {
             .chat-message {
                 max-width: 90%;
@@ -513,6 +585,67 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden rounded-lg">
                 <div class="chat-layout">
+                    <!-- Panel lateral de filtros -->
+                    <div class="filters-sidebar">
+                        <h3 class="filters-heading">Filtros</h3>
+                        
+                        <!-- Filtro de Entrega -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Entrega</label>
+                            <select id="filter-entrega" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Seleccionar entrega</option>
+                                @if(isset($catalogos['entregas']))
+                                    @foreach($catalogos['entregas'] as $entrega)
+                                        <option value="{{ $entrega->id }}">{{ $entrega->nombre }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <!-- Filtro de Cuenta Pública -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cuenta Pública</label>
+                            <select id="filter-cuenta-publica" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Seleccionar cuenta pública</option>
+                                @if(isset($catalogos['cuentasPublicas']))
+                                    @foreach($catalogos['cuentasPublicas'] as $cuenta)
+                                        <option value="{{ $cuenta->id }}">{{ $cuenta->nombre }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <!-- Filtro de UAA -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">UAA</label>
+                            <select id="filter-uaa" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Seleccionar UAA</option>
+                                @if(isset($catalogos['uaas']))
+                                    @foreach($catalogos['uaas'] as $uaa)
+                                        <option value="{{ $uaa->id }}">{{ $uaa->nombre }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <!-- Filtro de DG -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">DG</label>
+                            <select id="filter-dg" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Seleccionar DG</option>
+                                @if(isset($catalogos['dgsegs']))
+                                    @foreach($catalogos['dgsegs'] as $dg)
+                                        <option value="{{ $dg->id }}">{{ $dg->nombre }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <button id="apply-filters" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Aplicar Filtros
+                        </button>
+                    </div>
+
                     <!-- Sidebar del chat mejorado -->
                     <div class="chat-sidebar">
                         <div class="sidebar-section">
@@ -523,18 +656,26 @@
                                 Asistente IA
                             </div>
                             <p class="text-sm text-gray-600 mb-4">Este asistente inteligente te ayuda a resolver dudas sobre el sistema de expedientes.</p>
+                            <button id="newChatBtn" class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary-light text-white rounded-lg hover:bg-primary-dark transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Nueva conversación
+                            </button>
                         </div>
- 
-                        <div class="sidebar-section p-4">
-                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                                <p class="text-xs text-gray-500 font-medium">HISTORIAL DE CONVERSACIONES</p>
-                                <p class="text-sm text-gray-700 mt-2">No hay conversaciones guardadas.</p>
-                                <button class="mt-2 text-xs text-primary-color font-medium flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                    </svg>
-                                    Nueva conversación
-                                </button>
+
+                        <div class="sidebar-section">
+                            <div class="sidebar-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                                Historial
+                            </div>
+                            <div class="conversation-list mt-2">
+                                <!-- Las conversaciones se cargarán aquí dinámicamente -->
+                                <div class="text-sm text-gray-500 text-center py-4">
+                                    No hay conversaciones guardadas.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -544,22 +685,20 @@
                         <!-- Header del área de chat mejorado -->
                         <div class="chat-header">
                             <div class="flex items-center">
-                                <button class="mobile-sidebar-toggle">
+                                <button class="mobile-sidebar-toggle mr-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                                <button class="mobile-filters-toggle mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                                     </svg>
                                 </button>
                                 <div class="chat-status">
                                     <div class="status-indicator"></div>
                                     <span class="text-sm font-medium">Asistente conectado</span>
                                 </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <button type="button" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                    </svg>
-                                </button>
                             </div>
                         </div>
                         
@@ -606,6 +745,23 @@
                                         </button>
                                     </div>
                                 </div>
+                                
+                                <!-- Selector de proveedor y modelo de IA -->
+                                <div class="flex flex-wrap items-center gap-2 mt-2 mb-2">
+                                    <div class="relative">
+                                        <select id="ai-provider" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                                            @foreach($providers as $key => $name)
+                                                <option value="{{ $key }}" {{ $key == $defaultProvider ? 'selected' : '' }}>{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="relative">
+                                        <select id="ai-model" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                                            <!-- Se llenará con JavaScript -->
+                                        </select>
+                                    </div>
+                                </div>
+                                
                                 <button type="submit" class="send-button">
                                     Enviar
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -626,12 +782,20 @@
             const userInput = document.getElementById('userInput');
             const chatMessages = document.getElementById('chatMessages');
             const mobileSidebarToggle = document.querySelector('.mobile-sidebar-toggle');
+            const mobileFiltersToggle = document.querySelector('.mobile-filters-toggle');
             const chatSidebar = document.querySelector('.chat-sidebar');
+            const filtersSidebar = document.querySelector('.filters-sidebar');
             
             // Toggle sidebar en móvil
             if (mobileSidebarToggle) {
                 mobileSidebarToggle.addEventListener('click', function() {
                     if (chatSidebar.style.display === 'none' || getComputedStyle(chatSidebar).display === 'none') {
+                        // Cerrar el panel de filtros si está abierto
+                        if (filtersSidebar.style.display === 'block') {
+                            filtersSidebar.style.display = 'none';
+                        }
+                        
+                        // Mostrar el sidebar
                         chatSidebar.style.display = 'block';
                         chatSidebar.style.position = 'absolute';
                         chatSidebar.style.zIndex = '50';
@@ -646,15 +810,85 @@
                 });
             }
             
-            // Cerrar sidebar cuando se toca fuera en móvil
+            // Toggle panel de filtros en móvil
+            if (mobileFiltersToggle) {
+                mobileFiltersToggle.addEventListener('click', function() {
+                    if (filtersSidebar.style.display === 'none' || getComputedStyle(filtersSidebar).display === 'none') {
+                        // Cerrar el sidebar si está abierto
+                        if (chatSidebar.style.display === 'block') {
+                            chatSidebar.style.display = 'none';
+                        }
+                        
+                        // Mostrar el panel de filtros
+                        filtersSidebar.style.display = 'block';
+                        filtersSidebar.style.position = 'absolute';
+                        filtersSidebar.style.zIndex = '50';
+                        filtersSidebar.style.top = '0';
+                        filtersSidebar.style.left = '0';
+                        filtersSidebar.style.height = '100%';
+                        filtersSidebar.style.width = '80%';
+                        filtersSidebar.style.backgroundColor = 'white';
+                    } else {
+                        filtersSidebar.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Cerrar paneles cuando se toca fuera en móvil
             document.addEventListener('click', function(event) {
                 const isMobile = window.matchMedia('(max-width: 768px)').matches;
-                if (isMobile && chatSidebar.style.display === 'block') {
-                    if (!chatSidebar.contains(event.target) && event.target !== mobileSidebarToggle) {
-                        chatSidebar.style.display = 'none';
+                
+                if (isMobile) {
+                    // Cerrar sidebar si está abierto
+                    if (chatSidebar.style.display === 'block') {
+                        if (!chatSidebar.contains(event.target) && event.target !== mobileSidebarToggle) {
+                            chatSidebar.style.display = 'none';
+                        }
+                    }
+                    
+                    // Cerrar panel de filtros si está abierto
+                    if (filtersSidebar.style.display === 'block') {
+                        if (!filtersSidebar.contains(event.target) && event.target !== mobileFiltersToggle) {
+                            filtersSidebar.style.display = 'none';
+                        }
                     }
                 }
             });
+            
+            // Configuración de modelos de IA
+            const models = @json($models);
+            const defaultModel = '{{ $defaultModel }}';
+            const providerSelect = document.getElementById('ai-provider');
+            const modelSelect = document.getElementById('ai-model');
+            
+            // Función para actualizar la lista de modelos según el proveedor seleccionado
+            function updateModels() {
+                const provider = providerSelect.value;
+                const providerModels = models[provider] || {};
+                
+                // Limpiar select de modelos
+                modelSelect.innerHTML = '';
+                
+                // Agregar opciones de modelos
+                Object.entries(providerModels).forEach(([modelId, modelName]) => {
+                    const option = document.createElement('option');
+                    option.value = modelId;
+                    option.textContent = modelName;
+                    
+                    // Seleccionar modelo por defecto si coincide
+                    if (modelId === defaultModel) {
+                        option.selected = true;
+                    }
+                    
+                    modelSelect.appendChild(option);
+                });
+            }
+            
+            // Actualizar modelos al cambiar de proveedor
+            providerSelect.addEventListener('change', updateModels);
+            
+            // Inicializar lista de modelos
+            updateModels();
             
             /**
              * Función para agregar mensajes a la conversación con animación mejorada
@@ -796,10 +1030,10 @@
              * Desplaza la vista al final de la conversación con animación suave
              */
             function scrollToBottom() {
-                chatMessages.scrollTo({
-                    top: chatMessages.scrollHeight,
-                    behavior: 'smooth'
-                });
+                const lastMessage = chatMessages.lastElementChild;
+                if (lastMessage) {
+                    lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
             }
             
             /**
@@ -808,51 +1042,126 @@
              * @returns {boolean} - true si se manejó un comando, false de lo contrario
              */
             function handleCommands(message) {
-                // Verificar si es un comando
-                if (message.startsWith('/')) {
-                    const command = message.split(' ')[0].toLowerCase();
+                // Comando para limpiar
+                if (message.trim().toLowerCase() === '/limpiar' || message.trim().toLowerCase() === '/clear') {
+                    chatMessages.innerHTML = '';
                     
-                    switch(command) {
-                        case '/ayuda':
-                            addMessage(message, 'user');
-                            addMessage("Estos son los comandos disponibles:\n\n/buscar - Buscar expedientes por número o palabra clave\n/estatus - Ver todos los estados disponibles para expedientes\n/ayuda - Mostrar esta lista de comandos", 'assistant');
-                            return true;
-                            
-                        case '/buscar':
-                            addMessage(message, 'user');
-                            addMessage("Para buscar un expediente, utiliza:\n\n/buscar [número o palabra clave]\n\nPor ejemplo: /buscar 123456 o /buscar contrato", 'assistant');
-                            return true;
-                            
-                        case '/estatus':
-                            addMessage(message, 'user');
-                            addMessage("Estados disponibles para expedientes:\n\n• Pendiente\n• En revisión\n• Aprobado\n• Rechazado\n• En proceso\n• Finalizado\n• Archivado", 'assistant');
-                            return true;
-                    }
+                    // Mensaje de sistema limpio
+                    let systemMessage = document.createElement('div');
+                    systemMessage.className = 'bg-blue-100 text-blue-800 p-4 rounded-lg mb-4 text-sm';
+                    systemMessage.textContent = 'Chat limpiado. ¿En qué puedo ayudarte?';
+                    chatMessages.appendChild(systemMessage);
+                    
+                    // Limpiar el historial local
+                    currentConversationId = null;
+                    
+                    return true;
+                }
+                
+                // Comando para ayuda
+                if (message.trim().toLowerCase() === '/ayuda' || message.trim().toLowerCase() === '/help') {
+                    addMessage('Comandos disponibles:\n- /limpiar o /clear - Limpiar este chat\n- /ayuda o /help - Mostrar esta ayuda\n- /buscar [término] - Buscar expedientes\n- /estatus - Ver estados generales', 'assistant');
+                    return true;
                 }
                 
                 return false;
             }
         
+            // Variables para el manejo de conversaciones
+            let currentConversationId = null;
+
+            // Función para cargar la lista de conversaciones desde el servidor
+            function fetchConversations() {
+                fetch("{{ route('ai.getConversations') }}")
+                .then(response => response.json())
+                .then(data => {
+                    updateConversationList(data);
+                })
+                .catch(error => {
+                    console.error('Error al cargar conversaciones:', error);
+                });
+            }
+
+            // Actualizar la lista de conversaciones en la UI
+            function updateConversationList(data) {
+                const conversationList = document.querySelector('.conversation-list');
+                if (!conversationList) return;
+                
+                conversationList.innerHTML = '';
+                
+                // Convertir objeto a array para poder iterarlo
+                const conversations = Object.values(data);
+                
+                conversations.forEach(conv => {
+                    const item = document.createElement('div');
+                    item.className = `conversation-item ${conv.id === currentConversationId ? 'active' : ''}`;
+                    item.textContent = conv.title;
+                    item.onclick = () => loadConversation(conv.id);
+                    conversationList.appendChild(item);
+                });
+            }
+
+            // Cargar una conversación específica
+            function loadConversation(conversationId) {
+                fetch(`{{ route('ai.getConversation', ['id' => '_ID_']) }}`.replace('_ID_', conversationId))
+                .then(response => response.json())
+                .then(conversation => {
+                    if (!conversation || conversation.error) {
+                        console.error('Error al cargar conversación:', conversation.error || 'Conversación no encontrada');
+                        return;
+                    }
+                    
+                    // Actualizar el ID de conversación actual
+                    currentConversationId = conversation.id;
+                    
+                    // Limpiar los mensajes actuales
+                    chatMessages.innerHTML = '';
+                    
+                    // Mostrar los mensajes de la conversación
+                    conversation.messages.forEach(msg => {
+                        addMessage(msg.content, msg.role);
+                    });
+                    
+                    // Actualizar el estado de las conversaciones en el sidebar
+                    fetchConversations();
+                })
+                .catch(error => {
+                    console.error('Error al cargar conversación:', error);
+                });
+            }
+
+            // Botón para nueva conversación
+            const newChatBtn = document.getElementById('newChatBtn');
+            if (newChatBtn) {
+                newChatBtn.addEventListener('click', function() {
+                    // Reiniciar la conversación actual
+                    currentConversationId = null;
+                    
+                    // Limpiar la ventana de chat
+                    chatMessages.innerHTML = '';
+                    
+                    // Mostrar mensaje de bienvenida
+                    addMessage('¡Hola! Soy SAES-AI, tu asistente. ¿En qué puedo ayudarte?', 'assistant');
+                });
+            }
+
+            // Inicializar: cargar las conversaciones al iniciar
+            fetchConversations();
+
             // Evento de envío del formulario (mensaje del usuario)
             chatForm.addEventListener('submit', function(e) {
                 e.preventDefault();
         
                 const message = userInput.value.trim();
                 if (message) {
-                    // Manejar comandos especiales
                     if (handleCommands(message)) {
                         userInput.value = '';
                         return;
                     }
                     
-                    // 1) Agregar mensaje del usuario en la interfaz
                     addMessage(message, 'user');
                     userInput.value = '';
-        
-                    // 2) Mostrar indicador de escritura
                     showTypingIndicator();
-        
-                    // 3) Llamar al backend con fetch
                     
                     fetch("{{ route('ai.sendMessage') }}", {
                         method: 'POST',
@@ -860,26 +1169,45 @@
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: JSON.stringify({ message })
+                        body: JSON.stringify({
+                            message,
+                            provider: document.getElementById('ai-provider').value,
+                            model: document.getElementById('ai-model').value,
+                            includeContext: contextEnabled,
+                            conversation_id: currentConversationId || null,
+                            filters: {
+                                entrega: entregaSelect.value || null,
+                                cuenta_publica: cuentaPublicaSelect.value || null,
+                                uaa_id: uaaSelect.value || null,
+                                dg_id: dgSelect.value || null
+                            }
+                        })
                     })
                     .then(response => {
-                        // En caso de error de status
                         if (!response.ok) {
-                            throw new Error('Error de servidor, status ' + response.status);
+                            // Extraer texto del error para mejor diagnóstico
+                            return response.text().then(text => {
+                                throw new Error(`Error de servidor (${response.status}): ${text.substring(0, 150)}...`);
+                            });
                         }
                         return response.json();
                     })
                     .then(data => {
-                        // 4) Quitar indicador de escritura
                         removeTypingIndicator();
-        
-                        // data.assistantMessage => respuesta del asistente
                         addMessage(data.assistantMessage, 'assistant');
+                        
+                        // Guardar el ID de conversación recibido del servidor
+                        if (data.conversation_id && typeof data.conversation_id === 'string' && !currentConversationId) {
+                            currentConversationId = data.conversation_id;
+                            
+                            // Si es una nueva conversación, actualizamos la lista
+                            fetchConversations();
+                        }
                     })
                     .catch(error => {
                         removeTypingIndicator();
                         console.error('Error fetch IA:', error);
-                        addMessage('Lo siento, ocurrió un error con la IA. Por favor, intenta nuevamente en unos momentos.', 'assistant');
+                        addMessage('Lo siento, ocurrió un error con la IA. Por favor, intenta nuevamente en unos momentos. Error: ' + error.message, 'assistant');
                     });
                 }
             });
@@ -934,6 +1262,144 @@
             
             // Enfocar la caja de texto al cargar
             userInput.focus();
+
+            // Variable global para seguir si hay filtros activos
+            let contextEnabled = true;
+
+            const applyFiltersBtn = document.getElementById('apply-filters');
+            const entregaSelect = document.getElementById('filter-entrega');
+            const cuentaPublicaSelect = document.getElementById('filter-cuenta-publica');
+            const uaaSelect = document.getElementById('filter-uaa');
+            const dgSelect = document.getElementById('filter-dg');
+
+            // Función para actualizar el indicador de contexto
+            function updateContextIndicator(enabled) {
+                const indicator = document.getElementById('context-indicator');
+                if (enabled) {
+                    indicator.className = 'px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800';
+                    indicator.textContent = 'Contexto: Activado';
+                } else {
+                    indicator.className = 'px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800';
+                    indicator.textContent = 'Contexto: Desactivado';
+                }
+            }
+
+            applyFiltersBtn.addEventListener('click', function() {
+                const filters = {
+                    entrega: entregaSelect.value,
+                    cuenta_publica: cuentaPublicaSelect.value,
+                    uaa_id: uaaSelect.value,
+                    dg_id: dgSelect.value
+                };
+
+                // Determinar si algún filtro está activo
+                const hasActiveFilters = Object.values(filters).some(value => value !== '');
+                
+                // INVERTIR LA LÓGICA: Si hay filtros activos, activar el contexto
+                contextEnabled = hasActiveFilters;
+
+                // Actualizar el indicador visual
+                updateContextIndicator(contextEnabled);
+
+                // Actualizar la URL con los filtros
+                const url = new URL(window.location.href);
+                Object.entries(filters).forEach(([key, value]) => {
+                    if (value) {
+                        url.searchParams.set(key, value);
+                    } else {
+                        url.searchParams.delete(key);
+                    }
+                });
+                window.history.pushState({}, '', url);
+
+                // Limpiar el chat actual
+                chatMessages.innerHTML = '';
+                
+                // Crear el mensaje de filtros aplicados
+                const filterMessage = document.createElement('div');
+                filterMessage.className = 'bg-blue-100 text-blue-800 p-4 rounded-lg mb-4';
+                let filterText = 'Filtros aplicados: ';
+                
+                if (filters.entrega && entregaSelect.selectedIndex > 0) {
+                    filterText += 'Entrega ' + entregaSelect.options[entregaSelect.selectedIndex].text + ', ';
+                }
+                if (filters.cuenta_publica && cuentaPublicaSelect.selectedIndex > 0) {
+                    filterText += 'Cuenta Pública ' + cuentaPublicaSelect.options[cuentaPublicaSelect.selectedIndex].text + ', ';
+                }
+                if (filters.uaa_id && uaaSelect.selectedIndex > 0) {
+                    filterText += 'UAA ' + uaaSelect.options[uaaSelect.selectedIndex].text + ', ';
+                }
+                if (filters.dg_id && dgSelect.selectedIndex > 0) {
+                    filterText += 'DG ' + dgSelect.options[dgSelect.selectedIndex].text;
+                }
+                
+                // Eliminar la coma final si existe
+                filterText = filterText.replace(/,\s*$/, '');
+                
+                // Si no se seleccionó ningún filtro
+                if (filterText === 'Filtros aplicados: ') {
+                    filterText += 'Ninguno';
+                    contextEnabled = false;
+                } else {
+                    // Añadir mensaje sobre el contexto
+                    filterText += '<br>El asistente utilizará el contexto de datos filtrados.';
+                }
+                
+                filterMessage.innerHTML = filterText;
+                chatMessages.appendChild(filterMessage);
+                
+                // Mostrar un mensaje de bienvenida nuevamente
+                addMessage('¡Hola! Los filtros han sido aplicados. ¿En qué puedo ayudarte?', 'assistant');
+            });
+
+            // Cargar filtros de la URL al iniciar
+            const urlParams = new URLSearchParams(window.location.search);
+            entregaSelect.value = urlParams.get('entrega') || '';
+            cuentaPublicaSelect.value = urlParams.get('cuenta_publica') || '';
+            uaaSelect.value = urlParams.get('uaa_id') || '';
+            dgSelect.value = urlParams.get('dg_id') || '';
+            
+            // Comprobar si hay filtros activos al cargar la página
+            const hasActiveFiltersOnLoad = [
+                urlParams.get('entrega'),
+                urlParams.get('cuenta_publica'),
+                urlParams.get('uaa_id'),
+                urlParams.get('dg_id')
+            ].some(param => param !== null && param !== '');
+            
+            // INVERTIR LA LÓGICA: Si hay filtros activos, activar el contexto
+            contextEnabled = hasActiveFiltersOnLoad;
+            updateContextIndicator(contextEnabled);
+            
+            // Si hay filtros activos, mostrar un mensaje
+            if (hasActiveFiltersOnLoad) {
+                // Crear el mensaje de filtros aplicados
+                const filterMessage = document.createElement('div');
+                filterMessage.className = 'bg-blue-100 text-blue-800 p-4 rounded-lg mb-4';
+                let filterText = 'Filtros activos: ';
+                
+                if (urlParams.get('entrega') && entregaSelect.selectedIndex > 0) {
+                    filterText += 'Entrega ' + entregaSelect.options[entregaSelect.selectedIndex].text + ', ';
+                }
+                if (urlParams.get('cuenta_publica') && cuentaPublicaSelect.selectedIndex > 0) {
+                    filterText += 'Cuenta Pública ' + cuentaPublicaSelect.options[cuentaPublicaSelect.selectedIndex].text + ', ';
+                }
+                if (urlParams.get('uaa_id') && uaaSelect.selectedIndex > 0) {
+                    filterText += 'UAA ' + uaaSelect.options[uaaSelect.selectedIndex].text + ', ';
+                }
+                if (urlParams.get('dg_id') && dgSelect.selectedIndex > 0) {
+                    filterText += 'DG ' + dgSelect.options[dgSelect.selectedIndex].text;
+                }
+                
+                // Eliminar la coma final si existe
+                filterText = filterText.replace(/,\s*$/, '');
+                
+                // Añadir mensaje sobre el contexto
+                filterText += '<br>El asistente utilizará el contexto de datos filtrados.';
+                
+                filterMessage.innerHTML = filterText;
+                chatMessages.insertBefore(filterMessage, chatMessages.firstChild);
+            }
         });
     </script>
 </x-app-layout>

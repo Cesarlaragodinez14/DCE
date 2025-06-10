@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Programación de entrega de expedientes') }}
+            {{ __('Programación de Entrega de Expedientes de Acción por la UAA') }}
             <!-- Selectores para filtros -->
             <div class="ml-auto flex items-center space-x-4">
                 <x-ui.filter-cp-en
@@ -21,7 +21,7 @@
                 <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
                 <x-ui.breadcrumbs.separator />
                 <x-ui.breadcrumbs.link active>
-                    {{ __('Distribución de Expedientes de Acción') }}
+                    {{ __('Programación de entrega de Expedientes de Acción por la UAA') }}
                 </x-ui.breadcrumbs.link>
             </x-ui.breadcrumbs>
 
@@ -35,14 +35,13 @@
                         <x-slot name="head">
                             <x-ui.table.header>CP</x-ui.table.header>
                             <x-ui.table.header>Entrega</x-ui.table.header>
-                            <x-ui.table.header>AE / DG</x-ui.table.header>
-                            <x-ui.table.header>Clave de UA</x-ui.table.header>
+                            <x-ui.table.header>AE</x-ui.table.header>
+                            <x-ui.table.header>UAA</x-ui.table.header>
                             <x-ui.table.header>Total a entregar</x-ui.table.header>
                             <x-ui.table.header>Total entregados</x-ui.table.header>
                             <x-ui.table.header>Pendientes de entregar</x-ui.table.header>
                             <x-ui.table.header>% de avance</x-ui.table.header>
                             <x-ui.table.header>Avance</x-ui.table.header>
-                            <x-ui.table.header>Recordatorio</x-ui.table.header>
                             <x-ui.table.header>Expedientes Programados a entregar</x-ui.table.header>
                         </x-slot>
 
@@ -96,11 +95,6 @@
                                     <!-- Avance (fracción) -->
                                     <x-ui.table.column>
                                         {{ $totalEntregados }} / {{ $totalEntregar }}
-                                    </x-ui.table.column>
-
-                                    <!-- Recordatorio -->
-                                    <x-ui.table.column>
-                                        0 
                                     </x-ui.table.column>
 
                                     <!-- Expedientes programados a entregar (ej. 0, si no se maneja)-->

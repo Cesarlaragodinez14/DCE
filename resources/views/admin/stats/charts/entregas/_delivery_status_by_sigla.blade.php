@@ -1,7 +1,7 @@
 {{-- resources/views/admin/stats/charts/entregas/_delivery_status_by_sigla.blade.php --}}
 <section id="delivery-status-by-sigla" class="mb-8 bg-white p-6 rounded-lg shadow-md">
     <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold">Entregas de Expedientes por Siglas de Auditoría Especial</h3>
+        <h3 class="text-lg font-semibold">Estatus de la entrega de Expedientes de Acción por Auditoria Especial.</h3>
         <div class="flex space-x-2">
             <button id="view-chart-btn" class="px-3 py-1 bg-blue-600 text-white rounded-md text-sm font-medium active">Gráfica</button>
             <button id="view-table-btn" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm font-medium">Tabla</button>
@@ -125,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Crear filas para la tabla con formato mejorado
         tableRows.push({
             'Sigla': `<strong>${sigla}</strong>`,
-            'Estado': '<strong>Total</strong>',
-            'Cantidad': `<strong>${totalSigla}</strong>`,
+            'Estatus': '<strong>Total</strong>',
+            'Expedientes': `<strong>${totalSigla}</strong>`,
             'Porcentaje': '<strong>100%</strong>'
         });
         
@@ -136,27 +136,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const unscheduledPct = ((unscheduled / totalSigla) * 100).toFixed(1);
             
             tableRows.push({
-                'Sigla': '',
-                'Estado': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #4ade80;"></span>Aceptados</span>',
-                'Cantidad': delivered,
+                'UAA': '',
+                'Estatus': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #4ade80;"></span>Aceptados</span>',
+                'Expedientes': delivered,
                 'Porcentaje': `<div class="w-full bg-gray-200 rounded-full h-2.5">
                     <div class="bg-green-400 h-2.5 rounded-full" style="width: ${deliveredPct}%"></div>
                 </div><span class="text-xs">${deliveredPct}%</span>`
             });
             
             tableRows.push({
-                'Sigla': '',
-                'Estado': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #facc15;"></span>En Proceso</span>',
-                'Cantidad': in_process,
+                'UAA': '',
+                'Estatus': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #facc15;"></span>En Proceso</span>',
+                'Expedientes': in_process,
                 'Porcentaje': `<div class="w-full bg-gray-200 rounded-full h-2.5">
                     <div class="bg-yellow-400 h-2.5 rounded-full" style="width: ${inProcessPct}%"></div>
                 </div><span class="text-xs">${inProcessPct}%</span>`
             });
             
             tableRows.push({
-                'Sigla': '',
-                'Estado': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #f87171;"></span>No Entregados</span>',
-                'Cantidad': unscheduled,
+                'UAA': '',
+                'Estatus': '<span class="flex items-center"><span class="w-3 h-3 rounded-full mr-2" style="background-color: #f87171;"></span>No Entregados</span>',
+                'Expedientes': unscheduled,
                 'Porcentaje': `<div class="w-full bg-gray-200 rounded-full h-2.5">
                     <div class="bg-red-400 h-2.5 rounded-full" style="width: ${unscheduledPct}%"></div>
                 </div><span class="text-xs">${unscheduledPct}%</span>`
@@ -166,9 +166,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Agregar línea separadora excepto para el último elemento
         if (rawData.indexOf(item) < rawData.length - 1) {
             tableRows.push({
-                'Sigla': '<div class="border-b border-gray-200 my-2"></div>',
-                'Estado': '',
-                'Cantidad': '',
+                'UAA': '<div class="border-b border-gray-200 my-2"></div>',
+                'Estatus': '',
+                'Expedientes': '',
                 'Porcentaje': ''
             });
         }
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
         thead.className = 'bg-gray-50';
         const headerRow = document.createElement('tr');
         
-        ['Sigla', 'Estado', 'Cantidad', 'Porcentaje'].forEach(headerText => {
+        ['UAA', 'Estatus', 'Expedientes', 'Porcentaje'].forEach(headerText => {
             const th = document.createElement('th');
             th.className = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
             th.textContent = headerText;
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let csvContent = "data:text/csv;charset=utf-8,";
         
         // Encabezados
-        csvContent += "Sigla,Estado,Cantidad,Porcentaje\n";
+        csvContent += "UAA,Estatus,Expedientes,Porcentaje\n";
         
         // Datos
         allSiglas.forEach(sigla => {

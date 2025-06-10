@@ -39,7 +39,7 @@
             <td style="width:50%; vertical-align: top;">
                 <h3>Información del Hash</h3>
                 <p><strong>Hash:</strong> {{ $hash }}</p>
-                <p><strong>Generado por:</strong> {{ $currentUserName }} ({{ $currentUserRole }})</p>
+                <p><strong>Firmado por::</strong> {{ $currentUserName }} ({{ $currentUserRole }})</p>
                 <p><strong>Correo del Generador:</strong> {{ $email }}</p>
                 <p><strong>Dirección IP:</strong> {{ $ipAddress }}</p>
                 <p><strong>Fecha y Hora de Generación:</strong> {{ $formattedDate }}</p>

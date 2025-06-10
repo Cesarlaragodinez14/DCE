@@ -26,6 +26,7 @@ class RecepcionController extends Controller
         $entregaId          = $request->input('entrega');
         $cpId               = $request->input('cuenta_publica');
         $estatus            = $request->input('estatus');
+        $tipo_de_accion     = $request->input('tipo_accion');
         $responsable        = $request->input('responsable');
         $ente_fiscalizado   = $request->input('ente_fiscalizado');
         $ente_de_la_accion  = $request->input('ente_de_la_accion');
@@ -36,6 +37,7 @@ class RecepcionController extends Controller
         $enteFiscalizado = DB::table('cat_ente_fiscalizado')->get();
         $enteDeLaAccion = DB::table('cat_ente_de_la_accion')->get();
         $dgSegEf = DB::table('cat_dgseg_ef')->get();
+        $tipoDeAccion = DB::table('cat_siglas_tipo_accion')->get();
 
         // Ejemplo de UAA por defecto, o algo similar
         $uaa = DB::table('cat_uaa')->orderBy('id','asc')->first();
@@ -55,6 +57,8 @@ class RecepcionController extends Controller
             ->leftJoin('cat_auditoria_especial as n_auditoria','aditorias.auditoria_especial','=','n_auditoria.id')
             ->select(
                 'aditorias.id',
+                'aditorias.estatus_checklist',
+                'aditorias.archivo_uua',
                 DB::raw("COALESCE(cat_cuenta_publica.valor, 'Sin información') as cuenta_publica_valor"),
                 DB::raw("COALESCE(cat_entrega.valor, 'Sin información') as entrega_valor"),
                 DB::raw("COALESCE(csae.valor, 'Sin información') as ae_siglas"),
@@ -73,6 +77,8 @@ class RecepcionController extends Controller
                 DB::raw("COALESCE(cat_dgseg_ef.valor, 'Sin información') as valor_dgseg_ef"),
                 'aditorias.jefe_de_departamento as responsable_seg',
                 'entregas.id as id_entrega',
+                'entregas.fecha_entrega as fecha_entrega',
+                'entregas.fecha_real_entrega as fecha_real_entrega',
                 DB::raw("COALESCE(entregas.estado, 'Sin programar') as estado"),
                 DB::raw("COALESCE(entregas.numero_legajos, 'Sin programar') as numero_legajos"),
                 DB::raw("COALESCE(entregas.responsable, 'Sin programar') as responsable_uaa"),
@@ -113,6 +119,9 @@ class RecepcionController extends Controller
         if ($dgseg_ef) {
             $query->where('aditorias.dgseg_ef', $dgseg_ef);
         }
+        if ($tipo_de_accion) {
+            $query->where('aditorias.siglas_tipo_accion', $tipo_de_accion);
+        }
 
         $query->orderBy('aditorias.id');
 
@@ -128,6 +137,7 @@ class RecepcionController extends Controller
             'cuentasPublicas'   => $cuentasPublicas,
             'uaaName'           => $uaaName,
             'users'             => $users,
+            'tipoDeAccion'      => $tipoDeAccion,
         ]);
     }
 

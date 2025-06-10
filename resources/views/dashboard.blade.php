@@ -4,7 +4,7 @@
         [
             'route' => route('dashboard.upload-excel.form'),
             'icon' => 'cloud-upload-outline',
-            'text' => 'Cargar Acciones',
+            'text' => 'Carga de información de los Expedientes de Acción',
             'description' => 'Subir archivos Excel con acciones para procesar',
             'roles' => ['admin'],
             'section' => 'Principal',
@@ -13,13 +13,13 @@
         [
             'route' => route('dashboard.progress'),
             'icon' => 'analytics-outline',
-            'text' => 'Proceso de Acciones',
-            'description' => 'Seguimiento del proceso de acciones en curso',
+            'text' => 'Proceso de Carga de información de los Expedientes de Acción',
+            'description' => 'Seguimiento al proceso de carga de información',
             'roles' => ['admin'],
             'section' => 'Principal',
             'color' => 'info',
         ],
-        [
+        [ 
             'route' => route('dashboard.oficio-uaa'),
             'icon' => 'mail-outline',
             'text' => 'Envío de Oficio a las UAA',
@@ -31,7 +31,7 @@
         [
             'route' => route('dashboard.distribucion'),
             'icon' => 'swap-horizontal-outline',
-            'text' => 'Distribución de Acciones',
+            'text' => 'Distribución de Expedientes de Acción',
             'description' => 'Asignar y distribuir acciones a los departamentos',
             'roles' => ['admin'],
             'section' => 'Principal',
@@ -40,8 +40,8 @@
         [
             'route' => route('dashboard.expedientes.entrega'),
             'icon' => 'calendar-number-outline',
-            'text' => 'Programación de Entrega',
-            'description' => 'Programar fechas de entrega de expedientes',
+            'text' => 'Programación de Entrega de Expedientes de Acción por la UAA',
+            'description' => 'Programar Fechas y Responsables de Entrega de Expedientes',
             'roles' => ['Director General', 'admin', 'Responsable de la programación por UAA'],
             'section' => 'Principal',
             'color' => 'primary',
@@ -49,8 +49,8 @@
         [
             'route' => route('recepcion.index'),
             'icon' => 'file-tray-full-outline',
-            'text' => 'Recepción de Expedientes',
-            'description' => 'Gestionar la recepción de expedientes',
+            'text' => 'Entrega - Recepción de Expedientes',
+            'description' => 'Gestionar la entrega - recepción de los expedientes',
             'roles' => ['admin'],
             'section' => 'Principal',
             'color' => 'success',
@@ -58,8 +58,8 @@
         [
             'route' => route('programacion-historial.index'),
             'icon' => 'calendar-outline',
-            'text' => 'Historial de Movimientos de Expedientes',
-            'description' => 'Ver historial de programación de expedientes',
+            'text' => 'Histórico de la entrega - recepción de expedientes',
+            'description' => 'Ver historico de la entrega - recepción de los expedientes',
             'roles' => ['admin', 'Jefe de Departamento', 'Responsable de la programacion por UAA', 'Auditor habilitado UAA', 'Director General'],
             'section' => 'Principal',
             'color' => 'info',
@@ -85,8 +85,8 @@
         [
             'route' => route('auditorias.show'),
             'icon' => 'hourglass-outline',
-            'text' => 'Histórico de Expedientes',
-            'description' => 'Consultar registros históricos de Expedientes',
+            'text' => 'Histórico de Observaciones en la Revisión de los Expediente de Acción',
+            'description' => 'Consultar observaciones derivadas en la revisión de los Expediente de acción',
             'roles' => ['admin'],
             'section' => 'Principal',
             'color' => 'info',
@@ -94,8 +94,8 @@
         [
             'route' => route('dashboard.charts.index'),
             'icon' => 'pie-chart-outline',
-            'text' => 'Listas de Verificación',
-            'description' => 'Ver Informes y Estadísticas de las Listas de Verificación de Expedientes',
+            'text' => 'Revisión de Expedientes',
+            'description' => 'Gráficos y estadisticas',
             'roles' => ['admin', 'AUDITOR ESPECIAL', 'Director General SEG', 'AECF', 'AED', 'AEGF', 'DGUAA'],
             'section' => 'Graficos',
             'color' => 'primary',
@@ -103,7 +103,7 @@
         [
             'route' => route('dashboard.charts.entregas'),
             'icon' => 'pie-chart-outline',
-            'text' => 'Recepción y Entregas',
+            'text' => 'Entrega-recepción de expedientes de acción',
             'description' => 'Ver Informes y Estadísticas de Entrega y Repeción de Expedientes',
             'roles' => ['admin', 'AUDITOR ESPECIAL', 'Director General SEG', 'AECF', 'AED', 'AEGF', 'DGUAA'],
             'section' => 'Graficos',
@@ -228,282 +228,359 @@
     </x-slot>
 
     <style>
-        /* Estilos mejorados para las tarjetas del dashboard */
-.dashboard-card {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    padding: 0.875rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-normal);
-    border: 1px solid var(--border-color);
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    font-size: 0.8125rem;
-}
+        /* Variables CSS para consistencia */
+        :root {
+            --primary-color: #3b82f6;
+            --primary-light: #60a5fa;
+            --primary-dark: #2563eb;
+            --success-color: #10b981;
+            --success-light: #34d399;
+            --success-dark: #059669;
+            --warning-color: #f59e0b;
+            --warning-dark: #d97706;
+            --danger-color: #ef4444;
+            --danger-dark: #b91c1c;
+            --info-color: #38bdf8;
+            --info-dark: #0369a1;
+            --admin-color: #a78bfa;
+            --admin-dark: #7c3aed;
+            
+            --text-color: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f3f4f6;
+            --border-color: #e5e7eb;
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --primary-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+        }
 
-/* Overlay de gradiente sutil */
-.dashboard-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
-    z-index: 0;
-    transition: all 0.3s ease;
-}
+        /* Estilos base para las tarjetas del dashboard */
+        .dashboard-card {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.875rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.8125rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            will-change: transform, box-shadow;
+        }
 
-.dashboard-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
+        /* Overlay de gradiente sutil */
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
+            z-index: 0;
+            transition: opacity 0.2s ease;
+        }
 
-.dashboard-card:hover::before {
-    opacity: 0.8;
-}
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
 
-/* Indicador de borde con gradiente */
-.dashboard-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--primary-gradient);
-    transition: all 0.3s ease;
-}
+        .dashboard-card:hover::before {
+            opacity: 0.8;
+        }
 
-/* Contenedor del icono */
-.card-icon-container {
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    position: relative;
-    z-index: 1;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    background: var(--bg-light);
-    transition: all 0.3s ease;
-}
+        /* Indicador de borde con gradiente */
+        .dashboard-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: width 0.2s ease;
+        }
 
-.dashboard-card:hover .card-icon-container {
-    transform: scale(1.05);
-    background: var(--primary-gradient);
-}
+        .dashboard-card:hover::after {
+            width: 6px;
+        }
 
-.dashboard-icon {
-    font-size: 1.25rem;
-    transition: all 0.3s ease;
-    color: var(--primary-color);
-}
+        /* Contenedor del icono */
+        .card-icon-container {
+            flex-shrink: 0;
+            margin-right: 0.75rem;
+            position: relative;
+            z-index: 1;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            background: var(--bg-light);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
 
-.dashboard-card:hover .dashboard-icon {
-    color: white;
-}
+        .dashboard-card:hover .card-icon-container {
+            transform: scale(1.05);
+        }
 
-/* Contenido de la tarjeta */
-.card-content {
-    flex-grow: 1;
-    position: relative;
-    z-index: 1;
-}
+        .dashboard-icon {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            transition: color 0.2s ease;
+        }
 
-.card-title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 0.125rem;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-}
+        /* Contenido de la tarjeta */
+        .card-content {
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
 
-.dashboard-card:hover .card-title {
-    color: var(--primary-color);
-}
+        .card-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+            color: var(--text-color);
+            transition: color 0.2s ease;
+        }
 
-.card-description {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.2;
-}
+        .dashboard-card:hover .card-title {
+            color: var(--primary-color);
+        }
 
-/* Esquemas de colores */
-.dashboard-card.color-primary::after {
-    background: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
-}
+        .card-description {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
 
-.dashboard-card.color-success::after {
-    background: linear-gradient(to bottom, var(--success-light), var(--success-dark));
-}
+        /* Esquemas de colores para los bordes */
+        .dashboard-card.color-primary::after {
+            background: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+        }
 
-.dashboard-card.color-warning::after {
-    background: linear-gradient(to bottom, #f59e0b, #d97706);
-}
+        .dashboard-card.color-success::after {
+            background: linear-gradient(to bottom, var(--success-light), var(--success-dark));
+        }
 
-.dashboard-card.color-danger::after {
-    background: linear-gradient(to bottom, #ef4444, #b91c1c);
-}
+        .dashboard-card.color-warning::after {
+            background: linear-gradient(to bottom, var(--warning-color), var(--warning-dark));
+        }
 
-.dashboard-card.color-info::after {
-    background: linear-gradient(to bottom, #38bdf8, #0369a1);
-}
+        .dashboard-card.color-danger::after {
+            background: linear-gradient(to bottom, var(--danger-color), var(--danger-dark));
+        }
 
-.dashboard-card.color-gray::after {
-    background: linear-gradient(to bottom, #94a3b8, #475569);
-}
+        .dashboard-card.color-info::after {
+            background: linear-gradient(to bottom, var(--info-color), var(--info-dark));
+        }
 
-.dashboard-card.color-admin::after {
-    background: linear-gradient(to bottom, #a78bfa, #7c3aed);
-}
+        .dashboard-card.color-gray::after {
+            background: linear-gradient(to bottom, #94a3b8, #475569);
+        }
 
-/* Modificadores para secciones específicas */
-.dashboard-card[href*="admin"] .card-icon-container,
-.dashboard-card.color-admin .card-icon-container {
-    background: rgba(168, 139, 250, 0.1);
-}
+        .dashboard-card.color-admin::after {
+            background: linear-gradient(to bottom, var(--admin-color), var(--admin-dark));
+        }
 
-.dashboard-card[href*="admin"]:hover .card-icon-container,
-.dashboard-card.color-admin:hover .card-icon-container {
-    background: linear-gradient(135deg, #a78bfa, #7c3aed);
-}
+        /* Efectos de colores en iconos para secciones específicas */
+        .dashboard-card.color-primary .card-icon-container {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .dashboard-card.color-primary:hover .card-icon-container {
+            background: var(--primary-gradient);
+        }
+        .dashboard-card.color-primary:hover .dashboard-icon {
+            color: white;
+        }
 
-.dashboard-card[href*="charts"] .card-icon-container,
-.dashboard-card.color-info .card-icon-container {
-    background: rgba(56, 189, 248, 0.1);
-}
+        .dashboard-card.color-success .card-icon-container {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .dashboard-card.color-success:hover .card-icon-container {
+            background: linear-gradient(135deg, var(--success-light), var(--success-dark));
+        }
+        .dashboard-card.color-success:hover .dashboard-icon {
+            color: white;
+        }
 
-.dashboard-card[href*="charts"]:hover .card-icon-container,
-.dashboard-card.color-info:hover .card-icon-container {
-    background: linear-gradient(135deg, #38bdf8, #0369a1);
-}
+        .dashboard-card.color-warning .card-icon-container {
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .dashboard-card.color-warning:hover .card-icon-container {
+            background: linear-gradient(135deg, var(--warning-color), var(--warning-dark));
+        }
+        .dashboard-card.color-warning:hover .dashboard-icon {
+            color: white;
+        }
 
-/* Estilo para la barra de búsqueda */
-#dashboardSearch {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-normal);
-}
+        .dashboard-card.color-info .card-icon-container {
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .dashboard-card.color-info:hover .card-icon-container {
+            background: linear-gradient(135deg, var(--info-color), var(--info-dark));
+        }
+        .dashboard-card.color-info:hover .dashboard-icon {
+            color: white;
+        }
 
-#dashboardSearch:focus {
-    outline: none;
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
-}
+        .dashboard-card.color-admin .card-icon-container {
+            background: rgba(168, 139, 250, 0.1);
+        }
+        .dashboard-card.color-admin:hover .card-icon-container {
+            background: linear-gradient(135deg, var(--admin-color), var(--admin-dark));
+        }
+        .dashboard-card.color-admin:hover .dashboard-icon {
+            color: white;
+        }
 
-/* Adaptaciones al diseño de pantalla */
-@media (max-width: 1280px) {
-    .grid-cols-4 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
+        /* Estilo para la barra de búsqueda */
+        #dashboardSearch {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
 
-@media (max-width: 1024px) {
-    .grid-cols-4, .grid-cols-3 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
+        #dashboardSearch:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+        }
 
-@media (max-width: 640px) {
-    .grid-cols-4, .grid-cols-3, .grid-cols-2 {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-    
-    .dashboard-card {
-        padding: 0.75rem;
-    }
-    
-    .card-icon-container {
-        width: 2rem;
-        height: 2rem;
-    }
-    
-    .dashboard-icon {
-        font-size: 1rem;
-    }
-}
+        /* Adaptaciones al diseño de pantalla */
+        @media (max-width: 1280px) {
+            .grid-cols-4 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
 
-/* Animación para las tarjetas */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        @media (max-width: 1024px) {
+            .grid-cols-4, .grid-cols-3 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
 
-.dashboard-card {
-    animation: fadeIn 0.3s ease-out forwards;
-}
+        @media (max-width: 640px) {
+            .grid-cols-4, .grid-cols-3, .grid-cols-2 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            .dashboard-card {
+                padding: 0.75rem;
+            }
+            
+            .card-icon-container {
+                width: 2rem;
+                height: 2rem;
+            }
+            
+            .dashboard-icon {
+                font-size: 1rem;
+            }
+        }
 
-.dashboard-card:nth-child(1) { animation-delay: 0.05s; }
-.dashboard-card:nth-child(2) { animation-delay: 0.1s; }
-.dashboard-card:nth-child(3) { animation-delay: 0.15s; }
-.dashboard-card:nth-child(4) { animation-delay: 0.2s; }
-.dashboard-card:nth-child(5) { animation-delay: 0.25s; }
-.dashboard-card:nth-child(6) { animation-delay: 0.3s; }
-.dashboard-card:nth-child(7) { animation-delay: 0.35s; }
-.dashboard-card:nth-child(8) { animation-delay: 0.4s; }
+        /* Animación para las tarjetas - usando una solo al cargar */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
 
-/* Animación para tarjetas al hacer hover (sutil rebote) */
-@keyframes subtleBounce {
-    0%, 100% { transform: translateY(-2px); }
-    50% { transform: translateY(-4px); }
-}
+        .dashboard-card {
+            opacity: 0;
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
 
-.dashboard-card:hover {
-    animation: subtleBounce 0.4s ease-in-out;
-}
+        /* Establecer delays progresivos */
+        .dashboard-card:nth-child(1) { animation-delay: 0.05s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.15s; }
+        .dashboard-card:nth-child(4) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(5) { animation-delay: 0.25s; }
+        .dashboard-card:nth-child(6) { animation-delay: 0.3s; }
+        .dashboard-card:nth-child(7) { animation-delay: 0.35s; }
+        .dashboard-card:nth-child(8) { animation-delay: 0.4s; }
 
-/* Estilo para las pestañas de navegación */
-nav a {
-    font-size: 0.75rem;
-    padding: 0.325rem 0.625rem;
-    border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
-}
+        /* Estilo para las pestañas de navegación */
+        nav a {
+            font-size: 0.75rem;
+            padding: 0.325rem 0.625rem;
+            border-radius: var(--radius-sm);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
 
-nav a.bg-blue-100 {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: var(--primary-color);
-    font-weight: 600;
-}
+        nav a.bg-blue-100 {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
 
-/* Alerta de sin acceso */
-.bg-yellow-50 {
-    padding: 0.75rem;
-    font-size: 0.75rem;
-    border-radius: var(--radius-md);
-}
+        /* Alerta de sin acceso */
+        .bg-yellow-50 {
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            border-radius: var(--radius-md);
+        }
 
-/* Mensaje de no resultados */
-#noSearchResults {
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-}
+        /* Mensaje de no resultados */
+        #noSearchResults {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
 
-#noSearchResults ion-icon {
-    font-size: 2rem;
-    color: var(--text-muted);
-}
+        #noSearchResults.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-#noSearchResults p {
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
-}
+        #noSearchResults ion-icon {
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
 
-#clearSearch {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
-}
+        #noSearchResults p {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        #clearSearch {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        #clearSearch:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
     </style>
 
     <div class="py-4">
@@ -574,4 +651,51 @@ nav a.bg-blue-100 {
             @endif
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('dashboardSearch');
+            const cards = document.querySelectorAll('.dashboard-card');
+            const cardsContainer = document.getElementById('dashboardCards');
+            const noResultsEl = document.getElementById('noSearchResults');
+            const clearSearchBtn = document.getElementById('clearSearch');
+            
+            if (searchInput && cards.length > 0) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    let hasResults = false;
+                    
+                    cards.forEach(card => {
+                        const title = card.querySelector('.card-title').textContent.toLowerCase();
+                        const description = card.querySelector('.card-description').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.style.display = '';
+                            hasResults = true;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Mostrar u ocultar mensaje de no resultados
+                    if (hasResults) {
+                        noResultsEl.classList.remove('show');
+                        setTimeout(() => { noResultsEl.style.display = 'none'; }, 300);
+                    } else {
+                        noResultsEl.style.display = 'block';
+                        setTimeout(() => { noResultsEl.classList.add('show'); }, 10);
+                    }
+                });
+                
+                // Limpiar búsqueda
+                if (clearSearchBtn) {
+                    clearSearchBtn.addEventListener('click', function() {
+                        searchInput.value = '';
+                        searchInput.dispatchEvent(new Event('input'));
+                        searchInput.focus();
+                    });
+                }
+            }
+        });
+    </script>
 </x-app-layout>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center">
-            {{ __('Programación de entrega de expedientes -') }}
+            {{ __('Programación de entrega de expedientes de acción por la UAA') }}
             <div class="ml-auto flex items-center space-x-4">
                 <x-ui.filter-cp-en
                     :entregas="$entregas"

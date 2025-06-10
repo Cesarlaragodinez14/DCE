@@ -1,7 +1,7 @@
 {{-- resources/views/admin/stats/charts/_ae_delivery_status_multiple.blade.php --}}
 <section id="ae-delivery-status-multiple" class="mb-8">
     <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold">Expedientes por Auditoría Especial, UAA y Estado de Entrega</h3>
+        <h3 class="text-lg font-semibold">Estatus de la entrega de Expedientes de Acción por Auditoria Especial y DG.</h3>
         
         <!-- Controles de filtrado y visualización -->
         <div class="flex space-x-2">
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         progressText.className = "flex justify-between text-xs text-gray-500 mt-1";
         progressText.innerHTML = `
             <span>Aceptados: ${deliveredAE} (${(deliveredAE/totalAE*100).toFixed(1)}%)</span>
-            <span>En Proceso: ${inProcessAE} (${(inProcessAE/totalAE*100).toFixed(1)}%)</span>
+            <span>En proceso de aceptación : ${inProcessAE} (${(inProcessAE/totalAE*100).toFixed(1)}%)</span>
             <span>No Entregados: ${unscheduledAE} (${(unscheduledAE/totalAE*100).toFixed(1)}%)</span>
         `;
         titleDiv.appendChild(progressBar);
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UAA</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aceptados</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">En Proceso</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">En proceso de aceptación</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Entregados</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
             </tr>
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         borderWidth: 1
                     },
                     {
-                        label: 'En Proceso',
+                        label: 'En proceso de aceptación',
                         data: newDatasetInProcess,
                         backgroundColor: COLORS.in_process,
                         borderColor: COLORS.in_process,
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     borderWidth: 1
                 },
                 {
-                    label: 'En Proceso',
+                    label: 'En proceso de aceptación',
                     data: datasetInProcess,
                     backgroundColor: COLORS.in_process,
                     borderColor: COLORS.in_process,
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="text-sm">${(data.delivered/data.total*100).toFixed(1)}%</p>
                 </div>
                 <div class="border rounded p-3 text-center">
-                    <h5 class="text-sm text-gray-500">En Proceso</h5>
+                    <h5 class="text-sm text-gray-500">En proceso de aceptación</h5>
                     <p class="text-xl font-semibold" style="color: ${COLORS.in_process}">${data.in_process}</p>
                     <p class="text-sm">${(data.in_process/data.total*100).toFixed(1)}%</p>
                 </div>
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Exporta los datos de todas las AEs
      */
     function exportAllData() {
-        let csv = 'Auditoría Especial,UAA,Aceptados,En Proceso,No Entregados,Total\n';
+        let csv = 'Auditoría Especial,UAA,Aceptados,En proceso de aceptación,No Entregados,Total\n';
         
         chartInstances.forEach(instance => {
             instance.labels.forEach(uaa => {
@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Exporta los datos de una AE específica
      */
     function exportAEData(aeSigla, data, labels) {
-        let csv = 'UAA,Aceptados,En Proceso,No Entregados,Total\n';
+        let csv = 'UAA,Aceptados,En proceso de aceptación,No Entregados,Total\n';
         
         labels.forEach(uaa => {
             const item = data[uaa];

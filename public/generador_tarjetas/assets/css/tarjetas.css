@@ -1,0 +1,472 @@
+/**
+ * Estilos específicos para el Generador de Tarjetas
+ */
+
+/* Estilos para el área de arrastrar y soltar */
+#drop-area {
+    transition: all 0.3s ease;
+}
+
+#drop-area.highlight {
+    background-color: rgba(79, 70, 229, 0.1);
+    border-color: rgba(79, 70, 229, 0.8);
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.2);
+}
+
+/* Mejoras en la tabla de datos */
+.dataTables_wrapper .dataTables_info {
+    padding: 0.5em 0;
+    font-size: 0.9em;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.3em 0.8em;
+    border: 1px solid #ddd;
+    margin-left: 0.2em;
+    border-radius: 0.25rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4f46e5;
+    color: white !important;
+    border-color: #4f46e5;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #6366f1;
+    color: white !important;
+    border-color: #6366f1;
+}
+
+/* Estilos para SearchBuilder */
+.dtsb-group {
+    background-color: #f9fafb;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.dtsb-logicContainer {
+    border-radius: 0.25rem;
+    margin: 0.5rem 0;
+}
+
+.dtsb-criteria {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: white;
+    border-radius: 0.25rem;
+    border: 1px solid #e5e7eb;
+}
+
+.dtsb-input {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+.dtsb-select {
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    background-color: white;
+}
+
+/* Estilos responsivos para móviles */
+@media (max-width: 640px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        float: none;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .dataTables_wrapper .dataTables_paginate {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    
+    .dtsb-searchBuilder {
+        width: 100%;
+        overflow-x: auto;
+    }
+} 
+
+ /* Personalización de DataTables */
+ .dataTables_wrapper {
+    padding: 0;
+    font-size: 0.875rem;
+}
+
+/* Esconder elementos por defecto de DataTables que personalizaremos */
+.dataTables_filter, 
+.dataTables_info, 
+.dataTables_length, 
+.dataTables_paginate {
+    display: none;
+}
+
+/* Estilo para la tabla */
+#tabla {
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+#tabla thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f9fafb;
+    color: #1e293b;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#tabla tbody tr {
+    transition: all 0.2s ease;
+}
+
+#tabla tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+#tabla td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+/* SearchBuilder personalizado */
+.dtsb-searchBuilder {
+    margin: 0 !important;
+    padding: 1rem 0;
+}
+
+.dtsb-title {
+    display: none;
+}
+
+.dtsb-group {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dtsb-criteria {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #f9fafb;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+}
+
+.dtsb-button {
+    background-color: #4f46e5 !important;
+    color: white !important;
+    border-radius: 0.375rem !important;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem !important;
+    border: none !important;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dtsb-button:hover {
+    background-color: #4338ca !important;
+}
+
+/* Hacer la tabla responsiva para móviles */
+@media (max-width: 768px) {
+    #tabla {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    .dataTables_scrollBody {
+        overflow-x: auto !important;
+    }
+}
+
+/* Personalización de DateTime */
+.dt-datetime input,
+.dt-datetime select {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: white;
+}
+
+.dt-datetime-label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Personalización de paginación */
+.pagination-button {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    margin: 0 0.125rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pagination-button:hover {
+    background-color: #f3f4f6;
+}
+
+.pagination-button.active {
+    background-color: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.pagination-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilos para el generador de tarjetas */
+.tarjeta-info {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.tarjeta-info:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para el selector de campos */
+#campos-container {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+#campos-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#campos-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+#campos-container::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+}
+
+/* Estilos para el resumen ejecutivo */
+#resumen-ejecutivo {
+    min-height: 100px;
+}
+
+/* Transición suave para el panel de previsualización */
+#preview-container {
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+#preview-container.show {
+    opacity: 1;
+}
+
+/* Efecto para botones del generador de tarjetas */
+#generar-resumen, 
+#preview-tarjeta, 
+#generar-tarjeta, 
+#descargar-tarjeta {
+    transform: translateY(0);
+    transition: transform 0.2s ease;
+}
+
+#generar-resumen:hover, 
+#preview-tarjeta:hover, 
+#generar-tarjeta:hover, 
+#descargar-tarjeta:hover {
+    transform: translateY(-2px);
+}
+
+/* Pantalla de carga para operaciones largas */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4f46e5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilos optimizados para la generación de PDF */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .tarjeta-info, .tarjeta-info * {
+        visibility: visible;
+    }
+    
+    .tarjeta-info {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none !important;
+        border: none !important;
+    }
+}
+
+/* Clase para el contenedor de PDF temporal */
+.pdf-container {
+    background-color: white;
+    padding: 20px;
+    max-width: 210mm; /* Ancho A4 */
+    margin: 0 auto;
+}
+
+/* Sobrescribir algunos estilos para mejorar la calidad del PDF */
+.tarjeta-info.for-pdf {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+    margin: 0 auto;
+    max-width: 190mm; /* Ligeramente menor que A4 para márgenes */
+    page-break-inside: avoid;
+}
+
+.tarjeta-info.for-pdf .text-gray-500 {
+    color: #6b7280 !important; /* Garantizar que los colores se vean bien en PDF */
+}
+
+.tarjeta-info.for-pdf .text-gray-700 {
+    color: #374151 !important;
+}
+
+.tarjeta-info.for-pdf .text-gray-800 {
+    color: #1f2937 !important;
+}
+
+.tarjeta-info.for-pdf .bg-indigo-700 {
+    background-color: #4338ca !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+/* Estilos para la sección de campos seleccionados */
+.tarjeta-info .bg-green-200 {
+    background-color: #bbf7d0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color: #0f172a !important;
+}
+
+/* Asegurar que el color verde se mantenga en el PDF */
+.tarjeta-info.for-pdf .bg-green-200 {
+    background-color: #bbf7d0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color: #0f172a !important;
+    font-weight: bold;
+}
+
+/* Estilos para tooltips de descripciones resumidas */
+.tarjeta-info .group {
+    position: relative;
+    display: inline-block;
+}
+
+.tarjeta-info .group-hover\:block {
+    display: none;
+}
+
+.tarjeta-info .group:hover .group-hover\:block {
+    display: block;
+}
+
+/* Indicador visual para campos resumidos en el editor */
+.accion-descripcion[title] {
+    position: relative;
+    border: 1px solid #60a5fa !important;
+    background-color: #f0f9ff !important;
+}
+
+.accion-descripcion[title]:hover {
+    border-color: #3b82f6 !important;
+}
+
+/* Estilos para el indicador de resumen por IA */
+.text-blue-500 {
+    color: #3b82f6;
+    font-style: italic;
+}
+
+/* Mejorar la visualización del tooltip en la tabla */
+.tarjeta-info td {
+    position: relative;
+}
+
+.tarjeta-info .cursor-help {
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #3b82f6;
+    text-underline-offset: 2px;
+}

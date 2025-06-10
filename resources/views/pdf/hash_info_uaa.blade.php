@@ -41,7 +41,7 @@
                 <h3>Información de Conformidad de la UAA</h3>
                 <p><strong>Hash de Seguimiento Anterior:</strong> {{ $hashSeguimiento }}</p>
                 <p><strong>Nuevo Hash de Conformidad de la UAA:</strong> {{ $hashUAA }}</p>
-                <p><strong>Generado por:</strong> {{ $currentUserName }} ({{ $currentUserRole }})</p>
+                <p><strong>Firmado por:</strong> {{ $currentUserName }} ({{ $currentUserRole }})</p>
                 <p><strong>Correo del Generador:</strong> {{ Auth::user()->email }}</p>
                 <p><strong>Dirección IP:</strong> {{ $ipAddress }}</p>
                 <p><strong>Fecha y Hora de Generación:</strong> {{ $formattedDate }}</p>

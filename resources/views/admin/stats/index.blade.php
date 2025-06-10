@@ -6,7 +6,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Estadísticas Generales de Lista de Verificación de Expedientes') }}
+                {{ __('Gráficos y Estadísticas Generales de la Revisión de Expedientes') }}
             </h2>
             <div class="flex items-center space-x-2">
                 <span class="text-sm text-gray-500">Última actualización: {{ now()->format('d/m/Y H:i') }}</span>
@@ -486,7 +486,30 @@
             <span class="breadcrumb-separator">
                 <ion-icon name="chevron-forward-outline"></ion-icon>
             </span>
-            <span class="breadcrumb-current">Lista de Verificación</span>
+            <span class="breadcrumb-current">Revisión de Expedientes</span>
+        </div>
+
+        <div class="flex justify-between items-center">
+            @if(request('entrega') == 18 && request('cuenta_publica') == 1)
+                <div class="w-full mb-4">
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg shadow-sm">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <ion-icon name="information-circle-outline" class="text-amber-600 text-xl"></ion-icon>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-amber-800">
+                                    Filtro Especial RIASF Aplicado
+                                </p>
+                                <p class="text-sm text-amber-700 mt-1">
+                                    Se están excluyendo registros conforme al <strong>RIASF - Reglamento Interno de la Auditoría Superior de la Federación</strong>. 
+                                    Los datos mostrados han sido filtrados según los criterios establecidos en dicho reglamento.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
 
         <!-- Formulario de Filtros Mejorado -->
@@ -557,7 +580,7 @@
                         <div>
                             <label for="dg_id" class="block text-gray-700 text-sm font-medium mb-1">
                                 <ion-icon name="people-outline" class="inline-block mr-1 text-blue-500"></ion-icon>
-                                DGSEG EF:
+                                DG SEG.:
                             </label>
                             <select name="dg_id" id="dg_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Todas</option>
@@ -604,15 +627,11 @@
         <nav aria-label="Barra de navegación principal" class="navbar">
             <div class="navbar-container">
                 <div class="navbar-links">
-                    <a href="#delivery-status" class="navbar-link" aria-label="Ir a Cambios 30D">
-                        <ion-icon name="archive-outline" class="navbar-icon"></ion-icon>
-                        <span class="navbar-text">Entregas</span>
-                    </a> 
-                    <a href="#estatus" class="navbar-link" aria-label="Ir a Expedientes por Estatus">
+                    <a href="#estatus" class="navbar-link" aria-label="Ir a Estatus de la revisión de expedientes de acción">
                         <ion-icon name="stats-chart-outline" class="navbar-icon"></ion-icon>
                         <span class="navbar-text">Estatus</span>
                     </a>
-                    <a href="#dgseg-ef" class="navbar-link" aria-label="Ir a DGSEG EF">
+                    <a href="#dgseg-ef" class="navbar-link" aria-label="Ir a DG SEG.">
                         <ion-icon name="people-outline" class="navbar-icon"></ion-icon>
                         <span class="navbar-text">DGSEG</span>
                     </a>
@@ -632,7 +651,7 @@
                         <ion-icon name="school-outline" class="navbar-icon"></ion-icon>
                         <span class="navbar-text">UAA</span>
                     </a>
-                    <a href="#ente-fiscalizado" class="navbar-link" aria-label="Ir a Expedientes por Ente Fiscalizado">
+                    <a href="#ente-fiscalizado" class="navbar-link" aria-label="Ir a Expedientes de Acción por Ente Fiscalizado">
                         <ion-icon name="business-outline" class="navbar-icon"></ion-icon>
                         <span class="navbar-text">Ente Fisc.</span>
                     </a>

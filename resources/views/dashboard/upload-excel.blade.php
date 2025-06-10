@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Carga de Acciones Emitidas en la Entrega') }}
+            {{ __('Carga de información de los Expedientes de Acción') }}
         </h2>
     </x-slot>
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
         <!-- Breadcrumbs -->
         <x-ui.breadcrumbs>
-            <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link>
+            <x-ui.breadcrumbs.link href="/dashboard">Dashboard</x-ui.breadcrumbs.link> 
             <x-ui.breadcrumbs.separator />
             <x-ui.breadcrumbs.link active>{{ __('Carga de Acciones') }}</x-ui.breadcrumbs.link>
         </x-ui.breadcrumbs>
@@ -35,7 +35,7 @@
                 background: #2563eb;
                 color: #FFF!important;
             " type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    Cargar Acciones
+                    Carga de información de los Expedientes de Acción
                 </button>
             </form>
         </div>
