@@ -1,3 +1,14 @@
+@php
+    // Obtener los roles del usuario actual
+    $userRoles = auth()->user()->roles->pluck('name')->toArray();
+    
+    // Determinar si el usuario es admin (editor completo)
+    $isAdmin = in_array('admin', $userRoles);
+    
+    // Determinar el tipo de acceso
+    $isReadOnlyMode = !$isAdmin;
+@endphp
+
 <x-app-layout>
     <x-slot name="header" style="display: none;">
     
@@ -49,6 +60,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 {{ __('Entrega - Recepción de Expedientes') }}
+                @if($isReadOnlyMode)
+                    <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Modo Lectura</span>
+                @endif
             </x-ui.breadcrumbs.link>
         </x-ui.breadcrumbs>
             
@@ -163,6 +177,8 @@
                                 <option value="Sin Programar" {{ request('estatus')=='Sin Programar' ? 'selected' : '' }}>Sin Programar</option>
                             </optgroup>
                             <optgroup label="UAA a DCE">
+                                <option value="Recibido en el DCE PO superveniente (UAA – DCE)" {{ request('estatus')=='Recibido en el DCE PO superveniente (UAA – DCE)' ? 'selected' : '' }}>Recibido en el DCE PO superveniente (UAA – DCE)</option>
+                                <option value="Recibido en el DCE PO superveniente (UAA – DCE) - Firmado" {{ request('estatus')=='Recibido en el DCE PO superveniente (UAA – DCE) - Firmado' ? 'selected' : '' }}>Recibido en el DCE PO superveniente (UAA – DCE) - Firmado</option>
                                 <option value="Recibido en el DCE (UAA – DCE)" {{ request('estatus')=='Recibido en el DCE (UAA – DCE)' ? 'selected' : '' }}>Recibido en el DCE (UAA – DCE)</option>
                                 <option value="Recibido en el DCE (UAA – DCE) - Firmado" {{ request('estatus')=='Recibido en el DCE (UAA – DCE) - Firmado' ? 'selected' : '' }}>Recibido en el DCE (UAA – DCE) - Firmado</option>
                                 <option value="Recibido en el DCE con las correcciones solicitadas por la DGSEG (UAA – DCE)" {{ request('estatus')=='Recibido en el DCE con las correcciones solicitadas por la DGSEG (UAA – DCE)' ? 'selected' : '' }}>Recibido en el DCE con las correcciones (UAA – DCE)</option>
@@ -239,6 +255,7 @@
             </div>
 
             <!-- Expedientes para Recibir Hoy -->
+            @if($isAdmin)
             <div class="card mb-5 sticky top-0 z-40 shadow-lg">
                 <div class="card-header">
                     <div class="filter-section-title">
@@ -274,6 +291,37 @@
                     </div>
                 </div>
             </div>
+            @else
+            <!-- Información para usuarios en modo lectura -->
+            <div class="card mb-5">
+                <div class="card-header">
+                    <div class="filter-section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Información
+                    </div>
+                </div>
+                <div class="card-body bg-blue-50 border-l-4 border-blue-400">
+                    <div class="flex items-center">
+                        <div class="text-sm text-blue-800">
+                            <p><strong>Modo de Lectura:</strong> Estás visualizando los expedientes en modo consulta. No puedes realizar modificaciones ni generar acuses.</p>
+                            <p class="mt-1 text-xs">Total de expedientes: <span class="font-semibold">{{ count($expedientes) }}</span></p>
+                        </div>
+                        <div class="ml-auto">
+                            <button type="button" 
+                                    class="btn btn-secondary btn-sm"
+                                    onclick="exportTableToExcel()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Exportar a Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
  
             <!-- Tabla principal -->
             <div class="card">
@@ -306,12 +354,16 @@
                                 <th>Tipo</th>
                                 <th>Tipo de Movimiento</th>
                                 <th>Estatus</th>
+                                @if($isAdmin)
                                 <th>Checklist</th>
+                                @endif
                                 <th>Resp.UAA</th>
                                 <th>Resp.SEG</th>
                                     <th class="text-center w-12">Leg</th>
                                 <th>Fecha</th>
+                                @if($isAdmin)
                                     <th class="text-center w-12">Ent</th>
+                                @endif
                                     <th class="text-center w-16">Rastreo</th>
                             </tr>
                         </thead>
@@ -337,6 +389,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $exp->estatus_revision ?? 'Sin revisión' }}</td>
+                                    @if($isAdmin)
                                     <td>
                                         <!-- Estado y Botones de Descarga - Versión Mejorada -->
                                         <div class="status-card">
@@ -404,6 +457,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @endif
                                     <td>{{ $exp->responsable_uaa ?? '' }}</td>
                                     <td>{{ $exp->responsable_seg ?? '' }}</td>
                                     <td class="text-center font-semibold">{{ $exp->numero_legajos ?? '' }}</td>
@@ -418,6 +472,7 @@
                                                 @endif
                                             @endif
                                     </td>
+                                    @if($isAdmin)
                                     <td class="text-center">
                                         <label class="relative inline-flex items-center cursor-pointer tooltip">
                                             <input type="checkbox" 
@@ -429,6 +484,7 @@
                                             <span class="tooltip-text">Marcar como {{ !empty($exp->estado) && $exp->estado !== 'Programado' ? 'no entregado' : 'entregado' }}</span>
                                         </label>
                                     </td>
+                                    @endif
                                     <td class="text-center">
                                         <button type="button" 
                                                     class="btn btn-primary btn-sm"
@@ -439,7 +495,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                        <td colspan="19" class="px-4 py-8 text-center text-gray-500">
+                                        <td colspan="{{ $isAdmin ? '19' : '17' }}" class="px-4 py-8 text-center text-gray-500">
                                             <div class="flex flex-col items-center justify-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -458,6 +514,7 @@
         </div>
     </div>
 
+    @if($isAdmin)
     <!-- Modal de confirmación "Generar acuse" -->
     <div id="acuseModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
         <div class="relative w-full max-w-lg animate-fade-in">
@@ -485,6 +542,7 @@
                     </label>
                     <select id="estadoRecepcion" name="estado_recepcion" class="form-select">
                         <option value="">-- Seleccionar --</option>
+                        <option value="Recibido en el DCE PO superveniente (UAA – DCE)">Recibido en el DCE PO superveniente (UAA – DCE)</option>
                         <option value="Recibido en el DCE (UAA – DCE)">Recibido en el DCE (UAA – DCE)</option>
                         <option value="Recibido por la DGSEG para revisión (DCE - DGSEG)">Recibido por la DGSEG para revisión (DCE - DGSEG)</option>
                         <option value="Recibido en el DCE para resguardo (DGSEG – DCE)">Recibido en el DCE para resguardo (DGSEG – DCE)</option>
@@ -534,6 +592,14 @@
         </div>
     </div>
 
+    <!-- Formulario oculto para confirmar acuse -->
+    <form id="acuseForm" action="{{ route('recepcion.generarAcuse') }}" method="POST" class="hidden">
+        @csrf
+        <input type="hidden" name="expedientes_seleccionados" id="expedientesSeleccionadosInput">
+        <input type="hidden" name="estado_recepcion" id="estadoRecepcionInput">
+    </form>
+    @endif
+
     <!-- Modal de Rastreo (Timeline) -->
     <div id="rastreoModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
         <div class="relative w-full max-w-xl animate-fade-in">
@@ -573,13 +639,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Formulario oculto para confirmar acuse -->
-    <form id="acuseForm" action="{{ route('recepcion.generarAcuse') }}" method="POST" class="hidden">
-        @csrf
-        <input type="hidden" name="expedientes_seleccionados" id="expedientesSeleccionadosInput">
-        <input type="hidden" name="estado_recepcion" id="estadoRecepcionInput">
-    </form>
 
     <!-- Loading overlay -->
     <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm flex items-center justify-center z-50 hidden">

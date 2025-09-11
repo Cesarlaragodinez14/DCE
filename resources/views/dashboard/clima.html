@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avisos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .time-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .notice-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        
+        .notice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-6 max-w-md">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-3">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zm-5-5h5l-5 5v-5z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.55 0 1.02.19 1.41.59L16.59 6.59c.4.4.59.86.59 1.41v5H7V3z"></path>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Avisos Importantes</h1>
+            <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="space-y-4">
+            <div class="skeleton h-20 rounded-lg"></div>
+            <div class="skeleton h-20 rounded-lg"></div>
+            <div class="skeleton h-20 rounded-lg"></div>
+        </div>
+
+        <!-- Notices Container -->
+        <div id="notices-container" class="hidden space-y-4">
+            <!-- Los avisos se cargarán aquí dinámicamente -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-12">
+            <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.266 3.636L15.5 14.869a2 2 0 01.434.868L16 17h-2.434a2 2 0 01-.868-.434L2.567 6.434a2 2 0 01.434-.868L4.266 3.636zM16 3a2 2 0 00-2 2v1a2 2 0 002 2h1a2 2 0 002-2V5a2 2 0 00-2-2h-1z"></path>
+                </svg>
+            </div>
+            <h3 class="text-gray-700 font-medium mb-2">No hay notificaciones aún</h3>
+            <p class="text-gray-500 text-sm">Las notificaciones aparecerán aquí cuando estén disponibles</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="hidden text-center py-12">
+            <div class="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <h3 class="text-red-700 font-medium mb-2">Error al cargar avisos</h3>
+            <p class="text-gray-500 text-sm mb-4">No se pudieron cargar los avisos. Intenta recargar la página.</p>
+            <button id="retry-button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Reintentar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Envolver todo en una función auto-ejecutable para evitar conflictos globales
+        (function() {
+            'use strict';
+            
+            // Datos JSON de ejemplo
+            const avisosData = {
+                "dia": 2,
+                "titulo": "Mensajes huéspedes DIA 2",
+                "avisos": [
+                    {
+                        "id": 1,
+                        "hora": "8:00",
+                        "descripcion": "Cita Lobby Hotel Krystal – Traslado Sky Garden",
+                        "tipo": "traslado",
+                        "urgente": true
+                    },
+                    {
+                        "id": 3,
+                        "hora": "9:00",
+                        "descripcion": "Bienvenida oficial del evento",
+                        "tipo": "bienvenida",
+                        "urgente": false
+                    },
+                    {
+                        "id": 4,
+                        "hora": "13:50 - 15:10",
+                        "descripcion": "Comida - Tiempo libre para almorzar",
+                        "tipo": "comida",
+                        "urgente": false
+                    },
+                    {
+                        "id": 5,
+                        "hora": "17:40",
+                        "descripcion": "Finaliza Sesión del día",
+                        "tipo": "finalizacion",
+                        "urgente": false
+                    }
+                ]
+            };
+
+            // Para probar el estado vacío, puedes usar estos datos:
+            // const avisosDataVacio = {
+            //     "dia": 1,
+            //     "titulo": "Sin notificaciones",
+            //     "avisos": []
+            // };
+
+            // O simplemente un objeto vacío:
+            // const avisosDataVacio = {};
+
+            // Función para obtener icono según el tipo
+            function getIconByType(tipo) {
+                const icons = {
+                    'traslado': `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>`,
+                    'preparacion': `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`,
+                    'bienvenida': `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L9 7m5 3v4M9 7H6m3 0c0 .5-.5 1-1 1H5m4-2v10m0 0H9m3 0h3"></path>
+                    </svg>`,
+                    'comida': `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-.4-2L4 3H2m5 10v6a1 1 0 001 1h1m6-1a1 1 0 001-1v-6M9 13h6"></path>
+                    </svg>`,
+                    'finalizacion': `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`
+                };
+                return icons[tipo] || icons['preparacion'];
+            }
+
+            // Función para obtener color según el tipo
+            function getColorByType(tipo) {
+                const colors = {
+                    'traslado': 'bg-blue-50 border-blue-200',
+                    'preparacion': 'bg-yellow-50 border-yellow-200',
+                    'bienvenida': 'bg-green-50 border-green-200',
+                    'comida': 'bg-orange-50 border-orange-200',
+                    'finalizacion': 'bg-purple-50 border-purple-200'
+                };
+                return colors[tipo] || 'bg-gray-50 border-gray-200';
+            }
+
+            // Función para ocultar todos los estados
+            function hideAllStates() {
+                const container = document.getElementById('notices-container');
+                const loading = document.getElementById('loading');
+                const emptyState = document.getElementById('empty-state');
+                const errorState = document.getElementById('error-state');
+                
+                if (container) container.classList.add('hidden');
+                if (emptyState) emptyState.classList.add('hidden');
+                if (errorState) errorState.classList.add('hidden');
+            }
+
+            // Función para mostrar estado de error
+            function showErrorState() {
+                hideAllStates();
+                const loading = document.getElementById('loading');
+                const errorState = document.getElementById('error-state');
+                
+                if (loading) loading.classList.add('hidden');
+                if (errorState) errorState.classList.remove('hidden');
+            }
+
+            // Función para renderizar avisos
+            function renderAvisos(data) {
+                try {
+                    const container = document.getElementById('notices-container');
+                    const loading = document.getElementById('loading');
+                    const emptyState = document.getElementById('empty-state');
+
+                    if (!container || !loading || !emptyState) {
+                        console.error('No se encontraron los elementos del DOM necesarios');
+                        showErrorState();
+                        return;
+                    }
+
+                    // Primero ocultar todos los estados
+                    hideAllStates();
+
+                    // Verificar si no hay datos o avisos
+                    if (!data || !data.avisos || data.avisos.length === 0) {
+                        setTimeout(() => {
+                            loading.classList.add('hidden');
+                            emptyState.classList.remove('hidden');
+                        }, 500); // Reducido el tiempo de carga
+                        return;
+                    }
+
+                    let html = `
+                        <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-indigo-500 mb-4">
+                            <h2 class="text-lg font-semibold text-gray-800 mb-1">${data.titulo || 'Avisos del día'}</h2>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0h6m-6 0v1a3 3 0 003 3h0a3 3 0 003-3v-1m-6 0H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-1"></svg>
+                                ${data.dia ? `Día ${data.dia}` : 'Información del día'}
+                            </div>
+                        </div>
+                    `;
+
+                    data.avisos.forEach(aviso => {
+                        const urgentBadge = aviso.urgente ? 
+                            `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-2">
+                                <span class="w-1.5 h-1.5 bg-red-400 rounded-full mr-1 animate-pulse"></span>
+                                Urgente
+                            </span>` : '';
+
+                        html += `
+                            <div class="notice-card bg-white rounded-lg p-4 shadow-sm border ${getColorByType(aviso.tipo)} fade-in">
+                                <div class="flex items-start space-x-3">
+                                    <div class="time-badge text-white px-3 py-1 rounded-full text-sm font-medium min-w-fit">
+                                        ${aviso.hora}
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center mb-2">
+                                            <div class="text-gray-600 mr-2">
+                                                ${getIconByType(aviso.tipo)}
+                                            </div>
+                                            <span class="text-xs uppercase tracking-wide text-gray-500 font-medium">
+                                                ${aviso.tipo}
+                                            </span>
+                                            ${urgentBadge}
+                                        </div>
+                                        <p class="text-gray-800 text-sm leading-relaxed">
+                                            ${aviso.descripcion}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    setTimeout(() => {
+                        loading.classList.add('hidden');
+                        container.innerHTML = html;
+                        container.classList.remove('hidden');
+                    }, 500); // Reducido el tiempo de carga
+
+                } catch (error) {
+                    console.error('Error al renderizar avisos:', error);
+                    showErrorState();
+                }
+            }
+
+            // Función para cargar datos
+            function loadAvisos() {
+                try {
+                    // Simular carga de datos
+                    setTimeout(() => {
+                        renderAvisos(avisosData);
+                    }, 300); // Reducido el tiempo de carga
+                } catch (error) {
+                    console.error('Error al cargar avisos:', error);
+                    showErrorState();
+                }
+            }
+
+            // Inicializar cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadAvisos);
+            } else {
+                // El DOM ya está listo
+                loadAvisos();
+            }
+
+            // Función para actualizar datos (para uso externo)
+            function updateAvisos(newData) {
+                const container = document.getElementById('notices-container');
+                const loading = document.getElementById('loading');
+                
+                if (!container || !loading) {
+                    console.error('No se encontraron los elementos del DOM necesarios');
+                    return;
+                }
+                
+                // Ocultar todos los estados y mostrar loading
+                hideAllStates();
+                loading.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    renderAvisos(newData);
+                }, 200);
+            }
+
+            // Configurar botón de reintento
+            document.addEventListener('DOMContentLoaded', function() {
+                const retryButton = document.getElementById('retry-button');
+                if (retryButton) {
+                    retryButton.addEventListener('click', function() {
+                        hideAllStates();
+                        const loading = document.getElementById('loading');
+                        if (loading) loading.classList.remove('hidden');
+                        loadAvisos();
+                    });
+                }
+            });
+
+            // Exponer función globalmente para uso externo
+            window.updateAvisos = updateAvisos;
+            
+        })(); // Cerrar la función auto-ejecutable
+    </script>
+</body>
+</html>

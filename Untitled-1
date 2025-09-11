@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjetas de Contacto</title>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2fd5b225a.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --accent: #007bff;
+      --accent-hover: #0063c4;
+      --success: #28a745;
+      --success-hover: #218838;
+      --warning: #ffc107;
+      --warning-hover: #e0a800;
+      --danger: #dc3545;
+      --danger-hover: #c82333;
+      --bg-card: #ffffff;
+      --bg-page: #f8f9fa;
+      --text-primary: #2c3e50;
+      --text-secondary: #6c757d;
+      --border: #e9ecef;
+      --radius: 1rem;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--text-primary);
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .brand-section {
+      margin-bottom: 3rem;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .brand-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+    }
+
+    .brand-info h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .brand-category {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .contacts-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    /* Para un solo contacto: ocupa toda la fila */
+    .contacts-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    /* Para múltiples contactos: máximo 2 columnas */
+    .contacts-grid.multiple {
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      max-width: 100%;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--accent);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .contact-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .contact-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .contact-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-role {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .contact-details {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background: var(--bg-page);
+    }
+
+    .contact-item i {
+      width: 20px;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .contact-item span {
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .contact-item.unavailable {
+      opacity: 0.6;
+    }
+
+    .contact-item.unavailable i {
+      color: var(--text-secondary);
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .action-btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .action-btn.success {
+      background: var(--success);
+      color: white;
+    }
+
+    .action-btn.success:hover {
+      background: var(--success-hover);
+      transform: translateY(-1px);
+    }
+
+    .action-btn.warning {
+      background: var(--warning);
+      color: #212529;
+    }
+
+    .action-btn.warning:hover {
+      background: var(--warning-hover);
+      transform: translateY(-1px);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .action-btn i {
+      font-size: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .contacts-grid.multiple {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand-section {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .contact-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="page-title">Directorio de Contactos</h1>
+    <div id="contacts-container"></div>
+  </div>
+
+  <script>
+    // Datos mejorados de los contactos
+    const contacts = [
+      {
+        name: "Chieko Fukumori",
+        role: "Especialista en Vuelos",
+        phone: "+525562560249",
+        email: "chieko@groups2go.com",
+        brand: "Groups2Go",
+        category: "Vuelos",
+        image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+        available: { phone: true, email: true, whatsapp: true }
+      },
+      {
+        name: "Liz Nava",
+        role: "Coordinadora de Eventos",
+        phone: "+5215562551717",
+        email: "liz.nava@groups2go.com",
+        brand: "Groups2Go",
+        category: "Eventos",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+        available: { phone: true, email: true, whatsapp: true }
+      },
+      {
+        name: "Cotizaciones Individuales",
+        role: "Concierge",
+        phone: "+52525474737",
+        email: "concierge@groups2go.com",
+        brand: "Groups2Go",
+        category: "Concierge",
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+        available: { phone: true, email: true, whatsapp: true }
+      },
+      {
+        name: "Aldo Ambriz",
+        role: "Ejecutivo de Cuenta",
+        phone: "+5215513623994",
+        email: "Aldo.Ambriz@chubb.com",
+        brand: "CHUBB",
+        category: "Seguros",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+        available: { phone: true, email: true, whatsapp: true }
+      },
+      {
+        name: "Paola Perezgasga",
+        role: "Especialista en Seguros",
+        email: "Paola.PerezgasgaMejia@chubb.com",
+        brand: "CHUBB",
+        category: "Seguros",
+        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
+        available: { phone: false, email: true, whatsapp: false }
+      },
+      {
+        name: "Contacto General",
+        role: "Atención al Cliente",
+        email: "Chubb.EventosMexico@chubb.com",
+        brand: "CHUBB",
+        category: "Seguros",
+        image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=100&h=100&fit=crop&crop=face",
+        available: { phone: false, email: true, whatsapp: false }
+      }
+    ];
+
+    // Función para obtener iniciales del nombre
+    function getInitials(name) {
+      return name
+        .split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+    }
+
+    // Función para normalizar número de teléfono
+    function normalizePhone(phone) {
+      return phone ? phone.replace(/[^0-9]/g, "") : null;
+    }
+
+    // Función para agrupar contactos por marca y categoría
+    function groupContacts(contacts) {
+      const groups = {};
+      
+      contacts.forEach(contact => {
+        const key = `${contact.brand}-${contact.category}`;
+        if (!groups[key]) {
+          groups[key] = {
+            brand: contact.brand,
+            category: contact.category,
+            contacts: []
+          };
+        }
+        groups[key].contacts.push(contact);
+      });
+      
+      return Object.values(groups);
+    }
+
+    // Función para crear elemento de contacto (sin avatar)
+    function createContactCard(contact) {
+      return `
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-info">
+              <h3>${contact.name}</h3>
+              <div class="contact-role">${contact.role || ''}</div>
+            </div>
+          </div>
+          <div class="contact-details">
+            ${createContactItem('fa-solid fa-phone', contact.phone, contact.available.phone)}
+            ${createContactItem('fa-solid fa-envelope', contact.email, contact.available.email)}
+          </div>
+          <div class="contact-actions">
+            ${createActionButtons(contact)}
+          </div>
+        </div>
+      `;
+    }
+
+    // Función para crear elemento de contacto
+    function createContactItem(icon, text, available = true) {
+      const className = available ? 'contact-item' : 'contact-item unavailable';
+      const iconClass = available ? icon : 'fa-solid fa-times';
+      
+      return `
+        <div class="${className}">
+          <i class="${iconClass}"></i>
+          <span>${text || 'No disponible'}</span>
+        </div>
+      `;
+    }
+
+    // Función para crear botones de acción
+    function createActionButtons(contact) {
+      const buttons = [];
+      
+      if (contact.available.phone && contact.phone) {
+        buttons.push(`
+          <a href="tel:${contact.phone}" class="action-btn primary" title="Llamar">
+            <i class="fa-solid fa-phone"></i> Llamar
+          </a>
+        `);
+      }
+      
+      if (contact.available.whatsapp && contact.phone) {
+        const waNumber = normalizePhone(contact.phone);
+        buttons.push(`
+          <a href="https://wa.me/${waNumber}" target="_blank" rel="noopener" class="action-btn success" title="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+        `);
+      }
+      
+      if (contact.available.email && contact.email) {
+        buttons.push(`
+          <a href="mailto:${contact.email}" class="action-btn warning" title="Email">
+            <i class="fa-solid fa-envelope"></i> Email
+          </a>
+        `);
+      }
+      
+      return buttons.join('');
+    }
+
+    // Función para renderizar grupo de contactos
+    function renderContactGroup(group) {
+      const isSingle = group.contacts.length === 1;
+      const gridClass = isSingle ? 'single' : 'multiple';
+      // Agrupar contactos en filas de máximo 2 columnas
+      let rows = [];
+      for (let i = 0; i < group.contacts.length; i += 2) {
+        const rowContacts = group.contacts.slice(i, i + 2);
+        rows.push(`
+          <div class="contacts-grid ${rowContacts.length === 1 ? 'single' : 'multiple'}">
+            ${rowContacts.map(createContactCard).join('')}
+          </div>
+        `);
+      }
+      return `
+        <div class="brand-section">
+          <div class="brand-header">
+            <img src="https://via.placeholder.com/60x60/007bff/ffffff?text=${group.brand.charAt(0)}" 
+                 alt="${group.brand}" class="brand-logo" />
+            <div class="brand-info">
+              <h2>${group.brand}</h2>
+              <div class="brand-category">${group.category}</div>
+            </div>
+          </div>
+          ${rows.join('')}
+        </div>
+      `;
+    }
+
+    // Renderizar todos los contactos
+    function renderContacts() {
+      const container = document.getElementById('contacts-container');
+      const groupedContacts = groupContacts(contacts);
+      
+      const html = groupedContacts.map(group => renderContactGroup(group)).join('');
+      container.innerHTML = html;
+    }
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', renderContacts);
+  </script>
+</body>
+</html> 

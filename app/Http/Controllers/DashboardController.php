@@ -288,6 +288,12 @@ class DashboardController extends Controller
             if ($existingIndex !== false) {
                 // Sumamos el total al que ya estaba
                 $countsBySiglasAuditoriaEspecialEstatus[$existingIndex]->total += $item->total;
+                // Asegurar que la relación esté bien estructurada
+                if (!isset($countsBySiglasAuditoriaEspecialEstatus[$existingIndex]->catSiglasAuditoriaEspecial)) {
+                    $countsBySiglasAuditoriaEspecialEstatus[$existingIndex]->catSiglasAuditoriaEspecial = (object)[
+                        'valor' => $item->catSiglasAuditoriaEspecial ? $item->catSiglasAuditoriaEspecial->valor : 'Sin Datos'
+                    ];
+                }
             } else {
                 // Creamos un objeto nuevo con el key, sigla, estatus normalizado y total
                 $obj = new \stdClass;
@@ -295,8 +301,10 @@ class DashboardController extends Controller
                 $obj->siglas_auditoria_especial = $sigla;
                 $obj->estatus_checklist = $normalizedStatus;
                 $obj->total = $item->total;
-                // Opcional: Si necesitas mantener la relación, puedes asignar la propiedad del catálogo
-                $obj->catSiglasAuditoriaEspecial = $item->catSiglasAuditoriaEspecial;
+                // Crear el objeto catSiglasAuditoriaEspecial con la estructura correcta
+                $obj->catSiglasAuditoriaEspecial = (object)[
+                    'valor' => $item->catSiglasAuditoriaEspecial ? $item->catSiglasAuditoriaEspecial->valor : 'Sin Datos'
+                ];
                 $countsBySiglasAuditoriaEspecialEstatus->push($obj);
             }
         }
@@ -721,7 +729,7 @@ class DashboardController extends Controller
             'countsByStatus'                => $countsByStatus,
             'countsByDgsegEf'               => $countsByDgsegEf,
             'countsBySiglasTipoAccion'      => $countsBySiglasTipoAccion,
-            'countsBySiglasAuditoriaEspecialEstatus' => $countsBySiglasAuditoriaEspecial,
+            'countsBySiglasAuditoriaEspecialEstatus' => $countsBySiglasAuditoriaEspecialEstatus,
             'aeChartsData'                  => $aeChartsData,
             'countsByUaaStatus'             => $countsByUaaStatus,
             'countsByEnteFiscalizado'       => $countsByEnteFiscalizado,
@@ -866,6 +874,51 @@ class DashboardController extends Controller
                 ->groupBy('siglas_auditoria_especial', 'estatus_checklist')
                 ->get();
 
+            // NUEVO: Obtener datos de expedientes por UAA y estatus
+            $rawCountsByUaaAndStatus = Auditorias::with('catUaa')
+                ->select('uaa', 'estatus_checklist', DB::raw('COUNT(*) as total'))
+                ->when($request->filled('uaa_id'), function($q) use ($request) {
+                    $q->where('uaa', $request->uaa_id);
+                })
+                ->when($request->filled('dg_id'), function($q) use ($request) {
+                    $q->where('dgseg_ef', $request->dg_id);
+                })
+                ->when($request->filled('sae_id'), function($q) use ($request) {
+                    $q->where('siglas_auditoria_especial', $request->sae_id);
+                })
+                ->when($request->filled('entrega'), function($q) use ($request) {
+                    $q->where('entrega', $request->entrega);
+                })
+                ->when($request->filled('cuenta_publica'), function($q) use ($request) {
+                    $q->where('cuenta_publica', $request->cuenta_publica);
+                })
+                ->when(true, function($q) use ($request) {
+                    $this->applySpecialFilter($q, $request);
+                })
+                ->groupBy('uaa', 'estatus_checklist')
+                ->orderBy('total', 'desc')
+                ->get();
+                
+            // Normalizar el estatus y reagrupar para UAA
+            $countsByUaaAndStatus = $rawCountsByUaaAndStatus->map(function($item) {
+                return [
+                    'uaa' => $item->uaa,
+                    'estatus_checklist' => $this->normalizeChecklistStatus($item->estatus_checklist),
+                    'total' => $item->total,
+                    'catUaa' => $item->catUaa
+                ];
+            })->groupBy(function($item) {
+                return $item['uaa'] . '|' . $item['estatus_checklist'];
+            })->map(function($group) {
+                $first = $group->first();
+                return (object)[
+                    'uaa' => $first['uaa'],
+                    'estatus_checklist' => $first['estatus_checklist'],
+                    'total' => $group->sum('total'),
+                    'catUaa' => $first['catUaa']
+                ];
+            })->values();
+
             // Obtener catálogos
             $catalogos = [
                 'uaas' => DB::table('cat_uaa')
@@ -896,6 +949,7 @@ class DashboardController extends Controller
                     'expedientes_por_estatus' => $countsByStatus,
                     'expedientes_por_ente_fiscalizado' => $countsByEnteFiscalizado,
                     'expedientes_por_siglas' => $rawCountsBySiglasAuditoriaEspecial,
+                    'expedientes_por_uaa' => $countsByUaaAndStatus,
                     'catalogos' => $catalogos
                 ]
             ];

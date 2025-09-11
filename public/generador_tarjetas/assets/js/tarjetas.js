@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const tarjetaGenerator = document.getElementById('tarjeta-generator');
     const entidadSelector = document.getElementById('entidad-selector');
     const camposContainer = document.getElementById('campos-container');
+    const cantidadRegistrosInput = document.getElementById('cantidad-registros');
+    const todosRegistrosCheckbox = document.getElementById('todos-registros');
     const generarResumenBtn = document.getElementById('generar-resumen');
     const resumenEjecutivo = document.getElementById('resumen-ejecutivo');
     const previewTarjetaBtn = document.getElementById('preview-tarjeta');
@@ -69,6 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let excelData = []; // Variable para almacenar los datos del Excel
     let selectedEntidad = ''; // Entidad seleccionada actualmente
     let selectedFields = []; // Campos seleccionados para la tarjeta
+    let cantidadRegistros = 10; // Cantidad de registros a mostrar por defecto
+    let mostrarTodosRegistros = false; // Flag para mostrar todos los registros
     let tarjetaData = { // Datos para la tarjeta en formato de tabla
         titulo: '',
         subtitulo: 'Resumen',
@@ -887,6 +891,52 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar eventos para los botones de la tarjeta
     function setupTarjetaEvents() {
+        // Configurar eventos para el control de cantidad de registros
+        if (cantidadRegistrosInput) {
+            // Inicializar el valor por defecto
+            cantidadRegistrosInput.value = cantidadRegistros;
+            
+            cantidadRegistrosInput.addEventListener('change', function() {
+                const valor = parseInt(this.value);
+                if (isNaN(valor) || valor < 1) {
+                    cantidadRegistros = 1;
+                    this.value = 1;
+                    showError('La cantidad mínima de registros es 1', 3000);
+                } else if (valor > 1000) {
+                    cantidadRegistros = 1000;
+                    this.value = 1000;
+                    showError('La cantidad máxima de registros es 1000', 3000);
+                } else {
+                    cantidadRegistros = valor;
+                }
+                console.log('📊 Cantidad de registros actualizada:', cantidadRegistros);
+            });
+            
+            cantidadRegistrosInput.addEventListener('input', function() {
+                const valor = parseInt(this.value);
+                if (!isNaN(valor) && valor >= 1 && valor <= 1000) {
+                    cantidadRegistros = valor;
+                }
+            });
+        }
+        
+        if (todosRegistrosCheckbox) {
+            todosRegistrosCheckbox.addEventListener('change', function() {
+                mostrarTodosRegistros = this.checked;
+                console.log('📊 Mostrar todos los registros:', mostrarTodosRegistros ? 'SÍ' : 'NO');
+                
+                // Habilitar/deshabilitar el input de cantidad
+                if (cantidadRegistrosInput) {
+                    cantidadRegistrosInput.disabled = mostrarTodosRegistros;
+                    if (mostrarTodosRegistros) {
+                        cantidadRegistrosInput.style.opacity = '0.5';
+                    } else {
+                        cantidadRegistrosInput.style.opacity = '1';
+                    }
+                }
+            });
+        }
+        
         // Botón para generar resumen
         generarResumenBtn.addEventListener('click', function() {
             if (!excelData || excelData.length === 0) {
@@ -1323,9 +1373,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Mostrar mensaje de éxito
                 const successMsg = document.createElement('div');
                 successMsg.className = 'bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4';
+                const tipoMostrar = mostrarTodosRegistros ? 'todas las acciones disponibles' : `las ${tarjetaData.acciones.length} acciones con mayor monto`;
                 successMsg.innerHTML = `
                     <p class="font-bold">¡Tarjeta generada con éxito!</p>
-                    <p>Mostrando las ${tarjetaData.acciones.length} acciones con mayor monto.</p>
+                    <p>Mostrando ${tipoMostrar} ordenadas de mayor a menor monto.</p>
                 `;
                 
                 // Insertar antes de la previsualización
@@ -1373,7 +1424,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ Copia de seguridad creada de', accionesOriginales.length, 'acciones');
             console.log('💰 Verificando copia de seguridad - montos:', accionesOriginales.map(a => ({ no: a.no, monto: a.monto, clave: a.claveAccion })));
             
-            // Obtener las descripciones de las TOP 10 acciones con mayor monto
+            // Obtener las descripciones de las acciones seleccionadas con mayor monto
             const descriptions = tarjetaData.acciones
                 .map(accion => accion.descripcion)
                 .filter(desc => desc && desc.trim() !== '');
@@ -1386,62 +1437,168 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Mostrar mensaje específico
-            loadingMessage.textContent = 'Generando resúmenes con IA...';
-            
             // Obtener el token CSRF
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
             
             // Primero, obtener resúmenes individuales de las descripciones
-            const descriptionsToSummarize = tarjetaData.acciones.map(accion => accion.descripcion || '');
+            let descriptionsToSummarize = tarjetaData.acciones.map(accion => accion.descripcion || '');
             
-            console.log('🤖 Enviando descripciones a IA para resumir:', descriptionsToSummarize.length);
+            // Advertencia para muchos registros
+            if (descriptions.length > 100) {
+                console.warn(`⚠️ Gran cantidad de registros (${descriptions.length}). El procesamiento puede tomar varios minutos.`);
+                loadingMessage.textContent = `Procesando ${descriptions.length} descripciones con IA. Esto puede tomar varios minutos...`;
+            }
             
-            fetch('/dashboard/ai/summarize-descriptions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    descriptions: descriptionsToSummarize,
-                    maxLength: 200 // Longitud máxima para cada resumen individual
-                })
-            })
-            .then(response => {
-                console.log('📡 Respuesta del servidor para resúmenes individuales:', response.status);
-                if (!response.ok) {
-                    throw new Error(`Error al obtener resúmenes individuales: ${response.status}`);
-                }
-                return response.json();
-            })
+            // No limitar - procesaremos todos los registros en lotes
+            console.log(`📊 Procesando todos los ${descriptions.length} registros en lotes de 50`);
+            
+            // Advertencia para datasets muy grandes
+            if (descriptions.length > 500) {
+                const estimatedTime = Math.ceil(descriptions.length / 50) * 2; // 2 minutos por lote aproximadamente
+                showError(`Procesando ${descriptions.length} registros en lotes de 50. Tiempo estimado: ${estimatedTime} minutos.`, 10000);
+            }
+            
+            // Procesar en lotes secuenciales de 50
+            processDescriptionsInBatches(descriptionsToSummarize, csrfToken, loadingMessage)
             .then(data => {
-                console.log('📝 Resúmenes individuales recibidos - Estructura completa:', JSON.stringify(data, null, 2));
+                console.log('📝 Resúmenes por lotes recibidos - Estructura completa:', JSON.stringify(data, null, 2));
+                
+                // Continuar con el procesamiento normal
+                return processAllSummaries(data);
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(error => {
+                console.error('Error en procesamiento por lotes:', error);
+                handleSummaryError(error);
+                resolve();
+            });
+            
+            // Función para procesar en lotes secuenciales
+            async function processDescriptionsInBatches(descriptions, token, loadingElement) {
+                const BATCH_SIZE = 50;
+                const totalBatches = Math.ceil(descriptions.length / BATCH_SIZE);
+                let allSummaries = {};
+                let processedCount = 0;
+                
+                console.log(`🔀 Iniciando procesamiento en ${totalBatches} lotes de ${BATCH_SIZE} registros`);
+                
+                for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+                    const startIndex = batchIndex * BATCH_SIZE;
+                    const endIndex = Math.min(startIndex + BATCH_SIZE, descriptions.length);
+                    const batchDescriptions = descriptions.slice(startIndex, endIndex);
+                    
+                    // Crear mapeo de índices para el lote actual
+                    const batchIndexMap = {};
+                    batchDescriptions.forEach((desc, localIndex) => {
+                        batchIndexMap[localIndex] = startIndex + localIndex;
+                    });
+                    
+                    loadingElement.textContent = `Procesando lote ${batchIndex + 1}/${totalBatches} (${batchDescriptions.length} registros)...`;
+                    console.log(`📦 Procesando lote ${batchIndex + 1}/${totalBatches}: registros ${startIndex + 1}-${endIndex}`);
+                    
+                    try {
+                        // Configurar timeout específico para este lote
+                        const batchController = new AbortController();
+                        const batchTimeout = setTimeout(() => batchController.abort(), 180000); // 3 minutos por lote
+                        
+                        const response = await fetch('/dashboard/ai/summarize-descriptions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                descriptions: batchDescriptions,
+                                maxLength: 200,
+                                batch_size: 10
+                            }),
+                            signal: batchController.signal
+                        });
+                        
+                        clearTimeout(batchTimeout);
+                        
+                        if (!response.ok) {
+                            throw new Error(`Error en lote ${batchIndex + 1}: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        
+                        // Mapear los resúmenes del lote a los índices globales
+                        if (data.summaries) {
+                            Object.keys(data.summaries).forEach(localIndex => {
+                                const globalIndex = batchIndexMap[localIndex];
+                                allSummaries[globalIndex] = data.summaries[localIndex];
+                            });
+                        }
+                        
+                        processedCount += batchDescriptions.length;
+                        console.log(`✅ Lote ${batchIndex + 1} completado. Progreso: ${processedCount}/${descriptions.length}`);
+                        
+                        // Pequeña pausa entre lotes para no sobrecargar el servidor
+                        if (batchIndex < totalBatches - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 1000)); // 1 segundo de pausa
+                        }
+                        
+                    } catch (error) {
+                        console.error(`❌ Error en lote ${batchIndex + 1}:`, error);
+                        
+                        // En caso de error, llenar con descripciones truncadas para este lote
+                        batchDescriptions.forEach((desc, localIndex) => {
+                            const globalIndex = batchIndexMap[localIndex];
+                            allSummaries[globalIndex] = desc.length > 200 ? desc.substring(0, 197) + '...' : desc;
+                        });
+                        
+                        if (error.name === 'AbortError') {
+                            showError(`Timeout en lote ${batchIndex + 1}. Continuando con el siguiente...`, 3000);
+                        } else {
+                            showError(`Error en lote ${batchIndex + 1}. Continuando con el siguiente...`, 3000);
+                        }
+                    }
+                }
+                
+                console.log(`🎉 Procesamiento completo: ${processedCount} registros procesados en ${totalBatches} lotes`);
+                loadingElement.textContent = 'Aplicando resúmenes generados...';
+                
+                // Simular la estructura de respuesta esperada por el código existente
+                const mockResponse = {
+                    ok: true,
+                    status: 200,
+                    json: () => Promise.resolve({ summaries: allSummaries })
+                };
+                
+                return mockResponse.json();
+            }
+            
+            // Función para procesar todos los resúmenes una vez completados los lotes
+            function processAllSummaries(data) {
                 console.log('📝 Tipo de data.summaries:', typeof data.summaries);
                 console.log('📝 Array data.summaries?:', Array.isArray(data.summaries));
-                console.log('📝 Longitud data.summaries:', data.summaries ? data.summaries.length : 'UNDEFINED');
+                console.log('📝 Longitud data.summaries:', data.summaries ? Object.keys(data.summaries).length : 'UNDEFINED');
                 
                 // GUARDAR los resúmenes individuales para usar después
-                window.resumenesIndividuales = data.summaries || [];
+                window.resumenesIndividuales = data.summaries || {};
                 
                 // Actualizar las descripciones en tarjetaData con las versiones resumidas
-                if (data.summaries && data.summaries.length > 0) {
+                if (data.summaries && Object.keys(data.summaries).length > 0) {
                     console.log('✅ Aplicando resúmenes individuales a las acciones');
-                    console.log('📊 Cantidad de resúmenes recibidos:', data.summaries.length);
+                    console.log('📊 Cantidad de resúmenes recibidos:', Object.keys(data.summaries).length);
                     console.log('📊 Cantidad de acciones disponibles:', tarjetaData.acciones.length);
                     
                     tarjetaData.acciones.forEach((accion, index) => {
-                        if (data.summaries[index] && data.summaries[index].trim() !== '') {
-                            console.log(`📝 Acción ${accion.no}: Aplicando resumen`);
+                        if (data.summaries[index] && data.summaries[index].trim() !== '' && data.summaries[index] !== '...') {
+                            console.log(`📝 Acción ${accion.no}: Aplicando resumen completo de IA`);
                             console.log(`   Original (${accion.descripcion.length} chars): ${accion.descripcion.substring(0, 100)}...`);
                             console.log(`   Resumido (${data.summaries[index].length} chars): ${data.summaries[index]}`);
                             
-                            // Guardar la descripción original y la resumida
+                            // Guardar la descripción original y usar el resumen completo
                             accion.descripcionOriginal = accion.descripcion;
                             accion.descripcion = data.summaries[index];
+                            console.log(`✅ Resumen aplicado exitosamente para acción ${accion.no}`);
                         } else {
-                            console.log(`⚠️ Acción ${accion.no}: No hay resumen válido en el índice ${index}`);
+                            console.log(`⚠️ Acción ${accion.no}: No hay resumen válido en el índice ${index} - manteniendo descripción original completa`);
                         }
                     });
                 } else {
@@ -1451,6 +1608,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Ahora generar el resumen ejecutivo general
                 loadingMessage.textContent = 'Generando resumen ejecutivo con IA...';
+                
+                // Configurar timeout para resumen ejecutivo
+                const summaryTimeoutController = new AbortController();
+                const summaryTimeoutId = setTimeout(() => summaryTimeoutController.abort(), 60000); // 1 minuto timeout
                 
                 return fetch('/dashboard/ai/generate-summary', {
                     method: 'POST',
@@ -1463,17 +1624,27 @@ document.addEventListener('DOMContentLoaded', function() {
                         descriptions: descriptions, // Usar las descripciones originales para el resumen general
                         entity: selectedEntidad,
                         context: `Periodo: ${tarjetaData.periodo || 'No especificado'}. Se muestran las ${descriptions.length} acciones principales ordenadas por monto.`
-                    })
+                    }),
+                    signal: summaryTimeoutController.signal
+                })
+                .then(response => {
+                    clearTimeout(summaryTimeoutId);
+                    return response;
+                })
+                .then(response => {
+                    console.log('📡 Respuesta del servidor para resumen general:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    return finalizeProcessing(data);
                 });
-            })
-            .then(response => {
-                console.log('📡 Respuesta del servidor para resumen general:', response.status);
-                if (!response.ok) {
-                    throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
+            }
+            
+            // Función para finalizar el procesamiento
+            function finalizeProcessing(data) {
                 console.log('📄 Resumen ejecutivo general recibido:', JSON.stringify(data, null, 2));
                 
                 if (data.summary && data.summary.trim() !== '') {
@@ -1505,27 +1676,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // IMPORTANTE: Restaurar las acciones originales antes de actualizar la tabla del editor
                 console.log('🔄 Restaurando acciones originales para preservar los datos completos');
-                tarjetaData.acciones = JSON.parse(JSON.stringify(accionesOriginales)); // Doble copia por seguridad
+                tarjetaData.acciones = JSON.parse(JSON.stringify(accionesOriginales));
                 
                 console.log('🔄 DESPUÉS de restaurar - Acciones restauradas:', tarjetaData.acciones.length);
                 console.log('💰 DESPUÉS de restaurar - Montos restaurados:', tarjetaData.acciones.map(a => ({ no: a.no, monto: a.monto, clave: a.claveAccion })));
                 
                 // Para la visualización, aplicar TODOS los resúmenes recibidos
-                if (window.resumenesIndividuales && window.resumenesIndividuales.length > 0) {
+                if (window.resumenesIndividuales && Object.keys(window.resumenesIndividuales).length > 0) {
                     console.log('📝 Aplicando TODOS los resúmenes individuales recibidos');
-                    console.log('📊 Resúmenes disponibles:', window.resumenesIndividuales.length);
+                    console.log('📊 Resúmenes disponibles:', Object.keys(window.resumenesIndividuales).length);
                     tarjetaData.acciones.forEach((accion, index) => {
                         if (window.resumenesIndividuales[index] && 
-                            window.resumenesIndividuales[index].trim() !== '') {
-                            console.log(`📝 Aplicando resumen para acción ${accion.no}:`);
+                            window.resumenesIndividuales[index].trim() !== '' &&
+                            window.resumenesIndividuales[index] !== '...') {
+                            console.log(`📝 Aplicando resumen completo para acción ${accion.no}:`);
                             console.log(`   Original (${accion.descripcion.length} chars): ${accion.descripcion.substring(0, 100)}...`);
                             console.log(`   Resumido (${window.resumenesIndividuales[index].length} chars): ${window.resumenesIndividuales[index]}`);
                             accion.descripcionOriginal = accion.descripcion;
                             accion.descripcion = window.resumenesIndividuales[index];
+                            console.log(`✅ Resumen completo aplicado para acción ${accion.no}`);
+                        } else {
+                            console.log(`⚠️ No hay resumen válido para acción ${accion.no} - manteniendo descripción original completa`);
                         }
                     });
                 } else {
-                    console.log('⚠️ No hay resúmenes individuales disponibles para aplicar');
+                    console.log('⚠️ No hay resúmenes individuales disponibles - manteniendo descripciones originales completas');
                 }
                 
                 // Actualizar la tabla del editor con las descripciones resumidas
@@ -1536,11 +1711,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Limpiar la variable temporal
                 delete window.resumenesIndividuales;
-                
-                resolve();
-            })
-            .catch(error => {
+            }
+            
+            // Función para manejar errores en el procesamiento
+            function handleSummaryError(error) {
                 console.error('Error al generar resúmenes con IA:', error);
+                
                 // Generar un resumen básico de las acciones
                 const montoTotal = tarjetaData.acciones.reduce((sum, accion) => sum + accion.monto, 0);
                 const resumenBasico = `Se identificaron ${tarjetaData.acciones.length} acciones principales con un monto total de $${montoTotal.toLocaleString('es-MX')}. Las acciones corresponden principalmente a observaciones de tipo ${tarjetaData.acciones[0]?.tipoAccion || 'PO'} relacionadas con la gestión de recursos públicos durante el periodo ${tarjetaData.periodo}.`;
@@ -1563,30 +1739,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // IMPORTANTE: Restaurar las acciones originales en caso de error también
                 console.log('🔄 Error en IA - Restaurando acciones originales');
-                tarjetaData.acciones = JSON.parse(JSON.stringify(accionesOriginales)); // Doble copia por seguridad
+                tarjetaData.acciones = JSON.parse(JSON.stringify(accionesOriginales));
                 
                 console.log('🔄 DESPUÉS de restaurar (error) - Acciones restauradas:', tarjetaData.acciones.length);
                 console.log('💰 DESPUÉS de restaurar (error) - Montos restaurados:', tarjetaData.acciones.map(a => ({ no: a.no, monto: a.monto, clave: a.claveAccion })));
                 
-                // Si hay error pero tenemos resúmenes guardados, aplicarlos; si no, truncar manualmente
-                if (window.resumenesIndividuales && window.resumenesIndividuales.length > 0) {
+                // Si hay error pero tenemos resúmenes guardados, aplicarlos
+                if (window.resumenesIndividuales && Object.keys(window.resumenesIndividuales).length > 0) {
                     console.log('📝 Aplicando resúmenes guardados a pesar del error en resumen ejecutivo');
                     tarjetaData.acciones.forEach((accion, index) => {
                         if (window.resumenesIndividuales[index] && 
-                            window.resumenesIndividuales[index].trim() !== '') {
-                            console.log(`📝 Aplicando resumen para acción ${accion.no} (modo error)`);
+                            window.resumenesIndividuales[index].trim() !== '' &&
+                            window.resumenesIndividuales[index] !== '...') {
+                            console.log(`📝 Aplicando resumen completo para acción ${accion.no} (modo error)`);
                             accion.descripcionOriginal = accion.descripcion;
                             accion.descripcion = window.resumenesIndividuales[index];
+                            console.log(`✅ Resumen completo aplicado para acción ${accion.no} (modo error)`);
+                        } else {
+                            console.log(`⚠️ No hay resumen válido para acción ${accion.no} (modo error) - manteniendo descripción original completa`);
                         }
                     });
                 } else {
-                    // Si no hay resúmenes, truncar solo las descripciones largas manualmente
+                    // Si no hay resúmenes de IA disponibles, mantener las descripciones originales completas
+                    console.log('ℹ️ No hay resúmenes de IA disponibles, manteniendo descripciones originales completas');
                     tarjetaData.acciones.forEach(accion => {
-                        if (accion.descripcion && accion.descripcion.length > 200) {
-                            console.log(`✂️ Truncando descripción larga para acción ${accion.no}: ${accion.descripcion.length} caracteres`);
-                            accion.descripcionOriginal = accion.descripcion;
-                            accion.descripcion = accion.descripcion.substring(0, 197) + '...';
-                        }
+                        console.log(`📝 Manteniendo descripción completa para acción ${accion.no}: ${accion.descripcion.length} caracteres`);
                     });
                 }
                 
@@ -1597,10 +1774,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Limpiar la variable temporal
                 delete window.resumenesIndividuales;
-                
-                resolve();
-            });
-        });
+            }
+                 });
     }
     
     // Nueva función para actualizar la tabla de acciones con las descripciones resumidas
@@ -1874,7 +2049,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <em>${camposFiltrados.join(', ')}</em>
                         </p>
                         <p class="text-xs text-green-600 mt-1">
-                            Mostrando automáticamente las 10 acciones con mayor monto en orden descendente.
+                            ${mostrarTodosRegistros ? 
+                                `Mostrando todas las ${tarjetaData.acciones.length} acciones disponibles en orden descendente por monto.` : 
+                                `Mostrando las ${tarjetaData.acciones.length} acciones principales con mayor monto en orden descendente.`
+                            }
                         </p>
                     </div>`;
             }
@@ -2534,9 +2712,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     );
                     
                     // Añadir nota explicativa
+                    const notaTexto = mostrarTodosRegistros ? 
+                        `Nota: Las columnas resaltadas en verde muestran los campos adicionales seleccionados: ${camposFiltrados.join(', ')}. Mostrando todas las ${tarjetaData.acciones.length} acciones disponibles en orden descendente por monto.` :
+                        `Nota: Las columnas resaltadas en verde muestran los campos adicionales seleccionados: ${camposFiltrados.join(', ')}. Mostrando las ${tarjetaData.acciones.length} acciones principales con mayor monto en orden descendente.`;
+                    
                     children.push(
                         new Paragraph({
-                            text: `Nota: Las columnas resaltadas en verde muestran los campos adicionales seleccionados: ${camposFiltrados.join(', ')}. Mostrando automáticamente las 10 acciones con mayor monto en orden descendente.`,
+                            text: notaTexto,
                             italics: true,
                             size: 20, // Tamaño más pequeño
                             color: "666666", // Gris
@@ -3157,10 +3339,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const tipoAccionColumn = findTipoAccionColumn();
         const descripcionColumn = findDescripcionColumn();
         
-        // AUTOMÁTICO: Obtener las 10 acciones con mayor valor en orden descendente
+        // AUTOMÁTICO: Obtener las acciones con mayor valor en orden descendente
         if (montoColumn && dataForEntity.length > 0) {
-            console.log('🎯 Procesando automáticamente las 10 acciones con mayor monto');
+            const cantidadMostrar = mostrarTodosRegistros ? dataForEntity.length : cantidadRegistros;
+            console.log('🎯 Procesando automáticamente las acciones con mayor monto');
             console.log('📊 Total de registros disponibles:', dataForEntity.length);
+            console.log('📊 Cantidad a mostrar:', mostrarTodosRegistros ? 'TODOS' : cantidadMostrar);
             
             // Ordenar TODOS los datos por monto (de mayor a menor)
             const sortedData = [...dataForEntity].sort((a, b) => {
@@ -3174,10 +3358,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 clave: row[claveAccionColumn] || 'Sin clave'
             })));
             
-            // Tomar las TOP 10 acciones con mayor monto
-            const topRecords = sortedData.slice(0, Math.min(10, sortedData.length));
+            // Tomar las acciones según la configuración del usuario
+            const topRecords = mostrarTodosRegistros ? 
+                sortedData : 
+                sortedData.slice(0, Math.min(cantidadMostrar, sortedData.length));
             
             console.log(`✅ Seleccionadas ${topRecords.length} acciones con mayor monto para la tarjeta`);
+            console.log('💰 Configuración aplicada:', {
+                mostrarTodos: mostrarTodosRegistros,
+                cantidadSolicitada: cantidadMostrar,
+                cantidadObtenida: topRecords.length
+            });
             console.log('💰 Rango de montos:', {
                 mayor: parseFloat(topRecords[0][montoColumn].toString().replace(/[^\d.-]/g, '')) || 0,
                 menor: parseFloat(topRecords[topRecords.length - 1][montoColumn].toString().replace(/[^\d.-]/g, '')) || 0
@@ -3234,7 +3425,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return accion;
             });
             
-            // Verificación final: Asegurar que las 10 acciones están correctamente ordenadas
+            // Verificación final: Asegurar que las acciones están correctamente ordenadas
             console.log('🎯 VERIFICACIÓN FINAL - Acciones creadas:', tarjetaData.acciones.length);
             console.log('💰 Orden final de montos:', tarjetaData.acciones.map(a => ({ no: a.no, monto: a.monto, clave: a.claveAccion })));
             

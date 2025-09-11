@@ -34,6 +34,29 @@
             <span class="breadcrumb-current">Gráficas y estadisticas</span>
         </div>
 
+        <div class="flex justify-between items-center">
+            @if(request('entrega') == 18 && request('cuenta_publica') == 1)
+                <div class="w-full mb-4">
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg shadow-sm">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <ion-icon name="information-circle-outline" class="text-amber-600 text-xl"></ion-icon>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-amber-800">
+                                    Filtro Especial RIASF Aplicado
+                                </p>
+                                <p class="text-sm text-amber-700 mt-1">
+                                    Se están excluyendo registros conforme al <strong>RIASF - Reglamento Interno de la Auditoría Superior de la Federación</strong>. 
+                                    Los datos mostrados han sido filtrados según los criterios establecidos en dicho reglamento.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+
         <!-- Formulario de Filtros Mejorado -->
         <div class="" style="background-color: #FFF">
             <div class="filter-header">

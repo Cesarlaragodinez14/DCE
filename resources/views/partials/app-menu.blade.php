@@ -181,6 +181,14 @@
                 >
                     {{ __('Expedientes') }}
                 </x-dropdown-link>
+                @endcan
+                @can('view-any', App\Models\Auditorias::class)
+                <x-dropdown-link
+                    wire:navigate
+                    href="{{ route('auditorias.resumen') }}"
+                >
+                    Resumen de Auditorías
+                </x-dropdown-link>
                 @endcan 
             </x-slot>
         </x-dropdown>

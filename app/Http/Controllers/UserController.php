@@ -150,20 +150,20 @@ class UserController extends Controller
 
     public function impersonate(User $user)
     {
-        if (Auth::user()->canImpersonate()) {
+        if (Auth::user()->canImpersonate() && $user->canBeImpersonated()) {
             Auth::user()->impersonate($user);
             return redirect()->route('dashboard');
         }
-        abort(403);
+        abort(403, 'No tienes permisos para impersonar a este usuario.');
     }
 
     public function stopImpersonation()
     {
-        if (Auth::user()->canImpersonate()) {
-            Auth::user()->stopImpersonating();
+        if (Auth::user()->isImpersonating()) {
+            Auth::user()->leaveImpersonation();
             return redirect()->route('dashboard');
         }
-        abort(403);
+        abort(403, 'No estás impersonando a ningún usuario.');
     }
 
 }

@@ -153,6 +153,7 @@
             <!-- Columna de la Información del Hash -->
             <td style="width:50%; vertical-align: top;">
                 <p><strong>Hash:</strong> {{ $hash }}</p>
+                <p><strong>Firmado Por:</strong> {{ $nombreUsuario ?? 'N/A' }}</p>
                 <p><strong>Correo del Generador:</strong> {{ $userEmail }}</p>
                 <p><strong>Dirección IP:</strong> {{ $ipAddress }}</p>
                 <p><strong>Fecha/Hora de Generación:</strong> 

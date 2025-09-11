@@ -51,7 +51,7 @@
             'icon' => 'file-tray-full-outline',
             'text' => 'Entrega - Recepción de Expedientes',
             'description' => 'Gestionar la entrega - recepción de los expedientes',
-            'roles' => ['admin'],
+            'roles' => ['admin', 'Jefe de Departamento', 'Director General SEG', 'Responsable de la programación por UAA', 'Auditor habilitado UAA', 'Director General', 'DGUAA', 'AUDITOR ESPECIAL', 'AECF', 'AEGF'],
             'section' => 'Principal',
             'color' => 'success',
         ],
@@ -108,6 +108,17 @@
             'roles' => ['admin', 'AUDITOR ESPECIAL', 'Director General SEG', 'AECF', 'AED', 'AEGF', 'DGUAA'],
             'section' => 'Graficos',
             'color' => 'success',
+        ],
+
+        // Sección Inteligencia Artificial
+        [
+            'route' => url('/dashboard/ai'),
+            'icon' => 'bulb-outline',
+            'text' => 'Inteligencia Artificial',
+            'description' => 'Herramientas y funcionalidades de IA para análisis avanzado',
+            'roles' => ['admin', 'AECF', 'AED', 'Director General SEG'],
+            'section' => 'Inteligencia Artificial',
+            'color' => 'info',
         ],
 
         // Sección Administración (solo para 'admin')

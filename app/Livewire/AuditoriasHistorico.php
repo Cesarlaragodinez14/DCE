@@ -40,6 +40,7 @@ class AuditoriasHistorico extends Component
     public $historialChecklistApartados;
     public $dataForAuditoria = []; // Datos para Auditoría
     public $dataForChecklistApartados = []; // Datos para Checklist Apartados
+    public $apartadosWithChanges = []; // Datos agrupados por apartados
     public $isLoading = false; // Indicador de carga
     public $search = ''; // Parámetro de búsqueda
 
@@ -87,7 +88,7 @@ class AuditoriasHistorico extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Cargar el historial de los checklist apartados
+        // Cargar el historial de los checklist apartados con apartado información
         $this->historialChecklistApartados = ChecklistApartadoHistory::whereIn('checklist_apartado_id', function($query) use ($auditoriaId) {
             $query->select('id')
                   ->from('checklist_apartados')
@@ -99,6 +100,7 @@ class AuditoriasHistorico extends Component
         // Limpiar las variables antes de poblarlas
         $this->dataForAuditoria = [];
         $this->dataForChecklistApartados = [];
+        $this->apartadosWithChanges = [];
 
         // Procesar los cambios de la auditoría
         foreach ($this->historialAuditoria as $history) {
@@ -124,11 +126,11 @@ class AuditoriasHistorico extends Component
             foreach ($changes['before'] as $field => $beforeValue) {
                 // Verificar si el campo está en auditoriaFields
                 if (array_key_exists($field, $this->auditoriaFields)) {
-                    $afterValue = isset($changes['after'][$field]) ? $changes['after'][$field] : 'N/A';
+                    $afterValue = isset($changes['after'][$field]) ? $changes['after'][$field] : null;
 
-                    // Convertir valores booleanos a 'Sí' o 'No'
-                    $before = is_bool($beforeValue) ? ($beforeValue ? 'Sí' : 'No') : $beforeValue;
-                    $after = is_bool($afterValue) ? ($afterValue ? 'Sí' : 'No') : $afterValue;
+                    // Formatear valores
+                    $before = $this->formatValue($beforeValue);
+                    $after = $this->formatValue($afterValue);
 
                     $this->dataForAuditoria[] = [
                         'date' => $history->created_at->format('d/m/Y H:i'),
@@ -141,7 +143,7 @@ class AuditoriasHistorico extends Component
             }
         }
 
-        // Procesar los cambios de los apartados del checklist
+        // Procesar los cambios de los apartados del checklist y agrupar por apartado
         foreach ($this->historialChecklistApartados as $history) {
             $changes = json_decode($history->changes, true);
 
@@ -161,29 +163,84 @@ class AuditoriasHistorico extends Component
                 continue;
             }
 
+            $apartadoNombre = $history->checklistApartado->apartado->nombre ?? 'Apartado Desconocido';
+            $apartadoId = $history->checklistApartado->apartado->id ?? 'unknown';
+
+            // Inicializar el array del apartado si no existe
+            if (!isset($this->apartadosWithChanges[$apartadoId])) {
+                $this->apartadosWithChanges[$apartadoId] = [
+                    'nombre' => $apartadoNombre,
+                    'cambios' => []
+                ];
+            }
+
             // Iterar sobre las claves de 'before' para obtener los cambios
             foreach ($changes['before'] as $field => $beforeValue) {
-                // Verificar si el campo está en apartadoFields
-                if (array_key_exists($field, $this->apartadoFields)) {
-                    $afterValue = isset($changes['after'][$field]) ? $changes['after'][$field] : 'N/A';
+                // Verificar si el campo está en apartadoFields (excluir updated_at ya que no es relevante para el usuario)
+                if (array_key_exists($field, $this->apartadoFields) && $field !== 'updated_at') {
+                    $afterValue = isset($changes['after'][$field]) ? $changes['after'][$field] : null;
 
-                    // Convertir valores booleanos a 'Sí' o 'No'
-                    $before = is_bool($beforeValue) ? ($beforeValue ? 'Sí' : 'No') : $beforeValue;
-                    $after = is_bool($afterValue) ? ($afterValue ? 'Sí' : 'No') : $afterValue;
+                    // Formatear valores
+                    $before = $this->formatValue($beforeValue);
+                    $after = $this->formatValue($afterValue);
 
-                    $this->dataForChecklistApartados[] = [
-                        'date' => $history->created_at->format('d/m/Y H:i'),
-                        'user' => $history->user->name,
-                        'field' => $this->apartadoFields[$field],
-                        'apartado_nombre' => $history->checklistApartado->apartado->nombre ?? 'N/A',
-                        'before' => $before,
-                        'after' => $after,
-                    ];
+                    // Solo agregar si realmente hay un cambio visible
+                    if ($before !== $after) {
+                        // Agregar al apartado correspondiente
+                        $this->apartadosWithChanges[$apartadoId]['cambios'][] = [
+                            'date' => $history->created_at->format('d/m/Y H:i'),
+                            'user' => $history->user->name,
+                            'field' => $this->apartadoFields[$field],
+                            'apartado_nombre' => $apartadoNombre,
+                            'before' => $before,
+                            'after' => $after,
+                        ];
+
+                        // También mantener la lista global para compatibilidad
+                        $this->dataForChecklistApartados[] = [
+                            'date' => $history->created_at->format('d/m/Y H:i'),
+                            'user' => $history->user->name,
+                            'field' => $this->apartadoFields[$field],
+                            'apartado_nombre' => $apartadoNombre,
+                            'before' => $before,
+                            'after' => $after,
+                        ];
+                    }
                 }
             }
         }
 
         $this->isLoading = false;
+    }
+
+    /**
+     * Formatear valores para mostrar en el historial
+     */
+    private function formatValue($value)
+    {
+        if (is_null($value)) {
+            return 'Sin valor';
+        }
+        
+        if (is_bool($value)) {
+            return $value ? 'Sí' : 'No';
+        }
+        
+        if (is_string($value) && trim($value) === '') {
+            return 'Vacío';
+        }
+        
+        if (is_numeric($value)) {
+            // Si es 0 o 1, probablemente sea un booleano representado como número
+            if ($value === 0 || $value === '0') {
+                return 'No';
+            }
+            if ($value === 1 || $value === '1') {
+                return 'Sí';
+            }
+        }
+        
+        return (string) $value;
     }
 
     public function closeModal()
@@ -193,6 +250,7 @@ class AuditoriasHistorico extends Component
         $this->historialChecklistApartados = null;
         $this->dataForAuditoria = [];
         $this->dataForChecklistApartados = [];
+        $this->apartadosWithChanges = [];
         $this->isLoading = false;
     }
 }

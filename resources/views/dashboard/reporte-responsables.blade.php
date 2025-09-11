@@ -39,6 +39,82 @@
             padding: 8px;
             border: 1px solid #ccc;
         }
+        
+        /* Estilos para indicadores de progreso */
+        .bg-green-100 {
+            background-color: #dcfce7 !important;
+        }
+        .bg-yellow-100 {
+            background-color: #fef3c7 !important;
+        }
+        .bg-red-100 {
+            background-color: #fee2e2 !important;
+        }
+        .text-green-700 {
+            color: #15803d !important;
+        }
+        .text-yellow-700 {
+            color: #a16207 !important;
+        }
+        .text-red-700 {
+            color: #b91c1c !important;
+        }
+        
+        /* Animación sutil para las filas */
+        .table-row-hover:hover {
+            background-color: #f8fafc;
+            transition: background-color 0.2s ease;
+        }
+        
+        /* Mejora visual para responsables con UAA */
+        .uaa-responsable {
+            font-style: italic;
+            color: #6b7280;
+            padding-left: 20px;
+        }
+        
+        /* Mejora visual para responsables con UAA */
+        .uaa-responsable {
+            font-style: italic;
+            color: #6b7280;
+            padding-left: 20px;
+        }
+        
+        /* Estilos para jerarquía AECF/AEGF */
+        .grupo-principal {
+            background-color: #f8fafc !important;
+            border-left: 4px solid #7c3aed !important;
+        }
+        
+        .grupo-principal-cell {
+            font-weight: bold;
+            color: #7c3aed !important;
+            background-color: #faf5ff;
+        }
+        
+        .uaa-individual {
+            padding-left: 30px;
+            font-style: italic;
+            color: #4b5563;
+            border-left: 2px solid #e5e7eb;
+        }
+        
+        .uaa-indent {
+            color: #9ca3af;
+            margin-right: 8px;
+            font-family: monospace;
+        }
+        
+        /* Mejorar contrast en grupos principales */
+        .text-purple-700 {
+            color: #7c3aed !important;
+        }
+        
+        /* Separación visual entre grupos */
+        .grupo-principal {
+            border-top: 2px solid #e5e7eb;
+            margin-top: 2px;
+        }
     </style>
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
@@ -264,6 +340,102 @@
                                 <td class="table-cell">{{ $totalesDevueltos['po'] }}</td>
                                 <td class="table-cell">{{ $totalesDevueltos['sa'] }}</td>
                                 <td class="table-cell">{{ $totalesDevueltos['total_general'] }}</td>
+                            </tr>
+                        @endif
+                    </x-slot>
+                </x-ui.table>
+            </x-ui.container.table>
+        </div>
+
+        <!-- Nueva tabla de Estatus de Auditorías por Responsable -->
+        <div class="mt-8">
+            <h3 class="text-center text-lg font-bold mb-4">Estatus de Auditorías por Responsable</h3>
+            
+            <x-ui.container.table>
+                <x-ui.table>
+                    <x-slot name="head">
+                        <tr>
+                            <th class="table-header">Responsable</th>
+                            <th class="table-header">Aceptado</th>
+                            <th class="table-header">Devuelto</th>
+                            <th class="table-header">En Revisión</th>
+                            <th class="table-header">Sin Revisar</th>
+                            <th class="table-header">Total General</th>
+                            <th class="table-header">% de Avance</th>
+                        </tr>
+                    </x-slot>
+
+                    <x-slot name="body">
+                        @php
+                            $totalesEstatus = [
+                                'aceptado' => 0,
+                                'devuelto' => 0,
+                                'en_revision' => 0,
+                                'sin_revisar' => 0,
+                                'total_general' => 0,
+                            ];
+                        @endphp
+
+                        @foreach($reporteEstatusResponsables as $fila)
+                            @php
+                                $isGroupMain = isset($fila->es_grupo_principal) && $fila->es_grupo_principal;
+                                $isUAASpecial = isset($fila->es_uaa_especial) && $fila->es_uaa_especial;
+                                $rowClass = $fila->porcentaje_avance >= 90 ? 'bg-green-100' : 
+                                           ($fila->porcentaje_avance >= 70 ? 'bg-yellow-100' : 
+                                           ($fila->porcentaje_avance < 50 ? 'bg-red-100' : ''));
+                                           
+                                if ($isGroupMain) {
+                                    $rowClass .= ' grupo-principal';
+                                }
+                            @endphp
+                            
+                            <tr class="table-row-hover {{ $rowClass }}">
+                                <td class="table-cell-left {{ $isUAASpecial ? 'uaa-individual' : '' }} {{ $isGroupMain ? 'grupo-principal-cell' : '' }}">
+                                    @if($isUAASpecial)
+                                        <span class="uaa-indent">└─</span>
+                                    @endif
+                                    {{ $fila->responsable }}
+                                    @if($isGroupMain)
+                                        <span class="text-xs text-purple-600 ml-2 font-semibold">(TOTAL)</span>
+                                    @elseif($isUAASpecial)
+                                        <span class="text-xs text-blue-600 ml-2">(UAA)</span>
+                                    @endif
+                                </td>
+                                <td class="table-cell {{ $isGroupMain ? 'font-bold text-purple-700' : '' }}">{{ $fila->aceptado }}</td>
+                                <td class="table-cell {{ $isGroupMain ? 'font-bold text-purple-700' : '' }}">{{ $fila->devuelto }}</td>
+                                <td class="table-cell {{ $isGroupMain ? 'font-bold text-purple-700' : '' }}">{{ $fila->en_revision }}</td>
+                                <td class="table-cell {{ $isGroupMain ? 'font-bold text-purple-700' : '' }}">{{ $fila->sin_revisar }}</td>
+                                <td class="table-cell font-bold {{ $isGroupMain ? 'text-purple-700 text-lg' : '' }}">{{ $fila->total_general }}</td>
+                                <td class="table-cell {{ $fila->porcentaje_avance >= 90 ? 'text-green-700 font-bold' : ($fila->porcentaje_avance >= 70 ? 'text-yellow-700 font-bold' : ($fila->porcentaje_avance < 50 ? 'text-red-700 font-bold' : 'font-bold')) }} {{ $isGroupMain ? 'text-purple-700 text-lg' : '' }}">
+                                    {{ $fila->porcentaje_avance }}%
+                                </td>
+                            </tr>
+
+                            @php
+                                // Solo sumar al total general si NO es un grupo principal para evitar doble contabilización
+                                if (!$isGroupMain) {
+                                    $totalesEstatus['aceptado'] += $fila->aceptado;
+                                    $totalesEstatus['devuelto'] += $fila->devuelto;
+                                    $totalesEstatus['en_revision'] += $fila->en_revision;
+                                    $totalesEstatus['sin_revisar'] += $fila->sin_revisar;
+                                    $totalesEstatus['total_general'] += $fila->total_general;
+                                }
+                            @endphp
+                        @endforeach
+
+                        @if($reporteEstatusResponsables->isNotEmpty())
+                            @php
+                                $porcentajeTotalEstatus = $totalesEstatus['total_general'] > 0 ? 
+                                    round(($totalesEstatus['aceptado'] / $totalesEstatus['total_general']) * 100, 2) : 0;
+                            @endphp
+                            <tr class="bg-gray-500 text-white font-bold">
+                                <td class="table-cell-left">TOTAL GENERAL</td>
+                                <td class="table-cell">{{ $totalesEstatus['aceptado'] }}</td>
+                                <td class="table-cell">{{ $totalesEstatus['devuelto'] }}</td>
+                                <td class="table-cell">{{ $totalesEstatus['en_revision'] }}</td>
+                                <td class="table-cell">{{ $totalesEstatus['sin_revisar'] }}</td>
+                                <td class="table-cell">{{ $totalesEstatus['total_general'] }}</td>
+                                <td class="table-cell">{{ $porcentajeTotalEstatus }}%</td>
                             </tr>
                         @endif
                     </x-slot>

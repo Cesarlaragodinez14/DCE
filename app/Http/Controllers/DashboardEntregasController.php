@@ -23,6 +23,7 @@ class DashboardEntregasController extends Controller
     const STATUS_EN_PROCESO = "En Proceso de Revisión del Checklist";
     
     const ESTADO_RECIBIDO_DCE = "Recibido en el DCE para resguardo (DGSEG – DCE)%";
+    const ESTADO_RECIBIDO_DCE_PO_SUPERVENIENTE = "Recibido en el DCE PO superveniente (UAA – DCE)%";
     const ESTADO_RECIBIDO_DGSEG = "Recibido por la DGSEG para revisión (DCE - DGSEG) - Firmado%";
     const ESTADO_RECIBIDO_CORRECCIONES = "Recibido por la DGSEG para revisión de correcciones (DCE - DGSEG) - Firmado%";
     const ESTADO_PROGRAMADO = "Programado%";
@@ -173,6 +174,40 @@ class DashboardEntregasController extends Controller
     }
     
     /**
+     * Aplica el filtro especial del RIASF (Reglamento Interno de la Auditoría Superior de la Federación)
+     * 
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param Request $request
+     * @param string $tableAlias Prefijo de tabla para las columnas (opcional)
+     * @return \Illuminate\Database\Query\Builder
+     */
+    private function applySpecialFilter($query, $request, $tableAlias = 'aditorias')
+    {
+        // Solo aplicar el filtro especial cuando entrega=18 Y cuenta_publica=1
+        if ($request->filled('entrega') && $request->entrega == 18 && 
+            $request->filled('cuenta_publica') && $request->cuenta_publica == 1) {
+            
+            $prefix = $tableAlias ? $tableAlias . '.' : '';
+            
+            $query->where(function($q) use ($prefix) {
+                $q->where(function($subQ) use ($prefix) {
+                    // Excluir todos los registros donde siglas_auditoria_especial = 38
+                    $subQ->where($prefix . 'siglas_auditoria_especial', '!=', 38);
+                })->where(function($subQ) use ($prefix) {
+                    // Para siglas_auditoria_especial = 39, solo incluir siglas_tipo_accion = 35
+                    $subQ->where($prefix . 'siglas_auditoria_especial', '!=', 39)
+                         ->orWhere(function($innerQ) use ($prefix) {
+                             $innerQ->where($prefix . 'siglas_auditoria_especial', 39)
+                                    ->where($prefix . 'siglas_tipo_accion', 35);
+                         });
+                });
+            });
+        }
+        
+        return $query;
+    }
+
+    /**
      * Aplica los filtros a una consulta
      *
      * @param \Illuminate\Database\Query\Builder $query
@@ -181,7 +216,7 @@ class DashboardEntregasController extends Controller
      */
     private function applyFilters($query, Request $request)
     {
-        return $query->when($request->filled('uaa_id'), function($q) use ($request) {
+        $query = $query->when($request->filled('uaa_id'), function($q) use ($request) {
                 $q->where('aditorias.uaa', $request->uaa_id);
             })
             ->when($request->filled('dg_id'), function($q) use ($request) {
@@ -195,8 +230,10 @@ class DashboardEntregasController extends Controller
             })
             ->when($request->filled('cuenta_publica'), function($q) use ($request) {
                 $q->where('aditorias.cuenta_publica', $request->cuenta_publica);
-            })
-            ->whereNot(['aditorias.entrega' => 20, 'aditorias.cuenta_publica' => 1]);
+            });
+
+        // Aplicar filtro especial del RIASF
+        return $this->applySpecialFilter($query, $request, 'aditorias');
     }
     
     /**

@@ -196,6 +196,7 @@
                 </label>
                 <select id="estadoRecepcion" name="estado_recepcion" class="mt-1 block w-full rounded-md border-gray-300 text-gray-700">
                     <option value="">-- Seleccionar --</option>
+                    <option value="Recibido en el DCE PO superveniente (UAA – DCE)">Recibido en el DCE PO superveniente (UAA – DCE)</option>
                     <option value="Recibido en el DCE (UAA – DCE)">Recibido en el DCE (UAA – DCE)</option>
                     <option value="Recibido por la DGSEG para revisión (DCE - DGSEG)">Recibido por la DGSEG para revisión (DCE - DGSEG)</option>
                     <option value="Recibido en el DCE para resguardo (DGSEG – DCE)">Recibido en el DCE para resguardo (DGSEG – DCE)</option>

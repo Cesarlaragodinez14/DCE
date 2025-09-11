@@ -30,11 +30,13 @@
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
             @if(session()->has('impersonated_by'))
-            <form action="{{ route('stopImpersonation') }}" method="GET">
-                @csrf
-                <button type="submit">Dejar de Impersonar</button>
-            </form>
-        @endif
+                <div class="bg-yellow-500 text-white p-3 text-center">
+                    <strong>⚠️ Estás impersonando a otro usuario</strong>
+                    <a href="{{ route('stopImpersonation') }}" class="ml-4 bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">
+                        Dejar de Impersonar
+                    </a>
+                </div>
+            @endif
         
             <!-- Page Heading -->
             @if (isset($header))

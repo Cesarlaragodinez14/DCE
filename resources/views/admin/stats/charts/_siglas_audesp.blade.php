@@ -1,7 +1,7 @@
 {{-- resources/views/admin/stats/charts/_siglas_audesp.blade.php --}}
 <section id="siglas-audesp" class="mb-8">
     <h3 class="text-lg font-semibold mb-2">
-        Estatus de la revisión de Expedientes de Acción por Auditoría Especial
+        Estatus de la revisión de Expedientes de Acción por Auditoría Especial.
     </h3>
 
     <!-- Gráfico -->
@@ -58,15 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let tableData = [];
     sortedData.forEach(item => {
         tableData.push({
-            'Auditoria Especial': item.sigla,
-            'Estatus de la revisión': 'Total por Auditoria Especial',
+            'Siglas Auditoría Especial': item.sigla,
+            'Estatus': 'Total por Auditoría Especial',
             'Total de Auditoria Especial': item.total,
             'Porcentaje': '100%'
         });
         Object.entries(item.estatusMap).forEach(([estatus, count]) => {
             tableData.push({
                 'Siglas Auditoría Especial': '',
-                'Estatus de la revisión': estatus,
+                'Estatus': estatus,
                 'Total de Auditoria Especial': count,
                 'Porcentaje': ((count / item.total) * 100).toFixed(2) + '%'
             });
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Agregar fila de Gran Total
     tableData.push({
         'Siglas Auditoría Especial': 'Gran Total',
-        'Estatus de la revisión': '',
+        'Estatus': '',
         'Total de Auditoria Especial': globalTotal,
         'Porcentaje': '100%'
     });

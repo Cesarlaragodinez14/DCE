@@ -140,7 +140,7 @@
                         </div>
                         
                         <!-- Selección de entidad y campos -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                             <!-- Selector de Entidad Responsable -->
                             <div>
                                 <label for="entidad-selector" class="block text-sm font-medium text-gray-700 mb-2">Entidad Responsable de la Acción</label>
@@ -148,6 +148,27 @@
                                     <option value="">Seleccione una entidad</option>
                                     <!-- Las opciones se cargarán dinámicamente -->
                                 </select>
+                            </div>
+                            
+                            <!-- Control de cantidad de registros -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad de registros a mostrar</label>
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="number" id="cantidad-registros" min="1" max="1000" value="10" class="w-20 pl-3 pr-2 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <span class="text-sm text-gray-600">registros principales</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="todos-registros" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                        <label for="todos-registros" class="ml-2 text-sm text-gray-600">Mostrar todos los registros</label>
+                                    </div>
+                                    <p class="text-xs text-gray-500">
+                                        Por defecto se muestran las 10 acciones con mayor monto. Puede cambiar la cantidad o seleccionar todos los registros disponibles.
+                                    </p>
+                                    <p class="text-xs text-green-600 mt-1">
+                                        <strong>Procesamiento Optimizado:</strong> El sistema procesa automáticamente todos los registros en lotes de 50 para evitar timeouts. Con muchos registros, el proceso puede tomar varios minutos pero completará toda la información.
+                                    </p>
+                                </div>
                             </div>
                             
                             <!-- Selector de campos a incluir -->

@@ -137,6 +137,7 @@
             <!-- Columna de la Información del Hash -->
             <td style="width:35%; vertical-align: top; text-align:left">
                 <p><strong>Hash:</strong> {{ $hashPrimera }}</p>
+                <p><strong>Firmado Por:</strong> {{ $nombrePrimera ?? 'N/A' }}</p>
                 <p><strong>Correo del Generador:</strong> {{ $emailPrimera }}</p>
                 <p><strong>Dirección IP:</strong> {{ $ipPrimera }}</p>
                 <p><strong>Fecha/Hora de Generación:</strong> 
@@ -154,6 +155,7 @@
             <!-- Columna de la Información del Hash -->
             <td style="width:35%; vertical-align: top; text-align:left">
                 <p><strong>Hash:</strong> {{ $hashSegunda }}</p>
+                <p><strong>Firmado Por:</strong> {{ $nombreSegunda ?? 'N/A' }}</p>
                 <p><strong>Correo del Generador:</strong> {{ $emailSegunda }}</p>
                 <p><strong>Dirección IP:</strong> {{ $ipSegunda }}</p>
                 <p><strong>Fecha/Hora de Generación:</strong> 

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class Auditorias extends Model
 {
@@ -14,6 +16,69 @@ class Auditorias extends Model
     protected $guarded = [];
 
     protected $hidden = ['id'];
+
+    /**
+     * Boot del modelo para agregar eventos que limpien el caché
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Eventos que limpian el caché cuando se modifican auditorías
+        static::updated(function ($auditoria) {
+            static::limpiarCacheEstadisticas();
+        });
+
+        static::created(function ($auditoria) {
+            static::limpiarCacheEstadisticas();
+        });
+
+        static::deleted(function ($auditoria) {
+            static::limpiarCacheEstadisticas();
+        });
+    }
+
+    /**
+     * Limpiar caché de estadísticas de auditorías
+     */
+    private static function limpiarCacheEstadisticas()
+    {
+        try {
+            Log::info('🔄 Limpiando caché por modificación en modelo Auditorias...');
+            
+            // Obtener todas las claves de cache registradas
+            $cacheKeys = Cache::get('resumen_auditorias_cache_keys', []);
+            
+            if (!empty($cacheKeys)) {
+                foreach ($cacheKeys as $key) {
+                    Cache::forget($key);
+                }
+            }
+            
+            // Limpiar también las claves de registro
+            Cache::forget('resumen_auditorias_cache_keys');
+            
+            // Limpiar cachés por patrón si es Redis
+            if (config('cache.default') === 'redis') {
+                try {
+                    $redis = Cache::getRedis();
+                    $keys = $redis->keys('*resumen_auditorias_stats_*');
+                    
+                    foreach ($keys as $key) {
+                        $cleanKey = str_replace(config('cache.prefix') . ':', '', $key);
+                        Cache::forget($cleanKey);
+                    }
+                } catch (\Exception $e) {
+                    // Silently fail if Redis is not available
+                }
+            }
+            
+            Log::info('✅ Caché de estadísticas limpiado por modificación de auditoría');
+            
+        } catch (\Exception $e) {
+            Log::error("❌ Error limpiando caché por modificación de auditoría: {$e->getMessage()}");
+        }
+    }
 
     // Relationship for the catalog of "Siglas Tipo Acción"
     public function catSiglasTipoAccion()
@@ -102,6 +167,57 @@ class Auditorias extends Model
     public function pdfHistories()
     {
         return $this->hasMany(PdfHistory::class, 'auditoria_id');
+    }
+
+    /**
+     * Relación con etiquetas de auditoría.
+     */
+    public function auditoriaEtiquetas()
+    {
+        return $this->hasMany(AuditoriaEtiqueta::class, 'auditoria_id');
+    }
+
+    /**
+     * Relación many-to-many con etiquetas.
+     */
+    public function etiquetas()
+    {
+        return $this->belongsToMany(CatEtiqueta::class, 'auditoria_etiquetas', 'auditoria_id', 'etiqueta_id')
+                    ->withPivot('razon_asignacion', 'comentario_fuente', 'confianza_ia', 'validado_manualmente', 'procesado_en')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Verificar si tiene etiquetas pendientes de procesar.
+     */
+    public function tieneEtiquetasPendientes(): bool
+    {
+        // Verificar si hay comentarios en apartados que no han sido procesados para etiquetas
+        $ultimaActualizacionComentarios = $this->checklistApartados()
+            ->whereNotNull('observaciones')
+            ->orWhereNotNull('comentarios_uaa')
+            ->max('updated_at');
+
+        if (!$ultimaActualizacionComentarios) {
+            return false;
+        }
+
+        $ultimoProcesamientoEtiquetas = $this->auditoriaEtiquetas()
+            ->max('procesado_en');
+
+        return !$ultimoProcesamientoEtiquetas || 
+               $ultimaActualizacionComentarios > $ultimoProcesamientoEtiquetas;
+    }
+
+    /**
+     * Obtener etiquetas únicas de la auditoría.
+     */
+    public function getEtiquetasUnicasAttribute()
+    {
+        return $this->etiquetas()
+                    ->distinct()
+                    ->get()
+                    ->groupBy('nombre');
     }
     
 }

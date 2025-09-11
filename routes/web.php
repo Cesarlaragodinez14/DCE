@@ -6,7 +6,6 @@
     use App\Http\Controllers\AuditoriaController;
     use App\Http\Controllers\DashboardController;
     use App\Http\Controllers\DashboardEntregasController;
-    use App\Http\Controllers\DebugController;
     use App\Http\Controllers\EntregaController;
     use App\Http\Controllers\ExcelUploadController;
     use App\Http\Controllers\ExpedientesController;
@@ -15,6 +14,7 @@
     use App\Http\Controllers\PdfController;
     use App\Http\Controllers\PermissionController;
     use App\Http\Controllers\RecepcionController;
+    use App\Http\Controllers\PrivacyNoticeController;
     use App\Http\Controllers\RecepcionHistoryController;
     use App\Http\Controllers\ReporteController;
     use App\Http\Controllers\RoleController;
@@ -74,6 +74,10 @@
         Route::get('/user/profile', function () {
             return view('profile.show');
         })->name('profile.show');
+
+        // Aviso de privacidad
+        Route::get('/aceptar-aviso-privacidad', [PrivacyNoticeController::class, 'show'])->name('privacy.notice');
+        Route::post('/aceptar-aviso-privacidad', [PrivacyNoticeController::class, 'accept'])->name('privacy.notice.accept');
     });
 
     Route::middleware(['auth'])->group(function () {
@@ -104,7 +108,6 @@
         
         Route::get('/dashboard/charts', [DashboardController::class, 'dashboardIndex'])->name('dashboard.charts.index');
         Route::get('/dashboard/charts/entregas', [DashboardEntregasController::class, 'dashboardEntregasIndex'])->name('dashboard.charts.entregas');
-        Route::get('/dashboard/debug/entregas', [DebugController::class, 'debugEntregas'])->name('debug.entregas');
         
         /*
         |--------------------------------------------------------------------------
@@ -164,6 +167,7 @@
         Route::get('/dashboard/auditorias/{auditoria_id}/apartados', [ApartadosController::class, 'index'])->name('auditorias.apartados');
         Route::post('/dashboard/auditorias/apartados/checklist', [ApartadosController::class, 'storeChecklist'])->name('apartados.checklist.store');
         Route::get('/dashboard/auditorias/historico', [ApartadosController::class, 'show'])->name('auditorias.show');
+        Route::get('/dashboard/auditorias/resumen', [\App\Livewire\ResumenAuditorias::class, '__invoke'])->name('auditorias.resumen');
         Route::post('/apartados/uua', [ApartadosController::class, 'storeUua'])->name('apartados.storeUua');
         
         Route::get('/auditorias/{auditoria_id}/pdf', [PdfController::class, 'generateChecklistPdf'])->name('auditorias.pdf');
@@ -238,3 +242,136 @@
     */
 
     Route::get('/reportes/observaciones-apartados/{entrega_id?}', [App\Http\Controllers\ReporteController::class, 'observacionesApartados'])->name('reportes.observaciones-apartados');
+
+    // Ruta temporal para diagnosticar Claude API en servidor
+    Route::get('/debug/claude-api', function() {
+        $apiKey = trim(env('CLAUDE_API'));
+        $model = env('CLAUDE_MODEL', 'claude-3-5-haiku-20241022');
+        
+        // Clean API key of any whitespace/line breaks
+        $apiKey = preg_replace('/\s+/', '', $apiKey);
+        
+        $diagnosis = [
+            'timestamp' => now()->toDateTimeString(),
+            'api_key_configured' => !empty($apiKey),
+            'api_key_length' => strlen($apiKey ?? ''),
+            'api_key_format_valid' => str_starts_with($apiKey ?? '', 'sk-ant-'),
+            'api_key_preview' => substr($apiKey ?? '', 0, 15) . '...' . substr($apiKey ?? '', -10),
+            'model_configured' => $model,
+            'has_line_breaks' => preg_match('/\r|\n/', $apiKey ?? '') ? true : false,
+            'has_spaces' => preg_match('/\s/', $apiKey ?? '') ? true : false,
+        ];
+        
+        // Intentar hacer una llamada de prueba a Claude
+        if (!empty($apiKey)) {
+            try {
+                $response = \Illuminate\Support\Facades\Http::withHeaders([
+                    'x-api-key' => $apiKey,
+                    'Content-Type' => 'application/json',
+                    'anthropic-version' => '2023-06-01',
+                ])->timeout(60)->post('https://api.anthropic.com/v1/messages', [
+                    'model' => $model,
+                    'max_tokens' => 50,
+                    'temperature' => 0.7,
+                    'system' => 'Responde brevemente',
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => 'Di "Test exitoso" en una palabra'
+                        ]
+                    ]
+                ]);
+                
+                if ($response->successful()) {
+                    $responseData = $response->json();
+                    $diagnosis['test_result'] = 'SUCCESS';
+                    $diagnosis['claude_response'] = $responseData['content'][0]['text'] ?? 'Sin contenido';
+                } else {
+                    $diagnosis['test_result'] = 'FAILED';
+                    $diagnosis['error_code'] = $response->status();
+                    $diagnosis['error_body'] = $response->body();
+                }
+            } catch (\Exception $e) {
+                $diagnosis['test_result'] = 'EXCEPTION';
+                $diagnosis['error_message'] = $e->getMessage();
+            }
+        } else {
+            $diagnosis['test_result'] = 'NO_API_KEY';
+        }
+        
+        return response()->json($diagnosis, 200, [], JSON_PRETTY_PRINT);
+    })->middleware(['auth']); // Solo para usuarios autenticados
+
+    // Ruta temporal para limpiar caché desde navegador
+    Route::get('/debug/clear-cache', function() {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('config:clear');
+            \Illuminate\Support\Facades\Artisan::call('cache:clear');
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Caché limpiado exitosamente',
+                'timestamp' => now()->toDateTimeString()
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'timestamp' => now()->toDateTimeString()
+            ], 500, [], JSON_PRETTY_PRINT);
+                 }
+     })->middleware(['auth']);
+
+     // Ruta temporal para probar API key específica
+     Route::post('/debug/test-claude-key', function(\Illuminate\Http\Request $request) {
+         $apiKey = trim($request->input('api_key'));
+         $model = env('CLAUDE_MODEL', 'claude-3-5-haiku-20241022');
+         
+         if (empty($apiKey)) {
+             return response()->json(['error' => 'API key requerida'], 400);
+         }
+         
+         // Clean API key of any whitespace/line breaks
+         $apiKey = preg_replace('/\s+/', '', $apiKey);
+         
+         $diagnosis = [
+             'timestamp' => now()->toDateTimeString(),
+             'api_key_length' => strlen($apiKey),
+             'api_key_preview' => substr($apiKey, 0, 15) . '...' . substr($apiKey, -10),
+             'model_tested' => $model,
+         ];
+         
+         try {
+             $response = \Illuminate\Support\Facades\Http::withHeaders([
+                 'x-api-key' => $apiKey,
+                 'Content-Type' => 'application/json',
+                 'anthropic-version' => '2023-06-01',
+             ])->timeout(60)->post('https://api.anthropic.com/v1/messages', [
+                 'model' => $model,
+                 'max_tokens' => 50,
+                 'temperature' => 0.7,
+                 'system' => 'Responde brevemente',
+                 'messages' => [
+                     [
+                         'role' => 'user',
+                         'content' => 'Di "Test exitoso" en una palabra'
+                     ]
+                 ]
+             ]);
+             
+             if ($response->successful()) {
+                 $responseData = $response->json();
+                 $diagnosis['test_result'] = 'SUCCESS';
+                 $diagnosis['claude_response'] = $responseData['content'][0]['text'] ?? 'Sin contenido';
+             } else {
+                 $diagnosis['test_result'] = 'FAILED';
+                 $diagnosis['error_code'] = $response->status();
+                 $diagnosis['error_body'] = $response->body();
+             }
+         } catch (\Exception $e) {
+             $diagnosis['test_result'] = 'EXCEPTION';
+             $diagnosis['error_message'] = $e->getMessage();
+         }
+         
+                return response()->json($diagnosis, 200, [], JSON_PRETTY_PRINT);
+   })->middleware(['auth']);

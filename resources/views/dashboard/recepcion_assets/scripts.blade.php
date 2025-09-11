@@ -216,8 +216,10 @@
         
         // Definir las reglas de flujo de trabajo
         const flujoTrabajo = {
-            'Programado': ['Recibido en el DCE (UAA – DCE)'],
-            'Sin Programar': ['Recibido en el DCE (UAA – DCE)'],
+            'Programado': ['Recibido en el DCE PO superveniente (UAA – DCE)', 'Recibido en el DCE (UAA – DCE)'],
+            'Recibido en el DCE PO superveniente (UAA – DCE) - Firmado': ['Recibido en el DCE (UAA – DCE)'],
+            'Sin Programar': ['Recibido en el DCE PO superveniente (UAA – DCE)', 'Recibido en el DCE (UAA – DCE)'],
+            'Recibido en el DCE PO superveniente (UAA – DCE)': ['Recibido por la DGSEG para revisión (DCE - DGSEG)'],
             'Recibido en el DCE (UAA – DCE)': ['Recibido por la DGSEG para revisión (DCE - DGSEG)'],
             'Recibido en el DCE (UAA – DCE) - Firmado': ['Recibido por la DGSEG para revisión (DCE - DGSEG)'],
             'Recibido por la DGSEG para revisión (DCE - DGSEG)': [

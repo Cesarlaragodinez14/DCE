@@ -156,6 +156,7 @@ class AuditoriasImport implements ToModel, WithHeadingRow
             'jefe_de_departamento' => $row['nombre_jefe_de_departamento'],
             // Si deseas establecer un valor por defecto para estatus_checklist al crear una nueva auditoría, puedes agregarlo aquí
             'estatus_checklist' => $row['estatus_checklist'] ?? 'Sin Revisar',
+            'es_superveniente' => $row['es_superveniente'] ?? '0',
         ]);
     }
 

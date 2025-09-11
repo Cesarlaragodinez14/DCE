@@ -22,6 +22,10 @@ class RecepcionController extends Controller
 {
     public function index(Request $request)
     {
+        // Obtener los roles del usuario actual y aplicar filtros según el rol
+        $userRoles = auth()->user()->roles->pluck('name')->toArray();
+        $currentUser = auth()->user();
+        
         // Tus filtros y combos, sin cambios
         $entregaId          = $request->input('entrega');
         $cpId               = $request->input('cuenta_publica');
@@ -86,7 +90,54 @@ class RecepcionController extends Controller
                 DB::raw("CASE WHEN entregas.estado IS NULL THEN 0 WHEN entregas.estado not like '%Recibido%' THEN 1 ELSE 0 END as ya_entregado")
             );
 
-        // Aplicar filtros
+        // Aplicar filtros específicos según el rol del usuario
+        $isAdmin = in_array('admin', $userRoles);
+        
+        if (!$isAdmin) {
+            // Para usuarios que no son admin, aplicar filtros según su rol
+            if (in_array('Jefe de Departamento', $userRoles)) {
+                // Solo ve expedientes de su jefatura
+                if ($currentUser->uaa_id) {
+                    $userUaa = DB::table('cat_uaa')->where('id', $currentUser->uaa_id)->first();
+                    if ($userUaa) {
+                        $query->where('aditorias.jefe_de_departamento', 'like', '%' . $currentUser->name . '%');
+                    }
+                }
+            } elseif (in_array('Director General SEG', $userRoles)) {
+                // Solo ve expedientes de su DG
+                if ($currentUser->uaa_id) {
+                    $userUaa = DB::table('cat_uaa')->where('id', $currentUser->uaa_id)->first();
+                    if ($userUaa && $userUaa->dgseg_ef_id) {
+                        $query->where('aditorias.dgseg_ef', $userUaa->dgseg_ef_id);
+                    }
+                }
+            } elseif (in_array('Responsable de la programación por UAA', $userRoles) || 
+                      in_array('Auditor habilitado UAA', $userRoles) || 
+                      in_array('Director General', $userRoles) || 
+                      in_array('DGUAA', $userRoles)) {
+                // Solo ve expedientes de su DG
+                if ($currentUser->uaa_id) {
+                    $userUaa = DB::table('cat_uaa')->where('id', $currentUser->uaa_id)->first();
+                    if ($userUaa) {
+                        // Filtrar por UAA específica del usuario
+                        $query->where('aditorias.uaa', $currentUser->uaa_id);
+                    }
+                }
+            } elseif (in_array('AECF', $userRoles) || in_array('AEGF', $userRoles)) {
+                // Ve todo respecto a sus 6 DG - aquí podrías especificar las DGs específicas
+                // Por ahora, aplicamos un filtro más amplio basado en el contexto del usuario
+                if ($currentUser->uaa_id) {
+                    $userUaa = DB::table('cat_uaa')->where('id', $currentUser->uaa_id)->first();
+                    if ($userUaa && $userUaa->dgseg_ef_id) {
+                        // Para AECF/AEGF podrías especificar las 6 DGs específicas
+                        $query->where('aditorias.dgseg_ef', $userUaa->dgseg_ef_id);
+                    }
+                }
+            }
+            // AUDITOR ESPECIAL ve todo (sin restricciones adicionales)
+        }
+
+        // Aplicar filtros de la interfaz
         if ($entregaId) {
             $query->where('aditorias.entrega', $entregaId);
         }
@@ -568,6 +619,15 @@ class RecepcionController extends Controller
 
         // 5) Generar hash y QR
         $user       = Auth::user(); // Quien genera el PDF (DCE)
+        
+        if (!$user) {
+            \Log::error('Usuario no autenticado al generar PDF simple');
+            return view('validador-entregas.contraparte-error')->with(
+                'error',
+                'Usuario no autenticado para generar el PDF.'
+            );
+        }
+        
         $ipAddress  = request()->ip();
         $generatedAt= now();
         $hashString = $user->email.'|'.$ipAddress.'|'.$generatedAt->toDateTimeString();
@@ -603,6 +663,7 @@ class RecepcionController extends Controller
             'ipAddress'     => $ipAddress,
             'generatedAt'   => $generatedAt,
             'userEmail'     => $user->email,
+            'nombreUsuario' => $user->name,
         ];
 
         // 7) Generar PDF => guardarlo
@@ -787,9 +848,19 @@ class RecepcionController extends Controller
             ->where('id', $primeraFirma->generated_by)
             ->first();
 
-        $nombrePrimera = $usuarioPrimera->name   ?? 'Desconocido';
-        $puestoPrimera = $usuarioPrimera->puesto ?? '---';
-        $emailPrimera  = $usuarioPrimera->email  ?? '---';
+        if (!$usuarioPrimera) {
+            \Log::warning('Usuario no encontrado para primera firma', [
+                'generated_by' => $primeraFirma->generated_by,
+                'primera_firma_id' => $primeraFirma->id
+            ]);
+            $nombrePrimera = 'Usuario no encontrado';
+            $puestoPrimera = 'Cargo no disponible';
+            $emailPrimera  = 'email@no-disponible.com';
+        } else {
+            $nombrePrimera = $usuarioPrimera->name   ?? 'Sin nombre';
+            $puestoPrimera = $usuarioPrimera->puesto ?? 'Sin cargo';
+            $emailPrimera  = $usuarioPrimera->email  ?? 'Sin email';
+        }
 
         // Reutilizamos el mismo if/elseif para "quién entrega / quién recibe"
         // pero adaptado para que la primera firma sea "quien entrega" en algunos casos:
@@ -1075,5 +1146,4 @@ class RecepcionController extends Controller
         // 3) Retornar la descarga
         return response()->download($fullPath, basename($fullPath));
     }
-
 }
