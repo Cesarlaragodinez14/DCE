@@ -275,6 +275,7 @@
                                                             'apartado' => $apartado,
                                                             'parentIteration' => $loop->iteration,
                                                             'is_subrow' => false,
+                                                            'esSuperveniente' => $esSuperveniente,
                                                             'auditoria' => $auditoria,
                                                             'checklist' => $checklist,
                                                         ])
@@ -308,6 +309,7 @@
                                                         'apartado' => $apartado,
                                                         'parentIteration' => $loop->iteration,
                                                         'is_subrow' => false,
+                                                        'esSuperveniente' => $esSuperveniente,
                                                         'auditoria' => $auditoria,
                                                         'checklist' => $checklist,
                                                     ])
@@ -458,6 +460,7 @@
                                                     'apartado' => $apartado,
                                                     'parentIteration' => $loop->iteration,
                                                     'is_subrow' => false,
+                                                    'esSuperveniente' => $esSuperveniente,
                                                     'auditoria' => $auditoria,
                                                     'checklist' => $checklist,
                                                 ])
@@ -499,6 +502,7 @@
                                                 'apartado' => $apartado,
                                                 'parentIteration' => $loop->iteration,
                                                 'is_subrow' => false,
+                                                'esSuperveniente' => $esSuperveniente,
                                                 'auditoria' => $auditoria,
                                                 'checklist' => $checklist,
                                             ])

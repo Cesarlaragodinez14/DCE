@@ -4,7 +4,16 @@
         if ($loop->iteration <= 2) {
             $currentIteration = 0;
         } else {
-            $currentIteration = $loop->iteration - 2;
+                    // NUEVA LÓGICA: Numeración especial para apartados supervenientes
+                    if ($esSuperveniente && $formato === '06' && $apartado->id >= 67 && $apartado->id <= 73) {
+                        // Apartados supervenientes van del 14 al 20
+                        $currentIteration = 13 + ($apartado->id - 66); // 67->14, 68->15, 69->16, etc.
+                    } elseif ($esSuperveniente && $formato === '06' && ($apartado->id == 57 || $apartado->id == 60)) {
+                        // Apartados 57 y 60 van como 21 y 22 en supervenientes
+                        $currentIteration = ($apartado->id == 57) ? 21 : 22;
+                    } else {
+                        $currentIteration = $loop->iteration - 2;
+                    }
         }
     } else {
         $currentIteration = "$parentIteration.$loop->iteration";
@@ -16,8 +25,11 @@
     // Obtener el formato de la acción de auditoría basado en la clave
     $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
 
+    // NUEVA LÓGICA: Usar plantilla superveniente si aplica (usar variable del controlador)
+    $plantillaFormato = ($formato === '06' && $esSuperveniente) ? '06-superveniente' : $formato;
+
     // Obtener los valores predefinidos desde la tabla apartado_plantillas
-    $plantillaDatos = $apartado->plantillas->firstWhere('plantilla', $formato);
+    $plantillaDatos = $apartado->plantillas->firstWhere('plantilla', $plantillaFormato);
 
     // Establecer los valores predefinidos o null si no están disponibles
     $es_aplicable = $plantillaDatos->es_aplicable ?? null;
@@ -25,14 +37,18 @@
     $se_integra = $plantillaDatos->se_integra ?? 'En su caso';
 
     // Determinar si se debe mostrar la fila
-    $mostrarFila = $es_aplicable !== 0 && $es_aplicable !== '0' && $es_aplicable !== false;
+    $mostrarFila = $es_aplicable !== 0 && $es_aplicable !== '0' && $es_aplicable !== false && $es_aplicable !== null;
+    
+    // NUEVA LÓGICA: Detectar apartados supervenientes (IDs 67-73)
+    $esApartadoSuperveniente = $apartado->id >= 67 && $apartado->id <= 73;
 @endphp
 
 @if($mostrarFila)
 <tr 
     class="{{ is_null($apartado->parent_id) ? 'bg-gray-50' : 'bg-white parent-'.$apartado->parent_id }} 
            {{ isset($is_subrow) && $is_subrow ? 'hidden' : '' }} 
-           {{ (($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados) ? 'mandatory' : '' }}" 
+           {{ (($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados) ? 'mandatory' : '' }}
+           {{ $esApartadoSuperveniente ? 'border-l-4 border-blue-500' : '' }}" 
         @if(($es_obligatorio === 1 || $es_obligatorio === '1') && !$hasSubapartados)
             data-nombre-apartado="{{ $apartado->nombre }}"
         @elseif (($formato === "01" || $formato === "07") && $apartado->id === 51)
@@ -58,6 +74,9 @@
                 </svg>
             </button>
             {{ $apartado->nombre }}
+            @if($esApartadoSuperveniente)
+                <span class="ml-2 px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">SUPERVENIENTE</span>
+            @endif
         </td>
         <!-- Inputs ocultos para los demás campos -->
         <input type="hidden" name="apartados[{{ $apartado->id }}][se_integra]" value="">
@@ -67,6 +86,9 @@
         <!-- Nombre del apartado -->
         <td class="px-4 py-3 text-gray-700" style="padding-left: {{ $apartado->depth * 20 }}px;">
             {!! $apartado->nombre !!}
+            @if($esApartadoSuperveniente)
+                <span class="ml-2 px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">SUPERVENIENTE</span>
+            @endif
         </td>
 
         <!-- ¿Obligatorio? -->

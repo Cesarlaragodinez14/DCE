@@ -82,7 +82,7 @@
                     @elseif ($formato == "03")
                         <b>Lista de verificación del Expediente de la Solicitud de Aclaración</b><br>
                     @elseif ($formato == "06")
-                        <b>Lista de verificación del Expediente de Pliego de Observaciones</b><br>
+                        <b>Lista de verificación del Expediente de Pliego de Observaciones{{ $esSuperveniente ? ' Superveniente' : '' }}</b><br>
                     @elseif ($formato == "07")
                         <b>Lista de verificación del Expediente de la Recomendación al Desempeño</b><br>
                     @else

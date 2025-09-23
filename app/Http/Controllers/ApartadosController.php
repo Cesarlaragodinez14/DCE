@@ -35,20 +35,44 @@ class ApartadosController extends Controller
         // Obtener la auditoría
         $auditoria = Auditorias::with('catSiglasTipoAccion')->findOrFail($auditoria_id);
 
-        // Obtener los apartados principales y subapartados
-        $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
+        // Obtener el formato de la auditoría
+        $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
+
+        // NUEVA LÓGICA: Detectar si es superveniente
+        $esSuperveniente = $auditoria->es_superveniente == 1;
+        
+        // Usar plantilla superveniente si aplica
+        $plantillaFormato = ($formato === '06' && $esSuperveniente) ? '06-superveniente' : $formato;
+
+        // Obtener los valores predefinidos de la plantilla para el formato específico
+        $plantillaDatos = ApartadoPlantilla::where('plantilla', $plantillaFormato)->get()->keyBy('apartado_id');
+
+        // NUEVA LÓGICA: Ordenar apartados correctamente para supervenientes
+        if ($formato === '06' && $esSuperveniente) {
+            // Para supervenientes, obtener apartados en orden específico
+            $apartados = Apartado::whereNull('parent_id')
+                ->whereIn('id', $plantillaDatos->keys())
+                ->with('subapartados')
+                ->get()
+                ->sortBy(function($apartado) {
+                    // Apartados supervenientes (67-73) van después de los normales pero antes de 57 y 60
+                    if ($apartado->id >= 67 && $apartado->id <= 73) {
+                        return $apartado->id + 100; // Después de normales pero antes de 57,60
+                    } elseif ($apartado->id == 57 || $apartado->id == 60) {
+                        return $apartado->id + 200; // Al final
+                    }
+                    return $apartado->id;
+                });
+        } else {
+            // Para formatos normales, usar orden estándar
+            $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
+        }
 
         // Obtener el checklist de apartados para esta auditoría
         $checklist = ChecklistApartado::where('auditoria_id', $auditoria_id)->get()->keyBy('apartado_id');
 
-        // Obtener el formato de la auditoría
-        $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
-
-        // Obtener los valores predefinidos de la plantilla para el formato específico
-        $plantillaDatos = ApartadoPlantilla::where('plantilla', $formato)->get()->keyBy('apartado_id');
-
         // Pasar los datos a la vista
-        return view('apartados.index', compact('auditoria', 'apartados', 'checklist', 'plantillaDatos', 'formato'));
+        return view('apartados.index', compact('auditoria', 'apartados', 'checklist', 'plantillaDatos', 'formato', 'esSuperveniente'));
     }
 
     public function storeChecklist(Request $request) 
@@ -255,6 +279,12 @@ class ApartadosController extends Controller
         $checklist = ChecklistApartado::where('auditoria_id', $request->auditoria_id)->get()->keyBy('apartado_id');
         $estatus_checklist = $auditoria->estatus_checklist;
         $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
+
+        // NUEVA LÓGICA: Detectar si es superveniente
+        $esSuperveniente = $auditoria->es_superveniente == 1;
+        
+        // Usar plantilla superveniente si aplica
+        $plantillaFormato = ($formato === '06' && $esSuperveniente) ? '06-superveniente' : $formato;
 
         // Verificar si ya existe un PDF generado en el historial
         $pdfHistory = PdfHistory::where('auditoria_id', $auditoria->id)->first();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartado;
+use App\Models\ApartadoPlantilla;
 use App\Models\ChecklistApartado;
 use App\Models\Auditorias;
 use App\Models\User;
@@ -40,10 +41,39 @@ class PdfController extends Controller
 
         // Obtener la auditoría y los datos relacionados
         $auditoria = Auditorias::findOrFail($auditoria_id);
-        $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
         $checklist = ChecklistApartado::where('auditoria_id', $auditoria_id)->get()->keyBy('apartado_id');
         $estatus_checklist = $auditoria->estatus_checklist;
         $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
+
+        // NUEVA LÓGICA: Detectar si es superveniente
+        $esSuperveniente = $auditoria->es_superveniente == 1;
+        
+        // Usar plantilla superveniente si aplica
+        $plantillaFormato = ($formato === '06' && $esSuperveniente) ? '06-superveniente' : $formato;
+
+        // Obtener los valores predefinidos de la plantilla para el formato específico
+        $plantillaDatos = ApartadoPlantilla::where('plantilla', $plantillaFormato)->get()->keyBy('apartado_id');
+
+        // NUEVA LÓGICA: Ordenar apartados correctamente para supervenientes
+        if ($formato === '06' && $esSuperveniente) {
+            // Para supervenientes, obtener apartados en orden específico
+            $apartados = Apartado::whereNull('parent_id')
+                ->whereIn('id', $plantillaDatos->keys())
+                ->with('subapartados')
+                ->get()
+                ->sortBy(function($apartado) {
+                    // Apartados supervenientes (67-73) van después de los normales pero antes de 57 y 60
+                    if ($apartado->id >= 67 && $apartado->id <= 73) {
+                        return $apartado->id + 100; // Después de normales pero antes de 57,60
+                    } elseif ($apartado->id == 57 || $apartado->id == 60) {
+                        return $apartado->id + 200; // Al final
+                    }
+                    return $apartado->id;
+                });
+        } else {
+            // Para formatos normales, usar orden estándar
+            $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
+        }
 
         // Si no se solicita regeneración, verificar si ya existe un PDF generado en el historial
         if (!$regenerate) {
@@ -121,6 +151,7 @@ class PdfController extends Controller
             'checklist',
             'estatus_checklist',
             'firmaPath',
+            'esSuperveniente',
             'formato',
             'qrCodeDataUri',
             'hash',
@@ -232,10 +263,39 @@ class PdfController extends Controller
     {
         // Obtener la auditoría y los datos relacionados
         $auditoria = Auditorias::findOrFail($auditoria_id);
-        $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
         $checklist = ChecklistApartado::where('auditoria_id', $auditoria_id)->get()->keyBy('apartado_id');
         $estatus_checklist = $auditoria->estatus_checklist;
         $formato = explode('-', $auditoria->catClaveAccion->valor)[5];
+
+        // NUEVA LÓGICA: Detectar si es superveniente
+        $esSuperveniente = $auditoria->es_superveniente == 1;
+        
+        // Usar plantilla superveniente si aplica
+        $plantillaFormato = ($formato === '06' && $esSuperveniente) ? '06-superveniente' : $formato;
+
+        // Obtener los valores predefinidos de la plantilla para el formato específico
+        $plantillaDatos = ApartadoPlantilla::where('plantilla', $plantillaFormato)->get()->keyBy('apartado_id');
+
+        // NUEVA LÓGICA: Ordenar apartados correctamente para supervenientes
+        if ($formato === '06' && $esSuperveniente) {
+            // Para supervenientes, obtener apartados en orden específico
+            $apartados = Apartado::whereNull('parent_id')
+                ->whereIn('id', $plantillaDatos->keys())
+                ->with('subapartados')
+                ->get()
+                ->sortBy(function($apartado) {
+                    // Apartados supervenientes (67-73) van después de los normales pero antes de 57 y 60
+                    if ($apartado->id >= 67 && $apartado->id <= 73) {
+                        return $apartado->id + 100; // Después de normales pero antes de 57,60
+                    } elseif ($apartado->id == 57 || $apartado->id == 60) {
+                        return $apartado->id + 200; // Al final
+                    }
+                    return $apartado->id;
+                });
+        } else {
+            // Para formatos normales, usar orden estándar
+            $apartados = Apartado::whereNull('parent_id')->with('subapartados')->get();
+        }
 
         $previousPdfHash = PdfHash::where('auditoria_id', $auditoria->id)
         ->orderBy('id', 'desc')
@@ -319,6 +379,7 @@ class PdfController extends Controller
             'checklist',
             'estatus_checklist',
             'formato',
+            'esSuperveniente',
             'trackingHash',
             'trackingUserEmail',
             'trackingIpAddress',
