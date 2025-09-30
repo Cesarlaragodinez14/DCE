@@ -94,7 +94,7 @@
                     <!-- Header con Logo -->
                     <tr>
                         <td class="header" style="text-align: center">
-                            <img style="max-width: 250px;" src="https://saes-asf.icu/img/logo-v.png" alt="{{ config('app.name') }}" />
+                            <img style="max-width: 250px;" src="http://saes.asf.gob.mx/img/logo-v.png" alt="{{ config('app.name') }}" />
                         </td>
                     </tr>
                     <!-- Título del Correo -->

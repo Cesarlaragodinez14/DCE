@@ -66,13 +66,13 @@ class UserController extends Controller
          $user_email = $validated['email'];
          //$user_email = "ablozano@asf.gob.mx";
          $subject  = 'Te damos la bienvenida';
-         $content = '<b>¡Te damos la bienvenida a la plataforma SAES!</b><br><br> Tu correo ha sido registrado exitosamente. Para comenzar, haz clic en el botón. <br><br>Si no has actualizado tu contraseña. Esta se construye por defailt con tus iniciales (Ejemplo - Juan Pérez Reyez = JPR) seguidas por 2025* <br><small>En dígitos: Dos Mil Veiticinco Asterisco</small><br> Ejemplo: <b>JPR2025*</b>.<br><br><a href="https://saes-asf.icu/" target="_blank" style="background-color: #007bff; color: #ffffff; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">Ir a la plataforma</a>.<br><br> Si tu cuenta lo requiere, configura el 2FA con una aplicación de autenticathor.<br><br> Para cambiar tu contraseña, ingresa a “Mi perfil” haciendo clic en tu nombre en la esquina superior derecha de la pantalla ingresa tu nueva contraseña y presiona actualizar.<br><br>';
+         $content = '<b>¡Te damos la bienvenida a la plataforma SAES!</b><br><br> Tu correo ha sido registrado exitosamente. Para comenzar, haz clic en el botón. <br><br>Si no has actualizado tu contraseña. Esta se construye por defailt con tus iniciales (Ejemplo - Juan Pérez Reyez = JPR) seguidas por 2025* <br><small>En dígitos: Dos Mil Veiticinco Asterisco</small><br> Ejemplo: <b>JPR2025*</b>.<br><br><a href="http://saes.asf.gob.mx/" target="_blank" style="background-color: #007bff; color: #ffffff; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">Ir a la plataforma</a>.<br><br> Si tu cuenta lo requiere, configura el 2FA con una aplicación de autenticathor.<br><br> Para cambiar tu contraseña, ingresa a “Mi perfil” haciendo clic en tu nombre en la esquina superior derecha de la pantalla ingresa tu nueva contraseña y presiona actualizar.<br><br>';
 
          $mailData = [
              'footer' => 'Correo automático, no supervisado.',
              'action' => [
                  'text' => 'Ir a la plataforma',
-                 'url'  => 'https://saes-asf.icu/'
+                 'url'  => 'http://saes.asf.gob.mx/'
              ]
          ];
  

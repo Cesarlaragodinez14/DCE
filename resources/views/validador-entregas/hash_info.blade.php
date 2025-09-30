@@ -125,7 +125,7 @@
     <div class="container">
         <!-- Logo de la Plataforma -->
         <div class="logo">
-            <img src="https://saes-asf.icu/img/logo-v.png" alt="Logo Plataforma">
+            <img src="http://saes.asf.gob.mx/img/logo-v.png" alt="Logo Plataforma">
         </div>
         <!-- Animación Check -->
         <div class="wrapper">
